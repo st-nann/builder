@@ -1,17 +1,7 @@
 <template>
   <fragment>
-    <CircleButtonComponent
-      v-if="isCircleButtonComponent()"
-      :value="value[option.props.name]"
-      v-bind="option.props"
-      v-on="{...option.props.on}"/>
-    <SquareButtonComponent
-      v-if="isSquareButtonComponent()"
-      :value="value[option.props.name]"
-      v-bind="option.props"
-      v-on="{...option.props.on}"/>
-    <TextButtonComponent
-      v-else-if="isTextButtonComponent()"
+    <ButtonGroupComponent
+      v-if="isButtonGroupComponent()"
       :value="value[option.props.name]"
       v-bind="option.props"
       v-on="{...option.props.on}"/>
@@ -69,16 +59,8 @@ export default class Condition extends Base {
   @Prop(Object) readonly option!: IComponentOption
   @Prop(Object) readonly value!: IComponentOption
 
-  isCircleButtonComponent(): boolean {
-    return this.option.type === EComponentType.CIRCLE_BUTTON
-  }
-
-  isSquareButtonComponent(): boolean {
-    return this.option.type === EComponentType.SQUARE_BUTTON
-  }
-
-  isTextButtonComponent(): boolean {
-    return this.option.type === EComponentType.TEXT_BUTTON
+  isButtonGroupComponent(): boolean {
+    return this.option.type === EComponentType.BUTTON_GROUP
   }
 
   isBoxComponent(): boolean {

@@ -1,7 +1,5 @@
 export enum EComponentType {
-    CIRCLE_BUTTON = 'CIRCLE_BUTTON',
-    SQUARE_BUTTON = 'SQUARE_BUTTON',
-    TEXT_BUTTON = 'TEXT_BUTTON',
+    BUTTON_GROUP = 'BUTTON_GROUP',
     BOX = 'BOX',
     COLOR_PICKER = 'COLOR_Picker',
     DROPDOWN = 'DROPDOWN',
