@@ -1,0 +1,13 @@
+export enum EComponentType {
+    CIRCLE_BUTTON = 'CIRCLE_BUTTON',
+    SQUARE_BUTTON = 'SQUARE_BUTTON',
+    TEXT_BUTTON = 'TEXT_BUTTON',
+    BOX = 'BOX',
+    COLOR_PICKER = 'COLOR_Picker',
+    DROPDOWN = 'DROPDOWN',
+    INPUT = 'INPUT',
+    MODAL = 'MODAL',
+    SWITCH = 'SWITCH',
+    TEXT_PANEL = 'TEXT_PANEL',
+    UPLOAD_IMAGE = 'UPLOAD_IMAGE'
+}

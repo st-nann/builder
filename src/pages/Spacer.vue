@@ -1,14 +1,10 @@
 <template>
-  <div id="app">
-    <InputComponent/>
-  </div>
+  <div></div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component
-export default class App extends Vue {}
+export default class SpacerPage extends Vue {}
 </script>
-
-<style lang="scss"></style>
