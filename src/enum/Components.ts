@@ -9,3 +9,19 @@ export enum EComponentType {
     TEXT_PANEL = 'TEXT_PANEL',
     UPLOAD_IMAGE = 'UPLOAD_IMAGE'
 }
+
+export enum EDirection {
+    ROW = 'row',
+    COLUMN = 'column'
+}
+
+export enum EJustify {
+    START = 'start',
+    CENTER = 'center',
+    END = 'end'
+}
+export enum EAlign {
+    START = 'start',
+    CENTER = 'center',
+    END = 'end'
+}

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <InputComponent/>
+    ljljlkjkljlkjljljljljljl
   </div>
 </template>
 
@@ -11,4 +11,6 @@ import { Component, Vue } from 'vue-property-decorator';
 export default class App extends Vue {}
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+@import '@/assets/style';
+</style>

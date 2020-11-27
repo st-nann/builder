@@ -1,11 +1,17 @@
+import { EDirection, EJustify, EAlign } from '@/enum/Components'
+
+export interface IFlexbox {
+    grow: number
+}
+
 export interface IDropdownOption {
     label: string
     value: any
-  }
+}
 
 export interface IComponentOption {
     type: string
-    className: string
+    flexbox: IFlexbox
     props?: {
         name: string
         label?: string

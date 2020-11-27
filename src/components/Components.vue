@@ -3,7 +3,11 @@
     <div
       v-for="(option, index) in options"
       :key="index"
-      :class="options.className"
+      :class="[
+        options.className,
+        `component-flex-grow-${option.grow}`
+      ]"
+      :style="getStyle(option)"
     >
       <Condition :option="option" :value="mutation()" />
     </div>
@@ -13,9 +17,10 @@
 <script lang="ts">
 import { Base } from '@/core/Base'
 import { Component, Prop, Provide } from 'vue-property-decorator'
-import { IComponentOption } from "@/interfaces/Components"
-import { _get } from "@/utils/lodash"
-import Condition from "@/components/Condition"
+import { IComponentOption } from '@/interfaces/Components'
+import { _get } from '@/utils/lodash'
+import Condition from '@/components/Condition'
+import { IFlexbox } from '@/interfaces/Components'
 
 @Component({
   components: { Condition }
@@ -23,6 +28,12 @@ import Condition from "@/components/Condition"
 export default class Field extends Base {
   @Prop({default: [], required: true, type: Array}) readonly options!: IComponentOption[]
   @Prop({ type: Object, default: () => ({}) }) readonly value!: any
+
+  style(option: IFlexbox): object {
+    return {
+      '--flex-grow': option.grow
+    }
+  }
 
   mutation(): object {
     const data: any = {}
