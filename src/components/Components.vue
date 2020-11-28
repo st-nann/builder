@@ -15,12 +15,12 @@
 </template>
 
 <script lang="ts">
-import { Base } from '@/core/Base'
+import { Base } from '../core/Base'
 import { Component, Prop, Provide } from 'vue-property-decorator'
-import { IComponentOption } from '@/interfaces/Components'
-import { _get } from '@/utils/lodash'
-import Condition from '@/components/Condition'
-import { IFlexbox } from '@/interfaces/Components'
+import { IComponentOption } from '../interfaces/Components'
+import { _get } from '../utils/lodash'
+import Condition from './Condition'
+import { IFlexbox } from '../interfaces/Components'
 
 @Component({
   components: { Condition }

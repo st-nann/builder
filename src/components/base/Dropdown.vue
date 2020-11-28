@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { Component } from 'vue-property-decorator'
-import BaseComponent from '@/core/BaseComponent'
+import BaseComponent from '../../core/BaseComponent'
 
 @Component
 export default class DropdownComponent extends BaseComponent {}

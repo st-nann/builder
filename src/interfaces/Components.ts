@@ -1,4 +1,4 @@
-import { EDirection, EJustify, EAlign } from '@/enum/Components'
+import { EDirection, EJustify, EAlign } from '../enum/Components'
 
 export interface IFlexbox {
     grow: number

@@ -1,7 +1,7 @@
-import { Base } from '@/core/Base'
+import { Base } from './Base'
 import { Component, Prop, Watch } from 'vue-property-decorator'
-import { _isEqual } from '@/utils/lodash'
-import { IFlexbox } from '@/interfaces/Components'
+import { _isEqual } from '../utils/lodash'
+import { IFlexbox } from '../interfaces/Components'
 
 @Component
 export default class BaseComponent extends Base {

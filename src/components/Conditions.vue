@@ -49,10 +49,10 @@
 </template>
 
 <script lang="ts">
-import { Base } from '@/core/Base'
+import { Base } from '../core/Base'
 import { Component, Prop } from 'vue-property-decorator'
-import { IComponentOption } from '@/interfaces/Components'
-import { EComponentType } from '@/enum/Components'
+import { IComponentOption } from '../interfaces/Components'
+import { EComponentType } from '../enum/Components'
 
 @Component
 export default class Condition extends Base {
