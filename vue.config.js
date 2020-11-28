@@ -10,6 +10,9 @@ module.exports = {
           title: process.env.VUE_APP_TITLE
         }
     },
+    css: {
+      extract: false
+    },
     publicPath: process.env.NODE_ENV === 'production'
         ? '/production/'
         : '/'
