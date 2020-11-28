@@ -26762,4 +26762,4 @@ module.exports = NATIVE_SYMBOL
 /***/ })
 
 /******/ });
-//# sourceMappingURL=builder.common.js.map
+//# sourceMappingURL=vue-template-builder.common.js.map

@@ -4,9 +4,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define([], factory);
 	else if(typeof exports === 'object')
-		exports["builder"] = factory(require("vue"));
+		exports["vue-template-builder"] = factory(require("vue"));
 	else
-		root["builder"] = factory(root["Vue"]);
+		root["vue-template-builder"] = factory(root["Vue"]);
 })((typeof self !== 'undefined' ? self : this), function(__WEBPACK_EXTERNAL_MODULE__8bbf__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -26772,4 +26772,4 @@ module.exports = NATIVE_SYMBOL
 
 /******/ });
 });
-//# sourceMappingURL=builder.umd.js.map
+//# sourceMappingURL=vue-template-builder.umd.js.map
