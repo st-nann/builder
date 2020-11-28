@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="test">
     ljljlkjkljlkjljljljljljl
     <InputComponent/>
   </div>
@@ -15,5 +15,5 @@ export default class App extends Vue {
 </script>
 
 <style lang="scss">
-@import '//assets/style.scss';
+@import './assets/style.scss';
 </style>
