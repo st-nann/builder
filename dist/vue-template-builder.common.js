@@ -21743,12 +21743,12 @@ var Group_component = normalizeComponent(
 )
 
 /* harmony default export */ var Group = (Group_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4a8965a0-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/base/Box.vue?vue&type=template&id=b87c0cf2&
-var Boxvue_type_template_id_b87c0cf2_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div')}
-var Boxvue_type_template_id_b87c0cf2_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"4a8965a0-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/base/Box.vue?vue&type=template&id=32467076&
+var Boxvue_type_template_id_32467076_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div')}
+var Boxvue_type_template_id_32467076_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/base/Box.vue?vue&type=template&id=b87c0cf2&
+// CONCATENATED MODULE: ./src/components/base/Box.vue?vue&type=template&id=32467076&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--14-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/ts-loader??ref--14-3!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/base/Box.vue?vue&type=script&lang=ts&
 
@@ -21786,8 +21786,8 @@ Boxvue_type_script_lang_ts_BoxComponent = __decorate([vue_class_component_esm], 
 
 var Box_component = normalizeComponent(
   base_Boxvue_type_script_lang_ts_,
-  Boxvue_type_template_id_b87c0cf2_render,
-  Boxvue_type_template_id_b87c0cf2_staticRenderFns,
+  Boxvue_type_template_id_32467076_render,
+  Boxvue_type_template_id_32467076_staticRenderFns,
   false,
   null,
   null,
