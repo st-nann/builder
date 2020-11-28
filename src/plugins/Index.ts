@@ -1,7 +1,7 @@
 import Vue from 'vue'
-import App from '@/App'
-import { BaseComponents } from '@/plugins/components/Base'
-import { BasePages } from '@/plugins/pages/Base'
+import App from '../App'
+import { BaseComponents } from './components/Base'
+import { BasePages } from './pages/Base'
 
 const Components: any = {
     App,
