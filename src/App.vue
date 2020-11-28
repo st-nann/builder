@@ -1,8 +1,5 @@
 <template>
-  <div id="app" class="test">
-    ljljlkjkljlkjljljljljljl
-    <InputComponent/>
-  </div>
+  <div id="app"></div>
 </template>
 
 <script lang="ts">
