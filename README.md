@@ -2,13 +2,16 @@
 
 ### How to use plugin
 ```
-1. Add Dependencies on package.json
-    "builder": "git+ssh://git@bitbucket.org:3dsinteractive/pam-builder.git"
+1. Add Dependencies in package.json
+    "vue-template-builder": "git+ssh://git@bitbucket.org:3dsinteractive/pam-builder.git"
 2. Run Command
-    $ npm install builder --save
-    $ yarn add builder
-3. Import Component
-    import 'builder'
+    $ npm install vue-template-builder --save
+3. Import Component in main.ts or main.js
+    import 'vue-template-builder/src/plugins/Index.ts'
+4. Use Component
+    <Component>....</Component>
+
+* remark: If you update code, You must run command `yarn build:lib` and then push your code to git.
 ```
 
 ## Project setup
