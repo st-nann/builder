@@ -14,5 +14,5 @@ export default class CircleButtonComponent extends BaseComponent {}
 </script>
 
 <style lang="scss">
-  @import '../../../assets/scss/button.scss';
+  @import '../../../assets/scss/Components.scss';
 </style>

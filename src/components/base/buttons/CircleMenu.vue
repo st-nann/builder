@@ -1,6 +1,6 @@
 <template>
-  <fragment class="circle-menu-button-layout">
-    <fragment class="menu-button-container">
+  <span class="circle-menu-button-layout">
+    <span class="menu-button-container">
       <CircleButtonComponent v-bind="$props" class="circle-menu-button"/>
       <div class="menu-container">
         <div class="menu-links">
@@ -14,8 +14,8 @@
           </a>
         </div>
       </div>
-    </fragment>
-  </fragment>
+    </span>
+  </span>
 </template>
 
 <script lang="ts">
@@ -27,5 +27,5 @@ export default class CircleMenuButtonComponent extends BaseComponent {}
 </script>
 
 <style lang="scss">
-  @import '../../../assets/scss/button.scss';
+  @import '../../../assets/scss/Components.scss';
 </style>

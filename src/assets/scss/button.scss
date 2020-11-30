@@ -1,43 +1,65 @@
 .circle-button {
+    cursor: pointer;
     padding: 8px;
     background-color: #ffffff;
     border: 1px solid #dddddd;
-    border-radius: 50px;
+    border-radius: 50%;
     box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
     font-size: 18px;
 }
 
 .square-button {
+    cursor: pointer;
     margin: 3px;
     padding: 9px;
     border: none;
     border-radius: 8px;
-    font-size: 18px;
+}
+
+.circle-button:focus,
+.square-button:focus {
+    outline: none;
 }
 
 .default-square-button {
     @extend .square-button;
     background-color: #c6c6c6;
     color: #414141;
+    z-index: 20;
+    font-size: 18px;
 }
 
 .delete-square-button {
     @extend .square-button;
     background-color: #888888;
     color: #ffffff;
+    font-size: 18px;
+}
+
+.confirm-delete-square-button {
+    @extend .square-button;
+    background-color: #eb7558;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.cancel-delete-square-button {
+    @extend .square-button;
+    background-color: #ebebeb;
+    color: #414141;
+    font-size: 16px;
 }
 
 .button-menu {
     position: relative;
     
-    .menu-button-container:hover .menu-container,
-    .menu-button-container:active .menu-container,
-    .menu-button-container:focus .menu-container {
+     .menu-button-container:hover .menu-container {
         display: flex;
         flex-direction: row;
         position: absolute;
-        top: 40px;
         left: -21px;
+        z-index: 10;
+        transition: .4s ease .25s;
     }
 
     .menu-container {
@@ -77,16 +99,25 @@
       
     .menu-link {
         text-decoration: none;
-        color: black;
+        color: #414141;
         font-size: 13px;
         width: 50px;
         min-width: max-content;
         padding: 7px 15px;
+        cursor: pointer;
+    }
+
+    .menu-link:hover {
+        color: #000000;
+        font-weight: 700;
     }
 }
 
 .default-square-menu-button-layout {
     @extend .button-menu;
+    .menu-button-container:hover .menu-container {
+        top: 30px;
+    }
     .default-square-menu-button {
         @extend .default-square-button;
     }
@@ -94,6 +125,9 @@
 
 .circle-menu-button-layout {
     @extend .button-menu;
+    .menu-button-container:hover .menu-container {
+        top: 40px;
+    }
     .circle-menu-button {
         @extend .circle-button;
     }
