@@ -19,6 +19,7 @@
     }
 
     .button-box,
+    .text-box-label,
     .circle-button-top,
     .circle-button-right,
     .circle-button-bottom,
@@ -32,11 +33,21 @@
     border: 1px dashed #414141;
 
     .button-box,
+    .text-box-label,
     .circle-button-top,
     .circle-button-right,
     .circle-button-bottom,
     .circle-button-left {
         display: inline;
+    }
+
+    .text-box-label {
+        font-weight: 700;
+        font-size: 13px;
+        color: #888888;
+        top: 0;
+        left: 0;
+        padding: 10px;
     }
 
     .circle-button-top {

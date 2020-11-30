@@ -9,6 +9,7 @@
             :key="index"
             :value="item.value"
             class="menu-link"
+            @click="doEmit"
           >
             {{ item.label }}
           </a>
@@ -23,7 +24,11 @@ import { Component } from 'vue-property-decorator'
 import BaseComponent from '../../../core/BaseComponent'
 
 @Component
-export default class SquareMenuButtonComponent extends BaseComponent {}
+export default class SquareMenuButtonComponent extends BaseComponent {
+  doEmit() {
+    this.$emit('click')
+  }
+}
 </script>
 
 <style lang="scss">

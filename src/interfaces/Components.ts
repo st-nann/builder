@@ -19,7 +19,7 @@ export interface IModal {
 }
 
 export interface IComponentOption {
-    type: string
+    element?: string
     flexbox: IFlexbox
     props?: {
         name: string

@@ -5,6 +5,7 @@
     <CircleMenuButtonComponent class="circle-button-bottom" icon="plus" :options="menu"/>
     <CircleMenuButtonComponent class="circle-button-left" icon="plus" :options="menu"/>
     <div class="text-box">
+      <label class="text-box-label">{{ element }}</label>
       Start modify your message <TextButtonComponent class="text-link-box" label="click" /> here
     </div>
     <MainButtonComponent class="button-box"/>

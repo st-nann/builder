@@ -5,6 +5,7 @@ import { IFlexbox, IModal } from '../interfaces/Components'
 
 @Component
 export default class BaseComponent extends Base {
+    @Prop(String) readonly element!: string
     @Prop(String) readonly name!: string
     @Prop(String) readonly label!: string
     @Prop(String) readonly placeholder!: string

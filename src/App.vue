@@ -12,7 +12,7 @@
     <div class="container-body">
       <div class="content">
         <div class="title">Hello my customer :)</div>
-        <BoxComponent/>
+        <BoxComponent element="Text" />
       </div>
     </div>
   </div>
