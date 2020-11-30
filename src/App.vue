@@ -1,5 +1,8 @@
 <template>
-  <div id="app"></div>
+  <div id="app">
+    <CircleMenuButtonComponent icon="plus" :options="menu"/>
+    <MainButtonComponent/>
+  </div>
 </template>
 
 <script lang="ts">
@@ -12,5 +15,5 @@ export default class App extends Vue {
 </script>
 
 <style lang="scss">
-@import './assets/scss/main.scss';
+  @import './assets/scss/main.scss';
 </style>
