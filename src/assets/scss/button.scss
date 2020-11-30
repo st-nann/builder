@@ -1,0 +1,102 @@
+.circle-button {
+    padding: 8px;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 50px;
+    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+    font-size: 18px;
+}
+
+.square-button {
+    margin: 3px;
+    padding: 9px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+}
+
+.default-square-button {
+    @extend .square-button;
+    background-color: #c6c6c6;
+    color: #414141;
+}
+
+.delete-square-button {
+    @extend .square-button;
+    background-color: #888888;
+    color: #ffffff;
+}
+
+.button-menu {
+    position: relative;
+    
+    .menu-button-container:hover .menu-container,
+    .menu-button-container:active .menu-container,
+    .menu-button-container:focus .menu-container {
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        top: 40px;
+        left: -21px;
+    }
+
+    .menu-container {
+        display: none;
+    }
+
+    .menu-links {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        background: white;
+        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+    }
+      
+    .menu-links:after, 
+    .menu-links:before {
+        content: " ";
+        position: absolute;
+        bottom: 100%;
+        right: 40%;
+        border: solid transparent;
+        height: 0;
+        width: 0;
+        pointer-events: none;
+    }
+      
+    .menu-links:after {
+        border-bottom-color: #ffffff;
+        border-width: 8px;
+        right: 42%;
+    }
+      
+    .menu-links:before {
+        border-bottom-color: #eaeaea;
+        border-width: 9px;
+    }
+      
+    .menu-link {
+        text-decoration: none;
+        color: black;
+        font-size: 13px;
+        width: 50px;
+        min-width: max-content;
+        padding: 7px 15px;
+    }
+}
+
+.default-square-menu-button-layout {
+    @extend .button-menu;
+    .default-square-menu-button {
+        @extend .default-square-button;
+    }
+}
+
+.circle-menu-button-layout {
+    @extend .button-menu;
+    .circle-menu-button {
+        @extend .circle-button;
+    }
+}
+   
+    

@@ -7,6 +7,7 @@ export interface IFlexbox {
 export interface IDropdownOption {
     label: string
     value: any
+    icon?: string
 }
 
 export interface IComponentOption {
@@ -20,6 +21,7 @@ export interface IComponentOption {
         value?: any
         options?: IDropdownOption[] | any[]
         disabled?: boolean
-        rules?: Function[]
+        rules?: Function[],
+        className?: string
     }
 }

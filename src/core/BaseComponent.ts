@@ -14,6 +14,7 @@ export default class BaseComponent extends Base {
     @Prop(Boolean) readonly disabled!: boolean
     @Prop(Array) readonly rules!: object
     @Prop(Array) readonly flexbox!: IFlexbox
+    @Prop(String) readonly className!: string
 
     onInput(value: any) {
         this.$emit('change', value)
