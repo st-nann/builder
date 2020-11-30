@@ -1,0 +1,30 @@
+.color-picker-label {
+    font-weight: 700;
+    font-size: 13px;
+    padding-right: 10px;
+    color: #414141;
+}
+
+input[type='color'] {
+    appearance: none;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    width: 25px;
+    height: 25px;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+input[type='color']::-webkit-color-swatch {
+    border: 1px solid #c6c6c6;
+    border-radius: 4px;
+}
+
+input[type='color']::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+input[type='color']:focus {
+    outline: none;
+}

@@ -1,7 +1,7 @@
 <template>
-  <fragment class="default-square-menu-button-layout">
-    <fragment class="menu-button-container">
-      <SquareButtonComponent v-bind="$props" class="default-square-menu-button"/>
+  <span class="default-square-menu-button-layout">
+    <span class="menu-button-container">
+      <SquareButtonComponent v-bind="$props" class="default-square-menu-button" />
       <div class="menu-container">
         <div class="menu-links">
           <a
@@ -14,8 +14,8 @@
           </a>
         </div>
       </div>
-    </fragment>
-  </fragment>
+    </span>
+  </span>
 </template>
 
 <script lang="ts">
@@ -27,5 +27,5 @@ export default class SquareMenuButtonComponent extends BaseComponent {}
 </script>
 
 <style lang="scss">
-  @import '../../../assets/scss/button.scss';
+  @import '../../../assets/scss/Components.scss';
 </style>

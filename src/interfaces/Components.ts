@@ -10,6 +10,15 @@ export interface IDropdownOption {
     icon?: string
 }
 
+export interface IModal {
+    open: boolean
+    width: number
+    button: {
+        save: string
+        position: EJustify.START | EJustify.CENTER | EJustify.END
+    }
+}
+
 export interface IComponentOption {
     type: string
     flexbox: IFlexbox
@@ -22,6 +31,8 @@ export interface IComponentOption {
         options?: IDropdownOption[] | any[]
         disabled?: boolean
         rules?: Function[],
-        className?: string
+        className?: string,
+        width?: string, // input, dropdown
+        modal?: IModal
     }
 }

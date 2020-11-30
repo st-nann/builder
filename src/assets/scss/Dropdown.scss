@@ -1,0 +1,36 @@
+.dropdown-label {
+    font-weight: 700;
+    font-size: 13px;
+    color: #414141;
+    margin-right: 10px;
+}
+
+select {
+    appearance: inherit;
+    border: 1px solid #c6c6c6;
+    border-radius: 3px;
+    padding: 4px;
+    font-size: 12px;
+    overflow-wrap: break-word;
+    width: var(--dropdown-width);
+}
+
+select:focus {
+    outline: none;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown:after {
+    content: "▼";
+    font-size: 8px;
+    position: absolute;
+    right: 7px;
+    top: 6px;
+    z-index: 1;
+    color: #888888;
+    width: 18%;
+    text-align: end;
+}
