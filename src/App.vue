@@ -7,10 +7,15 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
+import { MENU } from './constants/base'
 
 @Component
 export default class App extends Vue {
   @Prop() readonly templates!: any
+
+  get menu() {
+    return MENU
+  }
 }
 </script>
 

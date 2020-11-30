@@ -9,16 +9,12 @@
 <script lang="ts">
 import { Component } from 'vue-property-decorator'
 import BaseComponent from '../../../core/BaseComponent'
-import { POSITION, MENU } from '../../../constants/base'
+import { POSITION } from '../../../constants/base'
 
 @Component
 export default class MainButtonComponent extends BaseComponent {
   get positions() {
     return POSITION
-  }
-
-  get menu() {
-    return MENU
   }
 }
 </script>
