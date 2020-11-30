@@ -12,7 +12,7 @@ import BaseComponent from '../../../core/BaseComponent'
 @Component
 export default class ButtonSquareComponent extends BaseComponent {
   doEmit() {
-    this.$emit('clickAction')
+    this.$emit('click')
   }
 }
 </script>

@@ -11,7 +11,6 @@ export interface IDropdownOption {
 }
 
 export interface IModal {
-    open: boolean
     width: number
     button: {
         save: string

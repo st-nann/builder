@@ -3,14 +3,15 @@
     <SquareButtonComponent icon="pencil" className="default-square-button"/>
     <SquareMenuButtonComponent icon="note-multiple" :options="positions"/>
     <ModalComponent
-      :modal="{ open: isOpenModal, width: 400, button: { save: 'Yes, Delete it', position: 'center' } }"
-      @clickAction="doDelete"
+      ref="modal"
+      :modal="{ width: 400, button: { save: 'Yes, Delete it', position: 'center' } }"
+      @click="doDelete"
     >
       <SquareButtonComponent
         slot="button"
         icon="trash-can"
         className="delete-square-button"
-        @clickAction="doOpenModal"
+        @click="doOpenModal"
       />
       <div slot="content">
         <div class="content-delete">
@@ -36,7 +37,7 @@ export default class MainButtonComponent extends BaseComponent {
   }
 
   doOpenModal() {
-    this.isOpenModal = true
+    this.$refs.modal.isOpenModal = true
   }
 
   doDelete() {

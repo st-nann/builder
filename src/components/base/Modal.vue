@@ -28,6 +28,8 @@ import BaseComponent from '../../core/BaseComponent'
 @Component
 export default class ModalComponent extends BaseComponent {
 
+  isOpenModal = false
+
   get style() {
     return {
       '--modal-width': `${this.modal.width}px`,
@@ -36,17 +38,17 @@ export default class ModalComponent extends BaseComponent {
   }
 
   doCloseModal() {
-    this.modal.open = false
+    this.isOpenModal = false
   }
 
   doAction() {
     this.doCloseModal()
-    this.$emit('clickAction')
+    this.$emit('click')
   }
 
-  @Watch('modal.open', { deep: true })
+  @Watch('isOpenModal')
   triggerModal() {
-    document.getElementById("modal")?.setAttribute('style', `display: ${this.modal.open ? 'block' : 'none' }`)
+    document.getElementById("modal")?.setAttribute('style', `display: ${this.isOpenModal ? 'block' : 'none' }`)
   }
 }
 </script>
