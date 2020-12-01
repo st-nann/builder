@@ -8,9 +8,9 @@ export const POSITION: IDropdownOption[] = [
 ]
 
 export const MENU: IDropdownOption[] = [
-    { label: 'Text', value: 'text', icon: '' },
-    { label: 'Image', value: 'image', icon: '' },
-    { label: 'Button', value: 'button', icon: '' },
-    { label: 'Box', value: 'box' },
-    { label: 'Spacer', value: 'spacer', icon: '' }
+    { label: 'Text', value: 'Text', icon: '' },
+    { label: 'Image', value: 'Image', icon: '' },
+    { label: 'Button', value: 'Button', icon: '' },
+    { label: 'Box', value: 'Box' },
+    { label: 'Spacer', value: 'Spacer', icon: '' }
 ]

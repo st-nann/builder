@@ -6,13 +6,16 @@
 @import './Input';
 @import './Switch';
 @import './Modal';
+@import './UploadImage';
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif !important;
 }
 
 .link-text {
     text-decoration: none;
     color: #414141;
     font-weight: 700;
+    cursor: pointer;
+    padding: 0 3px;
 }

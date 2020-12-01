@@ -50,6 +50,14 @@
     font-size: 16px;
 }
 
+.upload-square-button {
+    @extend .square-button;
+    background-color: #414141;
+    color: #ffffff;
+    font-size: 14px;
+    width: max-content;
+}
+
 .button-menu {
     position: relative;
     
@@ -132,5 +140,10 @@
         @extend .circle-button;
     }
 }
-   
-    
+
+.text-menu-button-layout {
+    @extend .button-menu;
+    .menu-button-container:hover .menu-container {
+        top: 18px;
+    }
+}

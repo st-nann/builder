@@ -27,11 +27,12 @@
 <script lang="ts">
 import { Component } from 'vue-property-decorator'
 import BaseComponent from '../../../core/BaseComponent'
-import { POSITION } from '../../../constants/base'
+import { POSITION } from '../../../constants/Base'
 
 @Component
 export default class MainButtonComponent extends BaseComponent {
   isOpenModal = false
+  
   get positions() {
     return POSITION
   }

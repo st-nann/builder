@@ -1,4 +1,6 @@
-export enum EPageType {
+export enum EElementType {
+    SECTION = 'SECTION',
+    CONTAINER = 'CONTAINER',
     TEXT = 'TEXT',
     BUTTON = 'BUTTON',
     IMAGE = 'IMAGE',
