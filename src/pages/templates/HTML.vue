@@ -6,21 +6,25 @@
         <span class="project-name">Message Builder</span>
       </div>
       <div class="container-background">
-        <ColorPickerComponent label="Background"/>
+        <ColorPickerComponent
+          label="Background"
+          :value="jsonDataProcessing.background || '#ffffff'"
+          @change="doGetBackgrondContainer"
+        />
       </div>
     </div>
     <div class="container-body">
       <div class="content">
         <div v-if="haveElementChild">
           <div class="title">Hello my customer :)</div>
-          <!-- <keep-alive>
+          <keep-alive>
             <component
               :is="doGetLoopDisplayElement(jsonDataProcessing.children).component"
               v-bind="{ ...doGetLoopDisplayElement(jsonDataProcessing.children).props }"
               v-on="{ ...doGetLoopDisplayElement(jsonDataProcessing.children).on }"
               @click="doGetSpecificationData"
             />
-          </keep-alive> -->
+          </keep-alive>
         </div>
         <div v-else class="box-start">
           Start modify your message <TextMenuButtonComponent label="click" :options="menu" @click="doAddJson" /> here
@@ -56,7 +60,7 @@ export default class HTMLTemplate extends Vue {
 
   element = ''
   jsonDataSaved = {}
-  jsonDataProcessing: IContainer = this.defaultData['CONTAINER']
+  jsonDataProcessing: IContainer = JSON.parse(JSON.stringify(this.defaultData['CONTAINER']))
   haveElementChild = false
 
   get menu() {
@@ -77,7 +81,7 @@ export default class HTMLTemplate extends Vue {
     ]
   }
 
-  get defaultData() {
+  get defaultData(): any {
     return {
       CONTAINER,
       SECTION,
@@ -96,9 +100,14 @@ export default class HTMLTemplate extends Vue {
     }
   }
 
-  // doFindElement(element: any) {
-  //   return this.elementType.includes(element)
-  // }
+  doGetBackgrondContainer(value: string) {
+    this.jsonDataProcessing['container-props'].background = value
+    document.getElementsByClassName('content')[0].setAttribute('style', `background-color: ${value}`)
+  }
+
+  doFindElement(element: any) {
+    return this.elementType.includes(element)
+  }
 
   doAddJson(element: string) {
     this.element = _toUpper(element)
@@ -108,38 +117,38 @@ export default class HTMLTemplate extends Vue {
   doAddElementChild(children: object[]) {
     if (this.jsonDataProcessing.children.length < 1) {
       this.jsonDataProcessing.children.push(this.defaultData['SECTION'])
+      console.log(this.jsonDataProcessing)
       this.doAddElementChild(this.jsonDataProcessing.children)
     } else {
-      // children.forEach((item: any, index: number) => {
-      //   if (this.doFindElement(item.element)) {
-      //     this.haveElementChild = true
-      //     this.element = _toUpper(item.element)
-      //     this.doGetLoopDisplayElement(index, item)
-      //   } else if (item.element === EElementType.SECTION) {
-      //     // item.children.push(defaultData['CONTAINER'])
-      //     console.log(defaultData['CONTAINER'])
-      //     this.doAddElementChild(item.children)
-      //   } else {
-      //     // item.children.push(this.defaultData[`${this.element}_DEFAULT`])
-      //     this.doAddElementChild(item.children)
-      //   }
-      // })
+      children.forEach((item: any, index: number) => {
+        if (this.doFindElement(item.element)) {
+          this.haveElementChild = true
+          this.element = _toUpper(item.element)
+          this.doGetLoopDisplayElement(index, item)
+        } else if (_toUpper(item.element) === EElementType.SECTION) {
+          item.children.push(this.defaultData['CONTAINER'])
+          this.doAddElementChild(item.children)
+        } else {
+          item.children.push(this.defaultData[`${this.element}_DEFAULT`])
+          this.doAddElementChild(item.children)
+        }
+      })
     }
   }
 
-  // doGetLoopDisplayElement(index: number, item: any[]) {
-  //   return {
-  //     component: BoxComponent,
-  //     props: {
-  //       index: index,
-  //       element: this.element
-  //     }
-  //   }
-  // }
+  doGetLoopDisplayElement(index: number, item: any[]) {
+    return {
+      component: BoxComponent,
+      props: {
+        index: index,
+        element: this.element
+      }
+    }
+  }
 
-  // doGetSpecificationData(data: any) {
+  doGetSpecificationData(data: any) {
   //  this.doAddElementChild()
-  // }
+  }
 }
 </script>
 

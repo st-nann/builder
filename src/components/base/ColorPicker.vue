@@ -2,6 +2,7 @@
   <span>
     <span class="color-picker-label" :for="label">{{ label }}</span>
     <input
+      id="color-picker"
       class="color-picker-input"
       type="color"
       :name="label"

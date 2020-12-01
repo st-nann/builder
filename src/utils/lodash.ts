@@ -4,8 +4,7 @@ import {
   isEqual,
   isEmpty,
   isUndefined,
-  toUpper,
-  cloneDeep
+  toUpper
 } from 'lodash'
 
 export const _get = (object: any, path: string, def: any): any => {
@@ -30,8 +29,4 @@ export const _isUndefined = (value: any): boolean => {
 
 export const _toUpper = (value: string): string => {
   return toUpper(value)
-}
-
-export const _cloneDeep = (value: any): object => {
-  return cloneDeep(value)
 }
