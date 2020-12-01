@@ -1,10 +1,17 @@
 <template>
-  <div></div>
+  <div>
+    {{ getText() }}
+  </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Prop } from "vue-property-decorator";
 
 @Component
-export default class TextPage extends Vue {}
+export default class TextPage extends Vue {
+  @Prop() elementProps: any;
+  getText() {
+    return this.elementProps["text"];
+  }
+}
 </script>

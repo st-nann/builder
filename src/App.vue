@@ -1,18 +1,19 @@
 <template>
   <div id="app">
-    <HTMLTemplate :templates="templates"/>
+    <!--HTMLTemplate :templates="templates"/-->
+    <BuilderCanvas />
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop } from "vue-property-decorator";
 
 @Component
 export default class App extends Vue {
-  @Prop() readonly templates!: any
+  @Prop() readonly templates!: any;
 }
 </script>
 
 <style lang="scss">
-  @import './assets/scss/Main.scss';
+@import "./assets/scss/Main.scss";
 </style>
