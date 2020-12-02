@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BoxComponent :element="elementName" :action="manangement">
+    <BoxComponent :element="elementName" :action="manangement" @click="doEmitAddElement">
       <template slot="button-management">
         <MainButtonComponent class="button-box" @click="doManagement" />
       </template>
@@ -22,6 +22,7 @@ export default class TextPage extends Vue {
 
   manangement = { edit: false }
   footerData = {}
+  element = {}
 
   getText() {
     return this.elementProps["text"];
@@ -40,7 +41,16 @@ export default class TextPage extends Vue {
 
   doEmitData() {
     this.$emit('done', {
+      id: this.elementId,
       'container-props': { ...this.footerData }
+    })
+  }
+
+  doEmitAddElement(data: any) {
+    this.element = data
+    this.$emit('add', {
+      id: this.elementId,
+      ...this.element
     })
   }
 }

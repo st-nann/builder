@@ -7,3 +7,10 @@ export enum EElementType {
     BOX = 'BOX',
     SPACER = 'SPACER'
 }
+
+export enum EElementPosition {
+    TOP = 'TOP',
+    LEFT = 'LEFT',
+    BOTTOM = 'BOTTOM',
+    RIGHT = 'RIGHT'
+}

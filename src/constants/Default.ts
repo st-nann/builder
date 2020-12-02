@@ -2,19 +2,19 @@ import { IBox, IButton, IContainer, IImage, ISection, ISpacer, IText } from '../
 import { EDirection } from '../enum/Components'
 import { EElementType } from '../enum/Elements'
 
-export const CONTAINER: IContainer = {
+export const CONTAINER_DEFAULT: IContainer = {
     element: EElementType.CONTAINER,
     'container-props': {
         background: '#ffffff',
         flexbox: {
             'flex-grow': 1,
-            'flex-direction': EDirection.COLUMN
+            'flex-direction': EDirection.ROW
         }
     },
     children: []
 }
 
-export const SECTION: ISection = {
+export const SECTION_DEFAULT: ISection = {
     element: EElementType.SECTION,
     'container-props': {
         flexbox: {

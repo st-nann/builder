@@ -38,9 +38,11 @@
 </template>
 
 <script lang="ts">
+import _ from 'lodash'
 import { Component, Prop, Watch } from 'vue-property-decorator'
 import BaseComponent from '../../core/BaseComponent'
 import { MENU } from '../../constants/Base'
+import { EElementPosition } from '../../enum/Elements'
 
 @Component
 export default class BoxComponent extends BaseComponent {
@@ -53,19 +55,19 @@ export default class BoxComponent extends BaseComponent {
   }
 
   doEmitTop(element: string) {
-    this.$emit('click', { position: 'top', element: element })
+    this.$emit('click', { position: EElementPosition.TOP, element: _.toUpper(element) })
   }
 
   doEmitRight(element: string) {
-    this.$emit('click', { position: 'right', element: element })
+    this.$emit('click', { position: EElementPosition.RIGHT, element: _.toUpper(element) })
   }
 
   doEmitBottom(element: string) {
-    this.$emit('click', { position: 'bottom', element: element })
+    this.$emit('click', { position: EElementPosition.BOTTOM, element: _.toUpper(element) })
   }
 
   doEmitLeft(element: string) {
-    this.$emit('click', { position: 'left', element: element })
+    this.$emit('click', { position: EElementPosition.LEFT, element: _.toUpper(element) })
   }
 
   @Watch('action.edit')

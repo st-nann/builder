@@ -36,8 +36,8 @@ import { MENU } from '../../constants/Base'
 import { EElementType } from '../../enum/Elements'
 import { IContainer } from '../../interfaces/Template'
 import {
-  CONTAINER,
-  SECTION,
+  CONTAINER_DEFAULT,
+  SECTION_DEFAULT,
   TEXT_DEFAULT,
   IMAGE_DEFAULT,
   SPACER_DEFAULT,
@@ -45,6 +45,7 @@ import {
   BOX_DEFAULT
 } from '../../constants/Default'
 import BoxComponent from '../../components/base/Box'
+import { EDirection } from '@/enum/Components'
 
 @Component({
   components: { BoxComponent }
@@ -53,7 +54,7 @@ export default class HTMLTemplate extends Vue {
   @Prop() readonly propTemplateJson!: IContainer
 
   element = ''
-  templateJson: IContainer = JSON.parse(JSON.stringify(this.defaultData['CONTAINER']))
+  templateJson: IContainer = JSON.parse(JSON.stringify(this.defaultData['CONTAINER_DEFAULT']))
   haveElementChild = false
 
   get menu() {
@@ -72,8 +73,8 @@ export default class HTMLTemplate extends Vue {
 
   get defaultData(): any {
     return {
-      CONTAINER,
-      SECTION,
+      CONTAINER_DEFAULT,
+      SECTION_DEFAULT,
       TEXT_DEFAULT,
       IMAGE_DEFAULT,
       SPACER_DEFAULT,
@@ -83,6 +84,7 @@ export default class HTMLTemplate extends Vue {
   }
 
   created() {
+    this.templateJson['container-props'].flexbox['flex-direction'] = EDirection.COLUMN
     if (this.propTemplateJson) {
       this.templateJson = this.propTemplateJson
       this.doAddElementChild(this.templateJson.children)
@@ -105,7 +107,7 @@ export default class HTMLTemplate extends Vue {
 
   doAddElementChild(children: object[]) {
     if (this.templateJson.children.length < 1) {
-      this.templateJson.children.push(this.defaultData['SECTION'])
+      this.templateJson.children.push(this.defaultData['SECTION_DEFAULT'])
       this.doAddElementChild(this.templateJson.children)
     } else {
       children.forEach((item: any) => {
@@ -113,7 +115,7 @@ export default class HTMLTemplate extends Vue {
           this.haveElementChild = true
           this.element = _.toUpper(item.element)
         } else if (_.toUpper(item.element) === EElementType.SECTION) {
-          item.children.push(this.defaultData['CONTAINER'])
+          item.children.push(this.defaultData['CONTAINER_DEFAULT'])
           this.doAddElementChild(item.children)
         } else {
           item.children.push(this.defaultData[`${this.element}_DEFAULT`])

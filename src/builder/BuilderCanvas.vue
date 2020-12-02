@@ -4,6 +4,16 @@
   import { Component, Vue, Prop } from 'vue-property-decorator'
   import { CreateElement } from 'vue'
   import { BuilderTagMap } from './BuilderTagMap'
+  import { EElementPosition } from '../enum/Elements'
+  import {
+    CONTAINER_DEFAULT,
+    SECTION_DEFAULT,
+    TEXT_DEFAULT,
+    IMAGE_DEFAULT,
+    SPACER_DEFAULT,
+    BUTTON_DEFAULT,
+    BOX_DEFAULT
+} from '../constants/Default'
   import BoxPage from '../pages/Box'
   import ButtonPage from '../pages/Button'
   import ImagePage from '../pages/Image'
@@ -17,64 +27,132 @@
     @Prop() viewJSON: any
     @Prop() templateJson: any
 
-    // readonly defaultView = {
-    //   element: "box",
-    //   "container-props": {
-    //     background: "",
-    //     flexbox: {
-    //       "flex-grow": 1,
-    //       "flex-direction": "column",
-    //     },
-    //   },
-    //   children: [
-    //     { id: 'xxssw1', element: "text", "element-props": { text: "Hello" } },
-    //     { id: 'xxssw2',element: "text", "element-props": { text: "Builder" } },
-    //     { id: 'xxssw3',element: "text", "element-props": { text: "Is Awesome" } },
-    //   ],
-    // }
+    value: any = {}
+    parantId = ''
+    foundParent = false
 
-    createComponent(dNode: any, h: CreateElement): any {
-      if (_.isEmpty(dNode)) {
-        return h("div");
+    get defaultData(): any {
+      return {
+        CONTAINER_DEFAULT,
+        SECTION_DEFAULT,
+        TEXT_DEFAULT,
+        IMAGE_DEFAULT,
+        SPACER_DEFAULT,
+        BUTTON_DEFAULT,
+        BOX_DEFAULT
+      }
+    }
+
+    createComponent(state: any, tag: CreateElement): any {
+      if (_.isEmpty(state)) {
+        return tag("div")
       }
 
-      if (_.isArray(dNode)) {
-        return dNode.map((child) => this.createComponent(child, h));
+      if (_.isArray(state)) {
+        return state.map((child) => this.createComponent(child, tag));
+      }
+
+      if (_.isUndefined(state.id)) {
+        state.id = uuid()
       }
 
       const children: any[] = [];
 
-      if (dNode.children && dNode.children.length > 0) {
-        dNode.children.forEach((c: any) => {
-          if (_.isString(c)) {
-            children.push(c);
+      if (state.children && state.children.length > 0) {
+        state.children.forEach((child: any) => {
+          if (_.isString(child)) {
+            children.push(child);
           } else {
-            children.push(this.createComponent(c, h));
+            children.push(this.createComponent(child, tag));
           }
         });
       }
 
-      if( dNode.id === undefined){
-        dNode.id = uuid()
-      }
-
       const properties = {
+        style: {
+          'border-bottom': `${state['container-props'].width} ${state['container-props'].style} ${state['container-props'].color}`,
+          ...state['container-props'].flexbox,
+          ...state['element-props']
+        },
         props: {
-          elementId: dNode.id,
-          elementName: _.capitalize(dNode.element),
-          elementProps: dNode['element-props'],
-          containerProps: dNode['container-props']
+          elementId: state.id,
+          elementName: _.capitalize(state.element),
+          containerProps: state['container-props'],
+          elementProps: state['element-props']
         },
         on: {
+          add: (value: any) => {
+            this.value = value
+            switch (value.position) {
+              case EElementPosition.TOP:
+                this.addVerticalElement()
+                break
+              case EElementPosition.RIGHT:
+                this.addHorizentalElement()
+                break
+              case EElementPosition.BOTTOM:
+                this.addVerticalElement()
+                break
+              case EElementPosition.LEFT:
+                this.addHorizentalElement()
+                break
+            }
+          },
           done: (value: any) => {
-            dNode['container-props'] = value['container-props']
+            if (state.id === value.id) {
+              state['container-props'] = value['container-props']
+              state['element-props'] = value['element-props']
+            }
           }
         }
       };
 
-      const tagName = BuilderTagMap.getTag(dNode.element)
+      const tagName = BuilderTagMap.getTag(state.element)
 
-      return h(tagName, properties, children);
+      return tag(tagName, properties, children)
+    }
+
+    addHorizentalElement(state: any = this.templateJson) {
+      if (state.children) {
+        let indexInsert = 0
+        const lists = state.children.find((item: any, index: number) => {
+          if (item.id === this.value.id) {
+            indexInsert = index
+            return true
+          }
+          this.addHorizentalElement(item)
+        })
+        if (lists) {
+          state.children.splice(indexInsert, 0,
+            this.defaultData[`${this.value.element}_DEFAULT`]
+          )
+        }
+      }
+    }
+
+    addVerticalElement(state: any = this.templateJson) {
+      if (state.children) {
+        let indexInsert = 0
+        const lists = state.children.find((item: any, index: number) => {
+          if (this.foundParent) {
+            if (item.id === this.parantId) {
+              indexInsert = index
+              return true
+            }
+            this.addVerticalElement(item)
+          } else {
+            this.foundParent = item.id === this.value.id
+            this.parantId = state.id
+            this.addVerticalElement(this.foundParent ? undefined : item)
+          }
+        })
+        if (lists) {
+          state.children.splice(indexInsert, 0, {
+            ...this.defaultData['CONTAINER_DEFAULT'],
+            children: [this.defaultData[`${this.value.element}_DEFAULT`]]
+          })
+        }
+      }
     }
 
     render(createElement: CreateElement) {
