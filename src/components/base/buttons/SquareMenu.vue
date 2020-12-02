@@ -9,7 +9,7 @@
             :key="index"
             :value="item.value"
             class="menu-link"
-            @click="doEmit"
+            @click="doEmit(item.value)"
           >
             {{ item.label }}
           </a>
@@ -25,12 +25,12 @@ import BaseComponent from '../../../core/BaseComponent'
 
 @Component
 export default class SquareMenuButtonComponent extends BaseComponent {
-  doEmit() {
-    this.$emit('click')
+  doEmit(value: any) {
+    this.$emit('click', value)
   }
 }
 </script>
 
 <style lang="scss">
-  @import '../../../assets/scss/Components.scss';
+  @import '../../../assets/scss/Main.scss';
 </style>

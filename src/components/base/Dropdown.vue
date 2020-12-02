@@ -1,8 +1,8 @@
 <template>
   <span>
-    <label class="dropdown-label">{{ label }}</label>
+    <label v-if="label" class="dropdown-label">{{ label }}</label>
     <span class="dropdown">
-      <select :style="style">
+      <select :style="style" @change="doUpdateDropdown" :id="`select-${this.name}`" >
         <option
           v-for="(item, index) in options"
           :key="index"
@@ -26,9 +26,14 @@ export default class DropdownComponent extends BaseComponent {
       '--dropdown-width': `${this.width}px`
     }
   }
+
+  doUpdateDropdown() {
+    const element: any = document.getElementById(`select-${this.name}`)
+    this.onInput(element.value)
+  }
 }
 </script>
 
 <style lang="scss">
-  @import '../../assets/scss/Components.scss';
+  @import '../../assets/scss/Main.scss';
 </style>

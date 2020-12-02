@@ -1,7 +1,15 @@
 <template>
   <span>
-    <SquareButtonComponent icon="pencil" className="default-square-button"/>
-    <SquareMenuButtonComponent icon="note-multiple" :options="positions"/>
+    <SquareButtonComponent
+      icon="pencil"
+      className="default-square-button"
+      @click="doEdit"
+    />
+    <SquareMenuButtonComponent
+      icon="note-multiple"
+      :options="positions"
+      @click="doSetPosition"
+    />
     <ModalComponent
       ref="modal"
       :modal="{ width: 400, button: { save: 'Yes, Delete it', position: 'center' } }"
@@ -25,6 +33,7 @@
 </template>
 
 <script lang="ts">
+import _ from 'lodash'
 import { Component } from 'vue-property-decorator'
 import BaseComponent from '../../../core/BaseComponent'
 import { POSITION } from '../../../constants/Base'
@@ -32,6 +41,8 @@ import { POSITION } from '../../../constants/Base'
 @Component
 export default class MainButtonComponent extends BaseComponent {
   isOpenModal = false
+  edit = false
+  position = ''
   
   get positions() {
     return POSITION
@@ -41,6 +52,23 @@ export default class MainButtonComponent extends BaseComponent {
     this.$refs.modal.isOpenModal = true
   }
 
+  doEdit() {
+    this.edit = !this.edit
+    this.doEmitData()
+  }
+
+  doSetPosition(position: string) {
+    this.position = position
+    this.doEmitData()
+  }
+
+  doEmitData() {
+    this.$emit('click', {
+      edit: this.edit,
+      position: _.isEmpty(this.position) ? 'center' : this.position
+    })
+  }
+
   doDelete() {
     // delete
   }
@@ -48,5 +76,5 @@ export default class MainButtonComponent extends BaseComponent {
 </script>
 
 <style lang="scss">
-  @import '../../../assets/scss/Components.scss';
+  @import '../../../assets/scss/Main.scss';
 </style>

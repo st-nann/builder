@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <!--HTMLTemplate :templates="templates"/-->
-    <BuilderCanvas />
+    <!-- <BuilderCanvas /> -->
+    <HTMLTemplate/>
   </div>
 </template>
 

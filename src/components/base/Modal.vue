@@ -54,5 +54,5 @@ export default class ModalComponent extends BaseComponent {
 </script>
 
 <style lang="scss">
-  @import '../../assets/scss/Components.scss';
+  @import '../../assets/scss/Main.scss';
 </style>

@@ -7,8 +7,9 @@
       </div>
       <div class="container-background">
         <ColorPickerComponent
+          name="contanier-background"
           label="Background"
-          :value="jsonDataProcessing.background || '#ffffff'"
+          :value="templateJson.background"
           @change="doGetBackgrondContainer"
         />
       </div>
@@ -17,14 +18,8 @@
       <div class="content">
         <div v-if="haveElementChild">
           <div class="title">Hello my customer :)</div>
-          <keep-alive>
-            <component
-              :is="doGetLoopDisplayElement(jsonDataProcessing.children).component"
-              v-bind="{ ...doGetLoopDisplayElement(jsonDataProcessing.children).props }"
-              v-on="{ ...doGetLoopDisplayElement(jsonDataProcessing.children).on }"
-              @click="doGetSpecificationData"
-            />
-          </keep-alive>
+          <BuilderCanvas :templateJson="templateJson"/>
+          {{ templateJson }}
         </div>
         <div v-else class="box-start">
           Start modify your message <TextMenuButtonComponent label="click" :options="menu" @click="doAddJson" /> here
@@ -35,8 +30,8 @@
 </template>
 
 <script lang="ts">
+import _ from 'lodash'
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { SIMPLE_JSON } from '../../constants/ExampleJson'
 import { MENU } from '../../constants/Base'
 import { EElementType } from '../../enum/Elements'
 import { IContainer } from '../../interfaces/Template'
@@ -49,26 +44,20 @@ import {
   BUTTON_DEFAULT,
   BOX_DEFAULT
 } from '../../constants/Default'
-import { _toUpper } from '../../utils/lodash'
 import BoxComponent from '../../components/base/Box'
 
 @Component({
   components: { BoxComponent }
 })
 export default class HTMLTemplate extends Vue {
-  @Prop() readonly templates!: IContainer
+  @Prop() readonly propTemplateJson!: IContainer
 
   element = ''
-  jsonDataSaved = {}
-  jsonDataProcessing: IContainer = JSON.parse(JSON.stringify(this.defaultData['CONTAINER']))
+  templateJson: IContainer = JSON.parse(JSON.stringify(this.defaultData['CONTAINER']))
   haveElementChild = false
 
   get menu() {
     return MENU
-  }
-
-  get json() {
-    return SIMPLE_JSON
   }
 
   get elementType() {
@@ -94,38 +83,36 @@ export default class HTMLTemplate extends Vue {
   }
 
   created() {
-    if (this.templates) {
-      this.jsonDataProcessing = this.templates
-      this.doAddElementChild(this.jsonDataProcessing.children)
+    if (this.propTemplateJson) {
+      this.templateJson = this.propTemplateJson
+      this.doAddElementChild(this.templateJson.children)
     }
   }
 
   doGetBackgrondContainer(value: string) {
-    this.jsonDataProcessing['container-props'].background = value
+    this.templateJson['container-props'].background = value
     document.getElementsByClassName('content')[0].setAttribute('style', `background-color: ${value}`)
+  }
+
+  doAddJson(element: string) {
+    this.element = _.toUpper(element)
+    this.doAddElementChild(this.templateJson.children)
   }
 
   doFindElement(element: any) {
     return this.elementType.includes(element)
   }
 
-  doAddJson(element: string) {
-    this.element = _toUpper(element)
-    this.doAddElementChild(this.jsonDataProcessing.children)
-  }
-
   doAddElementChild(children: object[]) {
-    if (this.jsonDataProcessing.children.length < 1) {
-      this.jsonDataProcessing.children.push(this.defaultData['SECTION'])
-      console.log(this.jsonDataProcessing)
-      this.doAddElementChild(this.jsonDataProcessing.children)
+    if (this.templateJson.children.length < 1) {
+      this.templateJson.children.push(this.defaultData['SECTION'])
+      this.doAddElementChild(this.templateJson.children)
     } else {
-      children.forEach((item: any, index: number) => {
+      children.forEach((item: any) => {
         if (this.doFindElement(item.element)) {
           this.haveElementChild = true
-          this.element = _toUpper(item.element)
-          this.doGetLoopDisplayElement(index, item)
-        } else if (_toUpper(item.element) === EElementType.SECTION) {
+          this.element = _.toUpper(item.element)
+        } else if (_.toUpper(item.element) === EElementType.SECTION) {
           item.children.push(this.defaultData['CONTAINER'])
           this.doAddElementChild(item.children)
         } else {
@@ -134,20 +121,6 @@ export default class HTMLTemplate extends Vue {
         }
       })
     }
-  }
-
-  doGetLoopDisplayElement(index: number, item: any[]) {
-    return {
-      component: BoxComponent,
-      props: {
-        index: index,
-        element: this.element
-      }
-    }
-  }
-
-  doGetSpecificationData(data: any) {
-  //  this.doAddElementChild()
   }
 }
 </script>

@@ -1,17 +1,47 @@
 <template>
   <div>
-    {{ getText() }}
+    <BoxComponent :element="elementName" :action="manangement">
+      <template slot="button-management">
+        <MainButtonComponent class="button-box" @click="doManagement" />
+      </template>
+      <template slot="footer-panel">
+        <FooterPanel @click="doGetFooterPanelData"/>
+      </template>
+    </BoxComponent>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue, Prop } from 'vue-property-decorator'
 
 @Component
 export default class TextPage extends Vue {
-  @Prop() elementProps: any;
+  @Prop(String) elementId!: string
+  @Prop(String) elementName!: string
+  @Prop() elementProps!: any
+
+  manangement = { edit: false }
+  footerData = {}
+
   getText() {
     return this.elementProps["text"];
+  }
+
+  doManagement(data: any) {
+    this.manangement = data
+    console.log(data)
+  }
+
+  doGetFooterPanelData(data: any) {
+    this.footerData = data
+    this.manangement.edit = false
+    this.doEmitData()
+  }
+
+  doEmitData() {
+    this.$emit('done', {
+      'container-props': { ...this.footerData }
+    })
   }
 }
 </script>

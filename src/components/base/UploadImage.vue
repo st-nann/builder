@@ -37,5 +37,5 @@ export default class UploadImageComponent extends BaseComponent {
 </script>
 
 <style lang="scss">
-  @import '../../assets/scss/Components.scss';
+  @import '../../assets/scss/Main.scss';
 </style>

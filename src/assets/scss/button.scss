@@ -29,6 +29,26 @@
     font-size: 18px;
 }
 
+.done-square-button {
+    @extend .square-button;
+    background-color: #888888;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 7px 10px;
+    border-radius: 3px;
+}
+
+.cancel-square-button {
+    @extend .square-button;
+    background-color: #c6c6c6;
+    color: #414141;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 7px 10px;
+    border-radius: 3px;
+}
+
 .delete-square-button {
     @extend .square-button;
     background-color: #888888;
