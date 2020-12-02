@@ -1,7 +1,7 @@
 <template>
-  <span class="circle-menu-button-layout">
+  <span class="text-menu-button-layout">
     <span class="menu-button-container">
-      <CircleButtonComponent v-bind="$props" class="circle-menu-button"/>
+      <TextButtonComponent v-bind="$props" />
       <div class="menu-container">
         <div class="menu-links">
           <a
@@ -24,7 +24,7 @@ import { Component } from 'vue-property-decorator'
 import BaseComponent from '../../../core/BaseComponent'
 
 @Component
-export default class CircleMenuButtonComponent extends BaseComponent {
+export default class TextMenuButtonComponent extends BaseComponent {
   doEmit(element: string) {
     this.$emit('click', element)
   }

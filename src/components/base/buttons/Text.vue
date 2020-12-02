@@ -1,5 +1,5 @@
 <template>
-  <a class="link-text" @click="doEmit">{{ label }}</a>
+  <span class="link-text" @click="doEmit">{{ label }}</span>
 </template>
 
 <script lang="ts">
@@ -15,5 +15,5 @@ export default class ButtonTextComponent extends BaseComponent {
 </script>
 
 <style lang="scss">
-  @import '../../../assets/scss/Components.scss';
+  @import '../../../assets/scss/Main.scss';
 </style>
