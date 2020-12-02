@@ -27529,12 +27529,12 @@ var BasePages = {
   SpacerPage: Spacer,
   TextPage: pages_Text
 };
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"e49ed49a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/templates/HTML.vue?vue&type=template&id=39cd49ed&
-var HTMLvue_type_template_id_39cd49ed_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"container"},[_c('div',{staticClass:"container-header"},[_vm._m(0),_c('div',{staticClass:"container-background"},[_c('ColorPickerComponent',{attrs:{"name":"contanier-background","label":"Background","value":_vm.templateJson.background},on:{"change":_vm.doGetBackgrondContainer}})],1)]),_c('div',{staticClass:"container-body"},[_c('div',{staticClass:"content"},[(_vm.haveElementChild)?_c('div',[_c('div',{staticClass:"title"},[_vm._v("Hello my customer :)")]),_c('BuilderCanvas',{attrs:{"templateJson":_vm.templateJson}}),_vm._v(" "+_vm._s(_vm.templateJson)+" ")],1):_c('div',{staticClass:"box-start"},[_vm._v(" Start modify your message "),_c('TextMenuButtonComponent',{attrs:{"label":"click","options":_vm.menu},on:{"click":_vm.doAddJson}}),_vm._v(" here ")],1)])])])}
-var HTMLvue_type_template_id_39cd49ed_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"container-title"},[_c('span',{staticClass:"product-name"},[_vm._v("PAM ")]),_c('span',{staticClass:"project-name"},[_vm._v("Message Builder")])])}]
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"e49ed49a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/templates/HTML.vue?vue&type=template&id=390fa821&
+var HTMLvue_type_template_id_390fa821_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"container"},[_c('div',{staticClass:"container-header"},[_vm._m(0),_c('div',{staticClass:"container-background"},[_c('ColorPickerComponent',{attrs:{"name":"contanier-background","label":"Background","value":_vm.templateJson.background},on:{"change":_vm.doGetBackgrondContainer}})],1)]),_c('div',{staticClass:"container-body"},[_c('div',{staticClass:"content"},[(_vm.haveElementChild)?_c('div',[_c('div',{staticClass:"title"},[_vm._v("Hello my customer :)")]),_c('BuilderCanvas',{attrs:{"templateJson":_vm.templateJson}})],1):_c('div',{staticClass:"box-start"},[_vm._v(" Start modify your message "),_c('TextMenuButtonComponent',{attrs:{"label":"click","options":_vm.menu},on:{"click":_vm.doAddJson}}),_vm._v(" here ")],1)])])])}
+var HTMLvue_type_template_id_390fa821_staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"container-title"},[_c('span',{staticClass:"product-name"},[_vm._v("PAM ")]),_c('span',{staticClass:"project-name"},[_vm._v("Message Builder")])])}]
 
 
-// CONCATENATED MODULE: ./src/pages/templates/HTML.vue?vue&type=template&id=39cd49ed&
+// CONCATENATED MODULE: ./src/pages/templates/HTML.vue?vue&type=template&id=390fa821&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.includes.js
 var es_array_includes = __webpack_require__("caad");
@@ -27778,8 +27778,8 @@ var HTMLvue_type_style_index_0_lang_scss_ = __webpack_require__("1919");
 
 var HTML_component = normalizeComponent(
   templates_HTMLvue_type_script_lang_ts_,
-  HTMLvue_type_template_id_39cd49ed_render,
-  HTMLvue_type_template_id_39cd49ed_staticRenderFns,
+  HTMLvue_type_template_id_390fa821_render,
+  HTMLvue_type_template_id_390fa821_staticRenderFns,
   false,
   null,
   null,
