@@ -19,7 +19,6 @@
         <div v-if="haveElementChild">
           <div class="title">Hello my customer :)</div>
           <BuilderCanvas :templateJson="templateJson"/>
-          {{ templateJson }}
         </div>
         <div v-else class="box-start">
           Start modify your message <TextMenuButtonComponent label="click" :options="menu" @click="doAddJson" /> here
