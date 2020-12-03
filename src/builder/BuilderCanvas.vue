@@ -7,7 +7,6 @@
   import { EElementPosition } from '../enum/Elements'
   import {
     CONTAINER_DEFAULT,
-    SECTION_DEFAULT,
     TEXT_DEFAULT,
     IMAGE_DEFAULT,
     SPACER_DEFAULT,
@@ -34,7 +33,6 @@
     get defaultData(): any {
       return {
         CONTAINER_DEFAULT,
-        SECTION_DEFAULT,
         TEXT_DEFAULT,
         IMAGE_DEFAULT,
         SPACER_DEFAULT,
