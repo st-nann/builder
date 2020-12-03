@@ -52,9 +52,9 @@
         return state.map((child) => this.createComponent(child, tag));
       }
 
-      if (_.isUndefined(state.id)) {
-        state.id = uuid()
-      }
+      // if (_.isUndefined(state.id)) {
+      //   state.id = uuid()
+      // }
 
       const children: any[] = [];
 
@@ -83,19 +83,10 @@
         on: {
           add: (value: any) => {
             this.value = value
-            switch (value.position) {
-              case EElementPosition.TOP:
-                this.addVerticalElement()
-                break
-              case EElementPosition.RIGHT:
-                this.addHorizentalElement()
-                break
-              case EElementPosition.BOTTOM:
-                this.addVerticalElement()
-                break
-              case EElementPosition.LEFT:
-                this.addHorizentalElement()
-                break
+            if (_.includes([EElementPosition.TOP, EElementPosition.BOTTOM], value.position)) {
+              this.addVerticalElement()
+            } else if (_.includes([EElementPosition.LEFT, EElementPosition.RIGHT], value.position)) {
+              this.addHorizentalElement()
             }
           },
           done: (value: any) => {
@@ -117,15 +108,18 @@
         let indexInsert = 0
         const lists = state.children.find((item: any, index: number) => {
           if (item.id === this.value.id) {
-            indexInsert = index
+            indexInsert = EElementPosition.LEFT === this.value.position
+              ? index
+              : index + 1
             return true
           }
           this.addHorizentalElement(item)
         })
         if (lists) {
-          state.children.splice(indexInsert, 0,
-            this.defaultData[`${this.value.element}_DEFAULT`]
-          )
+          state.children.splice(indexInsert, 0, {
+            id: uuid(),
+            ...this.defaultData[`${this.value.element}_DEFAULT`]
+          })
         }
       }
     }
@@ -136,7 +130,9 @@
         const lists = state.children.find((item: any, index: number) => {
           if (this.foundParent) {
             if (item.id === this.parantId) {
-              indexInsert = index
+              indexInsert = EElementPosition.TOP === this.value.position
+                ? index
+                : index + 1
               return true
             }
             this.addVerticalElement(item)
@@ -149,6 +145,7 @@
         if (lists) {
           state.children.splice(indexInsert, 0, {
             ...this.defaultData['CONTAINER_DEFAULT'],
+            id: uuid(),
             children: [this.defaultData[`${this.value.element}_DEFAULT`]]
           })
         }

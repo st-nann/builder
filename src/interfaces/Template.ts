@@ -5,10 +5,7 @@ export interface IContainer {
     element: EElementType.CONTAINER
     'container-props': {
         background?: string
-        flexbox: {
-            'flex-grow': number
-            'flex-direction': EDirection.ROW | EDirection.COLUMN
-        }
+        flexbox: any
     },
     children: any[]
 }
@@ -16,10 +13,7 @@ export interface IContainer {
 export interface ISection {
     element: EElementType.SECTION,
     'container-props': {
-        flexbox: {
-            'flex-grow': number
-            'flex-direction': EDirection.ROW
-        }
+        flexbox: any
     },
     children: any[]
 }

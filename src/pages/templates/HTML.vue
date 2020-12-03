@@ -19,6 +19,7 @@
         <div v-if="haveElementChild">
           <div class="title">Hello my customer :)</div>
           <BuilderCanvas :templateJson="templateJson"/>
+          {{ templateJson }}
         </div>
         <div v-else class="box-start">
           Start modify your message <TextMenuButtonComponent label="click" :options="menu" @click="doAddJson" /> here
@@ -30,6 +31,7 @@
 
 <script lang="ts">
 import _ from 'lodash'
+import { uuid } from 'uuidv4'
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { MENU } from '../../constants/Base'
 import { EElementType } from '../../enum/Elements'
@@ -53,7 +55,10 @@ export default class HTMLTemplate extends Vue {
   @Prop() readonly propTemplateJson!: IContainer
 
   element = ''
-  templateJson: IContainer = JSON.parse(JSON.stringify(this.defaultData['CONTAINER_DEFAULT']))
+  templateJson: IContainer = JSON.parse(JSON.stringify({
+    id: uuid(),
+    ...this.defaultData['CONTAINER_DEFAULT']
+  }))
   haveElementChild = false
 
   get menu() {
@@ -106,18 +111,21 @@ export default class HTMLTemplate extends Vue {
 
   doAddElementChild(children: object[]) {
     if (this.templateJson.children.length < 1) {
-      this.templateJson.children.push(this.defaultData['SECTION_DEFAULT'])
+      this.templateJson.children.push({
+        id: uuid(),
+        ...this.defaultData['CONTAINER_DEFAULT']
+      })
       this.doAddElementChild(this.templateJson.children)
     } else {
       children.forEach((item: any) => {
         if (this.doFindElement(item.element)) {
           this.haveElementChild = true
           this.element = _.toUpper(item.element)
-        } else if (_.toUpper(item.element) === EElementType.SECTION) {
-          item.children.push(this.defaultData['CONTAINER_DEFAULT'])
-          this.doAddElementChild(item.children)
         } else {
-          item.children.push(this.defaultData[`${this.element}_DEFAULT`])
+          item.children.push({
+            id: uuid(),
+            ...this.defaultData[`${this.element}_DEFAULT`]
+          })
           this.doAddElementChild(item.children)
         }
       })

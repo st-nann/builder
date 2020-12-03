@@ -7,6 +7,7 @@ export const CONTAINER_DEFAULT: IContainer = {
     'container-props': {
         background: '#ffffff',
         flexbox: {
+            display: 'flex',
             'flex-grow': 1,
             'flex-direction': EDirection.ROW
         }
@@ -18,6 +19,7 @@ export const SECTION_DEFAULT: ISection = {
     element: EElementType.SECTION,
     'container-props': {
         flexbox: {
+            display: 'flex',
             'flex-grow': 1,
             'flex-direction': EDirection.ROW
         }
