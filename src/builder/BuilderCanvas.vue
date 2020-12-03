@@ -81,6 +81,10 @@
               this.addHorizentalElement()
             }
           },
+          delete: (id: string) => {
+            this.value.id = id
+            this.deleteElement(this.templateJson)
+          },
           done: (value: any) => {
             if (state.id === value.id) {
               state.props = value.props
@@ -143,8 +147,34 @@
       }
     }
 
+    deleteElement(state: any = this.templateJson) {
+      if (state.children) {
+        const lists = state.children.find((item: any) => {
+          if (this.foundParent) {
+            if (item.id === this.parantId) {
+              if (state.children.length > 1) {
+                this.parantId = this.value.id
+                this.deleteElement(item)
+              }
+              return true
+            }
+            this.deleteElement(item)
+          } else {
+            this.foundParent = item.id === this.value.id
+            this.parantId = state.id
+            this.deleteElement(this.foundParent ? undefined : item)
+          }
+        })
+        if (lists) {
+          state.children = _.filter(state.children, item =>
+            (state.children.length < 2 ? this.parantId : this.value.id) !== item.id
+          )
+        }
+      }
+    }
+
     render(createElement: CreateElement) {
-      return this.createComponent(this.templateJson, createElement);
+      return this.createComponent(this.templateJson, createElement)
     }
   }
 </script>

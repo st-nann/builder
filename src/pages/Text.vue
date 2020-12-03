@@ -20,13 +20,13 @@ export default class TextPage extends Vue {
   @Prop(String) elementName!: string
   @Prop() elementProps!: any
 
-  manangement = { edit: false }
+  manangement = { edit: false, delete: false }
   footerData = {}
   element = {}
 
   doManagement(data: any) {
     this.manangement = data
-    console.log(data)
+    if (this.manangement.delete) { this.doEmitData() }
   }
 
   doGetFooterPanelData(data: any) {
@@ -36,10 +36,14 @@ export default class TextPage extends Vue {
   }
 
   doEmitData() {
-    this.$emit('done', {
-      id: this.elementId,
-      props: { ...this.footerData }
-    })
+    if (this.manangement.delete) {
+      this.$emit('delete', this.elementId)
+    } else {
+      this.$emit('done', {
+        id: this.elementId,
+        props: { ...this.footerData }
+      })
+    }
   }
 
   doEmitAddElement(data: any) {

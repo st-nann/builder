@@ -42,6 +42,7 @@ import { POSITION } from '../../../constants/Base'
 export default class MainButtonComponent extends BaseComponent {
   isOpenModal = false
   edit = false
+  delete = false
   position = ''
   
   get positions() {
@@ -62,15 +63,23 @@ export default class MainButtonComponent extends BaseComponent {
     this.doEmitData()
   }
 
-  doEmitData() {
-    this.$emit('click', {
-      edit: this.edit,
-      position: _.isEmpty(this.position) ? 'center' : this.position
-    })
+  doDelete() {
+    this.delete = true
+    this.doEmitData()
   }
 
-  doDelete() {
-    // delete
+  doEmitData() {
+    let data
+    if (this.edit) {
+      data = {
+        edit: this.edit,
+        position: _.isEmpty(this.position) ? 'center' : this.position
+      }
+    }
+    if (this.delete) {
+      data = { delete: this.delete }
+    }
+    this.$emit('click', data)
   }
 }
 </script>

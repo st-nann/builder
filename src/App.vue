@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <!--HTMLTemplate :templates="templates"/-->
-    <!-- <BuilderCanvas /> -->
-    <HTMLTemplate/>
+    <HTMLTemplate @change="doEmitTemplate" />
   </div>
 </template>
 
@@ -12,6 +10,10 @@ import { Component, Vue, Prop } from "vue-property-decorator";
 @Component
 export default class App extends Vue {
   @Prop() readonly templates!: any;
+
+  doEmitTemplate(template: any) {
+    this.$emit('change', template)
+  }
 }
 </script>
 

@@ -19,7 +19,6 @@
         <div v-if="haveElementChild">
           <div class="title">Hello my customer :)</div>
           <BuilderCanvas :templateJson="templateJson"/>
-          {{ templateJson }}
         </div>
         <div v-else class="box-start">
           Start modify your message <TextMenuButtonComponent label="click" :options="menu" @click="doAddJson" /> here
@@ -32,7 +31,7 @@
 <script lang="ts">
 import _ from 'lodash'
 import { uuid } from 'uuidv4'
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import { MENU } from '../../constants/Base'
 import { EElementType } from '../../enum/Elements'
 import { IContainer } from '../../interfaces/Template'
@@ -128,6 +127,14 @@ export default class HTMLTemplate extends Vue {
         }
       })
     }
+  }
+
+  @Watch('templateJson', { deep: true })
+  onUpdateTemplate() {
+    if (this.templateJson.children.length < 1) {
+      this.haveElementChild = false
+    }
+    this.$emit('change', this.templateJson)
   }
 }
 </script>
