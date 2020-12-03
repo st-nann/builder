@@ -50,10 +50,6 @@
         return state.map((child) => this.createComponent(child, tag));
       }
 
-      // if (_.isUndefined(state.id)) {
-      //   state.id = uuid()
-      // }
-
       const children: any[] = [];
 
       if (state.children && state.children.length > 0) {
@@ -68,15 +64,13 @@
 
       const properties = {
         style: {
-          'border-bottom': `${state['container-props'].width} ${state['container-props'].style} ${state['container-props'].color}`,
-          ...state['container-props'].flexbox,
-          ...state['element-props']
+          'border-bottom': `${state.props.width} ${state.props.style} ${state.props.color}`,
+          ...state.props
         },
         props: {
           elementId: state.id,
           elementName: _.capitalize(state.element),
-          containerProps: state['container-props'],
-          elementProps: state['element-props']
+          props: state.props
         },
         on: {
           add: (value: any) => {
@@ -89,8 +83,7 @@
           },
           done: (value: any) => {
             if (state.id === value.id) {
-              state['container-props'] = value['container-props']
-              state['element-props'] = value['element-props']
+              state.props = value.props
             }
           }
         }

@@ -86,7 +86,7 @@ export default class HTMLTemplate extends Vue {
   }
 
   created() {
-    this.templateJson['container-props'].flexbox['flex-direction'] = EDirection.COLUMN
+    this.templateJson.props.flexbox['flex-direction'] = EDirection.COLUMN
     if (this.propTemplateJson) {
       this.templateJson = this.propTemplateJson
       this.doAddElementChild(this.templateJson.children)
@@ -94,7 +94,7 @@ export default class HTMLTemplate extends Vue {
   }
 
   doGetBackgrondContainer(value: string) {
-    this.templateJson['container-props'].background = value
+    this.templateJson.props.background = value
     document.getElementsByClassName('content')[0].setAttribute('style', `background-color: ${value}`)
   }
 

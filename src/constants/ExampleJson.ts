@@ -1,6 +1,6 @@
 export const SIMPLE_JSON = {
     element: 'container',
-    'container-props': {
+    props: {
         background: '',
         flexbox: {
             'flex-grow': 1,
@@ -10,7 +10,7 @@ export const SIMPLE_JSON = {
     children: [
         {
             element: 'container',
-            'container-props': {
+            props: {
                 flexbox: {
                     'flex-grow': 1,
                     'flex-direction': 'row'
@@ -19,18 +19,13 @@ export const SIMPLE_JSON = {
             children: [
                 {
                     element: 'text',
-                    'container-props': {
+                    props: {
                         background: '',
                         'border-bottom': {
                             width: '1px',
                             style: 'solid',
                             color: '#0000000'
                         },
-                        flexbox: {
-                            'flex-grow': 1
-                        }
-                    },
-                    'element-props': {
                         link: 'http://*',
                         font: {
                             family: '',

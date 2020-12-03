@@ -24,10 +24,6 @@ export default class TextPage extends Vue {
   footerData = {}
   element = {}
 
-  getText() {
-    return this.elementProps["text"];
-  }
-
   doManagement(data: any) {
     this.manangement = data
     console.log(data)
@@ -42,7 +38,7 @@ export default class TextPage extends Vue {
   doEmitData() {
     this.$emit('done', {
       id: this.elementId,
-      'container-props': { ...this.footerData }
+      props: { ...this.footerData }
     })
   }
 
