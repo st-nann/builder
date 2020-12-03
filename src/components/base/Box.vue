@@ -30,7 +30,6 @@
     />
     <div v-if="!action.edit" class="text-box">
       <label class="text-box-label">{{ element }}</label>
-      Start modify your message <TextButtonComponent class="text-link-box" label="click" /> here
     </div>
     <slot v-if="!action.edit" name="button-management" />
     <slot v-if="action.edit" name="footer-panel" />

@@ -27,7 +27,7 @@
     @Prop() templateJson: any
 
     value: any = {}
-    parantId = ''
+    parentId = ''
     foundParent = false
 
     get defaultData(): any {
@@ -42,27 +42,19 @@
     }
 
     createComponent(state: any, tag: CreateElement): any {
-      // if (_.isEmpty(state)) {
-      //   return tag("div")
-      // }
+      if (_.isEmpty(state)) { return tag("div") }
 
       if (_.isArray(state)) {
-        return state.map((child) => this.createComponent(child, tag));
+        return state.map((child) => this.createComponent(child, tag))
       }
 
-      const children: any[] = [];
+      const children: any[] = []
 
       if (state.children && state.children.length > 0) {
         state.children.forEach((child: any) => {
-          if (_.isString(child)) {
-            children.push(child);
-          } else {
-            children.push(this.createComponent(child, tag));
-          }
-        });
+          children.push(_.isString(child) ? child : this.createComponent(child, tag))
+        })
       }
-
-      console.log({...state.props})
 
       const properties = {
         style: {
@@ -86,7 +78,7 @@
           },
           delete: (id: string) => {
             this.value.id = id
-            this.deleteElement(this.templateJson)
+            this.deleteElement()
           },
           done: (value: any) => {
             if (state.id === value.id) {
@@ -127,7 +119,7 @@
         let indexInsert = 0
         const lists = state.children.find((item: any, index: number) => {
           if (this.foundParent) {
-            if (item.id === this.parantId) {
+            if (item.id === this.parentId) {
               indexInsert = EElementPosition.TOP === this.value.position
                 ? index
                 : index + 1
@@ -136,7 +128,7 @@
             this.addVerticalElement(item)
           } else {
             this.foundParent = item.id === this.value.id
-            this.parantId = state.id
+            this.parentId = state.id
             this.addVerticalElement(this.foundParent ? undefined : item)
           }
         })
@@ -144,7 +136,10 @@
           state.children.splice(indexInsert, 0, {
             ...this.defaultData['CONTAINER_DEFAULT'],
             id: uuid(),
-            children: [this.defaultData[`${this.value.element}_DEFAULT`]]
+            children: [{
+              id: uuid(),
+              ...this.defaultData[`${this.value.element}_DEFAULT`]
+            }]
           })
         }
       }
@@ -152,28 +147,21 @@
 
     deleteElement(state: any = this.templateJson) {
       if (state.children) {
-        const lists = state.children.find((item: any) => {
-          if (this.foundParent) {
-            if (item.id === this.parantId) {
-              if (state.children.length > 1) {
-                this.parantId = this.value.id
-                this.deleteElement(item)
-              }
-              return true
-            }
-            this.deleteElement(item)
-          } else {
-            this.foundParent = item.id === this.value.id
-            this.parantId = state.id
-            this.deleteElement(this.foundParent ? undefined : item)
+        state.children.forEach((child: any) => {
+          if (child.id === this.value.id) {
+            state.children = _.filter(state.children, item => this.value.id !== item.id)
+            this.deleteChildElement()
           }
+          this.deleteElement(child)
         })
-        if (lists) {
-          state.children = _.filter(state.children, item =>
-            (state.children.length < 2 ? this.parantId : this.value.id) !== item.id
-          )
-        }
       }
+    }
+
+    deleteChildElement(state: any = this.templateJson) {
+      if (state.children) {
+        state.children = _.filter(state.children, item => item.children.length > 0)
+      }
+      return
     }
 
     render(createElement: CreateElement) {

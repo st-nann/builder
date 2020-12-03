@@ -1,7 +1,7 @@
 <template>
   <BoxComponent :element="elementName" :action="management" @click="doEmitAddElement">
     <template slot="button-management">
-      <MainButtonComponent class="button-box" @click="doManagement" />
+      <MainButtonComponent class="button-box" :elementId="elementId" @click="doManagement" />
     </template>
     <!-- <tamplate v-if="management.edit">
       <div id="quill-text-editor" />
@@ -13,9 +13,9 @@
 </template>
 
 <script lang="ts">
-// import Quill from 'quill'
+import quill from 'quill'
 import { Component, Vue, Prop } from 'vue-property-decorator'
-// const Quill = quill as any
+const Quill = quill as any
 
 @Component
 export default class TextPage extends Vue {
@@ -29,19 +29,19 @@ export default class TextPage extends Vue {
   editor: any = null
   textValue = null
 
-  // mounted() {
-  //   const options = {
-  //     modules: {
-  //       toolbae: [
-  //         ['bold', 'italic', 'underline', 'strike']
-  //       ]
-  //     },
-  //     theme: 'snow'
-  //   }
-  //   this.editor = new Quill('#quill-text-editor', options)
-  //   // this.editor.root.innerHTML = this.textValue
-  //   // this.editor.on('text-change', () => {})
-  // }
+  mounted() {
+    const options = {
+      modules: {
+        toolbae: [
+          ['bold', 'italic', 'underline', 'strike']
+        ]
+      },
+      theme: 'snow'
+    }
+    this.editor = new Quill('#quill-text-editor', options)
+    // this.editor.root.innerHTML = this.textValue
+    // this.editor.on('text-change', () => {})
+  }
 
   doManagement(data: any) {
     this.management = data

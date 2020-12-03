@@ -7,12 +7,14 @@
     />
     <SquareMenuButtonComponent
       icon="note-multiple"
+      className="default-square-menu-button"
       :options="positions"
       @click="doSetPosition"
     />
     <ModalComponent
       ref="modal"
       :modal="{ width: 400, button: { save: 'Yes, Delete it', position: 'center' } }"
+      :elementId="elementId"
       @click="doDelete"
     >
       <SquareButtonComponent
@@ -34,12 +36,14 @@
 
 <script lang="ts">
 import _ from 'lodash'
-import { Component } from 'vue-property-decorator'
+import { Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../../../core/BaseComponent'
 import { POSITION } from '../../../constants/Base'
 
 @Component
 export default class MainButtonComponent extends BaseComponent {
+  @Prop(String) elementId!: string
+  
   isOpenModal = false
   edit = false
   delete = false
@@ -80,6 +84,7 @@ export default class MainButtonComponent extends BaseComponent {
       data = { delete: this.delete }
     }
     this.$emit('click', data)
+    Object.assign(this.$data, (this.$options.data as any).apply(this))
   }
 }
 </script>

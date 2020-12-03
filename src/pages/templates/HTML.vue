@@ -17,12 +17,16 @@
     <div class="container-body">
       <div class="content">
         <div v-if="haveElementChild">
-          <div class="title">Hello my customer :)</div>
           <BuilderCanvas :templateJson="templateJson"/>
-          {{ templateJson }}
         </div>
         <div v-else class="box-start">
-          Start modify your message <TextMenuButtonComponent label="click" :options="menu" @click="doAddJson" /> here
+          <SquareMenuButtonComponent
+            className="start-square-menu-button"
+            icon="plus-circle"
+            label="Launch Template"
+            :options="menu"
+            @click="doAddJson"
+          />
         </div>
       </div>
     </div>
