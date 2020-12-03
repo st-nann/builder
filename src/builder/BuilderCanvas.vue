@@ -62,10 +62,13 @@
         });
       }
 
+      console.log({...state.props})
+
       const properties = {
         style: {
           'border-bottom': `${state.props.width} ${state.props.style} ${state.props.color}`,
-          ...state.props
+          ...state.props,
+          ...state.props.flexbox
         },
         props: {
           elementId: state.id,

@@ -1,9 +1,12 @@
 <template>
   <div>
-    <BoxComponent :element="elementName" :action="manangement" @click="doEmitAddElement">
+    <BoxComponent :element="elementName" :action="management" @click="doEmitAddElement">
       <template slot="button-management">
         <MainButtonComponent class="button-box" @click="doManagement" />
       </template>
+      <!-- <tamplate v-if="management.edit">
+        <div id="quill-text-editor" />
+      </tamplate> -->
       <template slot="footer-panel">
         <FooterPanel @click="doGetFooterPanelData"/>
       </template>
@@ -12,7 +15,9 @@
 </template>
 
 <script lang="ts">
+// import Quill from 'quill'
 import { Component, Vue, Prop } from 'vue-property-decorator'
+// const Quill = quill as any
 
 @Component
 export default class TextPage extends Vue {
@@ -20,23 +25,39 @@ export default class TextPage extends Vue {
   @Prop(String) elementName!: string
   @Prop() elementProps!: any
 
-  manangement = { edit: false, delete: false }
+  management = { edit: false, delete: false }
   footerData = {}
   element = {}
+  editor: any = null
+  textValue = null
+
+  // mounted() {
+  //   const options = {
+  //     modules: {
+  //       toolbae: [
+  //         ['bold', 'italic', 'underline', 'strike']
+  //       ]
+  //     },
+  //     theme: 'snow'
+  //   }
+  //   this.editor = new Quill('#quill-text-editor', options)
+  //   // this.editor.root.innerHTML = this.textValue
+  //   // this.editor.on('text-change', () => {})
+  // }
 
   doManagement(data: any) {
-    this.manangement = data
-    if (this.manangement.delete) { this.doEmitData() }
+    this.management = data
+    if (this.management.delete) { this.doEmitData() }
   }
 
   doGetFooterPanelData(data: any) {
     this.footerData = data
-    this.manangement.edit = false
+    this.management.edit = false
     this.doEmitData()
   }
 
   doEmitData() {
-    if (this.manangement.delete) {
+    if (this.management.delete) {
       this.$emit('delete', this.elementId)
     } else {
       this.$emit('done', {
