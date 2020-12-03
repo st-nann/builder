@@ -1,17 +1,15 @@
 <template>
-  <div>
-    <BoxComponent :element="elementName" :action="management" @click="doEmitAddElement">
-      <template slot="button-management">
-        <MainButtonComponent class="button-box" @click="doManagement" />
-      </template>
-      <!-- <tamplate v-if="management.edit">
-        <div id="quill-text-editor" />
-      </tamplate> -->
-      <template slot="footer-panel">
-        <FooterPanel @click="doGetFooterPanelData"/>
-      </template>
-    </BoxComponent>
-  </div>
+  <BoxComponent :element="elementName" :action="management" @click="doEmitAddElement">
+    <template slot="button-management">
+      <MainButtonComponent class="button-box" @click="doManagement" />
+    </template>
+    <!-- <tamplate v-if="management.edit">
+      <div id="quill-text-editor" />
+    </tamplate> -->
+    <template slot="footer-panel">
+      <FooterPanel @click="doGetFooterPanelData"/>
+    </template>
+  </BoxComponent>
 </template>
 
 <script lang="ts">

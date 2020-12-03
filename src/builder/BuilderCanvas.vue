@@ -42,9 +42,9 @@
     }
 
     createComponent(state: any, tag: CreateElement): any {
-      if (_.isEmpty(state)) {
-        return tag("div")
-      }
+      // if (_.isEmpty(state)) {
+      //   return tag("div")
+      // }
 
       if (_.isArray(state)) {
         return state.map((child) => this.createComponent(child, tag));
