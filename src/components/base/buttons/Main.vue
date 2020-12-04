@@ -9,33 +9,31 @@
       icon="note-multiple"
       className="default-square-menu-button"
       :options="positions"
-      @click="doSetPosition"
+      @click="doDuplicate"
+    />
+    <SquareButtonComponent
+      icon="trash-can"
+      className="delete-square-button"
+      @click="doOpenModal"
     />
     <ModalComponent
-      ref="modal"
-      :modal="{ width: 400, button: { save: 'Yes, Delete it', position: 'center' } }"
+      :ref="`modal-delete-${elementId}`"
+      :modal="{ width: 400, action: 'delete', button: { save: 'Yes, Delete it', position: 'center' } }"
       :elementId="elementId"
       @click="doDelete"
     >
-      <SquareButtonComponent
-        slot="button"
-        icon="trash-can"
-        className="delete-square-button"
-        @click="doOpenModal"
-      />
-      <div slot="content">
+      <template slot="content">
         <div class="content-delete">
           <i class="content-delete-image mdi mdi-delete-circle" />
           <div class="content-delete-title">Delete Element</div>
           <div class="content-delete-body">Are you sure you want to delete this element ?</div>
         </div>
-      </div>
+      </template>
     </ModalComponent>
   </span>
 </template>
 
 <script lang="ts">
-import _ from 'lodash'
 import { Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../../../core/BaseComponent'
 import { POSITION } from '../../../constants/Base'
@@ -54,7 +52,7 @@ export default class MainButtonComponent extends BaseComponent {
   }
 
   doOpenModal() {
-    this.$refs.modal.isOpenModal = true
+    this.$refs[`modal-delete-${this.elementId}`].isOpenModal = true
   }
 
   doEdit() {
@@ -62,7 +60,7 @@ export default class MainButtonComponent extends BaseComponent {
     this.doEmitData()
   }
 
-  doSetPosition(position: string) {
+  doDuplicate(position: string) {
     this.position = position
     this.doEmitData()
   }
@@ -73,17 +71,11 @@ export default class MainButtonComponent extends BaseComponent {
   }
 
   doEmitData() {
-    let data
-    if (this.edit) {
-      data = {
-        edit: this.edit,
-        position: _.isEmpty(this.position) ? 'center' : this.position
-      }
-    }
-    if (this.delete) {
-      data = { delete: this.delete }
-    }
-    this.$emit('click', data)
+    this.$emit('click', {
+      edit: this.edit,
+      position: this.position,
+      delete: this.delete
+    })
     Object.assign(this.$data, (this.$options.data as any).apply(this))
   }
 }

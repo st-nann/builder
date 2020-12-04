@@ -58,11 +58,11 @@ export default class HTMLTemplate extends Vue {
   @Prop() readonly propTemplateJson!: IContainer
 
   element = ''
+  haveElementChild = false
   templateJson: IContainer = JSON.parse(JSON.stringify({
     id: uuid(),
     ...this.defaultData['CONTAINER_DEFAULT']
   }))
-  haveElementChild = false
 
   get menu() {
     return MENU
@@ -139,6 +139,7 @@ export default class HTMLTemplate extends Vue {
     if (this.templateJson.children.length < 1) {
       this.haveElementChild = false
     }
+    console.log(this.templateJson)
     this.$emit('change', this.templateJson)
   }
 }

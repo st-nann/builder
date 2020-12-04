@@ -1,10 +1,10 @@
 import { IDropdownOption } from '../interfaces/Components'
 
 export const POSITION: IDropdownOption[] = [
-    { label: 'To Left', value: 'left' },
-    { label: 'To Top', value: 'top' },
-    { label: 'To Right', value: 'right' },
-    { label: 'To Bottom', value: 'bottom' }
+    { label: 'Duplicate to Left', value: 'left' },
+    { label: 'Duplicate to Top', value: 'top' },
+    { label: 'Duplicate to Right', value: 'right' },
+    { label: 'Duplicate to Bottom', value: 'bottom' }
 ]
 
 export const MENU: IDropdownOption[] = [

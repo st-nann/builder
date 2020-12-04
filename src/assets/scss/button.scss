@@ -137,7 +137,7 @@
         text-decoration: none;
         color: #414141;
         font-size: 13px;
-        width: 50px;
+        width: max-content;
         min-width: max-content;
         padding: 7px 15px;
         cursor: pointer;
@@ -152,7 +152,8 @@
 .default-square-menu-button-layout {
     @extend .button-menu;
     .menu-button-container:hover .menu-container {
-        top: 30px;
+        top: 28px;
+        left: -55px;
     }
     .default-square-menu-button {
         @extend .default-square-button;

@@ -5,7 +5,6 @@ import { EElementType } from '../enum/Elements'
 export const CONTAINER_DEFAULT: IContainer = {
     element: EElementType.CONTAINER,
     props: {
-        background: '#ffffff',
         flexbox: {
             display: 'flex',
             'flex-grow': 1,

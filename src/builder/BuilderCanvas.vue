@@ -57,15 +57,12 @@
       }
 
       const properties = {
-        style: {
-          'border-bottom': `${state.props.width} ${state.props.style} ${state.props.color}`,
-          ...state.props,
-          ...state.props.flexbox
-        },
         props: {
           elementId: state.id,
           elementName: _.capitalize(state.element),
-          props: state.props
+          props: state.props,
+          elementValue: state.value,
+          elementValueHtml: state.valueHtml
         },
         on: {
           add: (value: any) => {
@@ -82,11 +79,23 @@
           },
           done: (value: any) => {
             if (state.id === value.id) {
-              state.props = value.props
+              state.props = {
+                ...value.props,
+                'border-bottom': JSON.parse(JSON.stringify(value.props))['border-bottom']
+              }
+              state.value = value.value
+              state.valueHtml = value.valueHtml
             }
           }
+        },
+        style: {
+          'border-bottom': state.props['border-bottom']
+            ? `${state.props['border-bottom'].width} ${state.props['border-bottom'].style} ${state.props['border-bottom'].color}`
+            : undefined,
+          ...state.props,
+          ...state.props.flexbox
         }
-      };
+      }
 
       const tagName = BuilderTagMap.getTag(state.element)
 

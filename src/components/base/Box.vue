@@ -1,38 +1,36 @@
 <template>
-  <span class="box">
-    <CircleMenuButtonComponent
-      v-if="!action.edit"
-      class="circle-button-top"
-      icon="plus"
-      :options="menu"
-      @click="doEmitTop"
-    />
-    <CircleMenuButtonComponent
-      v-if="!action.edit"
-      class="circle-button-right"
-      icon="plus"
-      :options="menu"
-      @click="doEmitRight"
-    />
-    <CircleMenuButtonComponent
-      v-if="!action.edit"
-      class="circle-button-bottom"
-      icon="plus"
-      :options="menu"
-      @click="doEmitBottom"
-    />
-    <CircleMenuButtonComponent
-      v-if="!action.edit"
-      class="circle-button-left"
-      icon="plus"
-      :options="menu"
-      @click="doEmitLeft"
-    />
-    <div v-if="!action.edit" class="text-box">
-      <label class="text-box-label">{{ element }}</label>
+  <span v-if="!action.edit" class="box">
+    <div class="box-action">
+      <CircleMenuButtonComponent
+        class="circle-button-top"
+        icon="plus"
+        :options="menu"
+        @click="doEmitTop"
+      />
+      <CircleMenuButtonComponent
+        class="circle-button-right"
+        icon="plus"
+        :options="menu"
+        @click="doEmitRight"
+      />
+      <CircleMenuButtonComponent
+        class="circle-button-bottom"
+        icon="plus"
+        :options="menu"
+        @click="doEmitBottom"
+      />
+      <CircleMenuButtonComponent
+        class="circle-button-left"
+        icon="plus"
+        :options="menu"
+        @click="doEmitLeft"
+      />
+      <div class="text-box">
+        <label class="text-box-label">{{ element }}</label>
+      </div>
+      <slot name="button-management" />
     </div>
-    <slot v-if="!action.edit" name="button-management" />
-    <slot v-if="action.edit" name="footer-panel" />
+    <slot name="text-content" />
   </span>
 </template>
 
@@ -67,13 +65,6 @@ export default class BoxComponent extends BaseComponent {
 
   doEmitLeft(element: string) {
     this.$emit('click', { position: EElementPosition.LEFT, element: _.toUpper(element) })
-  }
-
-  @Watch('action.edit')
-  onEdit() {
-    document.getElementsByClassName('box')[0].setAttribute(
-      'style', `justify-content: ${this.action.edit ? 'start' : 'center'};`
-    )
   }
 }
 </script>

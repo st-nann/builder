@@ -12,7 +12,8 @@ export interface IDropdownOption {
 
 export interface IModal {
     width: number
-    button: {
+    action: string
+    button?: {
         save: string
         position: EJustify.START | EJustify.CENTER | EJustify.END
     }

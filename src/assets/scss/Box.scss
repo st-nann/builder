@@ -7,75 +7,89 @@
 }
 
 .box {
-    display: flex;
-    flex-direction: row;
-    flex-grow: 1;
-    justify-content: center;
-    align-items: center;
+    display: -webkit-box;
+    min-height: 180px;
+    height: 180px;
+    padding: 8px;
     position: relative;
-    min-height: 150px;
-    color: #888888;
     // border: 1px dashed #969696;
-    // background-color: #f5f5f5;
+    background-color: transparent !important;
 
-    .text-box {
-        font-weight: 100;
-        color: #cad0d0;
 
-        .text-link-box {
-            color: #a2a5a5;
-        }
-    }
-
-    .button-box,
-    .text-box-label,
-    .circle-button-top,
-    .circle-button-right,
-    .circle-button-bottom,
-    .circle-button-left {
+    .box-action {
+        display: flex;
+        flex-direction: row;
+        flex-grow: 1;
+        justify-content: center;
+        align-items: center;
+        min-height: max-content;
+        height: inherit;
         position: absolute;
-        display: none;
+        width: -webkit-fill-available;
+        color: #888888;
+        background-color: transparent;
+
+        .text-box {
+            font-weight: 100;
+            color: #cad0d0;
+
+            .text-link-box {
+                color: #a2a5a5;
+            }
+        }
+
+        .button-box,
+        .text-box-label,
+        .circle-button-top,
+        .circle-button-right,
+        .circle-button-bottom,
+        .circle-button-left {
+            position: absolute;
+            display: none;
+        }
     }
 }
 
 .box:hover {
     border: 1px dashed #414141;
 
-    .button-box,
-    .text-box-label,
-    .circle-button-top,
-    .circle-button-right,
-    .circle-button-bottom,
-    .circle-button-left {
-        display: inline;
-    }
+    .box-action {
+        .button-box,
+        .text-box-label,
+        .circle-button-top,
+        .circle-button-right,
+        .circle-button-bottom,
+        .circle-button-left {
+            display: inline;
+        }
 
-    .text-box-label {
-        font-weight: 700;
-        font-size: 13px;
-        color: #888888;
-        top: 0;
-        left: 0;
-        padding: 10px;
-    }
+        .text-box-label {
+            font-weight: 700;
+            font-size: 13px;
+            color: #888888;
+            top: 0;
+            left: 0;
+            padding: 10px;
+        }
 
-    .circle-button-top {
-        top: -20px;
-        z-index: 9;
-    }
+        .circle-button-top {
+            top: -26px;
+            z-index: 1;
+        }
 
-    .circle-button-right {
-        right: -20px;
-        z-index: 9;
-    }
+        .circle-button-right {
+            right: -10px;
+            z-index: 1;
+        }
 
-    .circle-button-bottom {
-        bottom: -20px;
-        z-index: 9;
-    }
+        .circle-button-bottom {
+            bottom: -29px;
+            z-index: 1;
+        }
 
-    .circle-button-left {
-        left: -20px;
-        z-index: 9;
+        .circle-button-left {
+            left: -27px;
+            z-index: 1;
+        }
     }
 }

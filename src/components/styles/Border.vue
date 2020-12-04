@@ -74,9 +74,9 @@ export default class BorderStyleComponent extends BaseComponent {
   }
 
   onEmitData() {
-    this.$emit('click', {
+    this.$emit('change', {
       'border-bottom': {
-        width: `${this.borderWidth}px`,
+        width: `${this.borderWidth}`,
         style: this.borderStyle,
         color: this.borderColor
       }
