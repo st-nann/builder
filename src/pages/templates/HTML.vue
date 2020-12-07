@@ -5,7 +5,24 @@
         <span class="product-name">PAM </span>
         <span class="project-name">Message Builder</span>
       </div>
-      <div class="container-background">
+      <div class="container-management">
+        <SquareButtonComponent
+          className="view-json-square-button"
+            icon="code-braces-box"
+            label="View JSON"
+            @click="doOpenModal"
+        />
+        <ModalComponent
+          ref="modal-view-json"
+          :modal="{ width: 800, button: { info: true, position: 'center' } }"
+        >
+          <template slot="content">
+            <div class="json-viewer">
+              <pre><code>{{ templateJson }}</code></pre>
+            </div>
+          </template>
+        </ModalComponent>
+        <span class="vertical-line"> | </span>
         <ColorPickerComponent
           name="contanier-background"
           label="Background"
@@ -36,7 +53,8 @@
 <script lang="ts">
 import _ from 'lodash'
 import { uuid } from 'uuidv4'
-import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
+import { Component, Prop, Watch } from 'vue-property-decorator'
+import BaseComponent from '../../core/BaseComponent'
 import { MENU } from '../../constants/Base'
 import { EElementType } from '../../enum/Elements'
 import { IContainer } from '../../interfaces/Template'
@@ -54,10 +72,10 @@ import { EDirection } from '@/enum/Components'
 @Component({
   components: { BoxComponent }
 })
-export default class HTMLTemplate extends Vue {
-  @Prop() readonly propTemplateJson!: IContainer
+export default class HTMLTemplate extends BaseComponent {
+  @Prop() propTemplateJson!: IContainer
 
-  element = ''
+  elementName = ''
   haveElementChild = false
   templateJson: IContainer = {
     id: uuid(),
@@ -93,8 +111,12 @@ export default class HTMLTemplate extends Vue {
     this.templateJson.props.flexbox['flex-direction'] = EDirection.COLUMN
     if (this.propTemplateJson) {
       this.templateJson = this.propTemplateJson
-      this.doAddElementChild(this.templateJson.children)
+      this.haveElementChild = true
     }
+  }
+
+  doOpenModal() {
+    this.$refs['modal-view-json'].isOpenModal = true
   }
 
   doGetBackgrondContainer(value: string) {
@@ -103,7 +125,7 @@ export default class HTMLTemplate extends Vue {
   }
 
   doAddJson(element: string) {
-    this.element = _.toUpper(element)
+    this.elementName = _.toUpper(element)
     this.doAddElementChild(this.templateJson.children)
   }
 
@@ -122,11 +144,11 @@ export default class HTMLTemplate extends Vue {
       children.forEach((item: any) => {
         if (this.doFindElement(item.element)) {
           this.haveElementChild = true
-          this.element = _.toUpper(item.element)
+          this.elementName = _.toUpper(item.element)
         } else {
           item.children.push({
             id: uuid(),
-            ..._.cloneDeep(this.defaultData[`${this.element}_DEFAULT`])
+            ..._.cloneDeep(this.defaultData[`${this.elementName}_DEFAULT`])
           })
           this.doAddElementChild(item.children)
         }

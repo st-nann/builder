@@ -14,6 +14,9 @@ export interface IModal {
     width: number
     action: string
     button?: {
+        info?: boolean
+        manage?: boolean
+        custom?: boolean
         save: string
         position: EJustify.START | EJustify.CENTER | EJustify.END
     }

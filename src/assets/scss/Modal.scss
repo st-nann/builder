@@ -15,16 +15,19 @@
 .modal-content {
     background-color: #fefefe;
     margin: auto;
-    padding: 20px;
+    padding: 30px;
     border: 1px solid #888;
     width: var(--modal-width);
     border-radius: 10px;
+    max-height: 700px;
+    overflow-y: scroll;
 
     .content-delete {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        padding: 0 0 30px 0;
 
         .content-delete-image {
             font-size: 130px;
@@ -51,5 +54,4 @@
     flex-direction: row;
     justify-content: var(--modal-action-position);
     align-items: center;
-    padding: 30px;
 }

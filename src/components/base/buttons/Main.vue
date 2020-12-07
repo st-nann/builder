@@ -18,7 +18,7 @@
     />
     <ModalComponent
       :ref="`modal-delete-${elementId}`"
-      :modal="{ width: 400, action: 'delete', button: { save: 'Yes, Delete it', position: 'center' } }"
+      :modal="{ width: 400, action: 'delete', button: { save: 'Yes, Delete it', position: 'center', manage: true } }"
       :elementId="elementId"
       @click="doDelete"
     >
@@ -34,6 +34,7 @@
 </template>
 
 <script lang="ts">
+import _ from 'lodash'
 import { Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../../../core/BaseComponent'
 import { POSITION } from '../../../constants/Base'
@@ -44,6 +45,7 @@ export default class MainButtonComponent extends BaseComponent {
   
   isOpenModal = false
   edit = false
+  duplicate = false
   delete = false
   position = ''
   
@@ -61,7 +63,8 @@ export default class MainButtonComponent extends BaseComponent {
   }
 
   doDuplicate(position: string) {
-    this.position = position
+    this.position = _.upperCase(position)
+    this.duplicate = true
     this.doEmitData()
   }
 
@@ -73,6 +76,7 @@ export default class MainButtonComponent extends BaseComponent {
   doEmitData() {
     this.$emit('click', {
       edit: this.edit,
+      duplicate: this.duplicate,
       position: this.position,
       delete: this.delete
     })

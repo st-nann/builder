@@ -7,9 +7,10 @@
     >
       <template slot="text-content">
         <div
+          v-if="editor && editor.root"
           :id="`content-${elementId}`"
           class="ql-editor text-content"
-          v-html="contentHtml"
+          v-html="editor.root.innerHTML"
         />
       </template>
       <template slot="button-management">
@@ -22,11 +23,13 @@
     </BoxComponent>
     <ModalComponent
       :ref="`modal-edit-${elementId}`"
-      :modal="{ width: 700, action: 'edit' }"
+      :modal="{ width: 700, action: 'edit', button: { custom: true } }"
       :elementId="elementId"
     >
       <template slot="content">
         <div :id="`editor-${elementId}`" class="editor"/>
+      </template>
+      <template slot="action-custom">
         <FooterPanel @click="doGetFooterPanelData" />
       </template>
     </ModalComponent>
@@ -48,17 +51,24 @@ export default class TextPage extends BaseComponent {
   @Prop() elementProps!: any
   @Prop() elementValue!: any
 
-  management = { edit: false, delete: false }
+  management: any = {}
   footerData = {}
   editor: any = null
-  content: any = null
   contentHtml: any = null
 
+  created() {
+    this.doRenderUpdateElement()
+  }
+
   updated() {
-    const modal = document.querySelector(`#modal-edit-${this.elementId}`)
-    const toolbar = modal?.getElementsByClassName('ql-toolbar')[0]
-    if (_.isUndefined(toolbar)) {
-      this.$nextTick(() => {
+    this.doRenderUpdateElement()
+  }
+
+  doRenderUpdateElement() {
+    this.$nextTick(() => {
+      const modal = document.querySelector(`#modal-edit-${this.elementId}`)
+      const toolbar = modal?.getElementsByClassName('ql-toolbar')[0]
+      if (_.isUndefined(toolbar)) {
         const options = {
           modules: {
             toolbar: [
@@ -72,41 +82,44 @@ export default class TextPage extends BaseComponent {
             ]
           },
           theme: 'snow',
-          placeholder: 'Type content ...',
-          scrollingContainer: '#scrolling-container'
+          placeholder: 'Type content ...'
         }
         this.editor = new Quill(`#editor-${this.elementId}`, options)
-        if (this.elementValue) {
-          this.editor.editor.delta.ops = this.elementValue
-        }
-      })
-    }
+      }
+      if (this.elementValue && this.elementValue.json && this.elementValue.html) {
+        this.editor.editor.delta.ops = this.elementValue.json
+        this.editor.root.innerHTML = this.elementValue.html
+      }
+    })
   }
 
   doManagement(data: any) {
     this.management = data
-    if (this.management.delete) { this.doEmitData() }
+    this.doEmitData()
   }
 
   doGetFooterPanelData(data: any) {
     this.footerData = data
     this.management.edit = false
-    if (this.footerData) {
-      this.content = this.editor.editor.delta.ops
-      this.contentHtml = this.editor.root.innerHTML
-    }
     this.doEmitData()
   }
 
   doEmitData() {
     if (this.management.delete) {
       this.$emit('delete', this.elementId)
+    } else if (this.management.duplicate) {
+      this.$emit('duplicate', {
+        id: this.elementId,
+        position: this.management.position,
+        duplicate: this.management.duplicate
+      })
     } else {
       this.$emit('done', {
         id: this.elementId,
         props: { ...this.footerData },
-        value: this.content,
-        valueHtml: this.contentHtml
+        value: this.editor && this.editor.editor && this.editor.root
+          ? { json: this.editor.editor.delta.ops, html: this.editor.root.innerHTML }
+          : undefined
       })
     }
   }
@@ -118,6 +131,8 @@ export default class TextPage extends BaseComponent {
   @Watch('management.edit')
   onEdit() {
     this.$refs[`modal-edit-${this.elementId}`].isOpenModal = this.management.edit
+    const self = this
+    setTimeout(() => { self.editor.focus() }, 100)
   }
 }
 </script>

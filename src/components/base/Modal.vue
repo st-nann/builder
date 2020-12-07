@@ -3,16 +3,28 @@
     <div class="modal-content" :style="style">
       <slot name="content" />
       <div v-if="modal.button" class="modal-action" :style="style">
-        <SquareButtonComponent
-          @click="doCloseModal"
-          label="Cancel"
-          className="cancel-delete-square-button"
-        />
-        <SquareButtonComponent
-          @click="doAction"
-          :label="modal.button.save"
-          className="confirm-delete-square-button"
-        />
+        <template v-if="modal.button.manage">
+          <SquareButtonComponent
+            @click="doCloseModal"
+            label="Cancel"
+            className="cancel-delete-square-button"
+          />
+          <SquareButtonComponent
+            @click="doAction"
+            :label="modal.button.save"
+            className="confirm-delete-square-button"
+          />
+        </template>
+        <template v-if="modal.button.info">
+          <SquareButtonComponent
+            @click="doCloseModal"
+            label="Close"
+            className="cancel-delete-square-button"
+          />
+        </template>
+        <template v-if="modal.button.custom">
+          <slot name="action-custom" />
+        </template>
       </div>
     </div>
   </div>

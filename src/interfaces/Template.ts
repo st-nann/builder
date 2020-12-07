@@ -2,6 +2,7 @@ import { EDirection } from '../enum/Components'
 import { EElementType } from '../enum/Elements'
 
 export interface IContainer {
+    id?: string
     element: EElementType.CONTAINER
     props: {
         background?: string

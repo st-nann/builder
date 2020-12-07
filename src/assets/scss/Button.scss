@@ -16,8 +16,19 @@
     border-radius: 8px;
 }
 
+.view-json-square-button {
+    cursor: pointer;
+    padding: 5px 8px;
+    background-color: transparent;
+    border: 1px solid #dddddd;
+    border-radius: 50px;
+    font-size: 12px;
+    color: #202020;
+}
+
 .circle-button:focus,
-.square-button:focus {
+.square-button:focus,
+.view-json-square-button:focus {
     outline: none;
 }
 

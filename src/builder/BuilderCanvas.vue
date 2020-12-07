@@ -56,16 +56,36 @@
         })
       }
 
+      const style = {
+        ...state.props,
+        ...(state.props && state.props.flexbox ? state.props.flexbox : undefined),
+        ...(
+            state.props && state.props['border-bottom']
+              ? {
+                  'border-bottom':
+                    `${state.props['border-bottom'].width} ${state.props['border-bottom'].style} ${state.props['border-bottom'].color}`
+                }
+              : undefined
+          )
+      }
+
       const properties = {
         props: {
           elementId: state.id,
           elementName: _.capitalize(state.element),
           props: state.props,
-          elementValue: state.value,
-          elementValueHtml: state.valueHtml
+          elementValue: state.value
         },
         on: {
           add: (value: any) => {
+            this.value = value
+            if (_.includes([EElementPosition.TOP, EElementPosition.BOTTOM], value.position)) {
+              this.addVerticalElement()
+            } else if (_.includes([EElementPosition.LEFT, EElementPosition.RIGHT], value.position)) {
+              this.addHorizentalElement()
+            }
+          },
+          duplicate: (value: any) => {
             this.value = value
             if (_.includes([EElementPosition.TOP, EElementPosition.BOTTOM], value.position)) {
               this.addVerticalElement()
@@ -77,24 +97,21 @@
             this.value.id = id
             this.deleteElement()
           },
-          done: (value: any) => {
-            if (state.id === value.id) {
+          done: (item: any) => {
+            if (state.id === item.id) {
               state.props = {
-                ...value.props,
-                'border-bottom': JSON.parse(JSON.stringify(value.props))['border-bottom']
+                ...item.props,
+                ...(
+                    _.cloneDeep(item.props)['border-bottom']
+                      ? { 'border-bottom' : _.cloneDeep(item.props)['border-bottom'] }
+                      : undefined
+                  )
               }
-              state.value = value.value
-              state.valueHtml = value.valueHtml
+              state.value = item.value
             }
           }
         },
-        style: {
-          ...state.props,
-          ...state.props.flexbox,
-          'border-bottom': state.props['border-bottom']
-            ? `${state.props['border-bottom'].width} ${state.props['border-bottom'].style} ${state.props['border-bottom'].color}`
-            : undefined
-        }
+        style: style
       }
 
       const tagName = BuilderTagMap.getTag(state.element)
@@ -115,10 +132,10 @@
           this.addHorizentalElement(item)
         })
         if (lists) {
-          state.children.splice(indexInsert, 0, {
-            id: uuid(),
-            ..._.cloneDeep(this.defaultData[`${this.value.element}_DEFAULT`])
-          })
+          const data = this.value.duplicate
+            ? { ..._.cloneDeep(lists) }
+            : { ..._.cloneDeep(this.defaultData[`${this.value.element}_DEFAULT`]) }
+          state.children.splice(indexInsert, 0, { ...data, id: uuid() })
         }
       }
     }
@@ -142,14 +159,22 @@
           }
         })
         if (lists) {
-          state.children.splice(indexInsert, 0, {
-            ..._.cloneDeep(this.defaultData['CONTAINER_DEFAULT']),
-            id: uuid(),
-            children: _.cloneDeep([{
-              id: uuid(),
-              ..._.cloneDeep(this.defaultData[`${this.value.element}_DEFAULT`])
-            }])
-          })
+          const data = this.value.duplicate
+            ? { ..._.cloneDeep({
+                  ...lists,
+                  children: _(lists.children)
+                    .map(child => { return { ...child, id: uuid() } })
+                    .cloneDeep()
+                })
+              }
+            : { ..._.cloneDeep(this.defaultData['CONTAINER_DEFAULT']),
+                id: uuid(),
+                children: _.cloneDeep([{
+                  id: uuid(),
+                  ..._.cloneDeep(this.defaultData[`${this.value.element}_DEFAULT`])
+                }])
+              }
+          state.children.splice(indexInsert, 0, { ...data, id: uuid() })
         }
       }
     }

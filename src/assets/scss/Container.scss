@@ -26,6 +26,22 @@
         }
     }
 
+    .container-management {
+        .json-viewer {
+            border: 1px solid #dddddd;
+            border-radius: 3px;
+            padding: 30px;
+            background-color: #f4f7fc;
+            width: auto;
+            overflow: auto;
+            margin: 0 0 30px 0;
+        }
+
+        .vertical-line {
+            color: #aeaeae;
+        }
+    }
+
     .container-body {
         display: flex;
         flex-direction: row;
