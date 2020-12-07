@@ -43,6 +43,7 @@ import { Component, Prop, Watch } from 'vue-property-decorator'
 import BaseComponent from '../core/BaseComponent'
 
 const Quill = quill as any
+const Delta = Quill.import('delta')
 
 @Component
 export default class TextPage extends BaseComponent {
@@ -82,12 +83,12 @@ export default class TextPage extends BaseComponent {
             ]
           },
           theme: 'snow',
-          placeholder: 'Type content ...'
+          placeholder: this.elementValue ? '' : 'Type content ...'
         }
         this.editor = new Quill(`#editor-${this.elementId}`, options)
       }
       if (this.elementValue && this.elementValue.json && this.elementValue.html) {
-        this.editor.editor.delta.ops = this.elementValue.json
+        this.editor.updateContents(new Delta(this.elementValue.json))
         this.editor.root.innerHTML = this.elementValue.html
       }
     })
@@ -132,7 +133,10 @@ export default class TextPage extends BaseComponent {
   onEdit() {
     this.$refs[`modal-edit-${this.elementId}`].isOpenModal = this.management.edit
     const self = this
-    setTimeout(() => { self.editor.focus() }, 100)
+    setTimeout(() => {
+      self.editor.setSelection(self.editor.root.textContent.length)
+      self.editor.focus()
+    }, 100)
   }
 }
 </script>
