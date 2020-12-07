@@ -90,7 +90,7 @@ export default class TextPage extends BaseComponent {
       if (this.elementValue && this.elementValue.json && this.elementValue.html) {
         this.editor.updateContents(new Delta(this.elementValue.json))
         this.editor.root.innerHTML = this.elementValue.html
-        this.contentHtml = this.elementValue.html
+        this.contentHtml = this.editor.root.innerHTML
       }
     })
   }
@@ -98,10 +98,13 @@ export default class TextPage extends BaseComponent {
   doManagement(data: any) {
     this.management = data
     if (
-      this.editor &&
-      this.editor.root &&
-      this.elementValue &&
-      this.elementValue.html === this.editor.root.innerHTML
+      (
+        this.editor &&
+        this.editor.root &&
+        this.elementValue &&
+        this.elementValue.html === this.editor.root.innerHTML
+      ) ||
+      _.isEmpty(this.contentHtml)
     ) {
       this.doEmitData()
     }
@@ -139,7 +142,9 @@ export default class TextPage extends BaseComponent {
 
   @Watch('management.edit')
   onEdit() {
-    this.$refs[`modal-edit-${this.elementId}`].isOpenModal = this.management.edit
+    if (this.$refs[`modal-edit-${this.elementId}`]) {
+      this.$refs[`modal-edit-${this.elementId}`].isOpenModal = this.management.edit
+    }
     const self = this
     setTimeout(() => {
       self.editor.focus()

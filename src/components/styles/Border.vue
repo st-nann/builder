@@ -42,7 +42,7 @@ export default class BorderStyleComponent extends BaseComponent {
   get widthOptions() {
     const lists = []
     for (let i = 1; i < 16; i++) {
-      lists.push({ label: `${i}px`, value: `${i}px` })
+      lists.push({ label: `${i}px`, value: `${i}` })
     }
     return lists
   }
@@ -74,9 +74,10 @@ export default class BorderStyleComponent extends BaseComponent {
   }
 
   onEmitData() {
+    console.log(this.borderWidth)
     this.$emit('change', {
       'border-bottom': {
-        width: `${this.borderWidth}`,
+        width: `${this.borderWidth}px`,
         style: this.borderStyle,
         color: this.borderColor
       }
