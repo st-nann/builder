@@ -10,7 +10,7 @@
           v-if="editor && editor.root"
           :id="`content-${elementId}`"
           class="ql-editor text-content"
-          v-html="editor.root.innerHTML"
+          v-html="contentHtml"
         />
       </template>
       <template slot="button-management">
@@ -90,19 +90,27 @@ export default class TextPage extends BaseComponent {
       if (this.elementValue && this.elementValue.json && this.elementValue.html) {
         this.editor.updateContents(new Delta(this.elementValue.json))
         this.editor.root.innerHTML = this.elementValue.html
+        this.contentHtml = this.elementValue.html
       }
     })
   }
 
   doManagement(data: any) {
     this.management = data
-    this.doEmitData()
+    if (
+      this.editor &&
+      this.editor.root &&
+      this.elementValue &&
+      this.elementValue.html === this.editor.root.innerHTML
+    ) {
+      this.doEmitData()
+    }
   }
 
   doGetFooterPanelData(data: any) {
     this.footerData = data
     this.management.edit = false
-    this.doEmitData()
+    if (data) { this.doEmitData() }
   }
 
   doEmitData() {
@@ -134,8 +142,8 @@ export default class TextPage extends BaseComponent {
     this.$refs[`modal-edit-${this.elementId}`].isOpenModal = this.management.edit
     const self = this
     setTimeout(() => {
-      self.editor.setSelection(self.editor.root.textContent.length)
       self.editor.focus()
+      self.editor.setSelection(self.editor.root.textContent.length)
     }, 100)
   }
 }

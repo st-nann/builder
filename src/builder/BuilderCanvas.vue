@@ -107,7 +107,7 @@
                       : undefined
                   )
               }
-              state.value = item.value
+              state.value = _.cloneDeep(item.value)
             }
           }
         },
