@@ -1,6 +1,6 @@
 export const SIMPLE_JSON = {
     element: 'container',
-    'container-props': {
+    props: {
         background: '',
         flexbox: {
             'flex-grow': 1,
@@ -9,8 +9,8 @@ export const SIMPLE_JSON = {
     },
     children: [
         {
-            element: 'section',
-            'container-props': {
+            element: 'container',
+            props: {
                 flexbox: {
                     'flex-grow': 1,
                     'flex-direction': 'row'
@@ -18,40 +18,24 @@ export const SIMPLE_JSON = {
             },
             children: [
                 {
-                    element: 'container',
-                    'container-props': {
-                        flexbox: {
-                            'flex-grow': 1,
-                            'flex-direction': 'row'
-                        }
-                    },
-                    children: [
-                        {
-                            element: 'text',
-                            'container-props': {
-                                background: '',
-                                'border-bottom': {
-                                    width: '1px',
-                                    style: 'solid',
-                                    color: '#0000000'
-                                },
-                                flexbox: {
-                                    'flex-grow': 1
-                                }
-                            },
-                            'element-props': {
-                                link: 'http://*',
-                                font: {
-                                    family: '',
-                                    size: '*px',
-                                    weight: 100,
-                                    color: '#0000000'
-                                },
-                                'text-align': 'left',
-                                'line-height': 1.5,
-                            }
-                        }
-                    ]
+                    element: 'text',
+                    props: {
+                        background: '',
+                        'border-bottom': {
+                            width: '1px',
+                            style: 'solid',
+                            color: '#0000000'
+                        },
+                        link: 'http://*',
+                        font: {
+                            family: '',
+                            size: '*px',
+                            weight: 100,
+                            color: '#0000000'
+                        },
+                        'text-align': 'left',
+                        'line-height': 1.5,
+                    }
                 }
             ]
         }
@@ -61,7 +45,7 @@ export const SIMPLE_JSON = {
 
 export const ADVANCE_JSON = {
     element: 'container',
-    'container-props': {
+    props: {
         background: '',
         flexbox: {
             'flex-grow': 1,
@@ -70,8 +54,8 @@ export const ADVANCE_JSON = {
     },
     children: [
         {
-            element: 'section',
-            'container-props': {
+            element: 'container',
+            props: {
                 flexbox: {
                     'flex-grow': 1,
                     'flex-direction': 'row'
@@ -79,46 +63,33 @@ export const ADVANCE_JSON = {
             },
             children: [
                 {
-                    element: 'container',
-                    'container-props': {
+                    element: 'text',
+                    props: {
+                        background: '',
+                        'border-bottom': {
+                            width: '1px',
+                            style: 'solid',
+                            color: '#0000000'
+                        },
                         flexbox: {
-                            'flex-grow': 1,
-                            'flex-direction': 'row'
-                        }
-                    },
-                    children: [
-                        {
-                            element: 'text',
-                            'container-props': {
-                                background: '',
-                                'border-bottom': {
-                                    width: '1px',
-                                    style: 'solid',
-                                    color: '#0000000'
-                                },
-                                flexbox: {
-                                    'flex-grow': 1
-                                }
-                            },
-                            'element-props': {
-                                link: 'http://*',
-                                font: {
-                                    family: '',
-                                    size: '*px',
-                                    weight: 100,
-                                    color: '#0000000'
-                                },
-                                'text-align': 'left',
-                                'line-height': 1.5,
-                            }
-                        }
-                    ]
+                            'flex-grow': 1
+                        },
+                        link: 'http://*',
+                        font: {
+                            family: '',
+                            size: '*px',
+                            weight: 100,
+                            color: '#0000000'
+                        },
+                        'text-align': 'left',
+                        'line-height': 1.5,
+                    }
                 }
             ]
         },
         {
-            element: 'section',
-            'container-props': {
+            element: 'container',
+            props: {
                 flexbox: {
                     'flex-grow': 1,
                     'flex-direction': 'row'
@@ -126,38 +97,25 @@ export const ADVANCE_JSON = {
             },
             children: [
                 {
-                    element: 'container',
-                    'container-props': {
+                    element: 'spacer',
+                    props: {
+                        background: '',
+                        'border-bottom': {
+                            width: '1px',
+                            style: 'solid',
+                            color: '#0000000'
+                        },
                         flexbox: {
                             'flex-grow': 1,
-                            'flex-direction': 'row'
-                        }
-                    },
-                    children: [
-                        {
-                            element: 'spacer',
-                            'container-props': {
-                                background: '',
-                                'border-bottom': {
-                                    width: '1px',
-                                    style: 'solid',
-                                    color: '#0000000'
-                                },
-                                flexbox: {
-                                    'flex-grow': 1,
-                                }
-                            },
-                            'element-props': {
-                                height: '90px'
-                            }
-                        }
-                    ]
+                        },
+                        height: '90px'
+                    }
                 }
             ]
         },
-        { 
-            element: 'section',
-            'container-props': {
+        {
+            element: 'container',
+            props: {
                 flexbox: {
                     'flex-grow': 1,
                     'flex-direction': 'row'
@@ -165,17 +123,24 @@ export const ADVANCE_JSON = {
             },
             children: [
                 {
-                    element: 'container',
-                    'container-props': {
+                    element: 'box',
+                    props: {
+                        background: '',
+                        'border-bottom': {
+                            width: '1px',
+                            style: 'solid',
+                            color: '#0000000'
+                        },
                         flexbox: {
                             'flex-grow': 1,
                             'flex-direction': 'row'
-                        }
+                        },
+                        padding: '30px'
                     },
                     children: [
                         {
-                            element: 'box',
-                            'container-props': {
+                            element: 'image',
+                            props: {
                                 background: '',
                                 'border-bottom': {
                                     width: '1px',
@@ -184,48 +149,33 @@ export const ADVANCE_JSON = {
                                 },
                                 flexbox: {
                                     'flex-grow': 1,
-                                    'flex-direction': 'row'
-                                }
-                            },
-                            'element-props': {
-                                padding: '30px'
-                            },
-                            children: [
-                                {
-                                    element: 'image',
-                                    'container-props': {
-                                        background: '',
-                                        'border-bottom': {
-                                            width: '1px',
-                                            style: 'solid',
-                                            color: '#0000000'
-                                        },
-                                        flexbox: {
-                                            'flex-grow': 1,
-                                        }
-                                    },
-                                    'element-props': {
-                                        width: '250px',
-                                        link: 'http://*',
-                                        compress: true
-                                    }
-                                }
-                            ]
+                                },
+                                width: '250px',
+                                link: 'http://*',
+                                compress: true
+                            }
                         }
                     ]
                 },
                 {
-                    element: 'container',
-                    'container-props': {
+                    element: 'box',
+                    props: {
+                        background: '',
+                        'border-bottom': {
+                            width: '1px',
+                            style: 'solid',
+                            color: '#0000000'
+                        },
                         flexbox: {
                             'flex-grow': 1,
                             'flex-direction': 'row'
-                        }
+                        },
+                        padding: '20px'
                     },
                     children: [
                         {
                             element: 'box',
-                            'container-props': {
+                            props: {
                                 background: '',
                                 'border-bottom': {
                                     width: '1px',
@@ -235,15 +185,13 @@ export const ADVANCE_JSON = {
                                 flexbox: {
                                     'flex-grow': 1,
                                     'flex-direction': 'row'
-                                }
-                            },
-                            'element-props': {
+                                },
                                 padding: '20px'
                             },
                             children: [
                                 {
                                     element: 'text',
-                                    'container-props': {
+                                    props: {
                                         background: '',
                                         'border-bottom': {
                                             width: '1px',
@@ -252,9 +200,7 @@ export const ADVANCE_JSON = {
                                         },
                                         flexbox: {
                                             'flex-grow': 1,
-                                        }
-                                    },
-                                    'element-props': {
+                                        },
                                         link: 'http://*',
                                         font: {
                                             family: '',
@@ -270,7 +216,7 @@ export const ADVANCE_JSON = {
                         },
                         {
                             element: 'box',
-                            'container-props': {
+                            props: {
                                 background: '',
                                 'border-bottom': {
                                     width: '1px',
@@ -280,15 +226,13 @@ export const ADVANCE_JSON = {
                                 flexbox: {
                                     'flex-grow': 1,
                                     'flex-direction': 'row'
-                                }
-                            },
-                            'element-props': {
-                                padding: '30px'
+                                },
+                                padding: '20px'
                             },
                             children: [
                                 {
                                     element: 'text',
-                                    'container-props': {
+                                    props: {
                                         background: '',
                                         'border-bottom': {
                                             width: '1px',
@@ -297,13 +241,11 @@ export const ADVANCE_JSON = {
                                         },
                                         flexbox: {
                                             'flex-grow': 1,
-                                        }
-                                    },
-                                    'element-props': {
+                                        },
                                         link: 'http://*',
                                         font: {
                                             family: '',
-                                            size: '*px',
+                                            size: '14px',
                                             weight: 100,
                                             color: ''
                                         },
@@ -312,21 +254,28 @@ export const ADVANCE_JSON = {
                                     }
                                 }
                             ]
-                        }
+                        }  
                     ]
                 },
                 {
-                    element: 'container',
-                    'container-props': {
+                    element: 'box',
+                    props: {
+                        background: '',
+                        'border-bottom': {
+                            width: '1px',
+                            style: 'solid',
+                            color: '#0000000'
+                        },
                         flexbox: {
                             'flex-grow': 1,
                             'flex-direction': 'row'
-                        }
+                        },
+                        padding: '20px'
                     },
                     children: [
                         {
                             element: 'box',
-                            'container-props': {
+                            props: {
                                 background: '',
                                 'border-bottom': {
                                     width: '1px',
@@ -336,15 +285,13 @@ export const ADVANCE_JSON = {
                                 flexbox: {
                                     'flex-grow': 1,
                                     'flex-direction': 'row'
-                                }
-                            },
-                            'element-props': {
-                                padding: '30px'
+                                },
+                                padding: '20px'
                             },
                             children: [
                                 {
                                     element: 'text',
-                                    'container-props': {
+                                    props: {
                                         background: '',
                                         'border-bottom': {
                                             width: '1px',
@@ -353,18 +300,16 @@ export const ADVANCE_JSON = {
                                         },
                                         flexbox: {
                                             'flex-grow': 1,
-                                        }
-                                    },
-                                    'element-props': {
+                                        },
                                         link: 'http://*',
                                         font: {
                                             family: '',
-                                            size: '*px',
+                                            size: '14px',
                                             weight: 100,
                                             color: ''
                                         },
                                         'text-align': 'left',
-                                        'line-height': 1.5,
+                                        'line-height': 1.5
                                     }
                                 }
                             ]
@@ -374,8 +319,8 @@ export const ADVANCE_JSON = {
             ]
         },
         {
-            element: 'section',
-            'container-props': {
+            element: 'container',
+            props: {
                 flexbox: {
                     'flex-grow': 1,
                     'flex-direction': 'row'
@@ -383,44 +328,31 @@ export const ADVANCE_JSON = {
             },
             children: [
                 {
-                    element: 'container',
-                    'container-props': {
+                    element: 'button',
+                    props: {
+                        background: '',
+                        'border-bottom': {
+                            width: '1px',
+                            style: 'solid',
+                            color: '#0000000'
+                        },
                         flexbox: {
-                            'flex-grow': 1,
-                            'flex-direction': 'row'
+                            'flex-grow': 1
+                        },
+                        link: 'http://*',
+                        font: {
+                            family: '',
+                            size: '14px',
+                            weight: 100,
+                            color: '',
+                        },
+                        border: {
+                            width: '1px',
+                            style: 'solid',
+                            color: '#0000000',
+                            radius: '8px'
                         }
-                    },
-                    children: [
-                        {
-                            element: 'button',
-                            'container-props': {
-                                background: '',
-                                'border-bottom': {
-                                    width: '1px',
-                                    style: 'solid',
-                                    color: '#0000000'
-                                },
-                                flexbox: {
-                                    'flex-grow': 1
-                                }
-                            },
-                            'element-props': {
-                                link: 'http://*',
-                                font: {
-                                    family: '',
-                                    size: '14px',
-                                    weight: 100,
-                                    color: '',
-                                },
-                                border: {
-                                    width: '1px',
-                                    style: 'solid',
-                                    color: '#0000000',
-                                    radius: '8px'
-                                }
-                            }
-                        }
-                    ]
+                    }
                 }
             ]
         }

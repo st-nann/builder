@@ -1,10 +1,9 @@
 <template>
-  <span>
-    <slot name="button"/>
-    <div id="modal" class="modal">
-      <div class="modal-content" :style="style">
-        <slot name="content" />
-        <div class="modal-action" :style="style">
+  <div :id="`modal-${modal.action}-${elementId}`" class="modal">
+    <div class="modal-content" :style="style">
+      <slot name="content" />
+      <div v-if="modal.button" class="modal-action" :style="style">
+        <template v-if="modal.button.manage">
           <SquareButtonComponent
             @click="doCloseModal"
             label="Cancel"
@@ -15,18 +14,29 @@
             :label="modal.button.save"
             className="confirm-delete-square-button"
           />
-        </div>
+        </template>
+        <template v-if="modal.button.info">
+          <SquareButtonComponent
+            @click="doCloseModal"
+            label="Close"
+            className="cancel-delete-square-button"
+          />
+        </template>
+        <template v-if="modal.button.custom">
+          <slot name="action-custom" />
+        </template>
       </div>
     </div>
-  </span>
+  </div>
 </template>
 
 <script lang="ts">
-import { Component, Watch } from 'vue-property-decorator'
+import { Component, Watch, Prop } from 'vue-property-decorator'
 import BaseComponent from '../../core/BaseComponent'
 
 @Component
 export default class ModalComponent extends BaseComponent {
+  @Prop(String) elementId!: string
 
   isOpenModal = false
 
@@ -38,7 +48,7 @@ export default class ModalComponent extends BaseComponent {
   }
 
   doCloseModal() {
-    this.isOpenModal = false
+    Object.assign(this.$data, (this.$options.data as any).apply(this))
   }
 
   doAction() {
@@ -48,7 +58,9 @@ export default class ModalComponent extends BaseComponent {
 
   @Watch('isOpenModal')
   triggerModal() {
-    document.getElementById("modal")?.setAttribute('style', `display: ${this.isOpenModal ? 'block' : 'none' }`)
+    document.getElementById(`modal-${this.modal.action}-${this.elementId}`)?.setAttribute(
+      'style', `display: ${this.isOpenModal ? 'block' : 'none' }`
+    )
   }
 }
 </script>

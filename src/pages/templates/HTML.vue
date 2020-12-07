@@ -5,7 +5,24 @@
         <span class="product-name">PAM </span>
         <span class="project-name">Message Builder</span>
       </div>
-      <div class="container-background">
+      <div class="container-management">
+        <SquareButtonComponent
+          className="view-json-square-button"
+            icon="code-braces-box"
+            label="View JSON"
+            @click="doOpenModal"
+        />
+        <ModalComponent
+          ref="modal-view-json"
+          :modal="{ width: 800, button: { info: true, position: 'center' } }"
+        >
+          <template slot="content">
+            <div class="json-viewer">
+              <pre><code>{{ templateJson }}</code></pre>
+            </div>
+          </template>
+        </ModalComponent>
+        <span class="vertical-line"> | </span>
         <ColorPickerComponent
           name="contanier-background"
           label="Background"
@@ -17,11 +34,16 @@
     <div class="container-body">
       <div class="content">
         <div v-if="haveElementChild">
-          <div class="title">Hello my customer :)</div>
           <BuilderCanvas :templateJson="templateJson"/>
         </div>
         <div v-else class="box-start">
-          Start modify your message <TextMenuButtonComponent label="click" :options="menu" @click="doAddJson" /> here
+          <SquareMenuButtonComponent
+            className="start-square-menu-button"
+            icon="plus-circle"
+            label="Launch Template"
+            :options="menu"
+            @click="doAddJson"
+          />
         </div>
       </div>
     </div>
@@ -30,13 +52,14 @@
 
 <script lang="ts">
 import _ from 'lodash'
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { uuid } from 'uuidv4'
+import { Component, Prop, Watch } from 'vue-property-decorator'
+import BaseComponent from '../../core/BaseComponent'
 import { MENU } from '../../constants/Base'
 import { EElementType } from '../../enum/Elements'
 import { IContainer } from '../../interfaces/Template'
 import {
   CONTAINER_DEFAULT,
-  SECTION_DEFAULT,
   TEXT_DEFAULT,
   IMAGE_DEFAULT,
   SPACER_DEFAULT,
@@ -49,12 +72,15 @@ import { EDirection } from '@/enum/Components'
 @Component({
   components: { BoxComponent }
 })
-export default class HTMLTemplate extends Vue {
-  @Prop() readonly propTemplateJson!: IContainer
+export default class HTMLTemplate extends BaseComponent {
+  @Prop() propTemplateJson!: IContainer
 
-  element = ''
-  templateJson: IContainer = JSON.parse(JSON.stringify(this.defaultData['CONTAINER_DEFAULT']))
+  elementName = ''
   haveElementChild = false
+  templateJson: IContainer = {
+    id: uuid(),
+    ..._.cloneDeep(this.defaultData['CONTAINER_DEFAULT'])
+  }
 
   get menu() {
     return MENU
@@ -73,7 +99,6 @@ export default class HTMLTemplate extends Vue {
   get defaultData(): any {
     return {
       CONTAINER_DEFAULT,
-      SECTION_DEFAULT,
       TEXT_DEFAULT,
       IMAGE_DEFAULT,
       SPACER_DEFAULT,
@@ -83,20 +108,24 @@ export default class HTMLTemplate extends Vue {
   }
 
   created() {
-    this.templateJson['container-props'].flexbox['flex-direction'] = EDirection.COLUMN
+    this.templateJson.props.flexbox['flex-direction'] = EDirection.COLUMN
     if (this.propTemplateJson) {
       this.templateJson = this.propTemplateJson
-      this.doAddElementChild(this.templateJson.children)
+      this.haveElementChild = true
     }
   }
 
+  doOpenModal() {
+    this.$refs['modal-view-json'].isOpenModal = true
+  }
+
   doGetBackgrondContainer(value: string) {
-    this.templateJson['container-props'].background = value
+    this.templateJson.props.background = value
     document.getElementsByClassName('content')[0].setAttribute('style', `background-color: ${value}`)
   }
 
   doAddJson(element: string) {
-    this.element = _.toUpper(element)
+    this.elementName = _.toUpper(element)
     this.doAddElementChild(this.templateJson.children)
   }
 
@@ -106,22 +135,33 @@ export default class HTMLTemplate extends Vue {
 
   doAddElementChild(children: object[]) {
     if (this.templateJson.children.length < 1) {
-      this.templateJson.children.push(this.defaultData['SECTION_DEFAULT'])
+      this.templateJson.children.push({
+        id: uuid(),
+        ..._.cloneDeep(this.defaultData['CONTAINER_DEFAULT'])
+      })
       this.doAddElementChild(this.templateJson.children)
     } else {
       children.forEach((item: any) => {
         if (this.doFindElement(item.element)) {
           this.haveElementChild = true
-          this.element = _.toUpper(item.element)
-        } else if (_.toUpper(item.element) === EElementType.SECTION) {
-          item.children.push(this.defaultData['CONTAINER_DEFAULT'])
-          this.doAddElementChild(item.children)
+          this.elementName = _.toUpper(item.element)
         } else {
-          item.children.push(this.defaultData[`${this.element}_DEFAULT`])
+          item.children.push({
+            id: uuid(),
+            ..._.cloneDeep(this.defaultData[`${this.elementName}_DEFAULT`])
+          })
           this.doAddElementChild(item.children)
         }
       })
     }
+  }
+
+  @Watch('templateJson', { deep: true })
+  onUpdateTemplate() {
+    if (this.templateJson.children.length < 1) {
+      this.haveElementChild = false
+    }
+    this.$emit('change', this.templateJson)
   }
 }
 </script>

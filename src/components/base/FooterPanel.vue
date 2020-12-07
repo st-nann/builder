@@ -3,11 +3,11 @@
     <div class="footer-panel-switch">
       <BorderStyleComponent
         name="footer-panel-border-bottom"
-        @click="getBorderButton"
+        @change="getBorderButton"
       />
       <BackgroundStyleComponent
         name="footer-panel-background"
-        @click="getBackground"
+        @change="getBackground"
       />
     </div>
     <div class="footer-panel-button">

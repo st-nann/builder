@@ -7,7 +7,7 @@
       @change="doGetData"
     />
     <span v-if="toggle">
-      <ColorPickerComponent name="footer-panel-background-color" @click="onUpdateBackground" />
+      <ColorPickerComponent name="footer-panel-background-color" @change="onUpdateBackground" />
     </span>
   </span>
 </template>
@@ -30,10 +30,11 @@ export default class BackgroundStyleComponent extends BaseComponent {
 
   onUpdateBackground(background: any) {
     this.background = background
+    this.onEmitData()
   }
 
   onEmitData() {
-    this.$emit('click', { 'background-color': this.background })
+    this.$emit('change', { 'background-color': this.background })
   }
 }
 </script>

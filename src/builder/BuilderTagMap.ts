@@ -6,8 +6,7 @@ export class BuilderTagMap {
         image: "ImagePage",
         button: "ButtonPage",
         box: "BoxPage",
-        container: "div",
-        section: "div"
+        container: "div"
     }
     static getTag(elementName: string): string | undefined {
         const key = _.toLower(elementName)

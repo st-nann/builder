@@ -2,10 +2,12 @@ import { EDirection } from '../enum/Components'
 import { EElementType } from '../enum/Elements'
 
 export interface IContainer {
+    id?: string
     element: EElementType.CONTAINER
-    'container-props': {
+    props: {
         background?: string
         flexbox: {
+            display: string
             'flex-grow': number
             'flex-direction': EDirection.ROW | EDirection.COLUMN
         }
@@ -13,31 +15,15 @@ export interface IContainer {
     children: any[]
 }
 
-export interface ISection {
-    element: EElementType.SECTION,
-    'container-props': {
-        flexbox: {
-            'flex-grow': number
-            'flex-direction': EDirection.ROW
-        }
-    },
-    children: any[]
-}
-
 export interface IText {
     element: EElementType.TEXT
-    'container-props': {
+    props?: {
         background?: string
         'border-bottom'?: {
             width:  string
             style: string
             color: string
         },
-        flexbox: {
-            'flex-grow': number
-        }
-    },
-    'element-props'?: {
         link?: string
         font?: {
             family: string
@@ -52,18 +38,13 @@ export interface IText {
 
 export interface IImage {
     element: EElementType.IMAGE
-    'container-props': {
+    props?: {
         background?: string
         'border-bottom'?: {
             width: string
             style: string
             color: string
         },
-        flexbox: {
-            'flex-grow': number
-        }
-    },
-    'element-props': {
         link: string
         compress: boolean
         width?: string
@@ -72,36 +53,26 @@ export interface IImage {
 
 export interface ISpacer {
     element: EElementType.SPACER
-    'container-props': {
+    props?: {
         background?: string
         'border-bottom'?: {
             width: string
             style: string
             color: string
         },
-        flexbox: {
-            'flex-grow': number
-        }
-    },
-    'element-props'?: {
         height?: string
     }
 }
 
 export interface IButton {
     element: EElementType.BUTTON
-    'container-props': {
+    props: {
         background?: string
         'border-bottom'?: {
             width: string
             style: string
             color: string
         },
-        flexbox: {
-            'flex-grow': number
-        }
-    },
-    'element-props': {
         link?: string
         font?: {
             family: string
@@ -120,7 +91,7 @@ export interface IButton {
 
 export interface IBox {
     element: EElementType.BOX
-    'container-props': {
+    props: {
         background?: string
         'border-bottom'?: {
             width: string
@@ -128,11 +99,10 @@ export interface IBox {
             color: string
         },
         flexbox: {
+            display: string
             'flex-grow': number
             'flex-direction': EDirection.ROW
-        }
-    },
-    'element-props'?: {
+        },
         padding?: string
     },
     children: any[]

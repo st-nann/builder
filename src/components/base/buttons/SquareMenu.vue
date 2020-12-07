@@ -1,7 +1,7 @@
 <template>
-  <span class="default-square-menu-button-layout">
+  <span :class="`${className}-layout` || 'default-square-menu-button-layout'">
     <span class="menu-button-container">
-      <SquareButtonComponent v-bind="$props" class="default-square-menu-button" />
+      <SquareButtonComponent v-bind="$props" :class="className || 'default-square-menu-button'" />
       <div class="menu-container">
         <div class="menu-links">
           <a

@@ -7,7 +7,6 @@
   import { EElementPosition } from '../enum/Elements'
   import {
     CONTAINER_DEFAULT,
-    SECTION_DEFAULT,
     TEXT_DEFAULT,
     IMAGE_DEFAULT,
     SPACER_DEFAULT,
@@ -28,13 +27,12 @@
     @Prop() templateJson: any
 
     value: any = {}
-    parantId = ''
+    parentId = ''
     foundParent = false
 
     get defaultData(): any {
       return {
         CONTAINER_DEFAULT,
-        SECTION_DEFAULT,
         TEXT_DEFAULT,
         IMAGE_DEFAULT,
         SPACER_DEFAULT,
@@ -44,68 +42,79 @@
     }
 
     createComponent(state: any, tag: CreateElement): any {
-      if (_.isEmpty(state)) {
-        return tag("div")
-      }
+      if (_.isEmpty(state)) { return tag("div") }
 
       if (_.isArray(state)) {
-        return state.map((child) => this.createComponent(child, tag));
+        return state.map((child) => this.createComponent(child, tag))
       }
 
-      if (_.isUndefined(state.id)) {
-        state.id = uuid()
-      }
-
-      const children: any[] = [];
+      const children: any[] = []
 
       if (state.children && state.children.length > 0) {
         state.children.forEach((child: any) => {
-          if (_.isString(child)) {
-            children.push(child);
-          } else {
-            children.push(this.createComponent(child, tag));
-          }
-        });
+          children.push(_.isString(child) ? child : this.createComponent(child, tag))
+        })
+      }
+
+      const style = {
+        ...state.props,
+        ...(state.props && state.props.flexbox ? state.props.flexbox : undefined),
+        ...(
+            state.props && state.props['border-bottom']
+              ? {
+                  'border-bottom':
+                    `${state.props['border-bottom'].width} ${state.props['border-bottom'].style} ${state.props['border-bottom'].color}`
+                }
+              : undefined
+          )
       }
 
       const properties = {
-        style: {
-          'border-bottom': `${state['container-props'].width} ${state['container-props'].style} ${state['container-props'].color}`,
-          ...state['container-props'].flexbox,
-          ...state['element-props']
-        },
         props: {
           elementId: state.id,
           elementName: _.capitalize(state.element),
-          containerProps: state['container-props'],
-          elementProps: state['element-props']
+          props: state.props,
+          elementValue: state.value
         },
         on: {
           add: (value: any) => {
             this.value = value
-            switch (value.position) {
-              case EElementPosition.TOP:
-                this.addVerticalElement()
-                break
-              case EElementPosition.RIGHT:
-                this.addHorizentalElement()
-                break
-              case EElementPosition.BOTTOM:
-                this.addVerticalElement()
-                break
-              case EElementPosition.LEFT:
-                this.addHorizentalElement()
-                break
+            this.foundParent = false
+            if (_.includes([EElementPosition.TOP, EElementPosition.BOTTOM], value.position)) {
+              this.addVerticalElement()
+            } else if (_.includes([EElementPosition.LEFT, EElementPosition.RIGHT], value.position)) {
+              this.addHorizentalElement()
             }
           },
-          done: (value: any) => {
-            if (state.id === value.id) {
-              state['container-props'] = value['container-props']
-              state['element-props'] = value['element-props']
+          duplicate: (value: any) => {
+            this.value = value
+            this.foundParent = false
+            if (_.includes([EElementPosition.TOP, EElementPosition.BOTTOM], value.position)) {
+              this.addVerticalElement()
+            } else if (_.includes([EElementPosition.LEFT, EElementPosition.RIGHT], value.position)) {
+              this.addHorizentalElement()
+            }
+          },
+          delete: (id: string) => {
+            this.value.id = id
+            this.deleteElement()
+          },
+          done: (item: any) => {
+            if (state.id === item.id) {
+              state.props = {
+                ...item.props,
+                ...(
+                    _.cloneDeep(item.props)['border-bottom']
+                      ? { 'border-bottom' : _.cloneDeep(item.props)['border-bottom'] }
+                      : undefined
+                  )
+              }
+              state.value = _.cloneDeep(item.value)
             }
           }
-        }
-      };
+        },
+        style: style
+      }
 
       const tagName = BuilderTagMap.getTag(state.element)
 
@@ -117,15 +126,18 @@
         let indexInsert = 0
         const lists = state.children.find((item: any, index: number) => {
           if (item.id === this.value.id) {
-            indexInsert = index
+            indexInsert = EElementPosition.LEFT === this.value.position
+              ? index
+              : index + 1
             return true
           }
           this.addHorizentalElement(item)
         })
         if (lists) {
-          state.children.splice(indexInsert, 0,
-            this.defaultData[`${this.value.element}_DEFAULT`]
-          )
+          const data = this.value.duplicate
+            ? { ..._.cloneDeep(lists) }
+            : { ..._.cloneDeep(this.defaultData[`${this.value.element}_DEFAULT`]) }
+          state.children.splice(indexInsert, 0, { ...data, id: uuid() })
         }
       }
     }
@@ -135,28 +147,61 @@
         let indexInsert = 0
         const lists = state.children.find((item: any, index: number) => {
           if (this.foundParent) {
-            if (item.id === this.parantId) {
-              indexInsert = index
+            if (item.id === this.parentId) {
+              indexInsert = EElementPosition.TOP === this.value.position
+                ? index
+                : index + 1
               return true
             }
             this.addVerticalElement(item)
           } else {
             this.foundParent = item.id === this.value.id
-            this.parantId = state.id
+            this.parentId = state.id
             this.addVerticalElement(this.foundParent ? undefined : item)
           }
         })
         if (lists) {
-          state.children.splice(indexInsert, 0, {
-            ...this.defaultData['CONTAINER_DEFAULT'],
-            children: [this.defaultData[`${this.value.element}_DEFAULT`]]
-          })
+          const data = this.value.duplicate
+            ? { ..._.cloneDeep({
+                  ...lists,
+                  children: _(lists.children)
+                    .map(child => { return { ...child, id: uuid() } })
+                    .cloneDeep()
+                })
+              }
+            : { ..._.cloneDeep(this.defaultData['CONTAINER_DEFAULT']),
+                id: uuid(),
+                children: _.cloneDeep([{
+                  id: uuid(),
+                  ..._.cloneDeep(this.defaultData[`${this.value.element}_DEFAULT`])
+                }])
+              }
+          state.children.splice(indexInsert, 0, { ...data, id: uuid() })
         }
       }
     }
 
+    deleteElement(state: any = this.templateJson) {
+      if (state.children) {
+        state.children.forEach((child: any) => {
+          if (child.id === this.value.id) {
+            state.children = _.filter(state.children, item => this.value.id !== item.id)
+            this.deleteChildElement()
+          }
+          this.deleteElement(child)
+        })
+      }
+    }
+
+    deleteChildElement(state: any = this.templateJson) {
+      if (state.children) {
+        state.children = _.filter(state.children, item => item.children.length > 0)
+      }
+      return
+    }
+
     render(createElement: CreateElement) {
-      return this.createComponent(this.templateJson, createElement);
+      return this.createComponent(this.templateJson, createElement)
     }
   }
 </script>
