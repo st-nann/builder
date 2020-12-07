@@ -89,11 +89,11 @@
           }
         },
         style: {
+          ...state.props,
+          ...state.props.flexbox,
           'border-bottom': state.props['border-bottom']
             ? `${state.props['border-bottom'].width} ${state.props['border-bottom'].style} ${state.props['border-bottom'].color}`
-            : undefined,
-          ...state.props,
-          ...state.props.flexbox
+            : undefined
         }
       }
 
