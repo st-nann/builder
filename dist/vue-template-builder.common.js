@@ -41695,10 +41695,16 @@ var BuilderCanvasvue_type_script_lang_ts_BuilderCanvas = /*#__PURE__*/function (
         });
 
         if (lists) {
+          var key = lodash_default.a.findKey(lists.children, function (child) {
+            return child.id === _this4.value.id;
+          });
+
           var data = this.value.duplicate ? _objectSpread2({}, lodash_default.a.cloneDeep(_objectSpread2(_objectSpread2({}, lists), {}, {
-            children: lodash_default()(lists.children).map(function (child) {
+            children: lodash_default()(lists.children).map(function (child, index) {
               return _objectSpread2(_objectSpread2({}, child), {}, {
-                id: Object(uuidv4["uuid"])()
+                id: Object(uuidv4["uuid"])(),
+                props: index === lodash_default.a.parseInt(key) ? child.props : {},
+                value: index === lodash_default.a.parseInt(key) ? child.value : undefined
               });
             }).cloneDeep()
           }))) : _objectSpread2(_objectSpread2({}, lodash_default.a.cloneDeep(this.defaultData['CONTAINER_DEFAULT'])), {}, {
