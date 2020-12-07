@@ -87,11 +87,12 @@ export default class TextPage extends BaseComponent {
         }
         this.editor = new Quill(`#editor-${this.elementId}`, options)
       }
+      this.editor.root.innerHTML = ''
       if (this.elementValue && this.elementValue.json && this.elementValue.html) {
         this.editor.updateContents(new Delta(this.elementValue.json))
         this.editor.root.innerHTML = this.elementValue.html
-        this.contentHtml = this.editor.root.innerHTML
       }
+      this.contentHtml = this.editor.root.innerHTML
     })
   }
 
