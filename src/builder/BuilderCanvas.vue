@@ -161,11 +161,19 @@
           }
         })
         if (lists) {
+          const key: any = _.findKey(lists.children, child => child.id === this.value.id)
           const data = this.value.duplicate
             ? { ..._.cloneDeep({
                   ...lists,
                   children: _(lists.children)
-                    .map(child => { return { ...child, id: uuid() } })
+                    .map((child: any, index: number) => {
+                      return {
+                        ...child,
+                        id: uuid(),
+                        props: index === _.parseInt(key) ? child.props : {},
+                        value: index === _.parseInt(key) ? child.value : undefined,
+                      }
+                    })
                     .cloneDeep()
                 })
               }
