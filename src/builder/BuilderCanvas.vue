@@ -79,6 +79,7 @@
         on: {
           add: (value: any) => {
             this.value = value
+            this.foundParent = false
             if (_.includes([EElementPosition.TOP, EElementPosition.BOTTOM], value.position)) {
               this.addVerticalElement()
             } else if (_.includes([EElementPosition.LEFT, EElementPosition.RIGHT], value.position)) {
@@ -87,6 +88,7 @@
           },
           duplicate: (value: any) => {
             this.value = value
+            this.foundParent = false
             if (_.includes([EElementPosition.TOP, EElementPosition.BOTTOM], value.position)) {
               this.addVerticalElement()
             } else if (_.includes([EElementPosition.LEFT, EElementPosition.RIGHT], value.position)) {
