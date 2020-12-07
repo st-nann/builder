@@ -141,7 +141,7 @@ export default class TextPage extends BaseComponent {
     this.$emit('add', { id: this.elementId, ...data })
   }
 
-  @Watch('management.edit')
+  @Watch('management', { deep: true})
   onEdit() {
     if (this.$refs[`modal-edit-${this.elementId}`]) {
       this.$refs[`modal-edit-${this.elementId}`].isOpenModal = this.management.edit
