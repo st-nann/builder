@@ -117,7 +117,7 @@
         if (lists) {
           state.children.splice(indexInsert, 0, {
             id: uuid(),
-            ...this.defaultData[`${this.value.element}_DEFAULT`]
+            ..._.cloneDeep(this.defaultData[`${this.value.element}_DEFAULT`])
           })
         }
       }
@@ -143,12 +143,12 @@
         })
         if (lists) {
           state.children.splice(indexInsert, 0, {
-            ...this.defaultData['CONTAINER_DEFAULT'],
+            ..._.cloneDeep(this.defaultData['CONTAINER_DEFAULT']),
             id: uuid(),
-            children: [{
+            children: _.cloneDeep([{
               id: uuid(),
-              ...this.defaultData[`${this.value.element}_DEFAULT`]
-            }]
+              ..._.cloneDeep(this.defaultData[`${this.value.element}_DEFAULT`])
+            }])
           })
         }
       }

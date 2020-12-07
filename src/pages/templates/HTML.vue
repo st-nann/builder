@@ -59,10 +59,10 @@ export default class HTMLTemplate extends Vue {
 
   element = ''
   haveElementChild = false
-  templateJson: IContainer = JSON.parse(JSON.stringify({
+  templateJson: IContainer = {
     id: uuid(),
-    ...this.defaultData['CONTAINER_DEFAULT']
-  }))
+    ..._.cloneDeep(this.defaultData['CONTAINER_DEFAULT'])
+  }
 
   get menu() {
     return MENU
@@ -115,7 +115,7 @@ export default class HTMLTemplate extends Vue {
     if (this.templateJson.children.length < 1) {
       this.templateJson.children.push({
         id: uuid(),
-        ...this.defaultData['CONTAINER_DEFAULT']
+        ..._.cloneDeep(this.defaultData['CONTAINER_DEFAULT'])
       })
       this.doAddElementChild(this.templateJson.children)
     } else {
@@ -126,7 +126,7 @@ export default class HTMLTemplate extends Vue {
         } else {
           item.children.push({
             id: uuid(),
-            ...this.defaultData[`${this.element}_DEFAULT`]
+            ..._.cloneDeep(this.defaultData[`${this.element}_DEFAULT`])
           })
           this.doAddElementChild(item.children)
         }
@@ -139,7 +139,6 @@ export default class HTMLTemplate extends Vue {
     if (this.templateJson.children.length < 1) {
       this.haveElementChild = false
     }
-    console.log(this.templateJson)
     this.$emit('change', this.templateJson)
   }
 }
