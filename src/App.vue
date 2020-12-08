@@ -22,6 +22,6 @@ export default class App extends Vue {
 </style>
 
 <style lang="css">
-@import '~quill/dist/quill.core.css';
-@import '~quill/dist/quill.snow.css';
+@import './assets/css/quill.core.css';
+@import './assets/css/quill.snow.css';
 </style>
