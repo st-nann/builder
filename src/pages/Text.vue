@@ -30,7 +30,7 @@
         <div :id="`editor-${elementId}`" class="editor"/>
       </template>
       <template slot="action-custom">
-        <FooterPanel @click="doGetFooterPanelData" />
+        <FooterPanel :elementProps="elementProps" @click="doGetFooterPanelData" />
       </template>
     </ModalComponent>
   </span>
@@ -129,7 +129,7 @@ export default class TextPage extends BaseComponent {
     } else {
       this.$emit('done', {
         id: this.elementId,
-        props: { ...this.footerData },
+        props: { ...this.elementProps } || { ...this.footerData },
         value: this.editor && this.editor.editor && this.editor.root
           ? { json: this.editor.editor.delta.ops, html: this.editor.root.innerHTML }
           : undefined

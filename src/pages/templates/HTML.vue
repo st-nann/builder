@@ -67,7 +67,7 @@ import {
   BOX_DEFAULT
 } from '../../constants/Default'
 import BoxComponent from '../../components/base/Box'
-import { EDirection } from '@/enum/Components'
+import { EDirection } from '../../enum/Components'
 
 @Component({
   components: { BoxComponent }

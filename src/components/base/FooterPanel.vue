@@ -3,10 +3,12 @@
     <div class="footer-panel-switch">
       <BorderStyleComponent
         name="footer-panel-border-bottom"
+        :elementProps="elementProps"
         @change="getBorderButton"
       />
       <BackgroundStyleComponent
         name="footer-panel-background"
+        :elementProps="elementProps"
         @change="getBackground"
       />
     </div>
@@ -26,11 +28,13 @@
 </template>
 
 <script lang="ts">
-import { Component } from 'vue-property-decorator'
+import { Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../../core/BaseComponent'
 
 @Component
 export default class FooterPanel extends BaseComponent {
+  @Prop() elementProps!: any
+  
   borderBottom = {}
   background = {}
 

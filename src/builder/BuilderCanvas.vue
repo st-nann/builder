@@ -73,7 +73,7 @@
         props: {
           elementId: state.id,
           elementName: _.capitalize(state.element),
-          props: state.props,
+          elementProps: state.props,
           elementValue: state.value
         },
         on: {
