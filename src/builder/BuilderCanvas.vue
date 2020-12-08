@@ -166,14 +166,13 @@
             ? { ..._.cloneDeep({
                   ...lists,
                   children: _(lists.children)
-                    .map((child: any, index: number) => {
+                    .map((child: any) => {
                       return {
                         ...child,
-                        id: uuid(),
-                        props: index === _.parseInt(key) ? child.props : {},
-                        value: index === _.parseInt(key) ? child.value : undefined,
+                        id: uuid()
                       }
                     })
+                    .filter((child: any, index: number) => index === _.parseInt(key))
                     .cloneDeep()
                 })
               }

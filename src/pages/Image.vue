@@ -23,8 +23,8 @@
     >
       <template slot="content">
         <ImageToolbarPanel @change="getImageData" />
-        <div class="image-preview">
-          <div v-if="imageData.link" id="display-image" />
+        <div :id="`image-preview-${elementId}`" class="image-preview">
+          <div v-if="imageData.link" :id="`display-image-${elementId}`" />
           <div v-else class="no-image">
             <i class="mdi mdi-folder-multiple-image no-image-icon" />
             <div class="no-image-text">No Image</div>
@@ -36,7 +36,7 @@
           :elementProps="elementProps"
           :management="management"
           @change="onUpdatePreview"
-          @click="doGetFooterPanelData"
+          @click="onUpdateFooterPanelData"
         />
       </template>
     </ModalComponent>
@@ -55,26 +55,31 @@ export default class ImagePage extends BaseComponent {
 
   management: any = {}
   previewData: any = {}
-  previewStyle: any = {}
   footerData = {}
   imageData: any = {}
 
-  get style() {
-    this.previewStyle = {}
+  getImageData(data: any) {
+    this.imageData = data
+  }
+
+  doAssignStyle() {
+    const previewStyle: any = {}
     if (JSON.stringify(this.previewData) !== '{}') {
       if (this.previewData['border-bottom']) {
         const border = this.previewData['border-bottom']
-        this.previewStyle['border-bottom'] = `${border.width} ${border.style} ${border.color}`
+        previewStyle['border-bottom'] = `${border.width} ${border.style} ${border.color}`
       }
       if (this.previewData['background-color']) {
-        this.previewStyle['background-color'] = this.previewData['background-color']
+        previewStyle['background-color'] = this.previewData['background-color']
       }
     }
-    return this.previewStyle
-  }
-
-  getImageData(data: any) {
-    this.imageData = data
+    document.getElementById(`image-preview-${this.elementId}`)?.setAttribute(
+      'style',
+      JSON.stringify({...previewStyle})
+        .substring(1, JSON.stringify({...previewStyle}).length - 1)
+        .replaceAll(',', ';')
+        .replaceAll('"', '')
+    )
   }
 
   onUpdateManagement(data: any) {
@@ -85,6 +90,7 @@ export default class ImagePage extends BaseComponent {
   onUpdatePreview(data: any) {
     this.previewData = {}
     this.previewData = data
+    this.doAssignStyle()
   }
 
   onUpdateFooterPanelData(data: any) {
