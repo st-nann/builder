@@ -32,6 +32,7 @@
       <template slot="action-custom">
         <FooterPanel
           :elementProps="elementProps"
+          :elementName="elementName"
           :management="management"
           @change="onUpdatePreview"
           @click="onUpdateFooterPanelData"

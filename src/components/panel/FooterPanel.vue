@@ -93,11 +93,7 @@ export default class FooterPanel extends BaseComponent {
 
   onChangeImage() {
     this.changeImage = true
-    this.onEmitPreview()
-  }
-
-  onEmitCancel() {
-    this.$emit('click')
+    this.doEmitChangeImage()
   }
 
   onEmitPreview() {
@@ -105,9 +101,17 @@ export default class FooterPanel extends BaseComponent {
     this.$emit('change', { ...data })
   }
 
+  doEmitChangeImage() {
+    this.$emit('changeImage', this.changeImage)
+  }
+
   onEmitDone() {
     const data = this.emitData
     this.$emit('click', { ...data })
+  }
+
+  onEmitCancel() {
+    this.$emit('click')
   }
 }
 </script>

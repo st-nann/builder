@@ -1,6 +1,6 @@
 <template>
-  <span>
-    <label class="input-label">{{ label }}</label>
+  <span class="input-container">
+    <label v-if="label" class="input-label">{{ label }}</label>
     <input
       :id="`input-${this.name}`"
       class="input"
@@ -8,6 +8,7 @@
       :style="style"
       @input="doUpdateInput"
     />
+    <i v-if="search" class="mdi mdi-magnify input-append-icon" />
   </span>
 </template>
 
@@ -19,7 +20,7 @@ import BaseComponent from '../../core/BaseComponent'
 export default class InputComponent extends BaseComponent {
   get style() {
     return {
-      '--input-width': `${this.width}px`
+      '--input-width': this.width ? `${this.width}px` : '-webkit-fill-available'
     }
   }
 

@@ -6,7 +6,7 @@
       @click="doEmitAddElement"
     >
       <template slot="image-content">
-        
+
       </template>
       <template slot="button-management">
         <MainButtonComponent
@@ -18,24 +18,39 @@
     </BoxComponent>
     <ModalComponent
       :ref="`modal-edit-${elementId}`"
-      :modal="{ width: 1000, action: 'edit', button: { custom: true } }"
+      :modal="{ width: changeImage ? 900 : 1000, action: 'edit', button: { custom: true } }"
       :elementId="elementId"
     >
       <template slot="content">
-        <ImageToolbarPanel @change="getImageData" />
-        <div :id="`image-preview-${elementId}`" class="image-preview">
-          <div v-if="imageData.link" :id="`display-image-${elementId}`" />
-          <div v-else class="no-image">
-            <i class="mdi mdi-folder-multiple-image no-image-icon" />
-            <div class="no-image-text">No Image</div>
+        <div class="modal-content-image">
+          <ImageAssetContent
+            v-if="changeImage"
+            @click="onUpdateImageLink"
+          />
+          <div v-else>
+            <ImageToolbarPanel @change="getImageData" />
+            <div :id="`image-preview-${elementId}`" class="image-preview-container">
+              <img
+                v-if="imageData && imageData.imageUrl"
+                class="image-preview"
+                :src="imageData.imageUrl"
+              />
+              <div v-else class="no-image">
+                <i class="mdi mdi-folder-multiple-image no-image-icon" />
+                <div class="no-image-text">No Image</div>
+              </div>
+            </div>
           </div>
         </div>
       </template>
       <template slot="action-custom">
         <FooterPanel
+          v-if="!changeImage"
           :elementProps="elementProps"
+          :elementName="elementName"
           :management="management"
           @change="onUpdatePreview"
+          @changeImage="onUpdateChangeImage"
           @click="onUpdateFooterPanelData"
         />
       </template>
@@ -54,12 +69,18 @@ export default class ImagePage extends BaseComponent {
   @Prop() elementProps!: any
 
   management: any = {}
+  changeImage = true
   previewData: any = {}
   footerData = {}
   imageData: any = {}
 
   getImageData(data: any) {
     this.imageData = data
+  }
+
+  onUpdateImageLink(data: any) {
+    this.changeImage = data.changeImage
+    this.imageData.imageUrl = data.url
   }
 
   doAssignStyle() {
@@ -85,6 +106,10 @@ export default class ImagePage extends BaseComponent {
   onUpdateManagement(data: any) {
     this.management = data
     this.doEmitData()
+  }
+
+  onUpdateChangeImage(change: boolean) {
+    this.changeImage = change
   }
 
   onUpdatePreview(data: any) {

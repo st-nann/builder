@@ -23,10 +23,10 @@
       @click="doDelete"
     >
       <template slot="content">
-        <div class="content-delete">
-          <i class="content-delete-image mdi mdi-delete-circle" />
-          <div class="content-delete-title">Delete Element</div>
-          <div class="content-delete-body">Are you sure you want to delete this element ?</div>
+        <div class="modal-content-delete">
+          <i class="delete-image mdi mdi-delete-circle" />
+          <div class="delete-title">Delete Element</div>
+          <div class="delete-body">Are you sure you want to delete this element ?</div>
         </div>
       </template>
     </ModalComponent>

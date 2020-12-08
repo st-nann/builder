@@ -29,13 +29,14 @@ export interface IComponentOption {
         name: string
         label?: string
         placeholder?: string
+        search?: boolean // input, dropdown
         icon?: string
         value?: any
         options?: IDropdownOption[] | any[]
         disabled?: boolean
-        rules?: Function[],
-        className?: string,
-        width?: string, // input, dropdown
+        rules?: Function[]
+        className?: string
+        width?: string // input, dropdown
         modal?: IModal
     }
 }

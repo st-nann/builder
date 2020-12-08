@@ -10,6 +10,7 @@ export default class BaseComponent extends Base {
     @Prop(String) readonly label!: string
     @Prop(String) readonly placeholder!: string
     @Prop(String) readonly icon!: string
+    @Prop(Boolean) readonly search!: boolean
     @Prop() value!: any
     @Prop(Array) readonly options!: { label: string, value: any }[]
     @Prop(Boolean) readonly disabled!: boolean
