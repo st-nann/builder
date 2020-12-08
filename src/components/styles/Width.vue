@@ -1,18 +1,18 @@
 <template>
   <span>
     <SwitchComponent
-      name="footer-panel-background"
-      class="footer-panel-border-bottom"
-      label="Background"
+      name="toolbar-panel-image-width"
+      label="Custom Width"
       :value="toggle"
       @change="onUpdateToggle"
     />
     <span v-if="toggle">
-      <ColorPickerComponent
-        name="footer-panel-background-color"
-        :value="background"
-        @change="onUpdateBackground"
+      <InputComponent
+        name="image-width"
+        width="30"
+        @change="onUpdateWidth"
       />
+      <span class="toolbar-panel-image-width-text">px</span>
     </span>
   </span>
 </template>
@@ -23,15 +23,15 @@ import { Component, Prop, Watch } from 'vue-property-decorator'
 import BaseComponent from '../../core/BaseComponent'
 
 @Component
-export default class BackgroundStyleComponent extends BaseComponent {
+export default class WidthStyleComponent extends BaseComponent {
   @Prop() elementProps!: any
   @Prop() management!: any
   
   toggle = false
-  background = '#ffffff'
+  imageWidth = '100'
 
   doAssignDefaultData() {
-    this.background = '#ffffff'
+    this.imageWidth = '100'
   }
 
   onUpdateToggle(value: any) {
@@ -39,21 +39,21 @@ export default class BackgroundStyleComponent extends BaseComponent {
     this.onEmitData()
   }
 
-  onUpdateBackground(background: any) {
-    this.background = background
+  onUpdateWidth(width: any) {
+    this.imageWidth = width
     this.onEmitData()
   }
 
   onEmitData() {
-    this.$emit('change', this.toggle ? { 'background-color': this.background } : undefined)
+    this.$emit('change', this.toggle ? { width: `${this.imageWidth}px` } : undefined)
   }
 
   @Watch('toggle')
   onToggleUpdate() {
     if (this.toggle) {
-      if (this.elementProps && this.elementProps['background-color']) {
-        this.toggle = this.elementProps && this.elementProps['background-color']
-        this.background = _.cloneDeep(this.elementProps['background-color'])
+      if (this.elementProps && this.elementProps.width) {
+        this.toggle = this.elementProps && this.elementProps.width
+        this.imageWidth = _.cloneDeep(this.elementProps).width
       } else {
         this.doAssignDefaultData()
       }
@@ -66,9 +66,9 @@ export default class BackgroundStyleComponent extends BaseComponent {
   @Watch('management.edit')
   onEdit() {
     if (this.management.edit) {
-      if (this.elementProps && this.elementProps['background-color']) {
-        this.toggle = this.elementProps && this.elementProps['background-color']
-        this.background = _.cloneDeep(this.elementProps['background-color'])
+      if (this.elementProps && this.elementProps.width) {
+        this.toggle = this.elementProps && this.elementProps.width
+        this.imageWidth = _.cloneDeep(this.elementProps).width
       } else {
         this.toggle = false
         this.doAssignDefaultData()

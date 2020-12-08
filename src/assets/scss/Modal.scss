@@ -47,6 +47,28 @@
             font-weight: 100;
         }
     }
+
+    .image-preview {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        height: 550px;
+        border: 1px solid #eeeeee;
+
+        .no-image {
+            color: #dddddd;
+
+            .no-image-icon {
+                font-size: 80px;
+            }
+
+            .no-image-text {
+                text-align: center;
+                font-size: 16px;
+            }
+        }
+    }
 }
 
 .modal-action {

@@ -1,7 +1,13 @@
 <template>
   <span>
     <label class="input-label">{{ label }}</label>
-    <input class="input" :style="style"/>
+    <input
+      :id="`input-${this.name}`"
+      class="input"
+      :placeholder="placeholder"
+      :style="style"
+      @input="doUpdateInput"
+    />
   </span>
 </template>
 
@@ -15,6 +21,11 @@ export default class InputComponent extends BaseComponent {
     return {
       '--input-width': `${this.width}px`
     }
+  }
+
+  doUpdateInput() {
+    const element: any = document.getElementById(`input-${this.name}`)
+    this.onInput(element.value)
   }
 }
 </script>

@@ -1,11 +1,11 @@
-import { EDirection, EJustify, EAlign } from '../enum/Components'
+import { EJustify } from '../enum/Components'
 
 export interface IFlexbox {
     grow: number
 }
 
 export interface IDropdownOption {
-    label: string
+    label?: string
     value: any
     icon?: string
 }

@@ -12,27 +12,38 @@
         <MainButtonComponent
           class="button-box"
           :elementId="elementId"
-          @click="doManagement"
+          @click="onUpdateManagement"
         />
       </template>
     </BoxComponent>
     <ModalComponent
       :ref="`modal-edit-${elementId}`"
-      :modal="{ width: 700, action: 'edit', button: { custom: true } }"
+      :modal="{ width: 1000, action: 'edit', button: { custom: true } }"
       :elementId="elementId"
     >
       <template slot="content">
-        
+        <ImageToolbarPanel @change="getImageData" />
+        <div class="image-preview">
+          <div v-if="imageData.link" id="display-image" />
+          <div v-else class="no-image">
+            <i class="mdi mdi-folder-multiple-image no-image-icon" />
+            <div class="no-image-text">No Image</div>
+          </div>
+        </div>
       </template>
       <template slot="action-custom">
-        <FooterPanel @click="doGetFooterPanelData" />
+        <FooterPanel
+          :elementProps="elementProps"
+          :management="management"
+          @change="onUpdatePreview"
+          @click="doGetFooterPanelData"
+        />
       </template>
     </ModalComponent>
   </span>
 </template>
 
 <script lang="ts">
-import _ from 'lodash'
 import { Component, Prop, Watch } from 'vue-property-decorator'
 import BaseComponent from '../core/BaseComponent'
 
@@ -41,18 +52,42 @@ export default class ImagePage extends BaseComponent {
   @Prop(String) elementId!: string
   @Prop(String) elementName!: string
   @Prop() elementProps!: any
-  @Prop() elementValue!: any
 
   management: any = {}
+  previewData: any = {}
+  previewStyle: any = {}
   footerData = {}
-  editor: any = null
+  imageData: any = {}
 
-  doManagement(data: any) {
+  get style() {
+    this.previewStyle = {}
+    if (JSON.stringify(this.previewData) !== '{}') {
+      if (this.previewData['border-bottom']) {
+        const border = this.previewData['border-bottom']
+        this.previewStyle['border-bottom'] = `${border.width} ${border.style} ${border.color}`
+      }
+      if (this.previewData['background-color']) {
+        this.previewStyle['background-color'] = this.previewData['background-color']
+      }
+    }
+    return this.previewStyle
+  }
+
+  getImageData(data: any) {
+    this.imageData = data
+  }
+
+  onUpdateManagement(data: any) {
     this.management = data
     this.doEmitData()
   }
 
-  doGetFooterPanelData(data: any) {
+  onUpdatePreview(data: any) {
+    this.previewData = {}
+    this.previewData = data
+  }
+
+  onUpdateFooterPanelData(data: any) {
     this.footerData = data
     this.management.edit = false
     if (data) { this.doEmitData() }
@@ -70,8 +105,7 @@ export default class ImagePage extends BaseComponent {
     } else {
       this.$emit('done', {
         id: this.elementId,
-        props: { ...this.footerData },
-        value: {}
+        props: { ...this.imageData, ...this.footerData }
       })
     }
   }
