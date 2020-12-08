@@ -20,8 +20,3 @@ export default class App extends Vue {
 <style lang="scss">
 @import "./assets/scss/Main.scss";
 </style>
-
-<style lang="css">
-@import './assets/css/quill.core.css';
-@import './assets/css/quill.snow.css';
-</style>
