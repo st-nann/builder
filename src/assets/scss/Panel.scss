@@ -1,5 +1,9 @@
 /* Text Panel */
-.ql-editor{
+.ql-toolbar {
+    background-color: #ffffff;
+}
+
+.ql-editor {
     min-height: 200px;
 }
 
@@ -7,10 +11,7 @@
     width: -webkit-fill-available;
 }
 
-/* Image Panel */
-
-
-.footer-panel {
+.panel {
     display: flex;
     flex-direction: row;
     padding: 5px 0;
@@ -19,6 +20,33 @@
     align-items: center;
     align-self: flex-end;
     width: -webkit-fill-available;
+}
+
+/* Image Panel */
+.toolbar-panel {
+    @extend .panel;
+
+    .toolbar-panel-input {
+        flex-grow: 1;
+
+        .toobar-panel-image-width {
+            padding: 0 10px;
+
+            .toolbar-panel-image-width-text {
+                padding: 0 5px;
+                font-size: 14px;
+                color: #202020;
+            }
+        }
+
+        .toolbar-panel-image-link {
+            margin: 0 20px;
+        }
+    }
+}
+
+.footer-panel {
+    @extend .panel;
 
     .footer-panel-switch {
         flex-grow: 1;
@@ -34,5 +62,9 @@
     .footer-panel-button {
         flex-grow: 1;
         text-align: end;
+
+        .footer-panel-compress-image {
+            margin: 0 10px;
+        }
     }
 }

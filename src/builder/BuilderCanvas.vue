@@ -126,9 +126,7 @@
         let indexInsert = 0
         const lists = state.children.find((item: any, index: number) => {
           if (item.id === this.value.id) {
-            indexInsert = EElementPosition.LEFT === this.value.position
-              ? index
-              : index + 1
+            indexInsert = EElementPosition.LEFT === this.value.position ? index : index + 1
             return true
           }
           this.addHorizentalElement(item)
@@ -148,9 +146,7 @@
         const lists = state.children.find((item: any, index: number) => {
           if (this.foundParent) {
             if (item.id === this.parentId) {
-              indexInsert = EElementPosition.TOP === this.value.position
-                ? index
-                : index + 1
+              indexInsert = EElementPosition.TOP === this.value.position ? index : index + 1
               return true
             }
             this.addVerticalElement(item)
@@ -163,21 +159,17 @@
         if (lists) {
           const key: any = _.findKey(lists.children, child => child.id === this.value.id)
           const data = this.value.duplicate
-            ? { ..._.cloneDeep({
-                  ...lists,
-                  children: _(lists.children)
-                    .map((child: any, index: number) => {
-                      return {
-                        ...child,
-                        id: uuid(),
-                        props: index === _.parseInt(key) ? child.props : {},
-                        value: index === _.parseInt(key) ? child.value : undefined,
-                      }
-                    })
-                    .cloneDeep()
+            ? { 
+                ..._.cloneDeep({
+                ...lists,
+                children: _(lists.children)
+                  .map((child: any) => { return { ...child, id: uuid() } })
+                  .filter((child: any, index: number) => index === _.parseInt(key))
+                  .cloneDeep()
                 })
               }
-            : { ..._.cloneDeep(this.defaultData['CONTAINER_DEFAULT']),
+            : { 
+                ..._.cloneDeep(this.defaultData['CONTAINER_DEFAULT']),
                 id: uuid(),
                 children: _.cloneDeep([{
                   id: uuid(),

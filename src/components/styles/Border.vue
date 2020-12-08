@@ -5,7 +5,7 @@
       class="footer-panel-border-bottom"
       label="Border Bottom"
       :value="toggle"
-      @change="doGetData"
+      @change="onUpdateToggle"
     />
     <span v-if="toggle">
       <DropdownComponent
@@ -33,27 +33,19 @@
 
 <script lang="ts">
 import _ from 'lodash'
-import { Component, Prop } from 'vue-property-decorator'
+import { Component, Prop, Watch } from 'vue-property-decorator'
 import BaseComponent from '../../core/BaseComponent'
 import { BORDER_STYLE } from '../../constants/Style'
 
 @Component
 export default class BorderStyleComponent extends BaseComponent {
   @Prop() elementProps!: any
+  @Prop() management!: any
   
   toggle = false
   borderWidth = '1'
   borderStyle = 'solid'
   borderColor = '#ffffff'
-
-  created() {
-    if (this.elementProps && this.elementProps['border-bottom']) {
-      this.toggle = this.elementProps && this.elementProps['border-bottom']
-      this.borderWidth = _.cloneDeep(this.elementProps['border-bottom']).width
-      this.borderStyle = _.cloneDeep(this.elementProps['border-bottom']).style
-      this.borderColor = _.cloneDeep(this.elementProps['border-bottom']).color
-    }
-  }
 
   get widthOptions() {
     const lists = []
@@ -67,11 +59,15 @@ export default class BorderStyleComponent extends BaseComponent {
     return BORDER_STYLE
   }
 
-  doGetData(value: any) {
+  doAssignDefaultData() {
+    this.borderWidth = '1'
+    this.borderStyle = 'solid'
+    this.borderColor = '#ffffff'
+  }
+
+  onUpdateToggle(value: any) {
     this.toggle = value
-    if (this.toggle) {
-      this.onEmitData()
-    }
+    this.onEmitData()
   }
 
   onUpdateWidth(width: any) {
@@ -90,14 +86,49 @@ export default class BorderStyleComponent extends BaseComponent {
   }
 
   onEmitData() {
-    console.log(this.borderWidth)
-    this.$emit('change', {
-      'border-bottom': {
-        width: `${this.borderWidth}px`,
-        style: this.borderStyle,
-        color: this.borderColor
+    this.$emit('change', this.toggle
+      ? {
+          'border-bottom': {
+            width: `${this.borderWidth}px`,
+            style: this.borderStyle,
+            color: this.borderColor
+          }
+        }
+      : undefined
+    )
+  }
+
+  @Watch('toggle')
+  onToggleUpdate() {
+    if (this.toggle) {
+      if (this.elementProps && this.elementProps['border-bottom']) {
+        this.toggle = this.elementProps && this.elementProps['border-bottom']
+        this.borderWidth = _.cloneDeep(this.elementProps['border-bottom']).width
+        this.borderStyle = _.cloneDeep(this.elementProps['border-bottom']).style
+        this.borderColor = _.cloneDeep(this.elementProps['border-bottom']).color
+      } else {
+        this.doAssignDefaultData()
       }
-    })
+    } else {
+      this.doAssignDefaultData()
+    }
+    this.onEmitData()
+  }
+
+  @Watch('management.edit')
+  onEdit() {
+    if (this.management.edit) {
+      if (this.elementProps && this.elementProps['border-bottom']) {
+        this.toggle = this.elementProps && this.elementProps['border-bottom']
+        this.borderWidth = _.cloneDeep(this.elementProps['border-bottom']).width
+        this.borderStyle = _.cloneDeep(this.elementProps['border-bottom']).style
+        this.borderColor = _.cloneDeep(this.elementProps['border-bottom']).color
+      } else {
+        this.toggle = false
+        this.doAssignDefaultData()
+      }
+      this.onEmitData()
+    }
   }
 }
 </script>

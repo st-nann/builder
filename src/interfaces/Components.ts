@@ -1,11 +1,11 @@
-import { EDirection, EJustify, EAlign } from '../enum/Components'
+import { EJustify } from '../enum/Components'
 
 export interface IFlexbox {
     grow: number
 }
 
 export interface IDropdownOption {
-    label: string
+    label?: string
     value: any
     icon?: string
 }
@@ -29,13 +29,14 @@ export interface IComponentOption {
         name: string
         label?: string
         placeholder?: string
+        search?: boolean // input, dropdown
         icon?: string
         value?: any
         options?: IDropdownOption[] | any[]
         disabled?: boolean
-        rules?: Function[],
-        className?: string,
-        width?: string, // input, dropdown
+        rules?: Function[]
+        className?: string
+        width?: string // input, dropdown
         modal?: IModal
     }
 }

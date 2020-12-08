@@ -1,5 +1,5 @@
 <template>
-  <span style="width: 100%;">
+  <span :style="`width: 100%;`">
     <BoxComponent
       :element="elementName"
       :action="management"
@@ -17,7 +17,7 @@
         <MainButtonComponent
           class="button-box"
           :elementId="elementId"
-          @click="doManagement"
+          @click="onUpdateManagement"
         />
       </template>
     </BoxComponent>
@@ -30,7 +30,13 @@
         <div :id="`editor-${elementId}`" class="editor"/>
       </template>
       <template slot="action-custom">
-        <FooterPanel :elementProps="elementProps" @click="doGetFooterPanelData" />
+        <FooterPanel
+          :elementProps="elementProps"
+          :elementName="elementName"
+          :management="management"
+          @change="onUpdatePreview"
+          @click="onUpdateFooterPanelData"
+        />
       </template>
     </ModalComponent>
   </span>
@@ -53,6 +59,7 @@ export default class TextPage extends BaseComponent {
   @Prop() elementValue!: any
 
   management: any = {}
+  previewData: any = {}
   footerData = {}
   editor: any = null
   contentHtml: any = null
@@ -96,7 +103,27 @@ export default class TextPage extends BaseComponent {
     })
   }
 
-  doManagement(data: any) {
+  doAssignStyle() {
+    const previewStyle: any = {}
+    if (JSON.stringify(this.previewData) !== '{}') {
+      if (this.previewData['border-bottom']) {
+        const border = this.previewData['border-bottom']
+        previewStyle['border-bottom'] = `${border.width} ${border.style} ${border.color}`
+      }
+      if (this.previewData['background-color']) {
+        previewStyle['background-color'] = this.previewData['background-color']
+      }
+    }
+    document.getElementById(`editor-${this.elementId}`)?.setAttribute(
+      'style',
+      JSON.stringify({...previewStyle})
+        .substring(1, JSON.stringify({...previewStyle}).length - 1)
+        .replaceAll(',', ';')
+        .replaceAll('"', '')
+    )
+  }
+
+  onUpdateManagement(data: any) {
     this.management = data
     if (
       (
@@ -111,7 +138,13 @@ export default class TextPage extends BaseComponent {
     }
   }
 
-  doGetFooterPanelData(data: any) {
+  onUpdatePreview(data: any) {
+    this.previewData = {}
+    this.previewData = data
+    this.doAssignStyle()
+  }
+
+  onUpdateFooterPanelData(data: any) {
     this.footerData = data
     this.management.edit = false
     if (data) { this.doEmitData() }

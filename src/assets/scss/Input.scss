@@ -1,17 +1,34 @@
-.input-label {
-    font-weight: 700;
-    font-size: 13px;
-    color: #414141;
-    margin-right: 10px;
-}
+.input-container {
+    position:relative;
+    direction: ltr;
+    width: inherit;
 
-.input {
-    border: 1px solid #c6c6c6;
-    padding: 4px;
-    border-radius: 3px;
-    width: var(--input-width);
-}
+    .input-label {
+        font-weight: 700;
+        font-size: 13px;
+        color: #414141;
+        margin-right: 10px;
+    }
 
-.input:focus {
-    outline: none;
+    .input {
+        border: 1px solid #c6c6c6;
+        padding: 4px 30px 4px 4px;
+        border-radius: 5px;
+        width: var(--input-width);
+        height: 25px;
+        margin:0;
+    }
+
+    .input:focus {
+        outline: none;
+    }
+
+    .input-append-icon {
+        position:absolute;
+        bottom: -8px;
+        right: 0px;
+        width: 24px;
+        height: 24px;
+        color: #888888;
+    }
 }

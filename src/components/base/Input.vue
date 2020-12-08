@@ -1,7 +1,14 @@
 <template>
-  <span>
-    <label class="input-label">{{ label }}</label>
-    <input class="input" :style="style"/>
+  <span class="input-container">
+    <label v-if="label" class="input-label">{{ label }}</label>
+    <input
+      :id="`input-${this.name}`"
+      class="input"
+      :placeholder="placeholder"
+      :style="style"
+      @input="doUpdateInput"
+    />
+    <i v-if="search" class="mdi mdi-magnify input-append-icon" />
   </span>
 </template>
 
@@ -13,8 +20,13 @@ import BaseComponent from '../../core/BaseComponent'
 export default class InputComponent extends BaseComponent {
   get style() {
     return {
-      '--input-width': `${this.width}px`
+      '--input-width': this.width ? `${this.width}px` : '-webkit-fill-available'
     }
+  }
+
+  doUpdateInput() {
+    const element: any = document.getElementById(`input-${this.name}`)
+    this.onInput(element.value)
   }
 }
 </script>

@@ -47,7 +47,7 @@
     font-size: 13px;
     font-weight: 700;
     padding: 7px 10px;
-    border-radius: 3px;
+    border-radius: 8px;
 }
 
 .cancel-square-button {
@@ -57,7 +57,12 @@
     font-size: 13px;
     font-weight: 700;
     padding: 7px 10px;
-    border-radius: 3px;
+    border-radius: 8px;
+}
+
+.change-image-square-button {
+    @extend .cancel-square-button;
+    margin: 0 5px;
 }
 
 .delete-square-button {
@@ -196,5 +201,46 @@
     @extend .button-menu;
     .menu-button-container:hover .menu-container {
         top: 18px;
+    }
+}
+
+.button-group {
+    margin: 0 3px 0 8px;
+
+    .button-group-item {
+        background-color: #ffffff;
+        border: 1px solid #dddddd;
+        color: #202020;
+        padding: 5px;
+        cursor: pointer;
+        vertical-align: middle;
+
+        .button-group-icon {
+            font-size: 18px;
+        }
+    }
+    
+    .button-group-item:after {
+        content: "";
+        clear: both;
+        display: content;
+    }
+    
+    .button-group-item:not(:last-child) {
+        border-right: none;
+    }
+
+    .button-group-item:first-child {
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+    }
+
+    .button-group-item:last-child {
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+    }
+    
+    .button-group-item:hover {
+        background-color: #eeeeee;
     }
 }
