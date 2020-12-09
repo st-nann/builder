@@ -3,7 +3,10 @@
     <label v-if="label" class="input-label">{{ label }}</label>
     <input
       :id="`input-${this.name}`"
-      class="input"
+      :class="{
+        'input': !search,
+        'input-search': search
+      }"
       :placeholder="placeholder"
       :style="style"
       @input="doUpdateInput"

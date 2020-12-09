@@ -208,15 +208,24 @@
             }
 
             .no-image {
-                color: #dddddd;
+                color: #d6d6d6;
+                text-align: center;
 
                 .no-image-icon {
-                    font-size: 80px;
+                    font-size: 100px;
                 }
 
                 .no-image-text {
-                    text-align: center;
-                    font-size: 16px;
+                    margin-top: 0px;
+                    margin-bottom: 20px;
+                }
+
+                .no-image-button {
+                    padding: 8px 25px;
+                    color: #ffffff;
+                    background-color: #8e8e8e;
+                    border-radius: 50px;
+                    border: none;
                 }
             }
         }

@@ -1,5 +1,5 @@
 .input-container {
-    position:relative;
+    position: relative;
     direction: ltr;
     width: inherit;
 
@@ -7,26 +7,32 @@
         font-weight: 700;
         font-size: 13px;
         color: #414141;
-        margin-right: 10px;
+        margin: 0 10px;
     }
 
     .input {
-        border: 1px solid #c6c6c6;
-        padding: 4px 30px 4px 4px;
+        border: 1px solid #dddddd;
+        padding: 4px;
         border-radius: 5px;
         width: var(--input-width);
-        height: 25px;
-        margin:0;
+        height: 22px;
+        margin: 0 10px;
     }
 
-    .input:focus {
+    .input-search {
+        @extend .input;
+        padding: 4px 30px 4px 4px;
+    }
+
+    .input:focus,
+    .input-search:focus {
         outline: none;
     }
 
     .input-append-icon {
-        position:absolute;
-        bottom: -8px;
-        right: 0px;
+        position: absolute;
+        bottom: -9px;
+        right: 8px;
         width: 24px;
         height: 24px;
         color: #888888;

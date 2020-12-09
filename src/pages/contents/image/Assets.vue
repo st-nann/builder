@@ -20,19 +20,19 @@
                     name="search-image"
                     placeholder="Search Image"
                     :search="true"
-                    @change="doSearchImage"
+                    @change="doGetImages"
                 />
             </div>
             <div class="search-list">
                 <div
-                    v-for="(item, index) in imageLists"
+                    v-for="(item, index) in filterImageLists"
                     :key="index"
                     class="search-list-item"
                     :class="{ 'clickable': !item.uploading }"
-                    @click="item.uploading ? '' : doSelectImage(item.src)"
+                    @click="item.uploading ? '' : doSelectImage(item.url)"
                 >
                     <div class="search-list-item-image-container">
-                        <img class="search-list-item-image" :src="item.src" />
+                        <img class="search-list-item-image" :src="item.url" />
                     </div>
                     <div class="search-list-item-detail">
                         <div v-if="item.uploading" class="image-uploading">
@@ -40,8 +40,8 @@
                             <div class="image-uploading-progress"></div>
                         </div>
                         <div v-else class="image-complete">
-                            <div class="image-name">{{ item.name }}</div>
-                            <div class="image-size">{{ item.size }}</div>
+                            <div class="image-name">{{ item.title }}</div>
+                            <div class="image-size">{{ doConvertImageSize(item.size) }}</div>
                         </div>
                     </div>
                 </div>
@@ -49,6 +49,11 @@
         </div>
     </div>
     <div class="image-asset-action">
+        <SquareButtonComponent
+            label="Cancel"
+            className="cancel-square-button"
+            @click="onEmitCancel"
+        />
         <SquareButtonComponent
             label="Add Image"
             className="done-square-button"
@@ -59,24 +64,41 @@
 </template>
 
 <script lang="ts">
-import { Component } from 'vue-property-decorator'
+import _ from 'lodash'
+import { Component, Prop, Watch } from 'vue-property-decorator'
 import BaseComponent from '../../../core/BaseComponent'
+import { IImageLists, IImageItem } from '../../../interfaces/Image'
 import { IMAGE_LISTS } from '../../../constants/Image'
 
 @Component
 export default class ImageAssetContent extends BaseComponent {
+    @Prop(Boolean) changeImage!: boolean
+    
     imageUrl = ''
+    imageLists: IImageLists = _.cloneDeep(IMAGE_LISTS)
+    filterImageLists: IImageItem[] = this.imageLists.items
 
-    get imageLists() {
-        return IMAGE_LISTS
+    doConvertImageSize(size: number) {
+        let transformSize: any = '0 byte'
+        if (size >= 1048576) { transformSize = (size / 1048576).toFixed(2) + ' MB' }
+        else if (size >= 1024) { transformSize = (size / 1024).toFixed(2) + ' KB' }
+        else if (size > 1) { transformSize = size + ' bytes' }
+        else if (size == 1) { transformSize = size + ' byte' }
+        return transformSize
     }
 
-    doSelectImage(src: string) {
-        this.imageUrl = src
+    doSelectImage(url: string) {
+        this.imageUrl = url
     }
 
-    doSearchImage() {
-        // search
+    doGetImages(data: any = '') {
+        this.filterImageLists = this.imageLists.items.filter(
+            (item: IImageItem) => _.includes(_.toLower(item.title), _.toLower(data))
+        )
+    }
+
+    onEmitCancel() {
+        this.$emit('cancel', false)
     }
 
     onEmitAddImage() {
@@ -84,6 +106,11 @@ export default class ImageAssetContent extends BaseComponent {
             url: this.imageUrl,
             changeImage: false
         })
+    }
+
+    @Watch('changeImage')
+    onChangeImage() {
+        if (this.changeImage) { this.doGetImages() }
     }
 }
 </script>

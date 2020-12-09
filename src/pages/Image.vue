@@ -5,8 +5,8 @@
       :action="management"
       @click="doEmitAddElement"
     >
-      <template slot="image-content">
-
+      <template slot="content">
+        <img v-if="elementProps.url" :src="elementProps.url" class="image-content"/>
       </template>
       <template slot="button-management">
         <MainButtonComponent
@@ -25,19 +25,30 @@
         <div class="modal-content-image">
           <ImageAssetContent
             v-if="changeImage"
-            @click="onUpdateImageLink"
+            :changeImage="changeImage"
+            @click="onUpdateChangeImage"
+            @cancel="onUpdateChangeImageCancel"
           />
           <div v-else>
-            <ImageToolbarPanel @change="getImageData" />
+            <ImageToolbarPanel
+              :imageUrl="imageUrl"
+              :management="management"
+              @change="getImageData"
+            />
             <div :id="`image-preview-${elementId}`" class="image-preview-container">
               <img
-                v-if="imageData && imageData.imageUrl"
+                v-if="imageUrl"
                 class="image-preview"
-                :src="imageData.imageUrl"
+                :src="imageUrl"
               />
               <div v-else class="no-image">
-                <i class="mdi mdi-folder-multiple-image no-image-icon" />
-                <div class="no-image-text">No Image</div>
+                <i class="mdi mdi-image-plus no-image-icon" />
+                <p class="no-image-text">click the below button to add image</p>
+                <SquareButtonComponent
+                  label="Browse"
+                  className="no-image-button clickable"
+                  @click="doAddImage"
+                />
               </div>
             </div>
           </div>
@@ -49,6 +60,7 @@
           :elementProps="elementProps"
           :elementName="elementName"
           :management="management"
+          :imageUrl="imageUrl"
           @change="onUpdatePreview"
           @changeImage="onUpdateChangeImage"
           @click="onUpdateFooterPanelData"
@@ -69,18 +81,20 @@ export default class ImagePage extends BaseComponent {
   @Prop() elementProps!: any
 
   management: any = {}
-  changeImage = true
+  changeImage = false
   previewData: any = {}
   footerData = {}
   imageData: any = {}
+  imageUrl = ''
 
   getImageData(data: any) {
-    this.imageData = data
+    this.imageData = { ...data }
   }
 
-  onUpdateImageLink(data: any) {
+  onUpdateChangeImage(data: any) {
+    console.log(data.changeImage)
     this.changeImage = data.changeImage
-    this.imageData.imageUrl = data.url
+    this.imageUrl = data.url
   }
 
   doAssignStyle() {
@@ -108,7 +122,7 @@ export default class ImagePage extends BaseComponent {
     this.doEmitData()
   }
 
-  onUpdateChangeImage(change: boolean) {
+  onUpdateChangeImageCancel(change: boolean) {
     this.changeImage = change
   }
 
@@ -124,6 +138,10 @@ export default class ImagePage extends BaseComponent {
     if (data) { this.doEmitData() }
   }
 
+  doAddImage() {
+    this.changeImage = true
+  }
+
   doEmitData() {
     if (this.management.delete) {
       this.$emit('delete', this.elementId)
@@ -136,7 +154,11 @@ export default class ImagePage extends BaseComponent {
     } else {
       this.$emit('done', {
         id: this.elementId,
-        props: { ...this.imageData, ...this.footerData }
+        props: {
+          url: this.imageUrl,
+          ...this.imageData,
+          ...this.footerData
+        }
       })
     }
   }
@@ -145,7 +167,7 @@ export default class ImagePage extends BaseComponent {
     this.$emit('add', { id: this.elementId, ...data })
   }
 
-  @Watch('management', { deep: true})
+  @Watch('management', { deep: true })
   onEdit() {
     if (this.$refs[`modal-edit-${this.elementId}`]) {
       this.$refs[`modal-edit-${this.elementId}`].isOpenModal = this.management.edit

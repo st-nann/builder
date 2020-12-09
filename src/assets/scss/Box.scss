@@ -7,12 +7,12 @@
 }
 
 .box {
-    display: -webkit-box;
+    // display: -webkit-box;
+    display: flex;
     min-height: 180px;
-    height: 180px;
+    height: auto;
     padding: 8px;
     position: relative;
-    // border: 1px dashed #969696;
     background-color: transparent !important;
 
 
@@ -22,7 +22,7 @@
         flex-grow: 1;
         justify-content: center;
         align-items: center;
-        min-height: max-content;
+        min-height: 100%;
         height: inherit;
         position: absolute;
         width: -webkit-fill-available;
@@ -35,6 +35,7 @@
 
             .text-link-box {
                 color: #a2a5a5;
+                z-index: 99;
             }
         }
 
@@ -83,7 +84,7 @@
         }
 
         .circle-button-bottom {
-            bottom: -29px;
+            bottom: -14px;
             z-index: 1;
         }
 

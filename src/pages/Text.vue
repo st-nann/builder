@@ -5,7 +5,7 @@
       :action="management"
       @click="doEmitAddElement"
     >
-      <template slot="text-content">
+      <template slot="content">
         <div
           v-if="editor && editor.root"
           :id="`content-${elementId}`"

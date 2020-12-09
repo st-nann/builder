@@ -24,29 +24,25 @@ export interface IText {
             style: string
             color: string
         },
-        link?: string
-        font?: {
-            family: string
-            size: string
-            weight: number
-            color: string
-        },
-        'text-align'?: string
-        'line-height'?: number
+        html?: string
     }
 }
 
 export interface IImage {
     element: EElementType.IMAGE
-    props?: {
+    props: {
+        // flexbox: {
+        //     display: string
+        // },
         background?: string
         'border-bottom'?: {
             width: string
             style: string
             color: string
         },
-        link: string
-        compress: boolean
+        link?: string
+        url?: string
+        compress?: boolean
         width?: string
     }
 }

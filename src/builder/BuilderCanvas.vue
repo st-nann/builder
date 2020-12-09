@@ -56,18 +56,18 @@
         })
       }
 
-      const style = {
-        ...state.props,
-        ...(state.props && state.props.flexbox ? state.props.flexbox : undefined),
-        ...(
-            state.props && state.props['border-bottom']
-              ? {
-                  'border-bottom':
-                    `${state.props['border-bottom'].width} ${state.props['border-bottom'].style} ${state.props['border-bottom'].color}`
-                }
-              : undefined
-          )
-      }
+      const style = state.props
+        ? {
+            ..._.pick(state.props, ['background-color', 'flexbox']),
+            ...state.props.flexbox,
+            ...state.props['border-bottom']
+                ? {
+                    'border-bottom':
+                      `${state.props['border-bottom'].width} ${state.props['border-bottom'].style} ${state.props['border-bottom'].color}`
+                  }
+                : undefined
+          }
+          : undefined
 
       const properties = {
         props: {

@@ -9,7 +9,7 @@
     <span v-if="toggle">
       <InputComponent
         name="image-width"
-        width="30"
+        width="40"
         @change="onUpdateWidth"
       />
       <span class="toolbar-panel-image-width-text">px</span>

@@ -1,11 +1,13 @@
 <template>
-    <div class="toolbar-panel">
+    <div v-if="imageUrl !== ''" class="toolbar-panel">
         <div class="toolbar-panel-input">
         <WidthStyleComponent
             class="toobar-panel-image-width"
             :elementProps="elementProps"
             @change="onUpdateWidth"
         />
+        </div>
+        <div class="toolbar-panel-button">
         <InputComponent
             name="image-link"
             class="toolbar-panel-image-link"
@@ -15,14 +17,14 @@
             :value="imageLink"
             @change="onUpdateLink"
         />
-        </div>
-        <div class="toolbar-panel-button">
         <ButtonGroupComponent
+            name="image-vertical-position"
             :options="verticalPositionOptions"
             :value="justifyImage"
             @change="onUpdateVerticalPosition"
         />
         <ButtonGroupComponent
+            name="image-horizental-position"
             :options="horizentalPositionOptions"
             :value="alignImage"
             @change="onUpdateHorizentalPosition"
@@ -33,32 +35,20 @@
 
 <script lang="ts">
 import _ from 'lodash'
-import { Component, Prop } from 'vue-property-decorator'
+import { Component, Prop, Watch } from 'vue-property-decorator'
 import BaseComponent from '../../core/BaseComponent'
 import { VERTICAL_POSITION_STYLE, HORIZENTAL_POSITION_STYLE } from '../../constants/Style'
 
 @Component
 export default class ImageToolbarPanel extends BaseComponent {
     @Prop() elementProps!: any
+    @Prop(String) imageUrl!: string
+    @Prop() management!: any
     
-    imageWidth = ''
+    imageWidth: any
     imageLink = ''
     justifyImage = 'center'
     alignImage = 'center'
-
-    created() {
-        if (this.elementProps) {
-            if (this.elementProps.link) {
-                this.imageLink = this.elementProps.link
-            }
-            if (this.elementProps.flexbox && _.cloneDeep(this.elementProps.flexbox)['justify-content']) {
-                this.justifyImage = _.cloneDeep(this.elementProps.flexbox)['justify-content']
-            }
-            if (this.elementProps.flexbox && _.cloneDeep(this.elementProps.flexbox)['align-item']) {
-                this.alignImage = _.cloneDeep(this.elementProps.flexbox)['align-item']
-            }
-        }
-    }
 
     get horizentalPositionOptions() {
         return HORIZENTAL_POSITION_STYLE
@@ -70,27 +60,27 @@ export default class ImageToolbarPanel extends BaseComponent {
 
     onUpdateWidth(width: any) {
         this.imageWidth = width
-        if (width) { this.doEmitData() }
+        if (width) { this.onEmitData() }
     }
 
     onUpdateLink(link: string) {
         this.imageLink = link
-        if (link) { this.doEmitData() }
+        if (link) { this.onEmitData() }
     }
 
     onUpdateVerticalPosition(position: string) {
         this.alignImage = position
-        if (position) { this.doEmitData() }
+        if (position) { this.onEmitData() }
     }
 
     onUpdateHorizentalPosition(position: string) {
         this.justifyImage = position
-        if (position) { this.doEmitData() }
+        if (position) { this.onEmitData() }
     }
 
-    doEmitData() {
+    onEmitData() {
         this.$emit('change', {
-            width: _.isEmpty(this.imageWidth) ? undefined : this.imageWidth,
+            ...this.imageWidth,
             link: _.isEmpty(this.imageLink) ? undefined : this.imageLink,
             flexbox: _.isEmpty(this.justifyImage) && _.isEmpty(this.alignImage)
                 ? undefined
@@ -99,6 +89,22 @@ export default class ImageToolbarPanel extends BaseComponent {
                     'align-item': this.alignImage
                 }
         })
+    }
+
+    @Watch('management.edit')
+    onEdit() {
+        if (this.management.edit) {
+            if (this.elementProps) {
+                this.imageLink = this.elementProps.link ? this.elementProps.link : ''
+                this.justifyImage = this.elementProps.flexbox && _.cloneDeep(this.elementProps.flexbox)['justify-content']
+                    ? _.cloneDeep(this.elementProps.flexbox)['justify-content']
+                    : 'center'
+                this.alignImage = this.elementProps.flexbox && _.cloneDeep(this.elementProps.flexbox)['align-item']
+                    ? _.cloneDeep(this.elementProps.flexbox)['align-item']
+                    : 'center'
+            }
+            this.onEmitData()
+        }
     }
 }
 </script>

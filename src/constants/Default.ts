@@ -21,10 +21,7 @@ export const TEXT_DEFAULT: IText = {
 
 export const IMAGE_DEFAULT: IImage = {
     element: EElementType.IMAGE,
-    props: {
-        link: '',
-        compress: false
-    }
+    props: {}
 }
 
 export const SPACER_DEFAULT: ISpacer = {

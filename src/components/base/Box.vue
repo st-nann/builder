@@ -30,7 +30,7 @@
       </div>
       <slot name="button-management" />
     </div>
-    <slot name="text-content" />
+    <slot name="content" />
   </span>
 </template>
 
