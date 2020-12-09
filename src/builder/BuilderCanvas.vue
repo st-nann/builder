@@ -73,8 +73,7 @@
         props: {
           elementId: state.id,
           elementName: _.capitalize(state.element),
-          elementProps: state.props,
-          elementValue: state.value
+          elementProps: state.props
         },
         on: {
           add: (value: any) => {
@@ -109,7 +108,6 @@
                       : undefined
                   )
               }
-              state.value = _.cloneDeep(item.value)
             }
           }
         },

@@ -49,14 +49,12 @@ import { Component, Prop, Watch } from 'vue-property-decorator'
 import BaseComponent from '../core/BaseComponent'
 
 const Quill = quill as any
-const Delta = Quill.import('delta')
 
 @Component
 export default class TextPage extends BaseComponent {
   @Prop(String) elementId!: string
   @Prop(String) elementName!: string
   @Prop() elementProps!: any
-  @Prop() elementValue!: any
 
   management: any = {}
   previewData: any = {}
@@ -90,14 +88,13 @@ export default class TextPage extends BaseComponent {
             ]
           },
           theme: 'snow',
-          placeholder: this.elementValue ? '' : 'Type content ...'
+          placeholder: this.elementProps.html ? '' : 'Type content ...'
         }
         this.editor = new Quill(`#editor-${this.elementId}`, options)
       }
       this.editor.root.innerHTML = ''
-      if (this.elementValue && this.elementValue.json && this.elementValue.html) {
-        this.editor.updateContents(new Delta(this.elementValue.json))
-        this.editor.root.innerHTML = this.elementValue.html
+      if (this.elementProps && this.elementProps.html) {
+        this.editor.root.innerHTML = this.elementProps.html
       }
       this.contentHtml = this.editor.root.innerHTML
     })
@@ -129,8 +126,8 @@ export default class TextPage extends BaseComponent {
       (
         this.editor &&
         this.editor.root &&
-        this.elementValue &&
-        this.elementValue.html === this.editor.root.innerHTML
+        this.elementProps &&
+        this.elementProps.html === this.editor.root.innerHTML
       ) ||
       _.isEmpty(this.contentHtml)
     ) {
@@ -162,10 +159,11 @@ export default class TextPage extends BaseComponent {
     } else {
       this.$emit('done', {
         id: this.elementId,
-        props: { ...this.elementProps } || { ...this.footerData },
-        value: this.editor && this.editor.editor && this.editor.root
-          ? { json: this.editor.editor.delta.ops, html: this.editor.root.innerHTML }
-          : undefined
+        props: {
+          ...this.elementProps,
+          ...this.footerData,
+          ...(this.editor && this.editor.root ? { html: this.editor.root.innerHTML } : undefined)
+        }
       })
     }
   }
