@@ -58,9 +58,12 @@ export default class ModalComponent extends BaseComponent {
 
   @Watch('isOpenModal')
   triggerModal() {
-    document.getElementById(`modal-${this.modal.action}-${this.elementId}`)?.setAttribute(
-      'style', `display: ${this.isOpenModal ? 'block' : 'none' }`
-    )
+    const self = this
+    setTimeout(() => {
+      document.getElementById(`modal-${self.modal.action}-${self.elementId}`)?.setAttribute(
+        'style', `display: ${self.isOpenModal ? 'block' : 'none' }`
+      )
+    }, 100)
   }
 }
 </script>

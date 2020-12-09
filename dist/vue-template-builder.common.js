@@ -40354,12 +40354,12 @@ var Input_component = normalizeComponent(
 )
 
 /* harmony default export */ var Input = (Input_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"e49ed49a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/base/Modal.vue?vue&type=template&id=ae6385ee&
-var Modalvue_type_template_id_ae6385ee_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"modal",attrs:{"id":("modal-" + (_vm.modal.action) + "-" + _vm.elementId)}},[_c('div',{staticClass:"modal-content",style:(_vm.style)},[_vm._t("content"),(_vm.modal.button)?_c('div',{staticClass:"modal-action",style:(_vm.style)},[(_vm.modal.button.manage)?[_c('SquareButtonComponent',{attrs:{"label":"Cancel","className":"cancel-delete-square-button"},on:{"click":_vm.doCloseModal}}),_c('SquareButtonComponent',{attrs:{"label":_vm.modal.button.save,"className":"confirm-delete-square-button"},on:{"click":_vm.doAction}})]:_vm._e(),(_vm.modal.button.info)?[_c('SquareButtonComponent',{attrs:{"label":"Close","className":"cancel-delete-square-button"},on:{"click":_vm.doCloseModal}})]:_vm._e(),(_vm.modal.button.custom)?[_vm._t("action-custom")]:_vm._e()],2):_vm._e()],2)])}
-var Modalvue_type_template_id_ae6385ee_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"e49ed49a-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/base/Modal.vue?vue&type=template&id=f4f9ba44&
+var Modalvue_type_template_id_f4f9ba44_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"modal",attrs:{"id":("modal-" + (_vm.modal.action) + "-" + _vm.elementId)}},[_c('div',{staticClass:"modal-content",style:(_vm.style)},[_vm._t("content"),(_vm.modal.button)?_c('div',{staticClass:"modal-action",style:(_vm.style)},[(_vm.modal.button.manage)?[_c('SquareButtonComponent',{attrs:{"label":"Cancel","className":"cancel-delete-square-button"},on:{"click":_vm.doCloseModal}}),_c('SquareButtonComponent',{attrs:{"label":_vm.modal.button.save,"className":"confirm-delete-square-button"},on:{"click":_vm.doAction}})]:_vm._e(),(_vm.modal.button.info)?[_c('SquareButtonComponent',{attrs:{"label":"Close","className":"cancel-delete-square-button"},on:{"click":_vm.doCloseModal}})]:_vm._e(),(_vm.modal.button.custom)?[_vm._t("action-custom")]:_vm._e()],2):_vm._e()],2)])}
+var Modalvue_type_template_id_f4f9ba44_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/base/Modal.vue?vue&type=template&id=ae6385ee&
+// CONCATENATED MODULE: ./src/components/base/Modal.vue?vue&type=template&id=f4f9ba44&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.concat.js
 var es_array_concat = __webpack_require__("99af");
@@ -40404,9 +40404,12 @@ var Modalvue_type_script_lang_ts_ModalComponent = /*#__PURE__*/function (_BaseCo
   }, {
     key: "triggerModal",
     value: function triggerModal() {
-      var _document$getElementB;
+      var self = this;
+      setTimeout(function () {
+        var _document$getElementB;
 
-      (_document$getElementB = document.getElementById("modal-".concat(this.modal.action, "-").concat(this.elementId))) === null || _document$getElementB === void 0 ? void 0 : _document$getElementB.setAttribute('style', "display: ".concat(this.isOpenModal ? 'block' : 'none'));
+        (_document$getElementB = document.getElementById("modal-".concat(self.modal.action, "-").concat(self.elementId))) === null || _document$getElementB === void 0 ? void 0 : _document$getElementB.setAttribute('style', "display: ".concat(self.isOpenModal ? 'block' : 'none'));
+      }, 100);
     }
   }, {
     key: "style",
@@ -40445,8 +40448,8 @@ var Modalvue_type_style_index_0_lang_scss_ = __webpack_require__("e674");
 
 var Modal_component = normalizeComponent(
   base_Modalvue_type_script_lang_ts_,
-  Modalvue_type_template_id_ae6385ee_render,
-  Modalvue_type_template_id_ae6385ee_staticRenderFns,
+  Modalvue_type_template_id_f4f9ba44_render,
+  Modalvue_type_template_id_f4f9ba44_staticRenderFns,
   false,
   null,
   null,
