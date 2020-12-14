@@ -174,7 +174,8 @@
                                 }
                             }
                         }
-                        .search-list-item:hover {
+                        .search-list-item:hover,
+                        .search-list-item-active {
                             background-color: #fafafa;
                             border: 1px solid #dddddd;
                             border-radius: 8px;

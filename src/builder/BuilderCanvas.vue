@@ -29,6 +29,7 @@
     value: any = {}
     parentId = ''
     foundParent = false
+    inserted = false
 
     get defaultData(): any {
       return {
@@ -73,7 +74,7 @@
         props: {
           elementId: state.id,
           elementName: _.capitalize(state.element),
-          elementProps: state.props
+          elementProps: _.cloneDeep(state.props)
         },
         on: {
           add: (value: any) => {
@@ -122,60 +123,58 @@
     addHorizentalElement(state: any = this.templateJson) {
       if (state.children) {
         let indexInsert = 0
-        const lists = state.children.find((item: any, index: number) => {
+        state.children.forEach((item: any, index: number) => {
           if (item.id === this.value.id) {
             indexInsert = EElementPosition.LEFT === this.value.position ? index : index + 1
-            return true
+            const data = this.value.duplicate
+              ? { ..._.cloneDeep(item) }
+              : { ..._.cloneDeep(this.defaultData[`${this.value.element}_DEFAULT`]) }
+            state.children.splice(indexInsert, 0, { ...data, id: uuid() })
           }
           this.addHorizentalElement(item)
         })
-        if (lists) {
-          const data = this.value.duplicate
-            ? { ..._.cloneDeep(lists) }
-            : { ..._.cloneDeep(this.defaultData[`${this.value.element}_DEFAULT`]) }
-          state.children.splice(indexInsert, 0, { ...data, id: uuid() })
-        }
       }
     }
 
     addVerticalElement(state: any = this.templateJson) {
       if (state.children) {
         let indexInsert = 0
-        const lists = state.children.find((item: any, index: number) => {
+        state.children.forEach((item: any, index: number) => {
           if (this.foundParent) {
             if (item.id === this.parentId) {
               indexInsert = EElementPosition.TOP === this.value.position ? index : index + 1
-              return true
+              const key: any = _.findKey(item.children, child => child.id === this.value.id)
+              const data = this.value.duplicate
+                ? { 
+                    ..._.cloneDeep({
+                    ...item,
+                    children: _(item.children)
+                      .map((child: any) => { return { ...child, id: uuid() } })
+                      .filter((child: any, index: number) => index === _.parseInt(key))
+                      .cloneDeep()
+                    })
+                  }
+                : { 
+                    ..._.cloneDeep(this.defaultData['CONTAINER_DEFAULT']),
+                    id: uuid(),
+                    children: _.cloneDeep([{
+                      id: uuid(),
+                      ..._.cloneDeep(this.defaultData[`${this.value.element}_DEFAULT`])
+                    }])
+                  }
+              if (!this.inserted) {
+                state.children.splice(indexInsert, 0, { ...data, id: uuid() })
+                this.inserted = true
+              }
             }
             this.addVerticalElement(item)
           } else {
             this.foundParent = item.id === this.value.id
             this.parentId = state.id
+            this.inserted = false
             this.addVerticalElement(this.foundParent ? undefined : item)
           }
         })
-        if (lists) {
-          const key: any = _.findKey(lists.children, child => child.id === this.value.id)
-          const data = this.value.duplicate
-            ? { 
-                ..._.cloneDeep({
-                ...lists,
-                children: _(lists.children)
-                  .map((child: any) => { return { ...child, id: uuid() } })
-                  .filter((child: any, index: number) => index === _.parseInt(key))
-                  .cloneDeep()
-                })
-              }
-            : { 
-                ..._.cloneDeep(this.defaultData['CONTAINER_DEFAULT']),
-                id: uuid(),
-                children: _.cloneDeep([{
-                  id: uuid(),
-                  ..._.cloneDeep(this.defaultData[`${this.value.element}_DEFAULT`])
-                }])
-              }
-          state.children.splice(indexInsert, 0, { ...data, id: uuid() })
-        }
       }
     }
 

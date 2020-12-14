@@ -93,8 +93,9 @@ export default class TextPage extends BaseComponent {
         this.editor = new Quill(`#editor-${this.elementId}`, options)
       }
       this.editor.root.innerHTML = ''
-      if (this.elementProps && this.elementProps.html) {
-        this.editor.root.innerHTML = this.elementProps.html
+      this.editor.editor.delta.ops = []
+      if (this.elementProps && this.elementProps.json) {
+        this.editor.setContents(this.elementProps.json)
       }
       this.contentHtml = this.editor.root.innerHTML
     })
@@ -103,34 +104,25 @@ export default class TextPage extends BaseComponent {
   doAssignStyle() {
     const previewStyle: any = {}
     if (JSON.stringify(this.previewData) !== '{}') {
-      if (this.previewData['border-bottom']) {
-        const border = this.previewData['border-bottom']
-        previewStyle['border-bottom'] = `${border.width} ${border.style} ${border.color}`
-      }
-      if (this.previewData['background-color']) {
-        previewStyle['background-color'] = this.previewData['background-color']
-      }
+      const border = this.previewData['border-bottom']
+      const backgroundColor = this.previewData['border-bottom']
+      if (border) { previewStyle['border-bottom'] = `${border.width} ${border.style} ${border.color}` }
+      if (backgroundColor) { previewStyle['background-color'] = backgroundColor }
     }
-    document.getElementById(`editor-${this.elementId}`)?.setAttribute(
-      'style',
-      JSON.stringify({...previewStyle})
-        .substring(1, JSON.stringify({...previewStyle}).length - 1)
-        .replaceAll(',', ';')
-        .replaceAll('"', '')
-    )
+    setTimeout(() => {
+      document.getElementById(`editor-${this.elementId}`)?.setAttribute(
+        'style',
+        JSON.stringify({...previewStyle})
+          .substring(1, JSON.stringify({...previewStyle}).length - 1)
+          .replaceAll(',', ';')
+          .replaceAll('"', '')
+      )
+    }, 10)
   }
 
   onUpdateManagement(data: any) {
     this.management = data
-    if (
-      (
-        this.editor &&
-        this.editor.root &&
-        this.elementProps &&
-        this.elementProps.html === this.editor.root.innerHTML
-      ) ||
-      _.isEmpty(this.contentHtml)
-    ) {
+    if (this.management.duplicate || this.management.delete) {
       this.doEmitData()
     }
   }
@@ -162,7 +154,11 @@ export default class TextPage extends BaseComponent {
         props: {
           ...this.elementProps,
           ...this.footerData,
-          ...(this.editor && this.editor.root ? { html: this.editor.root.innerHTML } : undefined)
+          // ...(this.editor && this.editor.root ? { html: this.editor.root.innerHTML } : undefined),
+          ...(this.editor && this.editor.editor && this.editor.editor.delta && this.editor.editor.delta.ops
+                ? { json: this.editor.editor.delta.ops }
+                : undefined
+              )
         }
       })
     }
@@ -174,9 +170,8 @@ export default class TextPage extends BaseComponent {
 
   @Watch('management', { deep: true})
   onEdit() {
-    if (this.$refs[`modal-edit-${this.elementId}`]) {
-      this.$refs[`modal-edit-${this.elementId}`].isOpenModal = this.management.edit
-    }
+    const ref = this.$refs[`modal-edit-${this.elementId}`]
+    if (ref) { ref.isOpenModal = this.management.edit }
     const self = this
     setTimeout(() => {
       self.editor.focus()

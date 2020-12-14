@@ -12,7 +12,7 @@
     <div class="image-asset-content">
         <div class="image-asset-content-preview">
             <div class="preview-text">Preview</div>
-            <img v-if="imageUrl" :src="imageUrl" class="image-preview"/> 
+            <img v-if="url" :src="url" class="image-preview"/> 
         </div>
         <div class="image-asset-content-search">
             <div class="search-input">
@@ -28,7 +28,10 @@
                     v-for="(item, index) in filterImageLists"
                     :key="index"
                     class="search-list-item"
-                    :class="{ 'clickable': !item.uploading }"
+                    :class="{
+                        'clickable': !item.uploading,
+                        'search-list-item-active': item.url === url
+                    }"
                     @click="item.uploading ? '' : doSelectImage(item.url)"
                 >
                     <div class="search-list-item-image-container">
@@ -52,12 +55,12 @@
         <SquareButtonComponent
             label="Cancel"
             className="cancel-square-button"
-            @click="onEmitCancel"
+            @click="doEmitCancel"
         />
         <SquareButtonComponent
             label="Add Image"
             className="done-square-button"
-            @click="onEmitAddImage"
+            @click="doEmitGetImage"
         />
     </div>
   </div>
@@ -65,7 +68,7 @@
 
 <script lang="ts">
 import _ from 'lodash'
-import { Component, Prop, Watch } from 'vue-property-decorator'
+import { Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../../../core/BaseComponent'
 import { IImageLists, IImageItem } from '../../../interfaces/Image'
 import { IMAGE_LISTS } from '../../../constants/Image'
@@ -73,9 +76,10 @@ import { IMAGE_LISTS } from '../../../constants/Image'
 @Component
 export default class ImageAssetContent extends BaseComponent {
     @Prop(Boolean) changeImage!: boolean
+    @Prop(String) imageUrl!: string
     
-    imageUrl = ''
-    imageLists: IImageLists = _.cloneDeep(IMAGE_LISTS)
+    url = this.imageUrl
+    imageLists: IImageLists = _.cloneDeep(IMAGE_LISTS) // api data
     filterImageLists: IImageItem[] = this.imageLists.items
 
     doConvertImageSize(size: number) {
@@ -88,7 +92,7 @@ export default class ImageAssetContent extends BaseComponent {
     }
 
     doSelectImage(url: string) {
-        this.imageUrl = url
+        this.url = url
     }
 
     doGetImages(data: any = '') {
@@ -97,20 +101,12 @@ export default class ImageAssetContent extends BaseComponent {
         )
     }
 
-    onEmitCancel() {
-        this.$emit('cancel', false)
+    doEmitGetImage() {
+        this.$emit('click', { url: this.url, changeImage: false })
     }
 
-    onEmitAddImage() {
-        this.$emit('click', {
-            url: this.imageUrl,
-            changeImage: false
-        })
-    }
-
-    @Watch('changeImage')
-    onChangeImage() {
-        if (this.changeImage) { this.doGetImages() }
+    doEmitCancel() {
+        this.$emit('click', { changeImage: false })
     }
 }
 </script>

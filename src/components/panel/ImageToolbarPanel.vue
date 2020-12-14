@@ -1,9 +1,11 @@
 <template>
-    <div v-if="imageUrl !== ''" class="toolbar-panel">
+    <div v-show="imageUrl && imageUrl !== ''" class="toolbar-panel">
         <div class="toolbar-panel-input">
         <WidthStyleComponent
             class="toobar-panel-image-width"
+            :elementId="elementId"
             :elementProps="elementProps"
+            :management="management"
             @change="onUpdateWidth"
         />
         </div>
@@ -20,13 +22,13 @@
         <ButtonGroupComponent
             name="image-vertical-position"
             :options="verticalPositionOptions"
-            :value="justifyImage"
+            :value="{'image-vertical-position': alignImage }"
             @change="onUpdateVerticalPosition"
         />
         <ButtonGroupComponent
             name="image-horizental-position"
             :options="horizentalPositionOptions"
-            :value="alignImage"
+            :value="{'image-horizental-position': justifyImage }"
             @change="onUpdateHorizentalPosition"
         />
         </div>
@@ -41,6 +43,7 @@ import { VERTICAL_POSITION_STYLE, HORIZENTAL_POSITION_STYLE } from '../../consta
 
 @Component
 export default class ImageToolbarPanel extends BaseComponent {
+    @Prop(String) elementId!: string
     @Prop() elementProps!: any
     @Prop(String) imageUrl!: string
     @Prop() management!: any
@@ -60,22 +63,22 @@ export default class ImageToolbarPanel extends BaseComponent {
 
     onUpdateWidth(width: any) {
         this.imageWidth = width
-        if (width) { this.onEmitData() }
+        this.onEmitData()
     }
 
     onUpdateLink(link: string) {
         this.imageLink = link
-        if (link) { this.onEmitData() }
+        this.onEmitData()
     }
 
     onUpdateVerticalPosition(position: string) {
         this.alignImage = position
-        if (position) { this.onEmitData() }
+        this.onEmitData()
     }
 
     onUpdateHorizentalPosition(position: string) {
         this.justifyImage = position
-        if (position) { this.onEmitData() }
+        this.onEmitData()
     }
 
     onEmitData() {
@@ -95,13 +98,17 @@ export default class ImageToolbarPanel extends BaseComponent {
     onEdit() {
         if (this.management.edit) {
             if (this.elementProps) {
-                this.imageLink = this.elementProps.link ? this.elementProps.link : ''
-                this.justifyImage = this.elementProps.flexbox && _.cloneDeep(this.elementProps.flexbox)['justify-content']
-                    ? _.cloneDeep(this.elementProps.flexbox)['justify-content']
-                    : 'center'
-                this.alignImage = this.elementProps.flexbox && _.cloneDeep(this.elementProps.flexbox)['align-item']
-                    ? _.cloneDeep(this.elementProps.flexbox)['align-item']
-                    : 'center'
+                const haveFlexbox = this.elementProps.flexbox
+                const flexbox = _.cloneDeep(this.elementProps.flexbox)
+                this.imageLink = this.elementProps.link || ''
+                if (haveFlexbox) {
+                    this.justifyImage = _.isEmpty(flexbox['justify-content'])
+                        ? 'center'
+                        : flexbox['justify-content']
+                    this.alignImage = _.isEmpty(flexbox['align-item'])
+                        ? 'center'
+                        : flexbox['align-item']
+                }
             }
             this.onEmitData()
         }

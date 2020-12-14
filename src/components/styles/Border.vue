@@ -1,7 +1,7 @@
 <template>
   <span>
     <SwitchComponent
-      name="footer-panel-border-bottom"
+      :name="`footer-panel-border-bottom-${elementId}`"
       class="footer-panel-border-bottom"
       label="Border Bottom"
       :value="toggle"
@@ -9,21 +9,21 @@
     />
     <span v-if="toggle">
       <DropdownComponent
-        name="footer-panel-border-bottom-width"
+        :name="`footer-panel-border-bottom-width-${elementId}`"
         :options="widthOptions"
         :value="borderWidth"
         width="50"
         @change="onUpdateWidth"
       />
       <DropdownComponent
-        name="footer-panel-border-bottom-style"
+        :name="`footer-panel-border-bottom-style-${elementId}`"
         :options="borderStyles"
         :value="borderStyle"
         width="70"
         @change="onUpdateStyle"
       />
       <ColorPickerComponent
-        name="footer-panel-border-bottom-color"
+        :name="`footer-panel-border-bottom-color-${elementId}`"
         :value="borderColor"
         @change="onUpdateColor"
       />
@@ -39,6 +39,7 @@ import { BORDER_STYLE } from '../../constants/Style'
 
 @Component
 export default class BorderStyleComponent extends BaseComponent {
+  @Prop(String) elementId!: string
   @Prop() elementProps!: any
   @Prop() management!: any
   
@@ -63,6 +64,20 @@ export default class BorderStyleComponent extends BaseComponent {
     this.borderWidth = '1'
     this.borderStyle = 'solid'
     this.borderColor = '#ffffff'
+  }
+
+  doAssignPropData() {
+    const haveBorderBottom = this.elementProps && this.elementProps['border-bottom']
+    if (haveBorderBottom) {
+      const borderBottom = _.cloneDeep(this.elementProps['border-bottom'])
+      this.toggle = haveBorderBottom
+      this.borderWidth = borderBottom.width.substring(0, borderBottom.width.length - 2)
+      this.borderStyle = borderBottom.style
+      this.borderColor = borderBottom.color
+    } else {
+      this.doAssignDefaultData()
+    }
+    return haveBorderBottom
   }
 
   onUpdateToggle(value: any) {
@@ -100,33 +115,16 @@ export default class BorderStyleComponent extends BaseComponent {
 
   @Watch('toggle')
   onToggleUpdate() {
-    if (this.toggle) {
-      if (this.elementProps && this.elementProps['border-bottom']) {
-        this.toggle = this.elementProps && this.elementProps['border-bottom']
-        this.borderWidth = _.cloneDeep(this.elementProps['border-bottom']).width
-        this.borderStyle = _.cloneDeep(this.elementProps['border-bottom']).style
-        this.borderColor = _.cloneDeep(this.elementProps['border-bottom']).color
-      } else {
-        this.doAssignDefaultData()
-      }
-    } else {
-      this.doAssignDefaultData()
-    }
+    if (this.toggle) { this.doAssignPropData() }
+    else { this.doAssignDefaultData() }
     this.onEmitData()
   }
 
   @Watch('management.edit')
   onEdit() {
     if (this.management.edit) {
-      if (this.elementProps && this.elementProps['border-bottom']) {
-        this.toggle = this.elementProps && this.elementProps['border-bottom']
-        this.borderWidth = _.cloneDeep(this.elementProps['border-bottom']).width
-        this.borderStyle = _.cloneDeep(this.elementProps['border-bottom']).style
-        this.borderColor = _.cloneDeep(this.elementProps['border-bottom']).color
-      } else {
-        this.toggle = false
-        this.doAssignDefaultData()
-      }
+      const haveProps = this.doAssignPropData()
+      if (!haveProps) { this.toggle = false }
       this.onEmitData()
     }
   }

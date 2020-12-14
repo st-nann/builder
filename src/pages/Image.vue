@@ -24,15 +24,17 @@
       <template slot="content">
         <div class="modal-content-image">
           <ImageAssetContent
-            v-if="changeImage"
+            v-show="changeImage"
             :changeImage="changeImage"
+            :imageUrl="imageUrl"
             @click="onUpdateChangeImage"
-            @cancel="onUpdateChangeImageCancel"
           />
-          <div v-else>
+          <div v-show="!changeImage">
             <ImageToolbarPanel
-              :imageUrl="imageUrl"
+              :elementId="elementId"
+              :elementProps="elementProps"
               :management="management"
+              :imageUrl="imageUrl"
               @change="getImageData"
             />
             <div :id="`image-preview-${elementId}`" class="image-preview-container">
@@ -56,13 +58,13 @@
       </template>
       <template slot="action-custom">
         <FooterPanel
-          v-if="!changeImage"
-          :elementProps="elementProps"
+          v-show="!changeImage"
+          :elementId="elementId"
           :elementName="elementName"
+          :elementProps="elementProps"
           :management="management"
           :imageUrl="imageUrl"
           @change="onUpdatePreview"
-          @changeImage="onUpdateChangeImage"
           @click="onUpdateFooterPanelData"
         />
       </template>
@@ -81,10 +83,10 @@ export default class ImagePage extends BaseComponent {
   @Prop() elementProps!: any
 
   management: any = {}
-  changeImage = false
   previewData: any = {}
-  footerData = {}
   imageData: any = {}
+  footerData = {}
+  changeImage = false
   imageUrl = ''
 
   getImageData(data: any) {
@@ -92,43 +94,42 @@ export default class ImagePage extends BaseComponent {
   }
 
   onUpdateChangeImage(data: any) {
-    console.log(data.changeImage)
     this.changeImage = data.changeImage
-    this.imageUrl = data.url
+    if (data.url) { this.imageUrl = data.url }
+    this.doAssignStyle()
   }
 
   doAssignStyle() {
+    const self = this
     const previewStyle: any = {}
     if (JSON.stringify(this.previewData) !== '{}') {
-      if (this.previewData['border-bottom']) {
-        const border = this.previewData['border-bottom']
-        previewStyle['border-bottom'] = `${border.width} ${border.style} ${border.color}`
-      }
-      if (this.previewData['background-color']) {
-        previewStyle['background-color'] = this.previewData['background-color']
-      }
+      const border = this.previewData['border-bottom']
+      const backgroundColor = this.previewData['background-color']
+      if (border) { previewStyle['border-bottom'] = `${border.width} ${border.style} ${border.color}` }
+      if (backgroundColor) { previewStyle['background-color'] = backgroundColor }
     }
-    document.getElementById(`image-preview-${this.elementId}`)?.setAttribute(
-      'style',
-      JSON.stringify({...previewStyle})
-        .substring(1, JSON.stringify({...previewStyle}).length - 1)
-        .replaceAll(',', ';')
-        .replaceAll('"', '')
-    )
+    setTimeout(() => {
+      document.getElementById(`image-preview-${self.elementId}`)?.setAttribute(
+        'style',
+        JSON.stringify({...previewStyle})
+          .substring(1, JSON.stringify({...previewStyle}).length - 1)
+          .replaceAll(',', ';')
+          .replaceAll('"', '')
+      )
+    }, 10)
   }
 
   onUpdateManagement(data: any) {
     this.management = data
-    this.doEmitData()
-  }
-
-  onUpdateChangeImageCancel(change: boolean) {
-    this.changeImage = change
+    if (this.management.duplicate || this.management.delete) {
+      this.doEmitData()
+    }
   }
 
   onUpdatePreview(data: any) {
     this.previewData = {}
     this.previewData = data
+    this.changeImage = data.changeImage
     this.doAssignStyle()
   }
 
@@ -169,8 +170,15 @@ export default class ImagePage extends BaseComponent {
 
   @Watch('management', { deep: true })
   onEdit() {
-    if (this.$refs[`modal-edit-${this.elementId}`]) {
-      this.$refs[`modal-edit-${this.elementId}`].isOpenModal = this.management.edit
+    const ref = this.$refs[`modal-edit-${this.elementId}`]
+    if (ref) {
+      ref.isOpenModal = this.management.edit
+      if (ref.isOpenModal && this.elementProps) {
+        this.imageUrl = this.elementProps.url
+        if (this.elementProps.url) {
+          this.changeImage = true
+        }
+      }
     }
   }
 }

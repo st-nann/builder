@@ -9,6 +9,7 @@
       }"
       :placeholder="placeholder"
       :style="style"
+      :value="value"
       @input="doUpdateInput"
     />
     <i v-if="search" class="mdi mdi-magnify input-append-icon" />

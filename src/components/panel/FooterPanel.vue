@@ -2,15 +2,18 @@
   <div class="footer-panel">
     <div class="footer-panel-switch">
       <BorderStyleComponent
-        name="footer-panel-border-bottom"
+        :name="`footer-panel-border-bottom-${elementId}`"
+        :elementId="elementId"
         :elementProps="elementProps"
         :management="management"
         @change="onUpdateBorderButton"
       />
       <BackgroundStyleComponent
-        name="footer-panel-background"
+        :name="`footer-panel-background-${elementId}`"
+        :elementId="elementId"
         :elementProps="elementProps"
         :management="management"
+        :changeImage="changeImage"
         @change="onUpdateBackground"
       />
     </div>
@@ -28,17 +31,17 @@
         icon="rotate-right"
         label="Change Image"
         className="change-image-square-button"
-        @click="onChangeImage"
+        @click="onUpdateChangeImage"
       />
       <SquareButtonComponent
         label="Cancel"
         className="cancel-square-button"
-        @click="onEmitCancel"
+        @click="doEmitCancel"
       />
       <SquareButtonComponent
         label="Done"
         className="done-square-button"
-        @click="onEmitDone"
+        @click="doEmitDone"
       />
     </div>
   </div>
@@ -50,6 +53,7 @@ import BaseComponent from '../../core/BaseComponent'
 
 @Component
 export default class FooterPanel extends BaseComponent {
+  @Prop(String) elementId!: string
   @Prop(String) elementName!: string
   @Prop() elementProps!: any
   @Prop() management!: any
@@ -58,12 +62,15 @@ export default class FooterPanel extends BaseComponent {
   borderBottom = {}
   background = {}
   toggleCompressFile = false
-  changeImage = true
+  changeImage = false
 
   get transformEmitData() {
     const data: any = { ...this.borderBottom, ...this.background }
     if (this.elementName === 'Image') {
       data['compress'] = this.toggleCompressFile
+      if (this.changeImage) {
+        data.changeImage = this.changeImage
+      }
     }
     return data
   }
@@ -73,11 +80,9 @@ export default class FooterPanel extends BaseComponent {
   }
 
   doAssignPropsDataCompressFile() {
-    if (this.elementProps && this.elementProps['compress']) {
-      this.toggleCompressFile = this.elementProps && this.elementProps['compress']
-    } else {
-      this.doAssignDefaultData()
-    }
+    const compress = this.elementProps && this.elementProps['compress']
+    if (compress) { this.toggleCompressFile = compress }
+    else { this.doAssignDefaultData() }
   }
 
   onUpdateBorderButton(value: any) {
@@ -95,41 +100,31 @@ export default class FooterPanel extends BaseComponent {
     this.onEmitPreview()
   }
 
+  onUpdateChangeImage() {
+    this.changeImage = true
+    this.onEmitPreview()
+    this.changeImage = false
+  }
+
   onEmitPreview() {
     const data = this.transformEmitData
     this.$emit('change', { ...data })
   }
 
-  onChangeImage() {
-    this.changeImage = true
-    this.doEmitChangeImage()
-  }
-
-  doEmitChangeImage() {
-    this.$emit('changeImage', { changeImage: this.changeImage })
-  }
-
-  onEmitDone() {
+  doEmitDone() {
     const data = this.transformEmitData
     this.$emit('click', { ...data })
   }
 
-  onEmitCancel() {
+  doEmitCancel() {
     this.$emit('click')
-  }
-
-  @Watch('toggleCompressFile')
-  onToggleUpdate() {
-    if (this.toggleCompressFile) { this.doAssignPropsDataCompressFile() }
-    else { this.doAssignDefaultData() }
-    this.onUpdateCompressFile()
   }
 
   @Watch('management.edit')
   onEdit() {
     if (this.management.edit) {
       this.doAssignPropsDataCompressFile()
-      this.onUpdateCompressFile()
+      this.onEmitPreview()
     }
   }
 }
