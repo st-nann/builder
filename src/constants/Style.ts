@@ -12,13 +12,13 @@ export const BORDER_STYLE: IDropdownOption[] = [
 ]
 
 export const VERTICAL_POSITION_STYLE: IDropdownOption[] = [
-    { icon: 'align-vertical-top', value: 'start' },
+    { icon: 'align-vertical-top', value: 'flex-start' },
     { icon: 'align-horizontal-center', value: 'center' },
-    { icon: 'align-vertical-bottom', value: 'end' }
+    { icon: 'align-vertical-bottom', value: 'flex-end' }
 ]
 
 export const HORIZENTAL_POSITION_STYLE: IDropdownOption[] = [
-    { icon: 'format-align-left', value: 'start' },
+    { icon: 'format-align-left', value: 'flex-start' },
     { icon: 'format-align-center', value: 'center' },
-    { icon: 'format-align-right', value: 'end' }
+    { icon: 'format-align-right', value: 'flex-end' }
 ]

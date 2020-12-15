@@ -1,12 +1,17 @@
 <template>
   <span style="width: 100%;">
     <BoxComponent
-      :element="elementName"
+      :elementName="elementName"
+      :elementProps="elementProps"
       :action="management"
       @click="doEmitAddElement"
     >
       <template slot="content">
-        <img v-if="elementProps.url" :src="elementProps.url" class="image-content"/>
+        <img
+          v-if="elementProps.url"
+          :src="elementProps.url"
+          :width="elementProps.width || '100%'"
+        />
       </template>
       <template slot="button-management">
         <MainButtonComponent
@@ -37,8 +42,9 @@
               :imageUrl="imageUrl"
               @change="getImageData"
             />
-            <div :id="`image-preview-${elementId}`" class="image-preview-container">
+            <div :id="`image-container-preview-${elementId}`" class="image-preview-container">
               <img
+                :id="`image-preview-${elementId}`"
                 v-if="imageUrl"
                 class="image-preview"
                 :src="imageUrl"
@@ -91,6 +97,7 @@ export default class ImagePage extends BaseComponent {
 
   getImageData(data: any) {
     this.imageData = { ...data }
+    this.doAssignStyle()
   }
 
   onUpdateChangeImage(data: any) {
@@ -100,23 +107,36 @@ export default class ImagePage extends BaseComponent {
   }
 
   doAssignStyle() {
+    Object.assign(this.previewData, this.imageData)
     const self = this
-    const previewStyle: any = {}
+    const previewContainerStyle: any = {}
+    const previewImageStyle: any = {}
     if (JSON.stringify(this.previewData) !== '{}') {
       const border = this.previewData['border-bottom']
       const backgroundColor = this.previewData['background-color']
-      if (border) { previewStyle['border-bottom'] = `${border.width} ${border.style} ${border.color}` }
-      if (backgroundColor) { previewStyle['background-color'] = backgroundColor }
+      const width = this.previewData.width
+      const justify = this.previewData.flexbox['justify-content']
+      const align = this.previewData.flexbox['align-items']
+      if (border) { previewContainerStyle['border-bottom'] = `${border.width} ${border.style} ${border.color}` }
+      if (backgroundColor) { previewContainerStyle['background-color'] = backgroundColor }
+      if (width) { previewImageStyle.width = width }
+      if (justify) { previewContainerStyle['justify-content'] = justify }
+      if (align) { previewContainerStyle['align-items'] = align }
     }
     setTimeout(() => {
-      document.getElementById(`image-preview-${self.elementId}`)?.setAttribute(
-        'style',
-        JSON.stringify({...previewStyle})
-          .substring(1, JSON.stringify({...previewStyle}).length - 1)
-          .replaceAll(',', ';')
-          .replaceAll('"', '')
-      )
+      this.doSetAttributeStyle(`image-container-preview-${self.elementId}`, previewContainerStyle)
+      this.doSetAttributeStyle(`image-preview-${self.elementId}`, previewImageStyle)
     }, 10)
+  }
+
+  doSetAttributeStyle(id: string, lists: object) {
+    document.getElementById(id)?.setAttribute(
+      'style',
+      JSON.stringify({...lists})
+        .substring(1, JSON.stringify({...lists}).length - 1)
+        .replaceAll(',', ';')
+        .replaceAll('"', '')
+    )
   }
 
   onUpdateManagement(data: any) {
@@ -129,7 +149,7 @@ export default class ImagePage extends BaseComponent {
   onUpdatePreview(data: any) {
     this.previewData = {}
     this.previewData = data
-    this.changeImage = data.changeImage
+    this.changeImage = data.changeImage || false
     this.doAssignStyle()
   }
 
@@ -157,8 +177,7 @@ export default class ImagePage extends BaseComponent {
         id: this.elementId,
         props: {
           url: this.imageUrl,
-          ...this.imageData,
-          ...this.footerData
+          ...this.previewData
         }
       })
     }

@@ -25,8 +25,11 @@
         :options="menu"
         @click="doEmitLeft"
       />
-      <div class="text-box">
-        <label class="text-box-label">{{ element }}</label>
+      <div class="text-element-name">
+        <label class="text-element-label">{{ element }}</label>
+      </div>
+      <div v-if="elementName === 'Image' && elementProps && elementProps.link" class="text-link-container">
+        <label class="text-link">{{ elementProps.link }}</label>
       </div>
       <slot name="button-management" />
     </div>
@@ -43,9 +46,9 @@ import { EElementPosition } from '../../enum/Elements'
 
 @Component
 export default class BoxComponent extends BaseComponent {
+  @Prop(String) readonly elementName!: string
+  @Prop() readonly elementProps!: any
   @Prop() readonly action!: any
-
-  elementType = ''
 
   get menu() {
     return MENU

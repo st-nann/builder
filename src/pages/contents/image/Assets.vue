@@ -38,9 +38,11 @@
                         <img class="search-list-item-image" :src="item.url" />
                     </div>
                     <div class="search-list-item-detail">
-                        <div v-if="item.uploading" class="image-uploading">
+                        <div v-if="!item.uploading" class="image-uploading">
                             <div class="image-uploading-status">Uploading...</div>
-                            <div class="image-uploading-progress"></div>
+                            <div class="image-uploading-progress">
+                                <progress max="100" :value.prop="uploadPercentage" />
+                            </div>
                         </div>
                         <div v-else class="image-complete">
                             <div class="image-name">{{ item.title }}</div>

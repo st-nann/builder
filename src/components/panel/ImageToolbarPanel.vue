@@ -89,7 +89,7 @@ export default class ImageToolbarPanel extends BaseComponent {
                 ? undefined
                 : {
                     'justify-content': this.justifyImage,
-                    'align-item': this.alignImage
+                    'align-items': this.alignImage
                 }
         })
     }
@@ -105,9 +105,9 @@ export default class ImageToolbarPanel extends BaseComponent {
                     this.justifyImage = _.isEmpty(flexbox['justify-content'])
                         ? 'center'
                         : flexbox['justify-content']
-                    this.alignImage = _.isEmpty(flexbox['align-item'])
+                    this.alignImage = _.isEmpty(flexbox['align-items'])
                         ? 'center'
-                        : flexbox['align-item']
+                        : flexbox['align-items']
                 }
             }
             this.onEmitData()
