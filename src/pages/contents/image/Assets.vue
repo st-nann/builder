@@ -3,7 +3,7 @@
     <div class="image-asset-header">
         <h2 class="image-asset-header-title">Image Assets</h2>
         <div class="image-asset-header-upload">
-            <UploadImageComponent />
+            <UploadImageComponent ref="upload" />
             <div class="image-asset-header-upload-description">
                 * File size must be less then 2 MB
             </div>
