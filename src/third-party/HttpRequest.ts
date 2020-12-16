@@ -71,7 +71,8 @@ class HttpRequest {
         method: options.method,
         url: options.path,
         responseType: "json",
-        data: options.payload
+        data: options.payload,
+        onUploadProgress: options.onUploadProgress || undefined
       }).then(async (response: any) => {
         store.commit(`${options.mutation}`, response.data)
         this.doRemoveKey('components', 'loading', options.mutation)
