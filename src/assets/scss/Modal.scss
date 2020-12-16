@@ -90,7 +90,7 @@
                     justify-content: center;
                     align-items: center;
                     padding: 10px;
-                    flex-basis: 50%;
+                    width: 50%;
 
                     .image-preview {
                         width: 380px;
@@ -115,7 +115,7 @@
                     border-bottom-right-radius: 8px;
                     flex-grow: 1;
                     padding: 10px;
-                    flex-basis: 50%;
+                    width: 50%;
                     display: flex;
                     flex-direction: column;
 
@@ -130,31 +130,42 @@
                         height: 350px;
                         margin: 15px 10px;
 
+                        .no-image-lists {
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: center;
+                            align-items: center;
+                            height: inherit;
+                            font-size: 14px;
+                            color: #737171;
+                        }
+
                         .search-list-item {
                             display: flex;
                             flex-direction: row;
                             align-items: center;
-                            margin: 1px 0;
-                            padding: 5px;
+                            margin: 3px 0;
+                            padding: 10px;
 
                             .search-list-item-image-container {
-                                width: 60px;
-                                height: 60px;
-                                margin: 0 30px 0 0;
+                                width: 20%;
 
                                 .search-list-item-image {
-                                    width: inherit;
-                                    height: inherit;
+                                    width: 60px;
+                                    height: 60px;
                                     object-fit: contain;
                                 }
                             }
 
                             .search-list-item-detail {
+                                width: 80%;
+
                                 .image-complete {
                                     .image-name {
-                                        font-weight: 200;
+                                        word-wrap: break-word;
+                                        font-weight: 100;
                                         color: #414141;
-                                        font-size: 14px;
+                                        font-size: 13px;
                                     }
 
                                     .image-size {
@@ -204,7 +215,7 @@
 
             .image-preview {
                 width: 500px;
-                // height: -webkit-fill-available;
+                max-height: 500px;
                 object-fit: contain;
             }
 

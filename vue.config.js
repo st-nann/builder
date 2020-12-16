@@ -7,7 +7,8 @@ module.exports = {
           entry: 'src/main.ts',
           template: 'public/index.html',
           filename: 'index.html',
-          title: process.env.VUE_APP_TITLE
+          title: process.env.VUE_APP_TITLE,
+          baseUrl: process.env.APP_ECOM_CMS_API
         }
     },
     publicPath: process.env.NODE_ENV === 'production'

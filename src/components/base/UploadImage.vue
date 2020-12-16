@@ -24,14 +24,18 @@ import BaseComponent from '../../core/BaseComponent'
 @Component
 export default class UploadImageComponent extends BaseComponent {
   onUpload (event: any) {
+    console.log('result', event.target.files[0], URL.createObjectURL(event.target.files[0]))
+    this.onInput(URL.createObjectURL(event.target.files[0]))
+    // display image on div 
+    /*
     const output = document.getElementById('output')
-    // const upload = document.getElementById('upload')
-    // if (output && upload) {
-    if (output) {
+    const upload = document.getElementById('upload')
+    if (output && upload) {
       output.setAttribute( 'src', URL.createObjectURL(event.target.files[0]))
-      // upload.setAttribute( 'style', 'display: none;')
+      upload.setAttribute( 'style', 'display: none;')
       this.value = URL.createObjectURL(event.target.files[0])
     }
+    */
   }
 }
 </script>
