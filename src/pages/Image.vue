@@ -1,12 +1,19 @@
 <template>
   <span style="width: 100%;">
     <BoxComponent
-      :element="elementName"
+      :elementName="elementName"
+      :elementProps="elementProps"
       :action="management"
       @click="doEmitAddElement"
+      :style="elementProps.flexbox ? { ...elementProps.flexbox } : ''"
     >
-      <template slot="image-content">
-
+      <template slot="content">
+        <img
+          v-if="elementProps.url"
+          :src="elementProps.url"
+          :width="elementProps.width || '100%'"
+          :style="propsStyle"
+        />
       </template>
       <template slot="button-management">
         <MainButtonComponent
@@ -24,20 +31,34 @@
       <template slot="content">
         <div class="modal-content-image">
           <ImageAssetContent
-            v-if="changeImage"
-            @click="onUpdateImageLink"
+            v-show="changeImage"
+            :changeImage="changeImage"
+            :imageUrl="imageUrl"
+            @click="onUpdateChangeImage"
           />
-          <div v-else>
-            <ImageToolbarPanel @change="getImageData" />
-            <div :id="`image-preview-${elementId}`" class="image-preview-container">
+          <div v-show="!changeImage">
+            <ImageToolbarPanel
+              :elementId="elementId"
+              :elementProps="elementProps"
+              :management="management"
+              :imageUrl="imageUrl"
+              @change="getImageData"
+            />
+            <div :id="`image-container-preview-${elementId}`" class="image-preview-container">
               <img
-                v-if="imageData && imageData.imageUrl"
+                :id="`image-preview-${elementId}`"
+                v-if="imageUrl"
                 class="image-preview"
-                :src="imageData.imageUrl"
+                :src="imageUrl"
               />
               <div v-else class="no-image">
-                <i class="mdi mdi-folder-multiple-image no-image-icon" />
-                <div class="no-image-text">No Image</div>
+                <i class="mdi mdi-image-plus no-image-icon" />
+                <p class="no-image-text">click the below button to add image</p>
+                <SquareButtonComponent
+                  label="Browse"
+                  className="no-image-button clickable"
+                  @click="doAddImage"
+                />
               </div>
             </div>
           </div>
@@ -45,12 +66,13 @@
       </template>
       <template slot="action-custom">
         <FooterPanel
-          v-if="!changeImage"
-          :elementProps="elementProps"
+          v-show="!changeImage"
+          :elementId="elementId"
           :elementName="elementName"
+          :elementProps="elementProps"
           :management="management"
+          :imageUrl="imageUrl"
           @change="onUpdatePreview"
-          @changeImage="onUpdateChangeImage"
           @click="onUpdateFooterPanelData"
         />
       </template>
@@ -59,45 +81,115 @@
 </template>
 
 <script lang="ts">
+import _ from 'lodash'
 import { Component, Prop, Watch } from 'vue-property-decorator'
+import { mapGetters, mapActions } from 'vuex'
 import BaseComponent from '../core/BaseComponent'
 
-@Component
+@Component({
+  computed: {
+    ...mapGetters('images', {   
+      loginResponse: 'login',
+      loginInfo: 'loginInfo'
+    })
+  },
+  methods: {
+    ...mapActions('images', [
+      'login',
+      'getLoginData'
+    ])
+  }
+})
 export default class ImagePage extends BaseComponent {
   @Prop(String) elementId!: string
   @Prop(String) elementName!: string
   @Prop() elementProps!: any
 
   management: any = {}
-  changeImage = true
   previewData: any = {}
-  footerData = {}
   imageData: any = {}
+  footerData = {}
+  changeImage = false
+  imageUrl = ''
+  loginResponse!: any
+  loginInfo!: any
 
-  getImageData(data: any) {
-    this.imageData = data
+  get propsStyle() {
+    let style = ''
+    if (this.elementProps.flexbox) {
+      if (this.elementProps.flexbox['align-items']) {
+        switch (this.elementProps.flexbox['align-items']) {
+          case 'flex-start':
+            style = 'margin-bottom: 100px;'
+            break
+          case 'center':
+            style = 'margin: 100px 0;'
+            break
+          case 'flex-end':
+            style = 'margin-top: 100px;'
+            break
+          default:
+            style = ''
+            break
+        }
+      }
+    }
+    return style
   }
 
-  onUpdateImageLink(data: any) {
+  login!: (payload: { data: { email: string, password: string } }) => void
+  getLoginData!: (payload: { headers: { ref: string } }) => void
+
+  async created() {
+    if (_.isEmpty(process.env.VUE_APP_TOKEN_IMAGE_STORAGE)) {
+      await this.login({
+        data: {
+          email: process.env.VUE_APP_ADMIN_USERNAME,
+          password: process.env.VUE_APP_ADMIN_PASSWORD
+        }
+      })
+    }
+  }
+
+  getImageData(data: any) {
+    this.imageData = { ...data }
+    this.doAssignStyle()
+  }
+
+  onUpdateChangeImage(data: any) {
     this.changeImage = data.changeImage
-    this.imageData.imageUrl = data.url
+    if (data.url) { this.imageUrl = data.url }
+    this.doAssignStyle()
   }
 
   doAssignStyle() {
-    const previewStyle: any = {}
+    Object.assign(this.previewData, this.imageData)
+    const self = this
+    const previewContainerStyle: any = {}
+    const previewImageStyle: any = {}
     if (JSON.stringify(this.previewData) !== '{}') {
-      if (this.previewData['border-bottom']) {
-        const border = this.previewData['border-bottom']
-        previewStyle['border-bottom'] = `${border.width} ${border.style} ${border.color}`
-      }
-      if (this.previewData['background-color']) {
-        previewStyle['background-color'] = this.previewData['background-color']
-      }
+      const border = this.previewData['border-bottom']
+      const backgroundColor = this.previewData['background-color']
+      const width = this.previewData.width
+      const justify = this.previewData.flexbox ? this.previewData.flexbox['justify-content'] : ''
+      const align = this.previewData.flexbox ? this.previewData.flexbox['align-items'] : ''
+      if (border) { previewContainerStyle['border-bottom'] = `${border.width} ${border.style} ${border.color}` }
+      if (backgroundColor) { previewContainerStyle['background-color'] = backgroundColor }
+      if (width) { previewImageStyle.width = width }
+      if (justify) { previewContainerStyle['justify-content'] = justify }
+      if (align) { previewContainerStyle['align-items'] = align }
     }
-    document.getElementById(`image-preview-${this.elementId}`)?.setAttribute(
+    setTimeout(() => {
+      this.doSetAttributeStyle(`image-container-preview-${self.elementId}`, previewContainerStyle)
+      this.doSetAttributeStyle(`image-preview-${self.elementId}`, previewImageStyle)
+    }, 10)
+  }
+
+  doSetAttributeStyle(id: string, lists: object) {
+    document.getElementById(id)?.setAttribute(
       'style',
-      JSON.stringify({...previewStyle})
-        .substring(1, JSON.stringify({...previewStyle}).length - 1)
+      JSON.stringify({...lists})
+        .substring(1, JSON.stringify({...lists}).length - 1)
         .replaceAll(',', ';')
         .replaceAll('"', '')
     )
@@ -105,16 +197,15 @@ export default class ImagePage extends BaseComponent {
 
   onUpdateManagement(data: any) {
     this.management = data
-    this.doEmitData()
-  }
-
-  onUpdateChangeImage(change: boolean) {
-    this.changeImage = change
+    if (this.management.duplicate || this.management.delete) {
+      this.doEmitData()
+    }
   }
 
   onUpdatePreview(data: any) {
     this.previewData = {}
     this.previewData = data
+    this.changeImage = data.changeImage || false
     this.doAssignStyle()
   }
 
@@ -122,6 +213,10 @@ export default class ImagePage extends BaseComponent {
     this.footerData = data
     this.management.edit = false
     if (data) { this.doEmitData() }
+  }
+
+  doAddImage() {
+    this.changeImage = true
   }
 
   doEmitData() {
@@ -136,7 +231,10 @@ export default class ImagePage extends BaseComponent {
     } else {
       this.$emit('done', {
         id: this.elementId,
-        props: { ...this.imageData, ...this.footerData }
+        props: {
+          url: this.imageUrl,
+          ...this.previewData
+        }
       })
     }
   }
@@ -145,10 +243,33 @@ export default class ImagePage extends BaseComponent {
     this.$emit('add', { id: this.elementId, ...data })
   }
 
-  @Watch('management', { deep: true})
+  async doGetLoginInfo() {
+    if (this.loginResponse) {
+      await this.getLoginData({ headers: { ref: this.loginResponse.ref } })
+    }
+    const self = this
+    const timeout = setTimeout(() => {
+      if (self.loginInfo.message) {
+        self.doGetLoginInfo()
+      } else {
+        clearInterval(timeout)
+        localStorage['authorization'] = self.loginInfo.token
+      }
+    }, 500)
+  }
+
+  @Watch('management', { deep: true })
   onEdit() {
-    if (this.$refs[`modal-edit-${this.elementId}`]) {
-      this.$refs[`modal-edit-${this.elementId}`].isOpenModal = this.management.edit
+    const ref = this.$refs[`modal-edit-${this.elementId}`]
+    if (ref) {
+      ref.isOpenModal = this.management.edit
+      if (ref.isOpenModal && this.elementProps) {
+        this.imageUrl = this.elementProps.url
+        if (this.elementProps.url) {
+          this.changeImage = true
+        }
+      }
+      this.doGetLoginInfo()
     }
   }
 }

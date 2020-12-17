@@ -1,46 +1,120 @@
 import { IImageLists } from '../interfaces/Image'
 
-export const IMAGE_LISTS: IImageLists[] = [
-    {
-        name: 'image-1.png',
-        src: 'https://pbs.twimg.com/media/EK72RI6UYAA3bxT.jpg',
-        size: '128.07 KB',
-        uploading: true
-    },
-    {
-        name: 'image-2.png',
-        src: 'https://pbs.twimg.com/media/DiSqccHUYAAUxAS.jpg',
-        size: '128.07 KB',
-        uploading: false
-    },
-    {
-        name: 'image-3.png',
-        src: 'https://pbs.twimg.com/media/DeceB8iU0AIKQXc.jpg',
-        size: '128.07 KB',
-        uploading: false
-    },
-    {
-        name: 'image-4.png',
-        src: 'data:image/jpeg;base64,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',
-        size: '128.07 KB',
-        uploading: false
-    },
-    {
-        name: 'image-5.png',
-        src: 'https://image.winudf.com/v2/image1/Y29tLmtvcmVhbndhbGxwYXBlcnMuSmVubmlzQk5LNDh3YWxscGFwZXJzX3NjcmVlbl8zXzE1NjI0NzA1MDVfMDcw/screen-3.jpg?fakeurl=1&type=.jpg',
-        size: '128.07 KB',
-        uploading: false
-    },
-    {
-        name: 'image-6.png',
-        src: 'https://i.pinimg.com/originals/4f/9b/68/4f9b6872587e6994fe7fd8ea43e4b29a.jpg',
-        size: '128.07 KB',
-        uploading: false
-    },
-    {
-        name: 'image-7.png',
-        src: 'https://f.ptcdn.info/292/068/000/q69eh9i49J8vLlPo7dj-o.jpg',
-        size: '128.07 KB',
-        uploading: false
-    }
-]
+export const IMAGE_LISTS: IImageLists = {
+    current: 1,
+    items: [
+        {
+            created_date: '2020-12-07 14:09:58',
+            description: '',
+            extension: 'png',
+            mime: 'image/png',
+            size: 72779,
+            title: 'default-promotion-product-bar.png',
+            type: 'IMAGE',
+            updated_date: '2020-12-07 14:09:58',
+            url: 'https://s3-ap-southeast-1.amazonaws.com/pam4-sansiri/ecom/public/1lKeR3wFUvVF6XQtK48G6liw2e1.png'
+        },
+        {
+            created_date: '2020-12-07 14:09:54',
+            description: '',
+            extension: 'png',
+            mime: 'image/png',
+            size: 72779,
+            title: 'default-promotion-product-bar.png',
+            type: 'IMAGE',
+            updated_date: '2020-12-07 14:09:54',
+            url: 'https://s3-ap-southeast-1.amazonaws.com/pam4-sansiri/ecom/public/1lKeQefotK345WTitl5Prvpvyl1.png'
+        },
+        {
+            created_date: '2020-12-07 14:09:51',
+            description: '',
+            extension: 'png',
+            mime: 'image/png',
+            size: 72779,
+            title: 'default-promotion-product-bar.png',
+            type: 'IMAGE',
+            updated_date: '2020-12-07 14:09:51',
+            url: 'https://s3-ap-southeast-1.amazonaws.com/pam4-sansiri/ecom/public/1lKeQ7jrECxLdyJka9tiZreWvpy.png'
+        },
+        {
+            created_date: '2020-12-07 13:55:06',
+            description: '',
+            extension: 'png',
+            mime: 'image/png',
+            size: 72779,
+            title: 'default-promotion-product-bar.png',
+            type: 'IMAGE',
+            updated_date: '2020-12-07 13:55:06',
+            url: 'https://s3-ap-southeast-1.amazonaws.com/pam4-sansiri/ecom/public/1lKcd0tDzcmhsFzIB1EhCTEp89P.png'
+        },
+        {
+            created_date: '2020-12-07 13:42:13',
+            description: '',
+            extension: 'png',
+            mime: 'image/png',
+            size: 72779,
+            title: 'default-promotion-product-bar.png',
+            type: 'IMAGE',
+            updated_date: '2020-12-07 13:42:13',
+            url: 'https://s3-ap-southeast-1.amazonaws.com/pam4-sansiri/ecom/public/1lKb3sVrOuoCrLAwKjDYrIcExAs.png'
+        },
+        {
+            created_date: '2020-12-07 13:42:09',
+            description: '',
+            extension: 'png',
+            mime: 'image/png',
+            size: 72779,
+            title: 'default-promotion-product-bar.png',
+            type: 'IMAGE',
+            updated_date: '2020-12-07 13:42:09',
+            url: 'https://s3-ap-southeast-1.amazonaws.com/pam4-sansiri/ecom/public/1lKb3MTbDBwFRzC2aLFkEQsDyip.png'
+        },
+        {
+            created_date: '2020-12-07 11:13:42',
+            description: '',
+            extension: 'jpg',
+            mime: 'image/jpeg',
+            size: 68236,
+            title: 'S__24772613.jpg',
+            type: 'IMAGE',
+            updated_date: '2020-12-07 11:13:42',
+            url: 'https://s3-ap-southeast-1.amazonaws.com/pam4-sansiri/ecom/public/1lKJ03JHuzrekDLrq5aZmXqbkRc.jpg'
+        },
+        {
+            created_date: '2020-12-03 13:17:48',
+            description: '',
+            extension: 'png',
+            mime: 'image/png',
+            size: 72779,
+            title: 'default-promotion-product-bar.png',
+            type: 'IMAGE',
+            updated_date: '2020-12-03 13:17:48',
+            url: 'https://s3-ap-southeast-1.amazonaws.com/pam4-sansiri/ecom/public/1l9FbBRzwdfxL68G5f1Z6xKipmM.png'
+        },
+        {
+            created_date: '2020-12-03 13:17:44',
+            description: '',
+            extension: 'png',
+            mime: 'image/png',
+            size: 72779,
+            title: 'default-promotion-product-bar.png',
+            type: 'IMAGE',
+            updated_date: '2020-12-03 13:17:44',
+            url: 'https://s3-ap-southeast-1.amazonaws.com/pam4-sansiri/ecom/public/1l9FafnSxfgJgbZmkRm3pVAfVCV.png'
+        },
+        {
+            created_date: '2020-12-03 13:09:26',
+            description: '',
+            extension: 'png',
+            mime: 'image/png',
+            size: 72779,
+            title: 'default-promotion-product-bar.png',
+            type: 'IMAGE',
+            updated_date: '2020-12-03 13:09:26',
+            url: 'https://s3-ap-southeast-1.amazonaws.com/pam4-sansiri/ecom/public/1l9Ea1ANByuAzwn1ymgeS2rGs9f.png'
+        }
+    ],
+    next: '2',
+    prev: '0',
+    total: 1045
+}

@@ -7,39 +7,37 @@
 }
 
 .box {
-    display: -webkit-box;
+    display: flex;
     min-height: 180px;
-    height: 180px;
-    padding: 8px;
+    height: auto;
     position: relative;
-    // border: 1px dashed #969696;
     background-color: transparent !important;
 
 
     .box-action {
+        position: absolute;
         display: flex;
         flex-direction: row;
-        flex-grow: 1;
         justify-content: center;
         align-items: center;
-        min-height: max-content;
-        height: inherit;
-        position: absolute;
-        width: -webkit-fill-available;
-        color: #888888;
-        background-color: transparent;
+        height: -webkit-fill-available;
+        min-width: -webkit-fill-available;
 
-        .text-box {
+        .text-link {
             font-weight: 100;
-            color: #cad0d0;
-
-            .text-link-box {
-                color: #a2a5a5;
-            }
+            font-size: 10px;
+            color: #000000;
+            background-color: #ffffff;
+            top: 5px;
+            right: 20px;
+            padding: 5px 8px;
+            opacity: .5;
+            border-radius: 5px;
+            position: absolute;
         }
 
         .button-box,
-        .text-box-label,
+        .text-element-label,
         .circle-button-top,
         .circle-button-right,
         .circle-button-bottom,
@@ -54,42 +52,41 @@
     border: 1px dashed #414141;
 
     .box-action {
-        .button-box,
-        .text-box-label,
+        .button-box {
+            display: inline;
+        }
+        .text-element-label,
         .circle-button-top,
         .circle-button-right,
         .circle-button-bottom,
         .circle-button-left {
-            display: inline;
+            @extend .button-box;
+            z-index: 1;
         }
 
-        .text-box-label {
+        .circle-button-top {
+            top: -20px;
+        }
+
+        .circle-button-right {
+            right: -20px;
+        }
+
+        .circle-button-bottom {
+            bottom: -20px;
+        }
+
+        .circle-button-left {
+            left: -20px;
+        }
+
+        .text-element-label {
             font-weight: 700;
             font-size: 13px;
             color: #888888;
             top: 0;
             left: 0;
             padding: 10px;
-        }
-
-        .circle-button-top {
-            top: -26px;
-            z-index: 1;
-        }
-
-        .circle-button-right {
-            right: -10px;
-            z-index: 1;
-        }
-
-        .circle-button-bottom {
-            bottom: -29px;
-            z-index: 1;
-        }
-
-        .circle-button-left {
-            left: -27px;
-            z-index: 1;
         }
     }
 }

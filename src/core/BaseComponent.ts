@@ -35,14 +35,6 @@ export default class BaseComponent extends Base {
         this.$emit('change', this.transformValue)
     }
 
-    @Watch('innerValue', { deep: true })
-    onChange(newValue: any, oldValue: any) {
-        if (!_.isEqual(newValue, oldValue)) {
-            const newRawValue = newValue || null
-            this.$emit('input', newRawValue)
-        }
-    }
-
     @Watch('value', { deep: true })
     onValueChange(newValue: any, oldValue: any) {
         if (!_.isEqual(newValue, oldValue)) {

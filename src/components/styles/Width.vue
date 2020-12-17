@@ -1,18 +1,19 @@
 <template>
   <span>
     <SwitchComponent
-      name="toolbar-panel-image-width"
+      :name="`toolbar-panel-width-${elementId}`"
       label="Custom Width"
       :value="toggle"
       @change="onUpdateToggle"
     />
     <span v-if="toggle">
       <InputComponent
-        name="image-width"
-        width="30"
+        :name="`toolbar-panel-width-${elementId}`"
+        width="40"
+        :value="imageWidth"
         @change="onUpdateWidth"
       />
-      <span class="toolbar-panel-image-width-text">px</span>
+      <span class="toolbar-panel-width-text">px</span>
     </span>
   </span>
 </template>
@@ -24,14 +25,27 @@ import BaseComponent from '../../core/BaseComponent'
 
 @Component
 export default class WidthStyleComponent extends BaseComponent {
+  @Prop(String) elementId!: string
   @Prop() elementProps!: any
   @Prop() management!: any
   
   toggle = false
-  imageWidth = '100'
+  imageWidth = '500'
 
   doAssignDefaultData() {
-    this.imageWidth = '100'
+    this.imageWidth = '500'
+  }
+
+  doAssignPropData() {
+    const haveWidth = this.elementProps && this.elementProps.width
+    if (haveWidth) {
+      const width = _.cloneDeep(this.elementProps)
+      this.toggle = haveWidth
+      this.imageWidth = width.width.substring(0, width.width.length - 2)
+    } else {
+      this.doAssignDefaultData()
+    }
+    return haveWidth
   }
 
   onUpdateToggle(value: any) {
@@ -45,34 +59,24 @@ export default class WidthStyleComponent extends BaseComponent {
   }
 
   onEmitData() {
-    this.$emit('change', this.toggle ? { width: `${this.imageWidth}px` } : undefined)
+    this.$emit('change', this.toggle && !_.isEmpty(this.imageWidth)
+      ? { width: `${this.imageWidth}px` }
+      : undefined
+    )
   }
 
   @Watch('toggle')
   onToggleUpdate() {
-    if (this.toggle) {
-      if (this.elementProps && this.elementProps.width) {
-        this.toggle = this.elementProps && this.elementProps.width
-        this.imageWidth = _.cloneDeep(this.elementProps).width
-      } else {
-        this.doAssignDefaultData()
-      }
-    } else {
-      this.doAssignDefaultData()
-    }
+    if (this.toggle) { this.doAssignPropData() }
+    else { this.doAssignDefaultData() }
     this.onEmitData()
   }
 
   @Watch('management.edit')
   onEdit() {
     if (this.management.edit) {
-      if (this.elementProps && this.elementProps.width) {
-        this.toggle = this.elementProps && this.elementProps.width
-        this.imageWidth = _.cloneDeep(this.elementProps).width
-      } else {
-        this.toggle = false
-        this.doAssignDefaultData()
-      }
+      const haveProps = this.doAssignPropData()
+      if (!haveProps) { this.toggle = false }
       this.onEmitData()
     }
   }

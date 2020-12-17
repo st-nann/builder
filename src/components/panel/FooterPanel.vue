@@ -2,21 +2,24 @@
   <div class="footer-panel">
     <div class="footer-panel-switch">
       <BorderStyleComponent
-        name="footer-panel-border-bottom"
+        :name="`footer-panel-border-bottom-${elementId}`"
+        :elementId="elementId"
         :elementProps="elementProps"
         :management="management"
         @change="onUpdateBorderButton"
       />
       <BackgroundStyleComponent
-        name="footer-panel-background"
+        :name="`footer-panel-background-${elementId}`"
+        :elementId="elementId"
         :elementProps="elementProps"
         :management="management"
+        :changeImage="changeImage"
         @change="onUpdateBackground"
       />
     </div>
     <div class="footer-panel-button">
       <SwitchComponent
-        v-if="elementName === 'Image'"
+        v-if="elementName === 'Image' && (imageUrl && imageUrl !== '')"
         name="footer-panel-compress-image"
         class="footer-panel-compress-image"
         label="Compressed File"
@@ -24,56 +27,62 @@
         @change="onUpdateCompressFile"
       />
       <SquareButtonComponent
-        v-if="elementName === 'Image'"
+        v-if="elementName === 'Image' && (imageUrl && imageUrl !== '')"
         icon="rotate-right"
         label="Change Image"
         className="change-image-square-button"
-        @click="onChangeImage"
+        @click="onUpdateChangeImage"
       />
       <SquareButtonComponent
         label="Cancel"
         className="cancel-square-button"
-        @click="onEmitCancel"
+        @click="doEmitCancel"
       />
       <SquareButtonComponent
         label="Done"
         className="done-square-button"
-        @click="onEmitDone"
+        @click="doEmitDone"
       />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop } from 'vue-property-decorator'
+import { Component, Prop, Watch } from 'vue-property-decorator'
 import BaseComponent from '../../core/BaseComponent'
 
 @Component
 export default class FooterPanel extends BaseComponent {
+  @Prop(String) elementId!: string
   @Prop(String) elementName!: string
   @Prop() elementProps!: any
   @Prop() management!: any
+  @Prop(String) imageUrl!: string
   
   borderBottom = {}
   background = {}
   toggleCompressFile = false
-  changeImage = true
+  changeImage = false
 
-  get emitData() {
-    const data: any = {
-      ...this.borderBottom,
-      ...this.background,
-    }
+  get transformEmitData() {
+    const data: any = { ...this.borderBottom, ...this.background }
     if (this.elementName === 'Image') {
-      data['compress-file'] = this.toggleCompressFile
+      data['compress'] = this.toggleCompressFile
+      if (this.changeImage) {
+        data.changeImage = this.changeImage
+      }
     }
     return data
   }
 
-  created() {
-    if (this.elementProps && this.elementProps['compress-file']) {
-      this.toggleCompressFile = this.elementProps['compress-file']
-    }
+  doAssignDefaultData() {
+    this.toggleCompressFile = false
+  }
+
+  doAssignPropsDataCompressFile() {
+    const compress = this.elementProps && this.elementProps['compress']
+    if (compress) { this.toggleCompressFile = compress }
+    else { this.doAssignDefaultData() }
   }
 
   onUpdateBorderButton(value: any) {
@@ -91,27 +100,32 @@ export default class FooterPanel extends BaseComponent {
     this.onEmitPreview()
   }
 
-  onChangeImage() {
+  onUpdateChangeImage() {
     this.changeImage = true
-    this.doEmitChangeImage()
+    this.onEmitPreview()
+    this.changeImage = false
   }
 
   onEmitPreview() {
-    const data = this.emitData
+    const data = this.transformEmitData
     this.$emit('change', { ...data })
   }
 
-  doEmitChangeImage() {
-    this.$emit('changeImage', this.changeImage)
-  }
-
-  onEmitDone() {
-    const data = this.emitData
+  doEmitDone() {
+    const data = this.transformEmitData
     this.$emit('click', { ...data })
   }
 
-  onEmitCancel() {
+  doEmitCancel() {
     this.$emit('click')
+  }
+
+  @Watch('management.edit')
+  onEdit() {
+    if (this.management.edit) {
+      this.doAssignPropsDataCompressFile()
+      this.onEmitPreview()
+    }
   }
 }
 </script>
