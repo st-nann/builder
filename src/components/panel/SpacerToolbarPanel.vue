@@ -1,10 +1,9 @@
 <template>
   <div class="toolbar-panel">
-    <SliderComponent
-      name="image-link"
-      class="toolbar-panel-spacer-height"
-      label="Height"
-      :value="spacerHeight"
+    <HeightStyleComponent
+      :elementId="elementId"
+      :elementProps="elementProps"
+      :management="management"
       @change="onUpdateHeight"
     />
   </div>
@@ -22,15 +21,15 @@ export default class SpacerToolbarPanel extends BaseComponent {
   @Prop(String) imageUrl!: string;
   @Prop() management!: any;
 
-  spacerHeight: any = 80;
+  spacerHeight: any
 
   onUpdateHeight(height: any) {
-    this.spacerHeight = height;
-    this.onEmitData();
+    this.spacerHeight = height
+    this.onEmitData()
   }
 
   onEmitData() {
-    this.$emit("change", { height: this.spacerHeight })
+    this.$emit("change", { ...this.spacerHeight })
   }
 
   @Watch("management.edit")

@@ -8,7 +8,7 @@
       :style="elementProps.flexbox ? { ...elementProps.flexbox } : ''"
     >
       <template slot="content">
-        
+        <div :style="{ ...elementProps }" />
       </template>
       <template slot="button-management">
         <MainButtonComponent
@@ -31,9 +31,7 @@
             :management="management"
             @change="getSpacerData"
           />
-          <div :id="`image-container-preview-${elementId}`" class="image-preview-container">
-            
-          </div>
+          <div :id="`spacer-preview-${elementId}`" class="spacer-preview-container" />
         </div>
       </template>
       <template slot="action-custom">
@@ -73,14 +71,13 @@ export default class SpacerPage extends BaseComponent {
   doAssignStyle() {
     Object.assign(this.previewData, this.spacerData)
     const self = this
-    const previewContainerStyle: any = {}
     const previewSpacerStyle: any = {}
     if (JSON.stringify(this.previewData) !== '{}') {
       const border = this.previewData['border-bottom']
       const backgroundColor = this.previewData['background-color']
       const height = this.previewData.height
-      if (border) { previewContainerStyle['border-bottom'] = `${border.width} ${border.style} ${border.color}` }
-      if (backgroundColor) { previewContainerStyle['background-color'] = backgroundColor }
+      if (border) { previewSpacerStyle['border-bottom'] = `${border.width} ${border.style} ${border.color}` }
+      if (backgroundColor) { previewSpacerStyle['background-color'] = backgroundColor }
       if (height) { previewSpacerStyle.height = height }
     }
     setTimeout(() => {
@@ -129,9 +126,7 @@ export default class SpacerPage extends BaseComponent {
     } else {
       this.$emit('done', {
         id: this.elementId,
-        props: {
-          ...this.previewData
-        }
+        props: { ...this.previewData }
       })
     }
   }

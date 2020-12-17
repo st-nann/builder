@@ -39,9 +39,9 @@ export default class WidthStyleComponent extends BaseComponent {
   doAssignPropData() {
     const haveWidth = this.elementProps && this.elementProps.width
     if (haveWidth) {
-      const width = _.cloneDeep(this.elementProps)
+      const props = _.cloneDeep(this.elementProps)
       this.toggle = haveWidth
-      this.imageWidth = width.width.substring(0, width.width.length - 2)
+      this.imageWidth = props.width.substring(0, props.width.length - 2)
     } else {
       this.doAssignDefaultData()
     }
