@@ -5,13 +5,14 @@ export class ImageState {
   public lists: object[]
   public upload: object
   public uploadPercent: number
+  // public uploadPercent: { [key: string]: number }[]
 
   constructor() {
     this.login = {}
     this.loginInfo = {}
     this.lists = []
     this.upload = {}
-    this.uploadPercent = 0
+    this.uploadPercent = 100
   }
 }
 

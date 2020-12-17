@@ -25,5 +25,6 @@ export interface IImageParam {
   limit?: number
 }
 export interface IUploadImageRequest {
-  file: string
+  file: any
+  name: string
 }

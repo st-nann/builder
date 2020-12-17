@@ -47,7 +47,7 @@ const actions: ActionTree<ImageState, IState> = {
       page = payload.params.page ? `page=${payload.params.page}` : ''
     }
     if (limit.length > 0 || page.length > 0) {
-      query = `?${limit}${limit.length > 0 ? `&${page}` : page}`
+      query = `?${limit}${limit.length > 0 && page ? `&${page}` : page}`
     }
     await HttpRequest.sendRequest({
       method: "GET",
@@ -63,11 +63,13 @@ const actions: ActionTree<ImageState, IState> = {
       method: "POST",
       path: baseUrl ? baseUrl : `${cmsApi}/uploader/public`,
       mutation: `images/${mutationType.UPLOAD}`,
-      payload: payload.data,
+      payload: payload.data.file,
+      headers: { 'Content-Type': 'multipart/form-data' },
       onUploadProgress: (progress: any) => {
         store.dispatch(
-          'images/updateUploadImage',
-          parseInt(Math.round((progress.loaded / progress.total ) * 100) as any)
+          `images/updateUploadImage`,
+          parseInt(Math.round((progress.loaded / progress.total) * 100) as any)
+          // { [payload.data.name]: parseInt(Math.round((progress.loaded / progress.total) * 100) as any) }
         )
       }
     })
@@ -75,6 +77,7 @@ const actions: ActionTree<ImageState, IState> = {
   updateUploadImage(
     { commit }: ActionContext<ImageState, IState>,
     data: number
+    // data: object
   ) {
     commit(mutationType.UPLOAD_PERCENT, data)
   }

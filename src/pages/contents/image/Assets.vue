@@ -3,7 +3,7 @@
     <div class="image-asset-header">
         <h2 class="image-asset-header-title">Image Assets</h2>
         <div class="image-asset-header-upload">
-            <UploadImageComponent @change="onUploadImage" />
+            <UploadImageComponent @change="onUploadImage" :disabled="uploadPercent < 100" />
             <div class="image-asset-header-upload-description">
                 * File size must be less then 2 MB
             </div>
@@ -24,7 +24,7 @@
                 />
             </div>
             <div class="search-list">
-                <div v-if="loading" class="loading-container">
+                <div v-if="loading && showLoading" class="loading-container">
                     <div class="loading" />
                 </div>
                 <div v-else-if="filterImageLists.length < 1" class="no-image-lists">
@@ -45,7 +45,7 @@
                             <img class="search-list-item-image" :src="item.url" />
                         </div>
                         <div class="search-list-item-detail">
-                            <div v-if="item.uploading" class="image-uploading">
+                            <div v-if="uploadPercent < 100 && index === 0" class="image-uploading">
                                 <div class="image-uploading-status">Uploading...</div>
                                 <div class="image-uploading-progress">
                                     <progress max="100" :value.prop="uploadPercent" />
@@ -115,19 +115,27 @@ export default class ImageAssetContent extends BaseComponent {
     private getImages!: (payload: { params: { page?: string, limit?: number } }) => void
     */
 
+    showLoading = true
     url = this.imageUrl
     uploadPercent!: number
+    // uploadPercentLists!: { [key: string]: number }[]
     loadingLists!: any
     imageLists!: IImageLists
     filterImageLists: IImageItem[] = []
 
     getImages!: (payload: { params: { page?: string, limit?: number } }) => void
-    uploadImage!: (payload: { file: string }) => void
+    uploadImage!: (payload: { data: { file: any } }) => any
 
     get loading() {
         const lists = this.loadingLists.reduce((value1: any, value2: any) => Object.assign(value1, value2), {})
         return lists['images/LISTS']
     }
+
+    // get uploadPercent() {
+    //     return this.uploadPercentLists.length > 0
+    //         ? this.uploadPercentLists.reduce((value1: any, value2: any) => Object.assign(value1, value2), {})
+    //         : undefined
+    // }
 
     doConvertImageSize(size: number) {
         let transformSize: any = '0 byte'
@@ -148,9 +156,11 @@ export default class ImageAssetContent extends BaseComponent {
         )
     }
 
-    async onUploadImage(data: any) {
-        console.log('data: ', data)
-        // await this.uploadImage({ file: data })
+    async onUploadImage(value: any) {
+        this.showLoading = false
+        await this.uploadImage({ data: value })
+        await this.getImages({ params: { limit: 9999999 } })
+        this.doFilterImages()
     }
 
     doEmitGetImage() {
@@ -164,7 +174,7 @@ export default class ImageAssetContent extends BaseComponent {
     @Watch('changeImage')
     async onChangeImage() {
         if (this.changeImage) {
-            await this.getImages({ params: { limit: 999 } })
+            await this.getImages({ params: { limit: 9999999 } })
             this.doFilterImages()
         }
     }

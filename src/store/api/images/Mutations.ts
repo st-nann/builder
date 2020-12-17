@@ -30,8 +30,23 @@ const mutations: MutationTree<ImageState> = {
   [mutationType.UPLOAD_PERCENT](
     state: ImageState,
     data: number
+    // data: { [key: string]: number }
   ): void {
     state.uploadPercent = data
+    /* array */
+    // const key = _.head(Object.keys(data))
+    // if (state.uploadPercent.length > 0) {
+    //   state.uploadPercent.map((item: any) => {
+    //     const transformData = { ...data }
+    //     if (key && item[key]) {
+    //       item[key] = data[key]
+    //       transformData[key] = item[key]
+    //     }
+    //     return { ...transformData }
+    //   })
+    // } else {
+    //   state.uploadPercent.push(data)
+    // }
   }
 };
 

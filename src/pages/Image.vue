@@ -143,10 +143,10 @@ export default class ImagePage extends BaseComponent {
   async created() {
     if (_.isEmpty(process.env.VUE_APP_TOKEN_IMAGE_STORAGE)) {
       await this.login({
-          data: {
-              email: process.env.VUE_APP_ADMIN_USERNAME,
-              password: process.env.VUE_APP_ADMIN_PASSWORD
-          }
+        data: {
+          email: process.env.VUE_APP_ADMIN_USERNAME,
+          password: process.env.VUE_APP_ADMIN_PASSWORD
+        }
       })
     }
   }
@@ -248,11 +248,11 @@ export default class ImagePage extends BaseComponent {
       await this.getLoginData({ headers: { ref: this.loginResponse.ref } })
     }
     const self = this
-    const interval = setInterval(() => {
+    const timeout = setTimeout(() => {
       if (self.loginInfo.message) {
         self.doGetLoginInfo()
       } else {
-        clearInterval(interval)
+        clearInterval(timeout)
         localStorage['authorization'] = self.loginInfo.token
       }
     }, 500)
