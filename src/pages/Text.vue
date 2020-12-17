@@ -75,10 +75,28 @@ export default class TextPage extends BaseComponent {
       const modal = document.querySelector(`#modal-edit-${this.elementId}`)
       const toolbar = modal?.getElementsByClassName('ql-toolbar')[0]
       if (_.isUndefined(toolbar)) {
+        const fonts = [
+          'Arial',
+          'Arial-Black',
+          'Brush-Script-MT',
+          'Comic-Sans-MS',
+          'Courier-New',
+          'Georgia',
+          'Helvetica',
+          'Impact',
+          'Lucida-Sans-Unicode',
+          'Tahoma',
+          'Times-New-Roman',
+          'Trebuchet-MS',
+          'Verdana'
+        ]
+        const Font = Quill.import('formats/font')
+        Font.whitelist = fonts
+        Quill.register(Font, true)
         const options = {
           modules: {
             toolbar: [
-              [{ 'font': [] }],
+              [{ 'font': fonts }],
               [{ 'size': ['small', false, 'large', 'huge'] }],
               [{ 'color': [] }],
               ['bold', 'italic', 'underline'],
