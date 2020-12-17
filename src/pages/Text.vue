@@ -58,7 +58,7 @@ export default class TextPage extends BaseComponent {
 
   management: any = {}
   previewData: any = {}
-  footerData = {}
+  footerData: any = {}
   editor: any = null
   contentHtml: any = null
 

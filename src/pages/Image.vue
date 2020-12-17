@@ -108,7 +108,7 @@ export default class ImagePage extends BaseComponent {
   management: any = {}
   previewData: any = {}
   imageData: any = {}
-  footerData = {}
+  footerData: any = {}
   changeImage = false
   imageUrl = ''
   loginResponse!: any

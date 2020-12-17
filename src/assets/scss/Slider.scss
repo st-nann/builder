@@ -1,0 +1,14 @@
+.slider-container {
+    position: relative;
+    direction: ltr;
+    width: inherit;
+    text-align: right;
+
+    .slider-label {
+        font-weight: 700;
+        font-size: 13px;
+        color: #414141;
+        margin: 0 10px;
+        vertical-align: text-top;
+    }
+}
