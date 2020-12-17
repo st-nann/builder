@@ -5,12 +5,14 @@
       :elementProps="elementProps"
       :action="management"
       @click="doEmitAddElement"
+      :style="elementProps.flexbox ? { ...elementProps.flexbox } : ''"
     >
       <template slot="content">
         <img
           v-if="elementProps.url"
           :src="elementProps.url"
           :width="elementProps.width || '100%'"
+          :style="propsStyle"
         />
       </template>
       <template slot="button-management">
@@ -95,6 +97,29 @@ export default class ImagePage extends BaseComponent {
   changeImage = false
   imageUrl = ''
 
+  get propsStyle() {
+    let style = ''
+    if (this.elementProps.flexbox) {
+      if (this.elementProps.flexbox['align-items']) {
+        switch (this.elementProps.flexbox['align-items']) {
+          case 'flex-start':
+            style = 'margin-bottom: 100px;'
+            break
+          case 'center':
+            style = 'margin: 100px 0;'
+            break
+          case 'flex-end':
+            style = 'margin-top: 100px;'
+            break
+          default:
+            style = ''
+            break
+        }
+      }
+    }
+    return style
+  }
+
   getImageData(data: any) {
     this.imageData = { ...data }
     this.doAssignStyle()
@@ -115,8 +140,8 @@ export default class ImagePage extends BaseComponent {
       const border = this.previewData['border-bottom']
       const backgroundColor = this.previewData['background-color']
       const width = this.previewData.width
-      const justify = this.previewData.flexbox['justify-content']
-      const align = this.previewData.flexbox['align-items']
+      const justify = this.previewData.flexbox ? this.previewData.flexbox['justify-content'] : ''
+      const align = this.previewData.flexbox ? this.previewData.flexbox['align-items'] : ''
       if (border) { previewContainerStyle['border-bottom'] = `${border.width} ${border.style} ${border.color}` }
       if (backgroundColor) { previewContainerStyle['background-color'] = backgroundColor }
       if (width) { previewImageStyle.width = width }

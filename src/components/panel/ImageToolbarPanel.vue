@@ -50,8 +50,8 @@ export default class ImageToolbarPanel extends BaseComponent {
     
     imageWidth: any
     imageLink = ''
-    justifyImage = 'center'
-    alignImage = 'center'
+    justifyImage = ''
+    alignImage = ''
 
     get horizentalPositionOptions() {
         return HORIZENTAL_POSITION_STYLE
@@ -103,10 +103,10 @@ export default class ImageToolbarPanel extends BaseComponent {
                 this.imageLink = this.elementProps.link || ''
                 if (haveFlexbox) {
                     this.justifyImage = _.isEmpty(flexbox['justify-content'])
-                        ? 'center'
+                        ? ''
                         : flexbox['justify-content']
                     this.alignImage = _.isEmpty(flexbox['align-items'])
-                        ? 'center'
+                        ? ''
                         : flexbox['align-items']
                 }
             }

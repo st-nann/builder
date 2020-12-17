@@ -25,9 +25,7 @@
         :options="menu"
         @click="doEmitLeft"
       />
-      <div class="text-element-name">
-        <label class="text-element-label">{{ element }}</label>
-      </div>
+      <label class="text-element-label">{{ elementName }}</label>
       <div v-if="elementName === 'Image' && elementProps && elementProps.link" class="text-link-container">
         <label class="text-link">{{ elementProps.link }}</label>
       </div>

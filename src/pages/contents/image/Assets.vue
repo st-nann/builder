@@ -143,7 +143,6 @@ export default class ImageAssetContent extends BaseComponent {
     }
 
     doGetImages(data: any = '') {
-        console.log(this.imageLists.items.length)
         this.filterImageLists = this.imageLists.items.filter(
             (item: IImageItem) => _.includes(_.toLower(item.title), _.toLower(data))
         )

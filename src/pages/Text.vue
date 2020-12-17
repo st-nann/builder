@@ -1,7 +1,7 @@
 <template>
   <span :style="`width: 100%;`">
     <BoxComponent
-      :element="elementName"
+      :elementName="elementName"
       :action="management"
       @click="doEmitAddElement"
     >

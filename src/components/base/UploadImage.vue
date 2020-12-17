@@ -24,7 +24,6 @@ import BaseComponent from '../../core/BaseComponent'
 @Component
 export default class UploadImageComponent extends BaseComponent {
   onUpload (event: any) {
-    console.log('result', event.target.files[0], URL.createObjectURL(event.target.files[0]))
     this.onInput(URL.createObjectURL(event.target.files[0]))
     // display image on div 
     /*
