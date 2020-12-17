@@ -43390,12 +43390,12 @@ var Spacer_component = normalizeComponent(
 )
 
 /* harmony default export */ var Spacer = (Spacer_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"1daf5b64-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/Text.vue?vue&type=template&id=c30f8452&
-var Textvue_type_template_id_c30f8452_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('span',{style:("width: 100%;")},[_c('BoxComponent',{attrs:{"elementName":_vm.elementName,"action":_vm.management},on:{"click":_vm.doEmitAddElement}},[_c('template',{slot:"content"},[(_vm.editor && _vm.editor.root)?_c('div',{staticClass:"ql-editor text-content",attrs:{"id":("content-" + _vm.elementId)},domProps:{"innerHTML":_vm._s(_vm.contentHtml)}}):_vm._e()]),_c('template',{slot:"button-management"},[_c('MainButtonComponent',{staticClass:"button-box",attrs:{"elementId":_vm.elementId},on:{"click":_vm.onUpdateManagement}})],1)],2),_c('ModalComponent',{ref:("modal-edit-" + _vm.elementId),attrs:{"modal":{ width: 700, action: 'edit', button: { custom: true } },"elementId":_vm.elementId}},[_c('template',{slot:"content"},[_c('div',{staticClass:"editor",attrs:{"id":("editor-" + _vm.elementId)}})]),_c('template',{slot:"action-custom"},[_c('FooterPanel',{attrs:{"elementProps":_vm.elementProps,"elementName":_vm.elementName,"management":_vm.management},on:{"change":_vm.onUpdatePreview,"click":_vm.onUpdateFooterPanelData}})],1)],2)],1)}
-var Textvue_type_template_id_c30f8452_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"1daf5b64-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/pages/Text.vue?vue&type=template&id=74e51da4&
+var Textvue_type_template_id_74e51da4_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('span',{style:("width: 100%;")},[_c('BoxComponent',{attrs:{"elementName":_vm.elementName,"action":_vm.management},on:{"click":_vm.doEmitAddElement}},[_c('template',{slot:"content"},[(_vm.editor && _vm.editor.root)?_c('div',{staticClass:"ql-editor text-content",attrs:{"id":("content-" + _vm.elementId)},domProps:{"innerHTML":_vm._s(_vm.contentHtml)}}):_vm._e()]),_c('template',{slot:"button-management"},[_c('MainButtonComponent',{staticClass:"button-box",attrs:{"elementId":_vm.elementId},on:{"click":_vm.onUpdateManagement}})],1)],2),_c('ModalComponent',{ref:("modal-edit-" + _vm.elementId),attrs:{"modal":{ width: 700, action: 'edit', button: { custom: true } },"elementId":_vm.elementId}},[_c('template',{slot:"content"},[_c('div',{staticClass:"editor",attrs:{"id":("editor-" + _vm.elementId)}})]),_c('template',{slot:"action-custom"},[_c('FooterPanel',{attrs:{"elementProps":_vm.elementProps,"elementName":_vm.elementName,"management":_vm.management},on:{"change":_vm.onUpdatePreview,"click":_vm.onUpdateFooterPanelData}})],1)],2)],1)}
+var Textvue_type_template_id_74e51da4_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/pages/Text.vue?vue&type=template&id=c30f8452&
+// CONCATENATED MODULE: ./src/pages/Text.vue?vue&type=template&id=74e51da4&
 
 // EXTERNAL MODULE: ./node_modules/quill/dist/quill.js
 var quill = __webpack_require__("9339");
@@ -43454,10 +43454,14 @@ var Textvue_type_script_lang_ts_TextPage = /*#__PURE__*/function (_BaseComponent
         var toolbar = modal === null || modal === void 0 ? void 0 : modal.getElementsByClassName('ql-toolbar')[0];
 
         if (lodash_default.a.isUndefined(toolbar)) {
+          var fonts = ['Arial', 'Arial-Black', 'Brush-Script-MT', 'Comic-Sans-MS', 'Courier-New', 'Georgia', 'Helvetica', 'Impact', 'Lucida-Sans-Unicode', 'Tahoma', 'Times-New-Roman', 'Trebuchet-MS', 'Verdana'];
+          var Font = Quill.import('formats/font');
+          Font.whitelist = fonts;
+          Quill.register(Font, true);
           var options = {
             modules: {
               toolbar: [[{
-                'font': []
+                'font': fonts
               }], [{
                 'size': ['small', false, 'large', 'huge']
               }], [{
@@ -43611,8 +43615,8 @@ var pages_Textvue_type_style_index_0_lang_scss_ = __webpack_require__("9dc3");
 
 var pages_Text_component = normalizeComponent(
   src_pages_Textvue_type_script_lang_ts_,
-  Textvue_type_template_id_c30f8452_render,
-  Textvue_type_template_id_c30f8452_staticRenderFns,
+  Textvue_type_template_id_74e51da4_render,
+  Textvue_type_template_id_74e51da4_staticRenderFns,
   false,
   null,
   null,
