@@ -25,8 +25,6 @@ import BaseComponent from '../../core/BaseComponent'
 
 @Component
 export default class WidthStyleComponent extends BaseComponent {
-  @Prop(String) elementId!: string
-  @Prop() elementProps!: any
   @Prop() management!: any
   
   toggle = false

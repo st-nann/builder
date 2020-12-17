@@ -15,8 +15,6 @@ import BaseComponent from '../../core/BaseComponent'
 
 @Component
 export default class HeightStyleComponent extends BaseComponent {
-  @Prop(String) elementId!: string
-  @Prop() elementProps!: any
   @Prop() management!: any
   
   spacerHeight = '80'

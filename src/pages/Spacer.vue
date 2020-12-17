@@ -49,15 +49,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Watch } from 'vue-property-decorator'
+import { Component, Watch } from 'vue-property-decorator'
 import BaseComponent from '../core/BaseComponent'
 
 @Component
 export default class SpacerPage extends BaseComponent {
-  @Prop(String) elementId!: string
-  @Prop(String) elementName!: string
-  @Prop() elementProps!: any
-
   management: any = {}
   previewData: any = {}
   spacerData: any = {}
@@ -80,19 +76,7 @@ export default class SpacerPage extends BaseComponent {
       if (backgroundColor) { previewSpacerStyle['background-color'] = backgroundColor }
       if (height) { previewSpacerStyle.height = height }
     }
-    setTimeout(() => {
-      this.doSetAttributeStyle(`spacer-preview-${self.elementId}`, previewSpacerStyle)
-    }, 10)
-  }
-
-  doSetAttributeStyle(id: string, lists: object) {
-    document.getElementById(id)?.setAttribute(
-      'style',
-      JSON.stringify({...lists})
-        .substring(1, JSON.stringify({...lists}).length - 1)
-        .replaceAll(',', ';')
-        .replaceAll('"', '')
-    )
+    this.doSetAttributeStyle(`spacer-preview-${self.elementId}`, previewSpacerStyle)
   }
 
   onUpdateManagement(data: any) {
@@ -129,10 +113,6 @@ export default class SpacerPage extends BaseComponent {
         props: { ...this.previewData }
       })
     }
-  }
-
-  doEmitAddElement(data: any) {
-    this.$emit('add', { id: this.elementId, ...data })
   }
   
   @Watch('management', { deep: true })

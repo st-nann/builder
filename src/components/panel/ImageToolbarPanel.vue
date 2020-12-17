@@ -46,8 +46,6 @@ import {
 
 @Component
 export default class ImageToolbarPanel extends BaseComponent {
-  @Prop(String) elementId!: string;
-  @Prop() elementProps!: any;
   @Prop(String) imageUrl!: string;
   @Prop() management!: any;
 

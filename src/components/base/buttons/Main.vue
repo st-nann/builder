@@ -35,14 +35,12 @@
 
 <script lang="ts">
 import _ from 'lodash'
-import { Component, Prop } from 'vue-property-decorator'
+import { Component } from 'vue-property-decorator'
 import BaseComponent from '../../../core/BaseComponent'
 import { POSITION } from '../../../constants/Base'
 
 @Component
 export default class MainButtonComponent extends BaseComponent {
-  @Prop(String) elementId!: string
-  
   isOpenModal = false
   edit = false
   duplicate = false

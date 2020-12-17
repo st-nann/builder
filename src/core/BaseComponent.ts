@@ -5,7 +5,9 @@ import { IFlexbox, IModal } from '../interfaces/Components'
 
 @Component
 export default class BaseComponent extends Base {
-    @Prop(String) readonly element!: string
+    @Prop(String) readonly elementId!: string
+    @Prop(String) readonly elementName!: string
+    @Prop() readonly elementProps!: any
     @Prop(String) readonly name!: string
     @Prop(String) readonly label!: string
     @Prop(String) readonly placeholder!: string
@@ -24,15 +26,31 @@ export default class BaseComponent extends Base {
 
     created() {
         this.init()
-      }
+    }
     
-      init() {
+    init() {
         this.transformValue = this.value || null
-      }
+    }
 
     onInput(value: any) {
         this.transformValue = value
         this.$emit('change', this.transformValue)
+    }
+
+    doSetAttributeStyle(id: string, lists: object) {
+        setTimeout(() => {
+            document.getElementById(id)?.setAttribute(
+            'style',
+            JSON.stringify({...lists})
+                .substring(1, JSON.stringify({...lists}).length - 1)
+                .replaceAll(',', ';')
+                .replaceAll('"', '')
+            )
+        }, 10)
+    }
+
+    doEmitAddElement(data: any) {
+        this.$emit('add', { id: this.elementId, ...data })
     }
 
     @Watch('value', { deep: true })

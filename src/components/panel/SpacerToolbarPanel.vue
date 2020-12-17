@@ -16,8 +16,6 @@ import BaseComponent from '../../core/BaseComponent'
 
 @Component
 export default class SpacerToolbarPanel extends BaseComponent {
-  @Prop(String) elementId!: string;
-  @Prop() elementProps!: any;
   @Prop(String) imageUrl!: string;
   @Prop() management!: any;
 

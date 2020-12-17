@@ -44,8 +44,6 @@ import { EElementPosition } from '../../enum/Elements'
 
 @Component
 export default class BoxComponent extends BaseComponent {
-  @Prop(String) readonly elementName!: string
-  @Prop() readonly elementProps!: any
   @Prop() readonly action!: any
 
   get menu() {

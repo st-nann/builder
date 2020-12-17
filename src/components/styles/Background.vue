@@ -24,8 +24,6 @@ import BaseComponent from '../../core/BaseComponent'
 
 @Component
 export default class BackgroundStyleComponent extends BaseComponent {
-  @Prop(String) elementId!: string
-  @Prop() elementProps!: any
   @Prop() management!: any
   @Prop(Boolean) changeImage!: boolean
   

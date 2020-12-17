@@ -45,17 +45,13 @@
 <script lang="ts">
 import _ from 'lodash'
 import quill from 'quill'
-import { Component, Prop, Watch } from 'vue-property-decorator'
+import { Component, Watch } from 'vue-property-decorator'
 import BaseComponent from '../core/BaseComponent'
 
 const Quill = quill as any
 
 @Component
 export default class TextPage extends BaseComponent {
-  @Prop(String) elementId!: string
-  @Prop(String) elementName!: string
-  @Prop() elementProps!: any
-
   management: any = {}
   previewData: any = {}
   footerData: any = {}
@@ -127,15 +123,7 @@ export default class TextPage extends BaseComponent {
       if (border) { previewStyle['border-bottom'] = `${border.width} ${border.style} ${border.color}` }
       if (backgroundColor) { previewStyle['background-color'] = backgroundColor }
     }
-    setTimeout(() => {
-      document.getElementById(`editor-${this.elementId}`)?.setAttribute(
-        'style',
-        JSON.stringify({...previewStyle})
-          .substring(1, JSON.stringify({...previewStyle}).length - 1)
-          .replaceAll(',', ';')
-          .replaceAll('"', '')
-      )
-    }, 10)
+    this.doSetAttributeStyle(`editor-${this.elementId}`, previewStyle)
   }
 
   onUpdateManagement(data: any) {
@@ -180,10 +168,6 @@ export default class TextPage extends BaseComponent {
         }
       })
     }
-  }
-
-  doEmitAddElement(data: any) {
-    this.$emit('add', { id: this.elementId, ...data })
   }
 
   @Watch('management', { deep: true})

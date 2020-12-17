@@ -82,7 +82,7 @@
 
 <script lang="ts">
 import _ from 'lodash'
-import { Component, Prop, Watch } from 'vue-property-decorator'
+import { Component, Watch } from 'vue-property-decorator'
 import { mapGetters, mapActions } from 'vuex'
 import BaseComponent from '../core/BaseComponent'
 
@@ -101,10 +101,6 @@ import BaseComponent from '../core/BaseComponent'
   }
 })
 export default class ImagePage extends BaseComponent {
-  @Prop(String) elementId!: string
-  @Prop(String) elementName!: string
-  @Prop() elementProps!: any
-
   management: any = {}
   previewData: any = {}
   imageData: any = {}
@@ -179,20 +175,8 @@ export default class ImagePage extends BaseComponent {
       if (justify) { previewContainerStyle['justify-content'] = justify }
       if (align) { previewContainerStyle['align-items'] = align }
     }
-    setTimeout(() => {
-      this.doSetAttributeStyle(`image-container-preview-${self.elementId}`, previewContainerStyle)
-      this.doSetAttributeStyle(`image-preview-${self.elementId}`, previewImageStyle)
-    }, 10)
-  }
-
-  doSetAttributeStyle(id: string, lists: object) {
-    document.getElementById(id)?.setAttribute(
-      'style',
-      JSON.stringify({...lists})
-        .substring(1, JSON.stringify({...lists}).length - 1)
-        .replaceAll(',', ';')
-        .replaceAll('"', '')
-    )
+    this.doSetAttributeStyle(`image-container-preview-${self.elementId}`, previewContainerStyle)
+    this.doSetAttributeStyle(`image-preview-${self.elementId}`, previewImageStyle)
   }
 
   onUpdateManagement(data: any) {
@@ -237,10 +221,6 @@ export default class ImagePage extends BaseComponent {
         }
       })
     }
-  }
-
-  doEmitAddElement(data: any) {
-    this.$emit('add', { id: this.elementId, ...data })
   }
 
   async doGetLoginInfo() {
