@@ -6,9 +6,19 @@
     "vue-template-builder": "git+ssh://git@bitbucket.org:3dsinteractive/pam-builder.git"
 2. Run Command
     $ npm install vue-template-builder --save
-3. Import Component in main.ts or main.js
+3. Crate .env file
+    NODE_ENV=development
+    VUE_APP_TITLE=Builder
+    VUE_APP_ECOM_CMS_API=<Base URL API image storage>
+    VUE_APP_ADMIN_USERNAME=<Username for access to image storage>
+    VUE_APP_ADMIN_PASSWORD=<Password for access to image storage>
+
+    optionnal
+    VUE_APP_BASE_URL=<Base URL API image storage>
+    VUE_APP_TOKEN_IMAGE_STORAGE=<Token for access to image storage>
+4. Import Component in main.ts or main.js
     import 'vue-template-builder/src/plugins/Index.ts'
-4. Use Component
+5. Use Component
     <Component>....</Component>
 
 * remark: If you update code, You must run command `yarn build:lib` and then push your code to git.
