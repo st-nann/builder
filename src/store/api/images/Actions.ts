@@ -12,7 +12,14 @@ const actions: ActionTree<ImageState, IState> = {
     context: ActionContext<ImageState, IState>,
     payload: { params?: IImageParam }
   ) {
-    const query = payload.params && payload.params.page ? `?page=${payload.params.page}` : ''
+    let [query, limit, page] = ['', '', '']
+    if (payload.params) {
+      limit = payload.params.limit ? `limit=${payload.params.limit}` : ''
+      page = payload.params.page ? `page=${payload.params.page}` : ''
+    }
+    if (limit.length > 0 || page.length > 0) {
+      query = `?${limit}${limit.length > 0 ? `&${page}` : page}`
+    }
     await HttpRequest.sendRequest({
       method: "GET",
       path: `${baseUrl}/galleries${query}`,

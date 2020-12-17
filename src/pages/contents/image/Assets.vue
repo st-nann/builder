@@ -112,7 +112,7 @@ export default class ImageAssetContent extends BaseComponent {
     private imageLists!: IImageLists
 
     @Action('images/getImages')
-    private getImages!: (params: { page?: string }) => void
+    private getImages!: (payload: { params: { page?: string, limit?: number } }) => void
     */
 
     url = this.imageUrl
@@ -121,7 +121,7 @@ export default class ImageAssetContent extends BaseComponent {
     imageLists!: IImageLists
     filterImageLists: IImageItem[] = []
 
-    getImages!: (params: { page?: string }) => void
+    getImages!: (payload: { params: { page?: string, limit?: number } }) => void
     uploadImage!: (payload: { file: string }) => void
 
     get loading() {
@@ -143,6 +143,7 @@ export default class ImageAssetContent extends BaseComponent {
     }
 
     doGetImages(data: any = '') {
+        console.log(this.imageLists.items.length)
         this.filterImageLists = this.imageLists.items.filter(
             (item: IImageItem) => _.includes(_.toLower(item.title), _.toLower(data))
         )
@@ -164,7 +165,7 @@ export default class ImageAssetContent extends BaseComponent {
     @Watch('changeImage')
     async onChangeImage() {
         if (this.changeImage) {
-            await this.getImages({})
+            await this.getImages({ params: { limit: 999 } })
             this.doGetImages()
         }
     }

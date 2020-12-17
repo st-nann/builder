@@ -17,6 +17,7 @@ export interface IState {
 
 export interface IImageParam {
   page?: string
+  limit?: number
 }
 
 export interface IUploadImageRequest {

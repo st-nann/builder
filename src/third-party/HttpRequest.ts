@@ -12,7 +12,7 @@ class HttpRequest {
       this.datetime = this.getDateTime()
       this.header = {
         'x-timestamp': this.datetime,
-        'authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQ4YTQxOTgxLWExYzItNGJkNi05ODE3LTFkYTA5ZjllODBkNiIsInVzZXJfaWQiOiI0MzU4ZGE3ZS1iMWFiLTQ0NTYtOGM5MC01Njc5ZmY1NzU5MjgiLCJleHAiOjE2MDgxNzE2MTV9.iWKlsShiPAqceBFWlqUnyKTmOmlYQZkBzxKAyya17zk'
+        'authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBkMDM0NTE1LWEyMzAtNGU2Ni05YzQ4LTcxNTUzYTZhZmY3MiIsInVzZXJfaWQiOiI0MzU4ZGE3ZS1iMWFiLTQ0NTYtOGM5MC01Njc5ZmY1NzU5MjgiLCJleHAiOjE2MDgyNTk4OTl9.QB7IXfz_8gbLrQf2argySIJRnLzZigy6skmLQASqQaQ'
       };
       this.axios = axios.create({
         headers: this.header
