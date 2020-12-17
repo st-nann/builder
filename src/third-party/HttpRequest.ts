@@ -12,7 +12,7 @@ class HttpRequest {
       this.datetime = this.getDateTime()
       this.header = {
         'x-timestamp': this.datetime,
-        'authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBkMDM0NTE1LWEyMzAtNGU2Ni05YzQ4LTcxNTUzYTZhZmY3MiIsInVzZXJfaWQiOiI0MzU4ZGE3ZS1iMWFiLTQ0NTYtOGM5MC01Njc5ZmY1NzU5MjgiLCJleHAiOjE2MDgyNTk4OTl9.QB7IXfz_8gbLrQf2argySIJRnLzZigy6skmLQASqQaQ'
+        'authorization': process.env.VUE_APP_TOKEN_IMAGE_STORAGE ? process.env.VUE_APP_TOKEN_IMAGE_STORAGE : localStorage['authorization']
       };
       this.axios = axios.create({
         headers: this.header
@@ -72,7 +72,8 @@ class HttpRequest {
         url: options.path,
         responseType: "json",
         data: options.payload,
-        onUploadProgress: options.onUploadProgress || undefined
+        onUploadProgress: options.onUploadProgress || undefined,
+        headers: options.headers || undefined
       }).then(async (response: any) => {
         store.commit(`${options.mutation}`, response.data)
         this.doRemoveKey('components', 'loading', options.mutation)

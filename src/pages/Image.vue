@@ -81,10 +81,25 @@
 </template>
 
 <script lang="ts">
+import _ from 'lodash'
 import { Component, Prop, Watch } from 'vue-property-decorator'
+import { mapGetters, mapActions } from 'vuex'
 import BaseComponent from '../core/BaseComponent'
 
-@Component
+@Component({
+  computed: {
+    ...mapGetters('images', {   
+      loginResponse: 'login',
+      loginInfo: 'loginInfo'
+    })
+  },
+  methods: {
+    ...mapActions('images', [
+      'login',
+      'getLoginData'
+    ])
+  }
+})
 export default class ImagePage extends BaseComponent {
   @Prop(String) elementId!: string
   @Prop(String) elementName!: string
@@ -96,6 +111,8 @@ export default class ImagePage extends BaseComponent {
   footerData = {}
   changeImage = false
   imageUrl = ''
+  loginResponse!: any
+  loginInfo!: any
 
   get propsStyle() {
     let style = ''
@@ -118,6 +135,20 @@ export default class ImagePage extends BaseComponent {
       }
     }
     return style
+  }
+
+  login!: (payload: { data: { email: string, password: string } }) => void
+  getLoginData!: (payload: { headers: { ref: string } }) => void
+
+  async created() {
+    if (_.isEmpty(process.env.VUE_APP_TOKEN_IMAGE_STORAGE)) {
+      await this.login({
+          data: {
+              email: process.env.VUE_APP_ADMIN_USERNAME,
+              password: process.env.VUE_APP_ADMIN_PASSWORD
+          }
+      })
+    }
   }
 
   getImageData(data: any) {
@@ -212,6 +243,21 @@ export default class ImagePage extends BaseComponent {
     this.$emit('add', { id: this.elementId, ...data })
   }
 
+  async doGetLoginInfo() {
+    if (this.loginResponse) {
+      await this.getLoginData({ headers: { ref: this.loginResponse.ref } })
+    }
+    const self = this
+    const interval = setInterval(() => {
+      if (self.loginInfo.message) {
+        self.doGetLoginInfo()
+      } else {
+        clearInterval(interval)
+        localStorage['authorization'] = self.loginInfo.token
+      }
+    }, 500)
+  }
+
   @Watch('management', { deep: true })
   onEdit() {
     const ref = this.$refs[`modal-edit-${this.elementId}`]
@@ -223,6 +269,7 @@ export default class ImagePage extends BaseComponent {
           this.changeImage = true
         }
       }
+      this.doGetLoginInfo()
     }
   }
 }

@@ -20,7 +20,7 @@
                     name="search-image"
                     placeholder="Search Image"
                     :search="true"
-                    @change="doGetImages"
+                    @change="doFilterImages"
                 />
             </div>
             <div class="search-list">
@@ -142,7 +142,7 @@ export default class ImageAssetContent extends BaseComponent {
         this.url = url
     }
 
-    doGetImages(data: any = '') {
+    doFilterImages(data: any = '') {
         this.filterImageLists = this.imageLists.items.filter(
             (item: IImageItem) => _.includes(_.toLower(item.title), _.toLower(data))
         )
@@ -165,7 +165,7 @@ export default class ImageAssetContent extends BaseComponent {
     async onChangeImage() {
         if (this.changeImage) {
             await this.getImages({ params: { limit: 999 } })
-            this.doGetImages()
+            this.doFilterImages()
         }
     }
 }

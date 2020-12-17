@@ -6,7 +6,7 @@
       :key="index"
       :value="item.value"
       class="button-group-item"
-      @click="doUpdateButtonGroup(item.value, 'click')"
+      @click="doUpdateButtonGroup(item.value, true)"
     >
       <i v-if="item.icon" :class="`mdi mdi-${item.icon} button-group-icon`"/>
       <span v-if="item.label">{{ item.label }}</span>
@@ -21,7 +21,7 @@ import BaseComponent from '../../../core/BaseComponent'
 
 @Component
 export default class ButtonGroupComponent extends BaseComponent {
-  doUpdateButtonGroup(value?: any, action?: string) {
+  doUpdateButtonGroup(value?: any, action?: boolean) {
     const self = this
     setTimeout(() => {
       const elements: any = document.querySelectorAll(`#button-group-${self.name}`)
@@ -48,8 +48,8 @@ export default class ButtonGroupComponent extends BaseComponent {
   @Watch('$parent.management.edit')
   onUpdateValue() {
     if ((this.$parent as any).management.edit) {
-      if (!_.isEmpty(this.transformValue)) {
-        this.doUpdateButtonGroup(this.transformValue[this.name])
+      if (!_.isEmpty(this.value)) {
+        this.doUpdateButtonGroup(this.value[this.name])
       }
     }
   }
