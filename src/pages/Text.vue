@@ -57,6 +57,7 @@ export default class TextPage extends BaseComponent {
   footerData: any = {}
   editor: any = null
   contentHtml: any = null
+  textData: any = {}
 
   created() {
     this.doRenderUpdateElement()
@@ -119,7 +120,7 @@ export default class TextPage extends BaseComponent {
     const previewStyle: any = {}
     if (JSON.stringify(this.previewData) !== '{}') {
       const border = this.previewData['border-bottom']
-      const backgroundColor = this.previewData['border-bottom']
+      const backgroundColor = this.previewData['background-color']
       if (border) { previewStyle['border-bottom'] = `${border.width} ${border.style} ${border.color}` }
       if (backgroundColor) { previewStyle['background-color'] = backgroundColor }
     }
