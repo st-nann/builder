@@ -127,7 +127,7 @@ export default class ImageAssetContent extends BaseComponent {
     uploadImage!: (payload: { data: { file: any } }) => any
 
     get loading() {
-        const lists = this.loadingLists.reduce((value1: any, value2: any) => Object.assign(value1, value2), {})
+        const lists = this.loadingLists?.reduce((value1: any, value2: any) => Object.assign(value1, value2), {})
         return lists['images/LISTS']
     }
 

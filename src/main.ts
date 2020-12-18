@@ -1,16 +1,17 @@
 import Vue from 'vue'
-import App from './App.vue'
+import BuilderTemplate from './App.vue'
 import router from './router/Index'
 import store from './store/Index'
 import Components from './plugins/Index'
 import '@mdi/font/css/materialdesignicons.css'
 
 Vue.config.productionTip = false
-
 Vue.use(Components)
 
-new Vue({
+const instances = new Vue({
   router,
   store,
-  render: h => h(App)
+  render: h => h(BuilderTemplate)
 }).$mount('#app')
+
+export default instances
