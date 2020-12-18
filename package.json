@@ -1,8 +1,9 @@
 {
-  "name": "pam-builder",
+  "name": "builder-template",
   "version": "0.1.0",
+  "description": "Builder Template (Vue + Typescript)",
   "private": true,
-  "sideEffects": false,
+  "main": "dist/index.js",
   "scripts": {
     "dev": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
@@ -40,5 +41,16 @@
     "sass-loader": "^8.0.2",
     "typescript": "~3.9.3",
     "vue-template-compiler": "^2.6.11"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/st-nann/builder.git"
+  },
+  "keywords": [
+    "npm",
+    "builder",
+    "builder-template",
+    "vue-builder-template"
+  ],
+  "author": "Sanyanee Thawinvongrak"
 }
