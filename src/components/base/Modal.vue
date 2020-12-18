@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Watch, Prop } from 'vue-property-decorator'
+import { Component, Watch } from 'vue-property-decorator'
 import BaseComponent from '../../core/BaseComponent'
 
 @Component

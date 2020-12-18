@@ -42009,12 +42009,12 @@ var Input_component = normalizeComponent(
 )
 
 /* harmony default export */ var Input = (Input_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"1daf5b64-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/base/Modal.vue?vue&type=template&id=32a3bb90&
-var Modalvue_type_template_id_32a3bb90_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"modal",attrs:{"id":("modal-" + (_vm.modal.action) + "-" + _vm.elementId)}},[_c('div',{staticClass:"modal-content",style:(_vm.style)},[_vm._t("content"),(_vm.modal.button)?_c('div',{staticClass:"modal-action",style:(_vm.style)},[(_vm.modal.button.manage)?[_c('SquareButtonComponent',{attrs:{"label":"Cancel","className":"cancel-delete-square-button"},on:{"click":_vm.doCloseModal}}),_c('SquareButtonComponent',{attrs:{"label":_vm.modal.button.save,"className":"confirm-delete-square-button"},on:{"click":_vm.doAction}})]:_vm._e(),(_vm.modal.button.info)?[_c('SquareButtonComponent',{attrs:{"label":"Close","className":"cancel-delete-square-button"},on:{"click":_vm.doCloseModal}})]:_vm._e(),(_vm.modal.button.custom)?[_vm._t("action-custom")]:_vm._e()],2):_vm._e()],2)])}
-var Modalvue_type_template_id_32a3bb90_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"1daf5b64-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/base/Modal.vue?vue&type=template&id=670d0ed9&
+var Modalvue_type_template_id_670d0ed9_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"modal",attrs:{"id":("modal-" + (_vm.modal.action) + "-" + _vm.elementId)}},[_c('div',{staticClass:"modal-content",style:(_vm.style)},[_vm._t("content"),(_vm.modal.button)?_c('div',{staticClass:"modal-action",style:(_vm.style)},[(_vm.modal.button.manage)?[_c('SquareButtonComponent',{attrs:{"label":"Cancel","className":"cancel-delete-square-button"},on:{"click":_vm.doCloseModal}}),_c('SquareButtonComponent',{attrs:{"label":_vm.modal.button.save,"className":"confirm-delete-square-button"},on:{"click":_vm.doAction}})]:_vm._e(),(_vm.modal.button.info)?[_c('SquareButtonComponent',{attrs:{"label":"Close","className":"cancel-delete-square-button"},on:{"click":_vm.doCloseModal}})]:_vm._e(),(_vm.modal.button.custom)?[_vm._t("action-custom")]:_vm._e()],2):_vm._e()],2)])}
+var Modalvue_type_template_id_670d0ed9_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/base/Modal.vue?vue&type=template&id=32a3bb90&
+// CONCATENATED MODULE: ./src/components/base/Modal.vue?vue&type=template&id=670d0ed9&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.concat.js
 var es_array_concat = __webpack_require__("99af");
@@ -42101,8 +42101,8 @@ var Modalvue_type_style_index_0_lang_scss_ = __webpack_require__("e674");
 
 var Modal_component = normalizeComponent(
   base_Modalvue_type_script_lang_ts_,
-  Modalvue_type_template_id_32a3bb90_render,
-  Modalvue_type_template_id_32a3bb90_staticRenderFns,
+  Modalvue_type_template_id_670d0ed9_render,
+  Modalvue_type_template_id_670d0ed9_staticRenderFns,
   false,
   null,
   null,
