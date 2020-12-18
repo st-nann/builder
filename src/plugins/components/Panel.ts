@@ -1,6 +1,6 @@
-import ImageToolbarPanel from '../../components/panel/ImageToolbarPanel'
-import SpacerToolbarPanel from '../../components/panel/SpacerToolbarPanel'
-import FooterPanel from '../../components/panel/FooterPanel'
+import ImageToolbarPanel from '../../components/panel/ImageToolbarPanel.vue'
+import SpacerToolbarPanel from '../../components/panel/SpacerToolbarPanel.vue'
+import FooterPanel from '../../components/panel/FooterPanel.vue'
 
 export const BasePanels = {
     ImageToolbarPanel,

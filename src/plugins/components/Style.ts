@@ -1,7 +1,7 @@
-import BorderStyleComponent from '../../components/styles/Border'
-import BackgroundStyleComponent from '../../components/styles/Background'
-import WidthStyleComponent from '../../components/styles/Width'
-import HeightStyleComponent from '../../components/styles/Height'
+import BorderStyleComponent from '../../components/styles/Border.vue'
+import BackgroundStyleComponent from '../../components/styles/Background.vue'
+import WidthStyleComponent from '../../components/styles/Width.vue'
+import HeightStyleComponent from '../../components/styles/Height.vue'
 
 export const BaseStyleComponent = {
     BorderStyleComponent,

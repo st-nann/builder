@@ -1,8 +1,8 @@
 import Vue from 'vue'
-import App from './App'
+import App from './App.vue'
 import router from './router/Index'
 import store from './store/Index'
-import Components from '@/plugins/Index'
+import Components from './plugins/Index'
 import '@mdi/font/css/materialdesignicons.css'
 
 Vue.config.productionTip = false
