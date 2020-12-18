@@ -23,6 +23,11 @@ export default class BaseComponent extends Base {
     @Prop() modal!: IModal
 
     transformValue: any = null
+    data: any = {}
+    action: any = {}
+    footerData: any = {}
+    previewData: any = {}
+    changeImage = false
 
     created() {
         this.init()
@@ -48,6 +53,50 @@ export default class BaseComponent extends Base {
             )
         }, 10)
     }
+
+    onUpdatePreview(data: any) {
+        this.previewData = {}
+        this.previewData = data
+        this.changeImage = data.changeImage || false
+      }
+
+    onUpdateManagement(data: any) {
+        this.action = data
+        this.$emit('updataManagement', this.action)
+        console.log(this.action)
+        if (this.action.duplicate || this.action.delete) {
+          Object.assign(this.data, data)
+          this.doEmitData()
+        }
+    }
+
+    onUpdateFooterPanelData(data: any) {
+        this.footerData = data
+        this.action.edit = false
+        console.log('footer', this.action)
+        this.$emit('updataManagement', this.action)
+        if (data) {
+          Object.assign(this.data, data)
+          this.doEmitData()
+        }
+      }
+    
+      doEmitData() {
+        if (this.action.delete) {
+          this.$emit('delete', this.elementId)
+        } else if (this.action.duplicate) {
+          this.$emit('duplicate', {
+            id: this.elementId,
+            position: this.action.position,
+            duplicate: this.action.duplicate
+          })
+        } else {
+          this.$emit('done', {
+            id: this.elementId,
+            props: { ...this.data }
+          })
+        }
+      }
 
     doEmitAddElement(data: any) {
         this.$emit('add', { id: this.elementId, ...data })

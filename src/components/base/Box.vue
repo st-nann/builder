@@ -1,5 +1,5 @@
 <template>
-  <span v-if="!action.edit" class="box">
+  <span v-if="!management.edit" class="box">
     <div class="box-action">
       <CircleMenuButtonComponent
         class="circle-button-top"
@@ -44,7 +44,7 @@ import { EElementPosition } from '../../enum/Elements'
 
 @Component
 export default class BoxComponent extends BaseComponent {
-  @Prop() readonly action!: any
+  @Prop() readonly management!: any
 
   get menu() {
     return MENU

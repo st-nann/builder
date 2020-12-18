@@ -3,7 +3,7 @@
     <BoxComponent
       :elementName="elementName"
       :elementProps="elementProps"
-      :action="management"
+      :management="management"
       @click="doEmitAddElement"
       :style="elementProps.flexbox ? { ...elementProps.flexbox } : ''"
     >
@@ -102,10 +102,7 @@ import BaseComponent from '../core/BaseComponent'
 })
 export default class ImagePage extends BaseComponent {
   management: any = {}
-  previewData: any = {}
   imageData: any = {}
-  footerData: any = {}
-  changeImage = false
   imageUrl = ''
   loginResponse!: any
   loginInfo!: any
@@ -149,12 +146,16 @@ export default class ImagePage extends BaseComponent {
 
   getImageData(data: any) {
     this.imageData = { ...data }
+    Object.assign(this.data, this.imageData)
     this.doAssignStyle()
   }
 
   onUpdateChangeImage(data: any) {
     this.changeImage = data.changeImage
-    if (data.url) { this.imageUrl = data.url }
+    if (data.url) {
+      this.imageUrl = data.url
+      Object.assign(this.data, { url: this.imageUrl })
+    }
     this.doAssignStyle()
   }
 
@@ -179,48 +180,8 @@ export default class ImagePage extends BaseComponent {
     this.doSetAttributeStyle(`image-preview-${self.elementId}`, previewImageStyle)
   }
 
-  onUpdateManagement(data: any) {
-    this.management = data
-    if (this.management.duplicate || this.management.delete) {
-      this.doEmitData()
-    }
-  }
-
-  onUpdatePreview(data: any) {
-    this.previewData = {}
-    this.previewData = data
-    this.changeImage = data.changeImage || false
-    this.doAssignStyle()
-  }
-
-  onUpdateFooterPanelData(data: any) {
-    this.footerData = data
-    this.management.edit = false
-    if (data) { this.doEmitData() }
-  }
-
   doAddImage() {
     this.changeImage = true
-  }
-
-  doEmitData() {
-    if (this.management.delete) {
-      this.$emit('delete', this.elementId)
-    } else if (this.management.duplicate) {
-      this.$emit('duplicate', {
-        id: this.elementId,
-        position: this.management.position,
-        duplicate: this.management.duplicate
-      })
-    } else {
-      this.$emit('done', {
-        id: this.elementId,
-        props: {
-          url: this.imageUrl,
-          ...this.previewData
-        }
-      })
-    }
   }
 
   async doGetLoginInfo() {
@@ -238,10 +199,16 @@ export default class ImagePage extends BaseComponent {
     }, 500)
   }
 
-  @Watch('management', { deep: true })
+  @Watch('previewData', { deep: true })
+  onUpdatePreviewData() {
+    this.doAssignStyle()
+  }
+
+  @Watch('action', { deep: true })
   onEdit() {
     const ref = this.$refs[`modal-edit-${this.elementId}`]
     if (ref) {
+      this.management = this.action
       ref.isOpenModal = this.management.edit
       if (ref.isOpenModal && this.elementProps) {
         this.imageUrl = this.elementProps.url

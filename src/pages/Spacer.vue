@@ -3,7 +3,7 @@
     <BoxComponent
       :elementName="elementName"
       :elementProps="elementProps"
-      :action="management"
+      :management="management"
       @click="doEmitAddElement"
       :style="elementProps.flexbox ? { ...elementProps.flexbox } : ''"
     >
@@ -55,12 +55,11 @@ import BaseComponent from '../core/BaseComponent'
 @Component
 export default class SpacerPage extends BaseComponent {
   management: any = {}
-  previewData: any = {}
   spacerData: any = {}
-  footerData: any = {}
 
   getSpacerData(data: any) {
     this.spacerData = { ...data }
+    Object.assign(this.data, this.spacerData)
     this.doAssignStyle()
   }
 
@@ -79,46 +78,16 @@ export default class SpacerPage extends BaseComponent {
     this.doSetAttributeStyle(`spacer-preview-${self.elementId}`, previewSpacerStyle)
   }
 
-  onUpdateManagement(data: any) {
-    this.management = data
-    if (this.management.duplicate || this.management.delete) {
-      this.doEmitData()
-    }
-  }
-
-  onUpdatePreview(data: any) {
-    this.previewData = {}
-    this.previewData = data
+  @Watch('previewData', { deep: true })
+  onPreviewDataUpdate() {
     this.doAssignStyle()
   }
-
-  onUpdateFooterPanelData(data: any) {
-    this.footerData = data
-    this.management.edit = false
-    if (data) { this.doEmitData() }
-  }
-
-  doEmitData() {
-    if (this.management.delete) {
-      this.$emit('delete', this.elementId)
-    } else if (this.management.duplicate) {
-      this.$emit('duplicate', {
-        id: this.elementId,
-        position: this.management.position,
-        duplicate: this.management.duplicate
-      })
-    } else {
-      this.$emit('done', {
-        id: this.elementId,
-        props: { ...this.previewData }
-      })
-    }
-  }
   
-  @Watch('management', { deep: true })
+  @Watch('action', { deep: true })
   onEdit() {
     const ref = this.$refs[`modal-edit-${this.elementId}`]
     if (ref) {
+      this.management = this.action
       ref.isOpenModal = this.management.edit
     }
   }

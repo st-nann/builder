@@ -7,13 +7,12 @@
       :value="toggle"
       @change="onUpdateToggle"
     />
-    <span v-if="toggle">
-      <ColorPickerComponent
-        :name="`footer-panel-background-color-${elementId}`"
-        :value="background"
-        @change="onUpdateBackground"
-      />
-    </span>
+    <ColorPickerComponent
+      v-if="toggle"
+      :name="`footer-panel-background-color-${elementId}`"
+      :value="background"
+      @change="onUpdateBackground"
+    />
   </span>
 </template>
 
