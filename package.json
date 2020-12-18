@@ -9,7 +9,7 @@
     "dev": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
     "build:lib": "vue-cli-service build --target lib --name vue-template-builder ./src/plugins/Index.ts",
-    "build:ts": "tsc",
+    "build:ts": "npx cross-env NODE_ENV=production tsc",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
