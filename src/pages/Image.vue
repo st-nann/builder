@@ -137,8 +137,8 @@ export default class ImagePage extends BaseComponent {
     if (_.isEmpty(process.env.VUE_APP_TOKEN_IMAGE_STORAGE)) {
       await this.login({
         data: {
-          email: process.env.VUE_APP_ADMIN_USERNAME,
-          password: process.env.VUE_APP_ADMIN_PASSWORD
+          email: process.env.VUE_APP_ADMIN_USERNAME || '',
+          password: process.env.VUE_APP_ADMIN_PASSWORD || ''
         }
       })
     }

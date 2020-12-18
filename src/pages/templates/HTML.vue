@@ -66,12 +66,9 @@ import {
   BUTTON_DEFAULT,
   BOX_DEFAULT
 } from '../../constants/Default'
-import BoxComponent from '../../components/base/Box'
 import { EDirection } from '../../enum/Components'
 
-@Component({
-  components: { BoxComponent }
-})
+@Component
 export default class HTMLTemplate extends BaseComponent {
   @Prop() propTemplateJson!: IContainer
 

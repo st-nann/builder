@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import App from '../App'
+import App from '../App.vue'
 import { BaseComponents } from './components/Base'
 import { BaseStyleComponent } from './components/Style'
 import { BasePanels } from './components/Panel'

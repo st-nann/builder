@@ -47,7 +47,7 @@ export default class BorderStyleComponent extends BaseComponent {
   borderColor = '#ffffff'
 
   get widthOptions() {
-    const lists = []
+    const lists: any = []
     for (let i = 1; i < 16; i++) {
       lists.push({ label: `${i}px`, value: `${i}` })
     }

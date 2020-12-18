@@ -31,9 +31,6 @@ export interface IText {
 export interface IImage {
     element: EElementType.IMAGE
     props: {
-        // flexbox: {
-        //     display: string
-        // },
         background?: string
         'border-bottom'?: {
             width: string
