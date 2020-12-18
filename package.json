@@ -2,7 +2,7 @@
   "name": "builder-template",
   "version": "0.1.0",
   "description": "Builder Template (Vue + Typescript)",
-  "private": true,
+  "private": false,
   "main": "dist/index.js",
   "scripts": {
     "dev": "vue-cli-service serve --open",
