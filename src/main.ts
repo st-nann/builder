@@ -8,10 +8,10 @@ import '@mdi/font/css/materialdesignicons.css'
 Vue.config.productionTip = false
 Vue.use(Components)
 
-const instances = new Vue({
+const Builder = new Vue({
   router,
   store,
   render: h => h(BuilderTemplate)
 }).$mount('#app')
 
-export default instances
+export default Builder

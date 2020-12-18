@@ -23,11 +23,13 @@
     ```
 4. Import Package to plugin file
     ```
-    import '../../pam-builder/src/main'
+    import Builder from 'vue-template-builder/src/main'
+
+    Builder
     ```
 5. Use Component
     ```
-    <Component>....</Component>
+    <BuilderTemplate>....</BuilderTemplate>
     ```
 
 
@@ -58,7 +60,7 @@
     ```
 5. Use Component
     ```
-    <Component>....</Component>
+    <BuilderTemplate>....</BuilderTemplate>
     ```
 
 * remark: If you update code, You must run command `yarn build:lib` and then push your code to git.
