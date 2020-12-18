@@ -243,6 +243,13 @@
             }
         }
     }
+
+    .modal-content-spacer {
+        .spacer-preview-container {
+            margin: 25px 0;
+            box-shadow: 0px .1px 0px #c8c8c8, 0px 0px 2px #c8c8c8;
+        }
+    }
 }
 
 .modal-action {

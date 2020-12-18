@@ -2,7 +2,8 @@
   <span :style="`width: 100%;`">
     <BoxComponent
       :elementName="elementName"
-      :action="management"
+      :management="management"
+      :style="`${contentHtml ? 'min-height: auto' : ''}`"
       @click="doEmitAddElement"
     >
       <template slot="content">
@@ -45,20 +46,14 @@
 <script lang="ts">
 import _ from 'lodash'
 import quill from 'quill'
-import { Component, Prop, Watch } from 'vue-property-decorator'
+import { Component, Watch } from 'vue-property-decorator'
 import BaseComponent from '../core/BaseComponent'
 
 const Quill = quill as any
 
 @Component
 export default class TextPage extends BaseComponent {
-  @Prop(String) elementId!: string
-  @Prop(String) elementName!: string
-  @Prop() elementProps!: any
-
   management: any = {}
-  previewData: any = {}
-  footerData = {}
   editor: any = null
   contentHtml: any = null
 
@@ -123,73 +118,37 @@ export default class TextPage extends BaseComponent {
     const previewStyle: any = {}
     if (JSON.stringify(this.previewData) !== '{}') {
       const border = this.previewData['border-bottom']
-      const backgroundColor = this.previewData['border-bottom']
+      const backgroundColor = this.previewData['background-color']
       if (border) { previewStyle['border-bottom'] = `${border.width} ${border.style} ${border.color}` }
       if (backgroundColor) { previewStyle['background-color'] = backgroundColor }
     }
-    setTimeout(() => {
-      document.getElementById(`editor-${this.elementId}`)?.setAttribute(
-        'style',
-        JSON.stringify({...previewStyle})
-          .substring(1, JSON.stringify({...previewStyle}).length - 1)
-          .replaceAll(',', ';')
-          .replaceAll('"', '')
-      )
-    }, 10)
+    this.doSetAttributeStyle(`editor-${this.elementId}`, previewStyle)
   }
 
-  onUpdateManagement(data: any) {
-    this.management = data
-    if (this.management.duplicate || this.management.delete) {
-      this.doEmitData()
-    }
+  @Watch('editor', { deep: true })
+  onUpdateText() {
+    Object.assign(this.data, {
+      ...this.elementProps,
+      // ...(this.editor && this.editor.root ? { html: this.editor.root.innerHTML } : undefined),
+      ...(this.editor && this.editor.editor && this.editor.editor.delta && this.editor.editor.delta.ops
+            ? { json: this.editor.editor.delta.ops }
+            : undefined
+          )
+    })
   }
 
-  onUpdatePreview(data: any) {
-    this.previewData = {}
-    this.previewData = data
+  @Watch('previewData', { deep: true })
+  onPreviewDataUpdate() {
     this.doAssignStyle()
   }
 
-  onUpdateFooterPanelData(data: any) {
-    this.footerData = data
-    this.management.edit = false
-    if (data) { this.doEmitData() }
-  }
-
-  doEmitData() {
-    if (this.management.delete) {
-      this.$emit('delete', this.elementId)
-    } else if (this.management.duplicate) {
-      this.$emit('duplicate', {
-        id: this.elementId,
-        position: this.management.position,
-        duplicate: this.management.duplicate
-      })
-    } else {
-      this.$emit('done', {
-        id: this.elementId,
-        props: {
-          ...this.elementProps,
-          ...this.footerData,
-          // ...(this.editor && this.editor.root ? { html: this.editor.root.innerHTML } : undefined),
-          ...(this.editor && this.editor.editor && this.editor.editor.delta && this.editor.editor.delta.ops
-                ? { json: this.editor.editor.delta.ops }
-                : undefined
-              )
-        }
-      })
-    }
-  }
-
-  doEmitAddElement(data: any) {
-    this.$emit('add', { id: this.elementId, ...data })
-  }
-
-  @Watch('management', { deep: true})
+  @Watch('action', { deep: true})
   onEdit() {
     const ref = this.$refs[`modal-edit-${this.elementId}`]
-    if (ref) { ref.isOpenModal = this.management.edit }
+    if (ref) {
+      this.management = this.action
+      ref.isOpenModal = this.management.edit
+    }
     const self = this
     setTimeout(() => {
       self.editor.focus()

@@ -36,8 +36,6 @@ import BaseComponent from '../../core/BaseComponent'
 
 @Component
 export default class ModalComponent extends BaseComponent {
-  @Prop(String) elementId!: string
-
   isOpenModal = false
 
   get style() {

@@ -39,8 +39,6 @@ import { BORDER_STYLE } from '../../constants/Style'
 
 @Component
 export default class BorderStyleComponent extends BaseComponent {
-  @Prop(String) elementId!: string
-  @Prop() elementProps!: any
   @Prop() management!: any
   
   toggle = false

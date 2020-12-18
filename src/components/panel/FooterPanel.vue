@@ -53,9 +53,6 @@ import BaseComponent from '../../core/BaseComponent'
 
 @Component
 export default class FooterPanel extends BaseComponent {
-  @Prop(String) elementId!: string
-  @Prop(String) elementName!: string
-  @Prop() elementProps!: any
   @Prop() management!: any
   @Prop(String) imageUrl!: string
   

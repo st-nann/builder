@@ -12,6 +12,7 @@ import DropdownComponent from '../../components/base/Dropdown'
 import InputComponent from '../../components/base/Input'
 import ModalComponent from '../../components/base/Modal'
 import SwitchComponent from '../../components/base/Switch'
+import SliderComponent from '../../components/base/Slider'
 import UploadImageComponent from '../../components/base/UploadImage'
 
 export const BaseComponents = {
@@ -29,5 +30,6 @@ export const BaseComponents = {
     InputComponent,
     ModalComponent,
     SwitchComponent,
+    SliderComponent,
     UploadImageComponent
 }

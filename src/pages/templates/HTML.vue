@@ -75,7 +75,7 @@ import { EDirection } from '../../enum/Components'
 export default class HTMLTemplate extends BaseComponent {
   @Prop() propTemplateJson!: IContainer
 
-  elementName = ''
+  element = ''
   haveElementChild = false
   templateJson: IContainer = {
     id: uuid(),
@@ -125,7 +125,7 @@ export default class HTMLTemplate extends BaseComponent {
   }
 
   doAddJson(element: string) {
-    this.elementName = _.toUpper(element)
+    this.element = _.toUpper(element)
     this.doAddElementChild(this.templateJson.children)
   }
 
@@ -144,11 +144,11 @@ export default class HTMLTemplate extends BaseComponent {
       children.forEach((item: any) => {
         if (this.doFindElement(item.element)) {
           this.haveElementChild = true
-          this.elementName = _.toUpper(item.element)
+          this.element = _.toUpper(item.element)
         } else {
           item.children.push({
             id: uuid(),
-            ..._.cloneDeep(this.defaultData[`${this.elementName}_DEFAULT`])
+            ..._.cloneDeep(this.defaultData[`${this.element}_DEFAULT`])
           })
           this.doAddElementChild(item.children)
         }

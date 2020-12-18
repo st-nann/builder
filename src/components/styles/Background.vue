@@ -7,13 +7,12 @@
       :value="toggle"
       @change="onUpdateToggle"
     />
-    <span v-if="toggle">
-      <ColorPickerComponent
-        :name="`footer-panel-background-color-${elementId}`"
-        :value="background"
-        @change="onUpdateBackground"
-      />
-    </span>
+    <ColorPickerComponent
+      v-if="toggle"
+      :name="`footer-panel-background-color-${elementId}`"
+      :value="background"
+      @change="onUpdateBackground"
+    />
   </span>
 </template>
 
@@ -24,8 +23,6 @@ import BaseComponent from '../../core/BaseComponent'
 
 @Component
 export default class BackgroundStyleComponent extends BaseComponent {
-  @Prop(String) elementId!: string
-  @Prop() elementProps!: any
   @Prop() management!: any
   @Prop(Boolean) changeImage!: boolean
   

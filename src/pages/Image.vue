@@ -3,9 +3,9 @@
     <BoxComponent
       :elementName="elementName"
       :elementProps="elementProps"
-      :action="management"
-      @click="doEmitAddElement"
+      :management="management"
       :style="elementProps.flexbox ? { ...elementProps.flexbox } : ''"
+      @click="doEmitAddElement"
     >
       <template slot="content">
         <img
@@ -82,7 +82,7 @@
 
 <script lang="ts">
 import _ from 'lodash'
-import { Component, Prop, Watch } from 'vue-property-decorator'
+import { Component, Watch } from 'vue-property-decorator'
 import { mapGetters, mapActions } from 'vuex'
 import BaseComponent from '../core/BaseComponent'
 
@@ -101,15 +101,8 @@ import BaseComponent from '../core/BaseComponent'
   }
 })
 export default class ImagePage extends BaseComponent {
-  @Prop(String) elementId!: string
-  @Prop(String) elementName!: string
-  @Prop() elementProps!: any
-
   management: any = {}
-  previewData: any = {}
   imageData: any = {}
-  footerData = {}
-  changeImage = false
   imageUrl = ''
   loginResponse!: any
   loginInfo!: any
@@ -153,12 +146,16 @@ export default class ImagePage extends BaseComponent {
 
   getImageData(data: any) {
     this.imageData = { ...data }
+    Object.assign(this.data, this.imageData)
     this.doAssignStyle()
   }
 
   onUpdateChangeImage(data: any) {
     this.changeImage = data.changeImage
-    if (data.url) { this.imageUrl = data.url }
+    if (data.url) {
+      this.imageUrl = data.url
+      Object.assign(this.data, { url: this.imageUrl })
+    }
     this.doAssignStyle()
   }
 
@@ -179,68 +176,12 @@ export default class ImagePage extends BaseComponent {
       if (justify) { previewContainerStyle['justify-content'] = justify }
       if (align) { previewContainerStyle['align-items'] = align }
     }
-    setTimeout(() => {
-      this.doSetAttributeStyle(`image-container-preview-${self.elementId}`, previewContainerStyle)
-      this.doSetAttributeStyle(`image-preview-${self.elementId}`, previewImageStyle)
-    }, 10)
-  }
-
-  doSetAttributeStyle(id: string, lists: object) {
-    document.getElementById(id)?.setAttribute(
-      'style',
-      JSON.stringify({...lists})
-        .substring(1, JSON.stringify({...lists}).length - 1)
-        .replaceAll(',', ';')
-        .replaceAll('"', '')
-    )
-  }
-
-  onUpdateManagement(data: any) {
-    this.management = data
-    if (this.management.duplicate || this.management.delete) {
-      this.doEmitData()
-    }
-  }
-
-  onUpdatePreview(data: any) {
-    this.previewData = {}
-    this.previewData = data
-    this.changeImage = data.changeImage || false
-    this.doAssignStyle()
-  }
-
-  onUpdateFooterPanelData(data: any) {
-    this.footerData = data
-    this.management.edit = false
-    if (data) { this.doEmitData() }
+    this.doSetAttributeStyle(`image-container-preview-${self.elementId}`, previewContainerStyle)
+    this.doSetAttributeStyle(`image-preview-${self.elementId}`, previewImageStyle)
   }
 
   doAddImage() {
     this.changeImage = true
-  }
-
-  doEmitData() {
-    if (this.management.delete) {
-      this.$emit('delete', this.elementId)
-    } else if (this.management.duplicate) {
-      this.$emit('duplicate', {
-        id: this.elementId,
-        position: this.management.position,
-        duplicate: this.management.duplicate
-      })
-    } else {
-      this.$emit('done', {
-        id: this.elementId,
-        props: {
-          url: this.imageUrl,
-          ...this.previewData
-        }
-      })
-    }
-  }
-
-  doEmitAddElement(data: any) {
-    this.$emit('add', { id: this.elementId, ...data })
   }
 
   async doGetLoginInfo() {
@@ -258,10 +199,16 @@ export default class ImagePage extends BaseComponent {
     }, 500)
   }
 
-  @Watch('management', { deep: true })
+  @Watch('previewData', { deep: true })
+  onUpdatePreviewData() {
+    this.doAssignStyle()
+  }
+
+  @Watch('action', { deep: true })
   onEdit() {
     const ref = this.$refs[`modal-edit-${this.elementId}`]
     if (ref) {
+      this.management = this.action
       ref.isOpenModal = this.management.edit
       if (ref.isOpenModal && this.elementProps) {
         this.imageUrl = this.elementProps.url
