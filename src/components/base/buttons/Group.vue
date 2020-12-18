@@ -46,7 +46,7 @@ export default class ButtonGroupComponent extends BaseComponent {
   }
 
   @Watch('$parent.management.edit')
-  onUpdateValue() {
+  onUpdateEdit() {
     if ((this.$parent as any).management.edit) {
       if (!_.isEmpty(this.value)) {
         this.doUpdateButtonGroup(this.value[this.name])

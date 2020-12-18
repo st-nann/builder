@@ -10,13 +10,11 @@
 </template>
 
 <script lang="ts">
-import _ from 'lodash'
 import { Component, Prop, Watch } from 'vue-property-decorator'
 import BaseComponent from '../../core/BaseComponent'
 
 @Component
 export default class SpacerToolbarPanel extends BaseComponent {
-  @Prop(String) imageUrl!: string;
   @Prop() management!: any;
 
   spacerHeight: any
@@ -34,7 +32,7 @@ export default class SpacerToolbarPanel extends BaseComponent {
   onEdit() {
     if (this.management.edit) {
       if (this.elementProps) {
-        this.spacerHeight = _.isEmpty(this.elementProps.height) ? 80 : this.elementProps.height
+        this.spacerHeight = this.elementProps.height
       }
       this.onEmitData();
     }

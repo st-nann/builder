@@ -63,7 +63,6 @@ export default class BaseComponent extends Base {
     onUpdateManagement(data: any) {
         this.action = data
         this.$emit('updataManagement', this.action)
-        console.log(this.action)
         if (this.action.duplicate || this.action.delete) {
           Object.assign(this.data, data)
           this.doEmitData()
@@ -73,7 +72,6 @@ export default class BaseComponent extends Base {
     onUpdateFooterPanelData(data: any) {
         this.footerData = data
         this.action.edit = false
-        console.log('footer', this.action)
         this.$emit('updataManagement', this.action)
         if (data) {
           Object.assign(this.data, data)

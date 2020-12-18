@@ -4,8 +4,8 @@
       :elementName="elementName"
       :elementProps="elementProps"
       :management="management"
-      @click="doEmitAddElement"
       :style="elementProps.flexbox ? { ...elementProps.flexbox } : ''"
+      @click="doEmitAddElement"
     >
       <template slot="content">
         <img
