@@ -12,6 +12,6 @@ const Builder = new Vue({
   router,
   store,
   render: h => h(BuilderTemplate)
-}).$mount('#app')
+}).$mount('#builder')
 
 export default Builder

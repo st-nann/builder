@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="builder">
     <HTMLTemplate @change="doEmitTemplate" />
   </div>
 </template>
