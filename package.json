@@ -44,9 +44,12 @@
     "typescript": "~3.9.3",
     "vue-template-compiler": "^2.6.11"
   },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/st-nann/builder.git"
+    "url": "git@github.com:st-nann/builder.git"
   },
   "keywords": [
     "npm",

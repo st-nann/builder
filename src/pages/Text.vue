@@ -3,7 +3,7 @@
     <BoxComponent
       :elementName="elementName"
       :management="management"
-      :style="`${contentHtml ? 'min-height: auto' : ''}`"
+      :style="`${contentHtml ? 'min-height: calc(100% + 60px)' : ''}`"
       @click="doEmitAddElement"
     >
       <template slot="content">
