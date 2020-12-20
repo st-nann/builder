@@ -29,9 +29,7 @@
     ```
 5. Use Component
     ```
-    <div id="builder">
-        <BuilderTemplate>....</BuilderTemplate>
-    </div>
+    <div id="builder" />
     ```
 
 
