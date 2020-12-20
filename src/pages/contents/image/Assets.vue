@@ -24,7 +24,7 @@
                 />
             </div>
             <div class="search-list">
-                <div v-if="loading && showLoading" class="loading-container">
+                <div v-if="loading && showLoading || loading === undefined" class="loading-container">
                     <div class="loading" />
                 </div>
                 <div v-else-if="filterImageLists.length < 1" class="no-image-lists">
@@ -91,6 +91,7 @@ import { IImageLists, IImageItem } from '../../../interfaces/Image'
             loadingLists: 'loading'
         }),
         ...mapGetters('images', {
+            loginInfo: 'loginInfo',
             imageLists: 'lists',
             uploadPercent: 'uploadPercent'
         })
@@ -120,6 +121,7 @@ export default class ImageAssetContent extends BaseComponent {
     uploadPercent!: number
     // uploadPercentLists!: { [key: string]: number }[]
     loadingLists!: any
+    loginInfo!: any
     imageLists!: IImageLists
     filterImageLists: IImageItem[] = []
 
@@ -128,7 +130,11 @@ export default class ImageAssetContent extends BaseComponent {
 
     get loading() {
         const lists = this.loadingLists?.reduce((value1: any, value2: any) => Object.assign(value1, value2), {})
-        return lists['images/LISTS']
+        return (
+            lists['images/LOGIN'] ||
+            lists['image/LOGIN_INFORMATION']||
+            lists['images/LISTS']
+        )
     }
 
     // get uploadPercent() {
@@ -171,9 +177,9 @@ export default class ImageAssetContent extends BaseComponent {
         this.$emit('click', { changeImage: false })
     }
 
-    @Watch('changeImage')
+    @Watch('loginInfo')
     async onChangeImage() {
-        if (this.changeImage) {
+        if (_.isUndefined(this.loginInfo.code) && this.changeImage) {
             await this.getImages({ params: { limit: 9999999 } })
             this.doFilterImages()
         }
