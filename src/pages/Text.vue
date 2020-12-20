@@ -3,7 +3,7 @@
     <BoxComponent
       :elementName="elementName"
       :management="management"
-      :style="`${contentHtml ? 'min-height: calc(100% + 60px)' : ''}`"
+      :style="`${contentHtml ? 'min-height: auto' : ''}`"
       @click="doEmitAddElement"
     >
       <template slot="content">
@@ -12,6 +12,7 @@
           :id="`content-${elementId}`"
           class="ql-editor text-content"
           v-html="contentHtml"
+          style="padding: 30px;"
         />
       </template>
       <template slot="button-management">
