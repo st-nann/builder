@@ -12,7 +12,6 @@
           :id="`content-${elementId}`"
           class="ql-editor text-content"
           v-html="contentHtml"
-          style="padding: 30px;"
         />
       </template>
       <template slot="button-management">

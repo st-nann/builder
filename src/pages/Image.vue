@@ -4,12 +4,13 @@
       :elementName="elementName"
       :elementProps="elementProps"
       :management="management"
-      :style="elementProps.flexbox ? { ...elementProps.flexbox } : ''"
+      :style="containerStyle"
       @click="doEmitAddElement"
     >
       <template slot="content">
         <img
           v-if="elementProps.url"
+          class="image-content"
           :src="elementProps.url"
           :width="elementProps.width || '100%'"
           :style="propsStyle"
@@ -106,6 +107,17 @@ export default class ImagePage extends BaseComponent {
   imageUrl = ''
   loginResponse!: any
   loginInfo!: any
+
+  get containerStyle() {
+    const style = {}
+    if (this.elementProps.flexbox) {
+      Object.assign(style, { ...this.elementProps.flexbox })
+    }
+    if (this.elementProps.url) {
+      Object.assign(style, { 'min-height': 'auto' })
+    }
+    return style
+  }
 
   get propsStyle() {
     let style = ''
