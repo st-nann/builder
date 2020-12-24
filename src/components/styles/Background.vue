@@ -1,19 +1,10 @@
 <template>
-  <span>
-    <SwitchComponent
-      :name="`footer-panel-background-${elementId}`"
-      class="footer-panel-border-bottom"
-      label="Background"
-      :value="toggle"
-      @change="onUpdateToggle"
-    />
-    <ColorPickerComponent
-      v-if="toggle"
-      :name="`footer-panel-background-color-${elementId}`"
-      :value="background"
-      @change="onUpdateBackground"
-    />
-  </span>
+  <ColorPickerComponent
+    :name="`${name}-background-color-${elementId}`"
+    :label="label"
+    :value="background"
+    @change="onUpdateBackground"
+  />
 </template>
 
 <script lang="ts">
@@ -24,9 +15,7 @@ import BaseComponent from '../../core/BaseComponent'
 @Component
 export default class BackgroundStyleComponent extends BaseComponent {
   @Prop() management!: any
-  @Prop(Boolean) changeImage!: boolean
   
-  toggle = false
   background = '#ffffff'
 
   doAssignDefaultData() {
@@ -34,20 +23,14 @@ export default class BackgroundStyleComponent extends BaseComponent {
   }
 
   doAssignPropData() {
-    const haveBackgroundColor = this.elementProps && this.elementProps['background-color']
+    const haveBackgroundColor = this.elementProps && this.elementProps[this.customKeyValue]
     if (haveBackgroundColor) {
-      const backgroundColor = _.cloneDeep(this.elementProps['background-color'])
-      this.toggle = haveBackgroundColor
+      const backgroundColor = _.cloneDeep(this.elementProps[this.customKeyValue])
       this.background = backgroundColor
     } else {
       this.doAssignDefaultData()
     }
     return haveBackgroundColor
-  }
-
-  onUpdateToggle(value: any) {
-    this.toggle = value
-    this.onEmitData()
   }
 
   onUpdateBackground(background: any) {
@@ -56,24 +39,15 @@ export default class BackgroundStyleComponent extends BaseComponent {
   }
 
   onEmitData() {
-    this.$emit('change', this.toggle
-      ? { 'background-color': this.background }
-      : undefined
-    )
-  }
-
-  @Watch('toggle')
-  onToggleUpdate() {
-    if (this.toggle) { this.doAssignPropData() }
-    else { this.doAssignDefaultData() }
-    this.onEmitData()
+    this.$emit('change', {
+      [this.customKeyValue]: !_.isEmpty(this.background) ? this.background : undefined
+    })
   }
 
   @Watch('management.edit')
   onEdit() {
     if (this.management.edit) {
-      const haveProps = this.doAssignPropData()
-      if (!haveProps) { this.toggle = false }
+      this.doAssignPropData()
       this.onEmitData()
     }
   }

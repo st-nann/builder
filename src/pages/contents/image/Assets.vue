@@ -177,9 +177,9 @@ export default class ImageAssetContent extends BaseComponent {
         this.$emit('click', { changeImage: false })
     }
 
-    @Watch('loginInfo')
+    @Watch('loginInfo', { deep: true })
     async onChangeImage() {
-        if (_.isUndefined(this.loginInfo.code) && this.changeImage) {
+        if (_.isUndefined(this.loginInfo.code)) {
             await this.getImages({ params: { limit: 9999999 } })
             this.doFilterImages()
         }

@@ -61,7 +61,7 @@
         .circle-button-bottom,
         .circle-button-left {
             @extend .button-box;
-            z-index: 1;
+            z-index: auto;
         }
 
         .circle-button-top {
@@ -90,11 +90,9 @@
         }
     }
     
-    .text-content {
-        padding-bottom: 70px;
-    }
-    
-    .image-content {
+    .text-content,
+    .image-content,
+    .button-content {
         margin-bottom: 70px;
     }
 }

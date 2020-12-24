@@ -5,6 +5,7 @@ import { IFlexbox, IModal } from '../interfaces/Components'
 
 @Component
 export default class BaseComponent extends Base {
+    @Prop() readonly elementState!: any
     @Prop(String) readonly elementId!: string
     @Prop(String) readonly elementName!: string
     @Prop() readonly elementProps!: any
@@ -21,6 +22,7 @@ export default class BaseComponent extends Base {
     @Prop(String) readonly className!: string
     @Prop(String) readonly width!: string
     @Prop() modal!: IModal
+    @Prop() customKeyValue!: string
 
     transformValue: any = null
     data: any = {}

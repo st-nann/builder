@@ -24,7 +24,7 @@
     </BoxComponent>
     <ModalComponent
       :ref="`modal-edit-${elementId}`"
-      :modal="{ width: 700, action: 'edit', button: { custom: true } }"
+      :modal="{ width: 900, action: 'edit', button: { custom: true } }"
       :elementId="elementId"
     >
       <template slot="content">
@@ -48,6 +48,7 @@ import _ from 'lodash'
 import quill from 'quill'
 import { Component, Watch } from 'vue-property-decorator'
 import BaseComponent from '../core/BaseComponent'
+import { FONT_STYLE } from '../constants/Style'
 
 const Quill = quill as any
 
@@ -70,21 +71,7 @@ export default class TextPage extends BaseComponent {
       const modal = document.querySelector(`#modal-edit-${this.elementId}`)
       const toolbar = modal?.getElementsByClassName('ql-toolbar')[0]
       if (_.isUndefined(toolbar)) {
-        const fonts = [
-          'Arial',
-          'Arial-Black',
-          'Brush-Script-MT',
-          'Comic-Sans-MS',
-          'Courier-New',
-          'Georgia',
-          'Helvetica',
-          'Impact',
-          'Lucida-Sans-Unicode',
-          'Tahoma',
-          'Times-New-Roman',
-          'Trebuchet-MS',
-          'Verdana'
-        ]
+        const fonts = FONT_STYLE
         const Font = Quill.import('formats/font')
         Font.whitelist = fonts
         Quill.register(Font, true)

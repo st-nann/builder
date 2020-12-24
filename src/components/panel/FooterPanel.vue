@@ -1,19 +1,22 @@
 <template>
   <div class="footer-panel">
     <div class="footer-panel-switch">
-      <BorderStyleComponent
+      <BorderToggleStyleComponent
         :name="`footer-panel-border-bottom-${elementId}`"
+        label="Border Bottom"
         :elementId="elementId"
         :elementProps="elementProps"
         :management="management"
+        customKeyValue="border-bottom"
         @change="onUpdateBorderButton"
       />
-      <BackgroundStyleComponent
+      <BackgroundToggleStyleComponent
         :name="`footer-panel-background-${elementId}`"
         :elementId="elementId"
         :elementProps="elementProps"
         :management="management"
         :changeImage="changeImage"
+        customKeyValue="background-color"
         @change="onUpdateBackground"
       />
     </div>

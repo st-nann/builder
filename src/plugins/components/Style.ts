@@ -1,11 +1,18 @@
-import BorderStyleComponent from '../../components/styles/Border.vue'
+
 import BackgroundStyleComponent from '../../components/styles/Background.vue'
-import WidthStyleComponent from '../../components/styles/Width.vue'
+import FontStyleComponent from '../../components/styles/Font.vue'
 import HeightStyleComponent from '../../components/styles/Height.vue'
+import RadiusStyleComponent from '../../components/styles/Radius.vue'
+import BackgroundToggleStyleComponent from '../../components/styles/BackgroundToggle.vue'
+import BorderToggleStyleComponent from '../../components/styles/BorderToggle.vue'
+import WidthToggleStyleComponent from '../../components/styles/WidthToggle.vue'
 
 export const BaseStyleComponent = {
-    BorderStyleComponent,
     BackgroundStyleComponent,
-    WidthStyleComponent,
-    HeightStyleComponent
+    FontStyleComponent,
+    HeightStyleComponent,
+    RadiusStyleComponent,
+    BackgroundToggleStyleComponent,
+    BorderToggleStyleComponent,
+    WidthToggleStyleComponent
 }

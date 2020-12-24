@@ -65,7 +65,6 @@ export default class SpacerPage extends BaseComponent {
 
   doAssignStyle() {
     Object.assign(this.previewData, this.spacerData)
-    const self = this
     const previewSpacerStyle: any = {}
     if (JSON.stringify(this.previewData) !== '{}') {
       const border = this.previewData['border-bottom']
@@ -75,7 +74,7 @@ export default class SpacerPage extends BaseComponent {
       if (backgroundColor) { previewSpacerStyle['background-color'] = backgroundColor }
       if (height) { previewSpacerStyle.height = height }
     }
-    this.doSetAttributeStyle(`spacer-preview-${self.elementId}`, previewSpacerStyle)
+    this.doSetAttributeStyle(`spacer-preview-${this.elementId}`, previewSpacerStyle)
   }
 
   @Watch('previewData', { deep: true })

@@ -72,6 +72,7 @@
 
       const properties = {
         props: {
+          elementState: state,
           elementId: state.id,
           elementName: _.capitalize(state.element),
           elementProps: _.cloneDeep(state.props)
@@ -83,7 +84,7 @@
             if (_.includes([EElementPosition.TOP, EElementPosition.BOTTOM], value.position)) {
               this.addVerticalElement()
             } else if (_.includes([EElementPosition.LEFT, EElementPosition.RIGHT], value.position)) {
-              this.addHorizentalElement()
+              this.addHorizontalElement()
             }
           },
           duplicate: (value: any) => {
@@ -92,7 +93,7 @@
             if (_.includes([EElementPosition.TOP, EElementPosition.BOTTOM], value.position)) {
               this.addVerticalElement()
             } else if (_.includes([EElementPosition.LEFT, EElementPosition.RIGHT], value.position)) {
-              this.addHorizentalElement()
+              this.addHorizontalElement()
             }
           },
           delete: (id: string) => {
@@ -120,7 +121,7 @@
       return tag(tagName, properties, children)
     }
 
-    addHorizentalElement(state: any = this.templateJson) {
+    addHorizontalElement(state: any = this.templateJson) {
       if (state.children) {
         let indexInsert = 0
         state.children.forEach((item: any, index: number) => {
@@ -131,7 +132,7 @@
               : { ..._.cloneDeep(this.defaultData[`${this.value.element}_DEFAULT`]) }
             state.children.splice(indexInsert, 0, { ...data, id: uuid() })
           }
-          this.addHorizentalElement(item)
+          this.addHorizontalElement(item)
         })
       }
     }

@@ -1,12 +1,14 @@
 <template>
   <div>
-    <slot></slot>
+    {{ elementState }}
+    <!-- <BuilderCanvas :templateJson="elementState"/> -->
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component } from 'vue-property-decorator'
+import BaseComponent from '../core/BaseComponent'
 
 @Component
-export default class BoxPage extends Vue {}
+export default class BoxPage extends BaseComponent {}
 </script>

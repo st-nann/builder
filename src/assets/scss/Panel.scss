@@ -116,6 +116,7 @@
 .panel {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     padding: 5px 0;
     background-color: #ffffff;
     justify-content: space-between;
@@ -131,7 +132,7 @@
     .toolbar-panel-input {
         flex-grow: 1;
 
-        .toobar-panel-image-width {
+        .toobar-panel-button-width {
             padding: 0 10px;
 
             .toolbar-panel-width-text {
@@ -146,17 +147,55 @@
     }
 }
 
+/* Button Panel */
+.toolbar-panel {
+    @extend .panel;
+
+    .toolbar-panel-text-and-position {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+        width: 100%;
+
+        .toolbar-panel-input {
+            flex-grow: 1;
+
+            .toolbar-panel-button-link {
+                margin: 0 20px;
+            }
+        }
+
+        .toolbar-panel-button {
+            flex-grow: 1;
+            text-align: right;
+        }
+    }
+    
+    .toolbar-panel-style {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin-bottom: 10px;
+        width: 100%;
+
+        .toobar-panel-border {
+            margin-left: 10px;
+        }
+    }
+}
+
 .footer-panel {
     @extend .panel;
 
     .footer-panel-switch {
         flex-grow: 1;
         .footer-panel-border-bottom {
-            padding: 0 10px;
+            padding: 0 0 0 10px;
         }
 
         .footer-panel-background {
-            padding: 0 20px;
+            padding: 0 0 0 20px;
         }
     }
 

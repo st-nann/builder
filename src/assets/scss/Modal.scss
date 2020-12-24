@@ -244,6 +244,19 @@
         }
     }
 
+    .modal-content-button {
+        .button-preview-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            min-height: 150px;
+            height: auto;
+            border: 1px solid #eeeeee;
+            padding: 10px;
+        }
+    }
+
     .modal-content-spacer {
         .spacer-preview-container {
             margin: 25px 0;

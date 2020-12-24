@@ -1,11 +1,12 @@
 <template>
   <div v-show="imageUrl && imageUrl !== ''" class="toolbar-panel">
     <div class="toolbar-panel-input">
-      <WidthStyleComponent
+      <WidthToggleStyleComponent
         class="toobar-panel-image-width"
         :elementId="elementId"
         :elementProps="elementProps"
         :management="management"
+        customKeyValue="width"
         @change="onUpdateWidth"
       />
     </div>
@@ -20,16 +21,16 @@
         @change="onUpdateLink"
       />
       <ButtonGroupComponent
-        name="image-vertical-position"
+        name="image-horizontal-position"
         :options="verticalPositionOptions"
         :value="{ 'image-vertical-position': alignImage }"
         @change="onUpdateVerticalPosition"
       />
       <ButtonGroupComponent
-        name="image-horizental-position"
-        :options="horizentalPositionOptions"
-        :value="{ 'image-horizental-position': justifyImage }"
-        @change="onUpdateHorizentalPosition"
+        name="image-horizontal-position"
+        :options="horizontalPositionOptions"
+        :value="{ 'image-horizontal-position': justifyImage }"
+        @change="onUpdateHorizontalPosition"
       />
     </div>
   </div>
@@ -41,7 +42,7 @@ import { Component, Prop, Watch } from 'vue-property-decorator'
 import BaseComponent from '../../core/BaseComponent'
 import {
   VERTICAL_POSITION_STYLE,
-  HORIZENTAL_POSITION_STYLE,
+  HORIZONTAL_POSITION_STYLE,
 } from '../../constants/Style'
 
 @Component
@@ -51,11 +52,11 @@ export default class ImageToolbarPanel extends BaseComponent {
 
   imageWidth: any;
   imageLink = '';
-  justifyImage = '';
-  alignImage = '';
+  justifyImage = 'center';
+  alignImage = 'center';
 
-  get horizentalPositionOptions() {
-    return HORIZENTAL_POSITION_STYLE
+  get horizontalPositionOptions() {
+    return HORIZONTAL_POSITION_STYLE
   }
 
   get verticalPositionOptions() {
@@ -77,7 +78,7 @@ export default class ImageToolbarPanel extends BaseComponent {
     this.onEmitData()
   }
 
-  onUpdateHorizentalPosition(position: string) {
+  onUpdateHorizontalPosition(position: string) {
     this.justifyImage = position
     this.onEmitData()
   }
@@ -92,7 +93,7 @@ export default class ImageToolbarPanel extends BaseComponent {
           : {
               'justify-content': this.justifyImage,
               'align-items': this.alignImage,
-            },
+            }
     })
   }
 
@@ -105,10 +106,10 @@ export default class ImageToolbarPanel extends BaseComponent {
         this.imageLink = this.elementProps.link || ''
         if (haveFlexbox) {
           this.justifyImage = _.isEmpty(flexbox['justify-content'])
-            ? ''
+            ? 'center'
             : flexbox['justify-content']
           this.alignImage = _.isEmpty(flexbox['align-items'])
-            ? ''
+            ? 'center'
             : flexbox['align-items']
         }
       }

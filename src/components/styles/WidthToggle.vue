@@ -1,14 +1,14 @@
 <template>
   <span>
     <SwitchComponent
-      :name="`toolbar-panel-width-${elementId}`"
+      :name="`${name}-width-toggle-${elementId}`"
       label="Custom Width"
       :value="toggle"
       @change="onUpdateToggle"
     />
     <span v-if="toggle">
       <InputComponent
-        :name="`toolbar-panel-width-${elementId}`"
+        :name="`${name}-width-toggle-${elementId}`"
         width="40"
         :value="imageWidth"
         @change="onUpdateWidth"
@@ -24,7 +24,7 @@ import { Component, Prop, Watch } from 'vue-property-decorator'
 import BaseComponent from '../../core/BaseComponent'
 
 @Component
-export default class WidthStyleComponent extends BaseComponent {
+export default class WidthToggleStyleComponent extends BaseComponent {
   @Prop() management!: any
   
   toggle = false
@@ -35,11 +35,11 @@ export default class WidthStyleComponent extends BaseComponent {
   }
 
   doAssignPropData() {
-    const haveWidth = this.elementProps && this.elementProps.width
+    const haveWidth = this.elementProps && this.elementProps[this.customKeyValue]
     if (haveWidth) {
       const props = _.cloneDeep(this.elementProps)
       this.toggle = haveWidth
-      this.imageWidth = props.width.substring(0, props.width.length - 2)
+      this.imageWidth = props[this.customKeyValue].substring(0, props[this.customKeyValue].length - 2)
     } else {
       this.doAssignDefaultData()
     }
@@ -57,8 +57,10 @@ export default class WidthStyleComponent extends BaseComponent {
   }
 
   onEmitData() {
-    this.$emit('change', this.toggle && !_.isEmpty(this.imageWidth)
-      ? { width: `${this.imageWidth}px` }
+    this.$emit('change', this.toggle
+      ? {
+          [this.customKeyValue]: !_.isEmpty(this.imageWidth )? `${this.imageWidth}px` : undefined
+        }
       : undefined
     )
   }

@@ -173,7 +173,6 @@ export default class ImagePage extends BaseComponent {
 
   doAssignStyle() {
     Object.assign(this.previewData, this.imageData)
-    const self = this
     const previewContainerStyle: any = {}
     const previewImageStyle: any = {}
     if (JSON.stringify(this.previewData) !== '{}') {
@@ -188,8 +187,8 @@ export default class ImagePage extends BaseComponent {
       if (justify) { previewContainerStyle['justify-content'] = justify }
       if (align) { previewContainerStyle['align-items'] = align }
     }
-    this.doSetAttributeStyle(`image-container-preview-${self.elementId}`, previewContainerStyle)
-    this.doSetAttributeStyle(`image-preview-${self.elementId}`, previewImageStyle)
+    this.doSetAttributeStyle(`image-container-preview-${this.elementId}`, previewContainerStyle)
+    this.doSetAttributeStyle(`image-preview-${this.elementId}`, previewImageStyle)
   }
 
   doAddImage() {

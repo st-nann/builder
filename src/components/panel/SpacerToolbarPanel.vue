@@ -4,6 +4,7 @@
       :elementId="elementId"
       :elementProps="elementProps"
       :management="management"
+      customKeyValue="height"
       @change="onUpdateHeight"
     />
   </div>

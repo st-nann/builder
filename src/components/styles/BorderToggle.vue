@@ -1,29 +1,29 @@
 <template>
   <span>
     <SwitchComponent
-      :name="`footer-panel-border-bottom-${elementId}`"
+      :name="`${name}-border-bottom-toggle-${elementId}`"
       class="footer-panel-border-bottom"
-      label="Border Bottom"
+      :label="label"
       :value="toggle"
       @change="onUpdateToggle"
     />
     <span v-if="toggle">
       <DropdownComponent
-        :name="`footer-panel-border-bottom-width-${elementId}`"
+        :name="`${name}-border-bottom-width-toggle-${elementId}`"
         :options="widthOptions"
         :value="borderWidth"
         width="50"
         @change="onUpdateWidth"
       />
       <DropdownComponent
-        :name="`footer-panel-border-bottom-style-${elementId}`"
+        :name="`${name}-border-bottom-style-toggle-${elementId}`"
         :options="borderStyles"
         :value="borderStyle"
         width="70"
         @change="onUpdateStyle"
       />
       <ColorPickerComponent
-        :name="`footer-panel-border-bottom-color-${elementId}`"
+        :name="`${name}-border-bottom-color-toggle-${elementId}`"
         :value="borderColor"
         @change="onUpdateColor"
       />
@@ -38,7 +38,7 @@ import BaseComponent from '../../core/BaseComponent'
 import { BORDER_STYLE } from '../../constants/Style'
 
 @Component
-export default class BorderStyleComponent extends BaseComponent {
+export default class BorderToggleStyleComponent extends BaseComponent {
   @Prop() management!: any
   
   toggle = false
@@ -65,9 +65,9 @@ export default class BorderStyleComponent extends BaseComponent {
   }
 
   doAssignPropData() {
-    const haveBorderBottom = this.elementProps && this.elementProps['border-bottom']
+    const haveBorderBottom = this.elementProps && this.elementProps[this.customKeyValue]
     if (haveBorderBottom) {
-      const borderBottom = _.cloneDeep(this.elementProps['border-bottom'])
+      const borderBottom = _.cloneDeep(this.elementProps[this.customKeyValue])
       this.toggle = haveBorderBottom
       this.borderWidth = borderBottom.width.substring(0, borderBottom.width.length - 2)
       this.borderStyle = borderBottom.style
@@ -101,10 +101,10 @@ export default class BorderStyleComponent extends BaseComponent {
   onEmitData() {
     this.$emit('change', this.toggle
       ? {
-          'border-bottom': {
-            width: `${this.borderWidth}px`,
-            style: this.borderStyle,
-            color: this.borderColor
+          [this.customKeyValue]: {
+            width: !_.isEmpty(this.borderWidth ) ? `${this.borderWidth}px` : undefined,
+            style: !_.isEmpty(this.borderStyle ) ? this.borderStyle : undefined,
+            color: !_.isEmpty(this.borderColor ) ? this.borderColor : undefined
           }
         }
       : undefined

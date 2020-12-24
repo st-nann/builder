@@ -7,6 +7,7 @@
           v-for="(item, index) in options"
           :key="index"
           :value="item.value"
+          :style="`font-family: ${item.value}`"
         >
           {{ item.label }}
         </option>

@@ -11,6 +11,7 @@
             class="menu-link"
             @click="doEmit(item.value)"
           >
+            <i v-if="item.icon" :class="`mdi mdi-${item.icon} menu-icon`" />
             {{ item.label }}
           </a>
         </div>

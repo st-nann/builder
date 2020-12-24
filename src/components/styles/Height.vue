@@ -1,9 +1,9 @@
 <template>
   <SliderComponent
     name="image-link"
-    class="toolbar-panel-spacer-height"
+    :class="`${name}-height-${elementId}`"
     label="Height"
-    :value="spacerHeight"
+    :value="height"
     @change="onUpdateHeight"
   />
 </template>
@@ -17,17 +17,17 @@ import BaseComponent from '../../core/BaseComponent'
 export default class HeightStyleComponent extends BaseComponent {
   @Prop() management!: any
   
-  spacerHeight = '80'
+  height = '80'
 
   doAssignDefaultData() {
-    this.spacerHeight = '80'
+    this.height = '80'
   }
 
   doAssignPropData() {
-    const haveHeight = this.elementProps && this.elementProps.height
+    const haveHeight = this.elementProps && this.elementProps[this.customKeyValue]
     if (haveHeight) {
       const props = _.cloneDeep(this.elementProps)
-      this.spacerHeight = props.height.substring(0, props.height.length - 2)
+      this.height = props[this.customKeyValue].substring(0, props[this.customKeyValue].length - 2)
     } else {
       this.doAssignDefaultData()
     }
@@ -35,13 +35,13 @@ export default class HeightStyleComponent extends BaseComponent {
   }
 
   onUpdateHeight(height: any) {
-    this.spacerHeight = height
+    this.height = height
     this.onEmitData()
   }
 
   onEmitData() {
-    this.$emit('change', !_.isEmpty(this.spacerHeight)
-      ? { height: `${this.spacerHeight}px` }
+    this.$emit('change', !_.isEmpty(this.height)
+      ? { [this.customKeyValue]: `${this.height}px` }
       : undefined
     )
   }

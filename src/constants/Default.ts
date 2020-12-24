@@ -1,3 +1,4 @@
+import { uuid } from 'uuidv4'
 import { IBox, IButton, IContainer, IImage, ISpacer, IText } from '../interfaces/Template'
 import { EDirection } from '../enum/Components'
 import { EElementType } from '../enum/Elements'
@@ -43,5 +44,8 @@ export const BOX_DEFAULT: IBox = {
             'flex-direction': EDirection.ROW
         }
     },
-    children: []
+    children: [{
+        id: uuid(),
+        ...TEXT_DEFAULT
+    }]
 }
