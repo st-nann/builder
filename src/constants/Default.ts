@@ -1,4 +1,4 @@
-import { uuid } from 'uuidv4'
+import { v4 as uuidv4 } from 'uuid'
 import { IBox, IButton, IContainer, IImage, ISpacer, IText } from '../interfaces/Template'
 import { EDirection } from '../enum/Components'
 import { EElementType } from '../enum/Elements'
@@ -45,7 +45,7 @@ export const BOX_DEFAULT: IBox = {
         }
     },
     children: [{
-        id: uuid(),
+        id: uuidv4(),
         ...TEXT_DEFAULT
     }]
 }

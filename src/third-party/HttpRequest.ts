@@ -2,6 +2,7 @@ import _ from 'lodash'
 import axios, { AxiosInstance } from 'axios'
 import store from '../store/Index'
 import { IHttpRequest, IHeader } from './interfaces/HttpRequest'
+import { ENV } from '../constants/Env'
 
 class HttpRequest {
     private axios: AxiosInstance;
@@ -12,7 +13,9 @@ class HttpRequest {
       this.datetime = this.getDateTime()
       this.header = {
         'x-timestamp': this.datetime,
-        'authorization': process.env.VUE_APP_TOKEN_IMAGE_STORAGE ? process.env.VUE_APP_TOKEN_IMAGE_STORAGE : localStorage['authorization']
+        'authorization': _.isEmpty(ENV.TOKEN_IMAGE_STORAGE)
+          ? localStorage['authorization']
+          : ENV.TOKEN_IMAGE_STORAGE
       };
       this.axios = axios.create({
         headers: this.header

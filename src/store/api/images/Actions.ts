@@ -1,3 +1,5 @@
+
+import _ from 'lodash'
 import store from '../../../store/Index'
 import HttpRequest from '../../../third-party/HttpRequest'
 import {
@@ -10,9 +12,10 @@ import {
 import { ActionContext, ActionTree } from 'vuex'
 import { mutationType } from './MutationTypes'
 import ImageState from './States'
+import { ENV } from '../../../constants/Env'
 
-const baseUrl = process.env.VUE_APP_BASE_URL
-const cmsApi = process.env.VUE_APP_ECOM_CMS_API
+const baseUrl = ENV.BASE_URL_STORAGE
+const cmsApi = ENV.ECOM_CMS_API_URL_STORAGE
 
 const actions: ActionTree<ImageState, IState> = {
   async login(
@@ -21,7 +24,7 @@ const actions: ActionTree<ImageState, IState> = {
   ) {
     await HttpRequest.sendRequest({
       method: "POST",
-      path: baseUrl ? baseUrl : `${cmsApi}/login`,
+      path: _.isEmpty(baseUrl) ? `${cmsApi}/login` : baseUrl,
       mutation: `images/${mutationType.LOGIN}`,
       payload: payload.data
     })

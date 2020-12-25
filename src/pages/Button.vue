@@ -44,7 +44,6 @@
       </template>
       <template slot="action-custom">
         <FooterPanel
-          v-show="!changeImage"
           :elementId="elementId"
           :elementName="elementName"
           :elementProps="elementProps"

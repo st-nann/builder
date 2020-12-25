@@ -52,7 +52,7 @@
 
 <script lang="ts">
 import _ from 'lodash'
-import { uuid } from 'uuidv4'
+import { v4 as uuidv4 } from 'uuid'
 import { Component, Prop, Watch } from 'vue-property-decorator'
 import BaseComponent from '../../core/BaseComponent'
 import { MENU } from '../../constants/Base'
@@ -75,7 +75,7 @@ export default class HTMLTemplate extends BaseComponent {
   element = ''
   haveElementChild = false
   templateJson: IContainer = {
-    id: uuid(),
+    id: uuidv4(),
     ..._.cloneDeep(this.defaultData['CONTAINER_DEFAULT'])
   }
 
@@ -105,11 +105,11 @@ export default class HTMLTemplate extends BaseComponent {
   }
 
   created() {
-    this.templateJson.props.flexbox['flex-direction'] = EDirection.COLUMN
-    if (this.propTemplateJson) {
+    if (this.propTemplateJson && !_.isEmpty(this.propTemplateJson)) {
       this.templateJson = this.propTemplateJson
       this.haveElementChild = true
     }
+    this.templateJson.props.flexbox['flex-direction'] = EDirection.COLUMN
   }
 
   doOpenModal() {
@@ -133,7 +133,7 @@ export default class HTMLTemplate extends BaseComponent {
   doAddElementChild(children: object[]) {
     if (this.templateJson.children.length < 1) {
       this.templateJson.children.push({
-        id: uuid(),
+        id: uuidv4(),
         ..._.cloneDeep(this.defaultData['CONTAINER_DEFAULT'])
       })
       this.doAddElementChild(this.templateJson.children)
@@ -144,7 +144,7 @@ export default class HTMLTemplate extends BaseComponent {
           this.element = _.toUpper(item.element)
         } else {
           item.children.push({
-            id: uuid(),
+            id: uuidv4(),
             ..._.cloneDeep(this.defaultData[`${this.element}_DEFAULT`])
           })
           this.doAddElementChild(item.children)

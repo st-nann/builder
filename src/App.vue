@@ -1,15 +1,18 @@
 <template>
-  <div id="builder">
-    <HTMLTemplate @change="doEmitTemplate" />
-  </div>
+  <HTMLTemplate
+    id="builder"
+    data-id="builder"
+    :propTemplateJson="propTemplateJson"
+    @change="doEmitTemplate"
+  />
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue, Prop } from 'vue-property-decorator'
 
 @Component
 export default class App extends Vue {
-  @Prop() readonly templates!: any;
+  @Prop() propTemplateJson!: any
 
   doEmitTemplate(template: any) {
     this.$emit('change', template)

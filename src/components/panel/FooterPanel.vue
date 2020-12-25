@@ -23,7 +23,7 @@
     <div class="footer-panel-button">
       <SwitchComponent
         v-if="elementName === 'Image' && (imageUrl && imageUrl !== '')"
-        name="footer-panel-compress-image"
+        :name="`footer-panel-compress-image-${elementId}`"
         class="footer-panel-compress-image"
         label="Compressed File"
         :value="toggleCompressFile"

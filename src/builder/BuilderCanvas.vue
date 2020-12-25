@@ -1,6 +1,6 @@
 <script lang="ts">
   import _ from 'lodash'
-  import { uuid } from 'uuidv4'
+  import { v4 as uuidv4 } from 'uuid'
   import { Component, Vue, Prop } from 'vue-property-decorator'
   import { CreateElement } from 'vue'
   import { BuilderTagMap } from './BuilderTagMap'
@@ -23,7 +23,6 @@
     components: { BoxPage, ButtonPage, ImagePage, SpacerPage, TextPage },
   })
   export default class BuilderCanvas extends Vue {
-    @Prop() viewJSON: any
     @Prop() templateJson: any
 
     value: any = {}
@@ -130,7 +129,7 @@
             const data = this.value.duplicate
               ? { ..._.cloneDeep(item) }
               : { ..._.cloneDeep(this.defaultData[`${this.value.element}_DEFAULT`]) }
-            state.children.splice(indexInsert, 0, { ...data, id: uuid() })
+            state.children.splice(indexInsert, 0, { ...data, id: uuidv4() })
           }
           this.addHorizontalElement(item)
         })
@@ -150,21 +149,21 @@
                     ..._.cloneDeep({
                     ...item,
                     children: _(item.children)
-                      .map((child: any) => { return { ...child, id: uuid() } })
+                      .map((child: any) => { return { ...child, id: uuidv4() } })
                       .filter((child: any, index: number) => index === _.parseInt(key))
                       .cloneDeep()
                     })
                   }
                 : { 
                     ..._.cloneDeep(this.defaultData['CONTAINER_DEFAULT']),
-                    id: uuid(),
+                    id: uuidv4(),
                     children: _.cloneDeep([{
-                      id: uuid(),
+                      id: uuidv4(),
                       ..._.cloneDeep(this.defaultData[`${this.value.element}_DEFAULT`])
                     }])
                   }
               if (!this.inserted) {
-                state.children.splice(indexInsert, 0, { ...data, id: uuid() })
+                state.children.splice(indexInsert, 0, { ...data, id: uuidv4() })
                 this.inserted = true
               }
             }

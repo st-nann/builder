@@ -86,6 +86,7 @@ import _ from 'lodash'
 import { Component, Watch } from 'vue-property-decorator'
 import { mapGetters, mapActions } from 'vuex'
 import BaseComponent from '../core/BaseComponent'
+import { ENV } from '../constants/Env'
 
 @Component({
   computed: {
@@ -146,11 +147,11 @@ export default class ImagePage extends BaseComponent {
   getLoginData!: (payload: { headers: { ref: string } }) => void
 
   async created() {
-    if (_.isEmpty(process.env.VUE_APP_TOKEN_IMAGE_STORAGE)) {
+    if (_.isEmpty(ENV.TOKEN_IMAGE_STORAGE)) {
       await this.login({
         data: {
-          email: process.env.VUE_APP_ADMIN_USERNAME || '',
-          password: process.env.VUE_APP_ADMIN_PASSWORD || ''
+          email: ENV.ADMIN_USERNAME_STORAGE,
+          password: ENV.ADMIN_PASSWORD_STORAGE
         }
       })
     }
