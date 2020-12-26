@@ -97,7 +97,7 @@ VUE_APP_TOKEN_IMAGE_STORAGE=<Token for access to image storage>
 ```
 
 ### How to Build and Publish Package (Self Reminder)
-1. Setup package.json
+1. Setup package.json (Change version)
 2. Setup tsconfig.json
 3. Run Command
 ```
@@ -109,7 +109,7 @@ npm run build:ts
 ```
 4. Register [NPM](https://www.npmjs.com)
 5. [In Your Project Plugin] npm login and type username, password, email
-6. Run Command (Every publish must be change version)
+6. Run Command (Every publish must be change version in package.json)
 ```
 npm publish
 ```
