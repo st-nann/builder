@@ -24,7 +24,7 @@ npm run dev
     ]
 ```
 
-4. Import Package to plugin file
+4. Import Package to main.ts or main.js file
 ```javascript
     import Builder from 'vue-template-builder/src/main'
 
