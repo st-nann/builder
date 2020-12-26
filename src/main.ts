@@ -25,8 +25,7 @@ const Builder = () => {
         props: { propTemplateJson: propTemplateJson },
         on: {
           change(template: any) {
-            vue.$root.$on('change', template)
-            console.log('template: ', template)
+            (vue.$el as any).dataset['data-result-template'] = JSON.stringify(template)
           }
         }
       })
