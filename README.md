@@ -113,7 +113,7 @@ npm run build:ts
 ```
 npm publish
 ```
-* remark: [Unpublish version] Run npm unpublish `<PACKAGE_NAME>@<VERSION>` such as `vue-template-builder@0.0.1`
+* remark: [Unpublish version] Run `npm unpublish <PACKAGE_NAME>@<VERSION>` such as `vue-template-builder@0.0.1`
 <br>
 
 ### Project setup
