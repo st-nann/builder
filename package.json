@@ -1,6 +1,6 @@
 {
   "name": "vue-template-builder",
-  "version": "0.0.60",
+  "version": "1.0.0",
   "description": "Builder Template (Vue + Typescript)",
   "private": false,
   "main": "dist/main.js",

@@ -1,104 +1,137 @@
 # Template Builder
 
 ### How to use plugin
-```
-** Solution 1: Build Package (Style Not Effect) **
+
+**Solution 1:** *Build Package (Style Not Effect and Include Store)*
 1. Run Command
-    ```
-    yarn add vue-template-builder
-    ```
+```
+yarn add vue-template-builder
+```
+
 2. Run Command
-    ```
-    yarn dev
-    ```
-    or
-    ```
-    npm install
-    ```
-3. Setup nuxt.config.js file
-    ```
-    plugins: [
-        { src: '~/plugins/<filename>', ssr: false }
+```
+yarn dev
+```
+or
+```
+npm run dev
+```
+
+3. Setup nuxt.config.js file (only nuxt.js)
+```json
+    "plugins": [
+        { "src": "~/plugins/<filename>", "ssr": false }
     ]
-    ```
+```
+
 4. Import Package to plugin file
-    ```
+```javascript
     import Builder from 'vue-template-builder/src/main'
 
-    Builder
-    ```
+    Builder // declare create
+```
+
 5. Use Component
-    ```
-    <div id="builder" />
-    ```
+```html
+    <div
+        id="builder"
+        ref="builder"
+        data-id="builder"
+        :data-prop-template="JSON.stringify(propTemplateJson)"
+        @click="onUpdateTemplate"
+    />
+```
 
+| attribute                              |value    |type      |description                                                                             |
+|----------------------------------------|:-------:|:--------:| -------------------------------------------------------------------------------------- |
+|id                                      |bilder   |`string`  |*for access element*                                                                    |
+|ref                                     |up to you|`string`  |*for access result template*                                                            |
+|data-id                                 |up to you|`string`  |*for create element (default: builder). Mutiple element should be setup difference name*|
+|:data-prop-template (optional)          |up to you|`string`  |*for setup default prop your template json*                                             |
+|@click="<YOUR_FUNCTION_NAME>" (optional)|up to you|`function`|*for get result on function*                                                            |
+<br>
 
-** Solution 2: Git Repo (Style Effect) **
+6. Access Result Template
+```javascript
+    JSON.parse(this.$refs.<REF_NAME>.dataset['data-result-template'])
+```
+<br>
+
+**Solution 2:** *Git Repo (Style Effect and Exclude Store)*
 1. Add Dependencies in package.json
-    ```
+```json
     "vue-template-builder": "git+ssh://git@bitbucket.org:3dsinteractive/pam-builder.git"
-    ```
+```
+
 2. Run Command
-    ```
-    $ npm install vue-template-builder --save
-    ```
-3. Crate .env file
-    ```
-    NODE_ENV=development
-    VUE_APP_TITLE=Builder
-    VUE_APP_ECOM_CMS_API=<Base URL API image storage>
-    VUE_APP_ADMIN_USERNAME=<Username for access to image storage>
-    VUE_APP_ADMIN_PASSWORD=<Password for access to image storage>
+```
+yarn add vue-template-builder
+```
+or
+```
+npm install vue-template-builder --save
+```
 
-    optionnal
-    VUE_APP_BASE_URL=<Base URL API image storage>
-    VUE_APP_TOKEN_IMAGE_STORAGE=<Token for access to image storage>
-    ```
+3. Create .env file
+```
+NODE_ENV=development
+VUE_APP_TITLE=Builder
+VUE_APP_ECOM_CMS_API=<Base URL API image storage>
+VUE_APP_ADMIN_USERNAME=<Username for access to image storage>
+VUE_APP_ADMIN_PASSWORD=<Password for access to image storage>
+
+[optionnal]
+VUE_APP_BASE_URL=<Base URL API image storage>
+VUE_APP_TOKEN_IMAGE_STORAGE=<Token for access to image storage>
+```
+
 4. Import Component in main.ts or main.js
-    ```
-    import 'vue-template-builder/src/plugins/Index.ts'
-    ```
+```javascript
+    import Components from 'vue-template-builder/src/plugins/Index.ts'
+
+    Vue.use(Components)
+```
 5. Use Component
-    ```
-    <BuilderTemplate>....</BuilderTemplate>
-    ```
-
-* remark: If you update code, You must run command `yarn build:lib` and then push your code to git.
+```html
+    <BuilderTemplate></BuilderTemplate>
 ```
 
-## How to Build Package (Self Reminder)
-```
+### How to Build and Publish Package (Self Reminder)
 1. Setup package.json
 2. Setup tsconfig.json
 3. Run Command
-    ```
-    yarn build:ts
-    ```
-4. Register https://www.npmjs.com/
-5. [Your Project Plugin] npm login and type username, password, email
-6. Run Command (Every publish must be change version)
-    ```
-    npm publish
-    ```
-* remark: [Unpublish version] Run npm unpublish <package>@<version>
 ```
+yarn build:ts
+```
+or
+```
+npm run build:ts
+```
+4. Register [NPM](https://www.npmjs.com)
+5. [In Your Project Plugin] npm login and type username, password, email
+6. Run Command (Every publish must be change version)
+```
+npm publish
+```
+* remark: [Unpublish version] Run npm unpublish `<PACKAGE_NAME>@<VERSION>` such as `vue-template-builder@0.0.1`
+<br>
 
-## Project setup
+### Project setup
 ```
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+#### Compiles and hot-reloads for development
 ```
 yarn dev
 ```
 
-### Compiles and minifies for production
+#### Compiles and minifies for production
 ```
 yarn build
 ```
 
-### Lints and fixes files
+#### Lints and fixes files
 ```
 yarn lint
 ```
