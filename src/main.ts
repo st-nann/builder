@@ -25,7 +25,7 @@ const Builder = () => {
         props: { propTemplateJson: propTemplateJson },
         on: {
           change(template: any) {
-            (vue.$el as any).dataset['data-result-template'] = JSON.stringify(template)
+            (vue.$el as any).dataset.resultTemplate = JSON.stringify(template)
           }
         }
       })

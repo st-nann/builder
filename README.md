@@ -53,7 +53,7 @@ npm run dev
 
 6. Access Result Template
 ```javascript
-    JSON.parse(this.$refs.<REF_NAME>.dataset['data-result-template'])
+    JSON.parse(this.$refs.<REF_NAME>.dataset.resultTemplate)
 ```
 <br>
 
