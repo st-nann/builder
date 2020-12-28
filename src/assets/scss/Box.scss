@@ -37,6 +37,7 @@
         }
 
         .button-box,
+        .button-scale,
         .text-element-label,
         .circle-button-top,
         .circle-button-right,
@@ -57,6 +58,7 @@
             display: inline;
         }
 
+        .button-scale,
         .text-element-label,
         .circle-button-top,
         .circle-button-right,
@@ -96,6 +98,12 @@
             right: -10px;
             transform: scale(.7);
             z-index: 10;
+        }
+
+        .button-scale {
+            bottom: -5px;
+            right: -35px;
+            transform: scale(.5);
         }
     }
     

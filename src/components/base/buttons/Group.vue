@@ -1,14 +1,14 @@
 <template>
-  <span class="button-group">
+  <span class="group-button">
     <button
-      :id="`button-group-${name}`"
+      :id="`group-button-${name}`"
       v-for="(item, index) in options"
       :key="index"
       :value="item.value"
-      class="button-group-item"
-      @click="doUpdateButtonGroup(item.value, true)"
+      class="group-button-item"
+      @click="doUpdateGroupButton(item.value, true)"
     >
-      <i v-if="item.icon" :class="`mdi mdi-${item.icon} button-group-icon`"/>
+      <i v-if="item.icon" :class="`mdi mdi-${item.icon} group-button-icon`"/>
       <span v-if="item.label">{{ item.label }}</span>
     </button>
   </span>
@@ -20,11 +20,11 @@ import { Component, Watch } from 'vue-property-decorator'
 import BaseComponent from '../../../core/BaseComponent'
 
 @Component
-export default class ButtonGroupComponent extends BaseComponent {
-  doUpdateButtonGroup(value?: any, action?: boolean) {
+export default class GroupButtonComponent extends BaseComponent {
+  doUpdateGroupButton(value?: any, action?: boolean) {
     const self = this
     setTimeout(() => {
-      const elements: any = document.querySelectorAll(`#button-group-${self.name}`)
+      const elements: any = document.querySelectorAll(`#group-button-${self.name}`)
       if (typeof self.transformValue === 'object') {
         self.transformValue = this.transformValue[this.name]
       }
@@ -49,7 +49,7 @@ export default class ButtonGroupComponent extends BaseComponent {
   onUpdateEdit() {
     if ((this.$parent as any).management.edit) {
       if (!_.isEmpty(this.value)) {
-        this.doUpdateButtonGroup(this.value[this.name])
+        this.doUpdateGroupButton(this.value[this.name])
       }
     }
   }

@@ -22,7 +22,7 @@
         />
       </div>
       <div class="toolbar-panel-button">
-        <ButtonGroupComponent
+        <GroupButtonComponent
           name="button-horizontal-position"
           :options="horizontalPositionOptions"
           :value="{ 'button-horizontal-position': justifyImage }"

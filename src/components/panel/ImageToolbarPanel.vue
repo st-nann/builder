@@ -20,13 +20,13 @@
         :value="imageLink"
         @change="onUpdateLink"
       />
-      <ButtonGroupComponent
+      <GroupButtonComponent
         name="image-horizontal-position"
         :options="verticalPositionOptions"
         :value="{ 'image-vertical-position': alignImage }"
         @change="onUpdateVerticalPosition"
       />
-      <ButtonGroupComponent
+      <GroupButtonComponent
         name="image-horizontal-position"
         :options="horizontalPositionOptions"
         :value="{ 'image-horizontal-position': justifyImage }"

@@ -17,22 +17,38 @@ export const CONTAINER_DEFAULT: IContainer = {
 
 export const TEXT_DEFAULT: IText = {
     element: EElementType.TEXT,
-    props: {}
+    props: {
+        flexbox: {
+            'flex-grow': 1,
+        }
+    }
 }
 
 export const IMAGE_DEFAULT: IImage = {
     element: EElementType.IMAGE,
-    props: {}
+    props: {
+        flexbox: {
+            'flex-grow': 1,
+        }
+    }
 }
 
 export const SPACER_DEFAULT: ISpacer = {
     element: EElementType.SPACER,
-    props: {}
+    props: {
+        flexbox: {
+            'flex-grow': 1,
+        }
+    }
 }
 
 export const BUTTON_DEFAULT: IButton = {
     element: EElementType.BUTTON,
-    props: {}
+    props: {
+        flexbox: {
+            'flex-grow': 1,
+        }
+    }
 }
 
 export const BOX_DEFAULT: IBox = {
