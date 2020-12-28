@@ -147,8 +147,22 @@ export default class HTMLTemplate extends BaseComponent {
             id: uuidv4(),
             ..._.cloneDeep(this.defaultData[`${this.element}_DEFAULT`])
           })
+          this.doAssignChildElementId(item)
           this.doAddElementChild(item.children)
         }
+      })
+    }
+  }
+
+  doAssignChildElementId(state: any) {
+    if (state.children) {
+      state.children.forEach((child: any) => {
+        if (state.children && state.children.length > 0) {
+          this.doAssignChildElementId(child)
+        }
+        state.children = state.children.map((child: any) => {
+          return { ...child, id: uuidv4() }
+        })
       })
     }
   }

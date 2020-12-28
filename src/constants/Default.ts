@@ -41,7 +41,7 @@ export const BOX_DEFAULT: IBox = {
         flexbox: {
             display: 'flex',
             'flex-grow': 1,
-            'flex-direction': EDirection.ROW
+            'flex-direction': EDirection.COLUMN
         }
     },
     children: [{

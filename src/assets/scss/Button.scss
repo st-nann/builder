@@ -120,27 +120,8 @@
 
     .menu-container-hidden {
         position: absolute;
-        height: 80px;
+        height: 30px;
         top: 20px;
-    }
-
-    .menu-container-circle-hidden {
-        @extend .menu-container-hidden;
-        width: 135px;
-        right: -50px;
-    }
-
-    .menu-container-square-hidden {
-        @extend .menu-container-hidden;
-        width: 250px;
-        right: -103px;
-    }
-
-    .menu-container-text-hidden {
-        @extend .menu-container-hidden;
-        width: 100px;
-        top: 10px;
-        right: 20px;
     }
 
     .menu-container {
@@ -201,9 +182,15 @@
 .default-square-menu-button-layout {
     @extend .button-menu;
 
+    .menu-container-square-hidden {
+        @extend .menu-container-hidden;
+        width: 120px;
+        right: -40px;
+    }
+
     .menu-button-container:hover .menu-container {
-        top: 20px;
-        left: 50px;
+        top: 13px;
+        left: -15px;
     }
 
     .default-square-menu-button {
@@ -214,9 +201,15 @@
 .start-square-menu-button-layout {
     @extend .button-menu;
 
+    .menu-container-square-hidden {
+        @extend .menu-container-hidden;
+        width: 150px;
+        right: -3px;
+    }
+
     .menu-button-container:hover .menu-container {
-        top: 25px;
-        left: 30px;
+        top: 20px;
+        left: 25px;
     }
 
     .start-square-menu-button {
@@ -227,9 +220,15 @@
 .circle-menu-button-layout {
     @extend .button-menu;
 
+    .menu-container-circle-hidden {
+        @extend .menu-container-hidden;
+        width: 110px;
+        right: -35px;
+    }
+
     .menu-button-container:hover .menu-container {
-        top: 25px;
-        left: 20px;
+        top: 20px;
+        left: 10px;
     }
 
     .circle-menu-button {
@@ -239,6 +238,13 @@
 
 .text-menu-button-layout {
     @extend .button-menu;
+
+    .menu-container-text-hidden {
+        @extend .menu-container-hidden;
+        width: 100px;
+        top: 10px;
+        right: 20px;
+    }
     
     .menu-button-container:hover .menu-container {
         top: 15px;
