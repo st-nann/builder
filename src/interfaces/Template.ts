@@ -5,12 +5,12 @@ export interface IContainer {
     id?: string
     element: EElementType.CONTAINER
     props: {
-        background?: string
         flexbox: {
             display: string
             'flex-grow': number
             'flex-direction': EDirection.ROW | EDirection.COLUMN
-        }
+        },
+        background?: string
     },
     children: any[]
 }
@@ -18,6 +18,9 @@ export interface IContainer {
 export interface IText {
     element: EElementType.TEXT
     props?: {
+        flexbox: {
+            'flex-grow': number
+        },
         background?: string
         'border-bottom'?: {
             width:  string
@@ -31,6 +34,9 @@ export interface IText {
 export interface IImage {
     element: EElementType.IMAGE
     props: {
+        flexbox: {
+            'flex-grow': number
+        },
         background?: string
         'border-bottom'?: {
             width: string
@@ -47,6 +53,9 @@ export interface IImage {
 export interface ISpacer {
     element: EElementType.SPACER
     props?: {
+        flexbox: {
+            'flex-grow': number
+        },
         background?: string
         'border-bottom'?: {
             width: string
@@ -60,6 +69,9 @@ export interface ISpacer {
 export interface IButton {
     element: EElementType.BUTTON
     props: {
+        flexbox: {
+            'flex-grow': number
+        },
         background?: string
         'border-bottom'?: {
             width: string
@@ -85,16 +97,16 @@ export interface IButton {
 export interface IBox {
     element: EElementType.BOX
     props: {
+        flexbox: {
+            display: string
+            'flex-grow': number
+            'flex-direction': EDirection.COLUMN
+        },
         background?: string
         'border-bottom'?: {
             width: string
             style: string
             color: string
-        },
-        flexbox: {
-            display: string
-            'flex-grow': number
-            'flex-direction': EDirection.COLUMN
         },
         padding?: string
     },

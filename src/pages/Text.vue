@@ -1,10 +1,15 @@
 <template>
-  <span :style="`width: 100%;`">
+  <span
+    :style="elementProps.flexbox && elementProps.flexbox['flex-grow']
+      ? `flex-grow: ${elementProps.flexbox['flex-grow']}`
+      : ''"
+  >
     <BoxComponent
       :elementName="elementName"
       :management="management"
       :style="`${contentHtml ? 'min-height: auto' : ''}`"
       @click="doEmitAddElement"
+      @change="onUpdateScale"
     >
       <template slot="content">
         <div
@@ -98,7 +103,9 @@ export default class TextPage extends BaseComponent {
       if (this.elementProps && this.elementProps.json) {
         this.editor.setContents(this.elementProps.json)
       }
-      this.contentHtml = this.editor.root.innerHTML
+      if (this.editor.editor.delta.ops[0]) {
+        this.contentHtml = this.editor.root.innerHTML
+      }
     })
   }
 
@@ -118,10 +125,15 @@ export default class TextPage extends BaseComponent {
     Object.assign(this.data, {
       ...this.elementProps,
       // ...(this.editor && this.editor.root ? { html: this.editor.root.innerHTML } : undefined),
-      ...(this.editor && this.editor.editor && this.editor.editor.delta && this.editor.editor.delta.ops
+      ...(
+          this.editor &&
+          this.editor.editor &&
+          this.editor.editor.delta &&
+          this.editor.editor.delta.ops &&
+          (this.editor.editor.delta.ops.length < 2 && this.editor.editor.delta.ops[0].insert !== '\n')
             ? { json: this.editor.editor.delta.ops }
             : undefined
-          )
+        )
     })
   }
 

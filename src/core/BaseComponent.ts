@@ -34,80 +34,86 @@ export default class BaseComponent extends Base {
     changeImage = false
 
     created() {
-        this.init()
+      this.init()
     }
     
     init() {
-        this.transformValue = this.value || null
+      this.transformValue = this.value || null
     }
 
     onInput(value: any) {
-        this.transformValue = value
-        this.$emit('change', this.transformValue)
+      this.transformValue = value
+      this.$emit('change', this.transformValue)
     }
 
     doSetAttributeStyle(id: string, lists: object) {
-        setTimeout(() => {
-            document.getElementById(id)?.setAttribute(
-            'style',
-            JSON.stringify({...lists})
-                .substring(1, JSON.stringify({...lists}).length - 1)
-                .replaceAll(',', ';')
-                .replaceAll('"', '')
-            )
-        }, 10)
+      setTimeout(() => {
+          document.getElementById(id)?.setAttribute(
+          'style',
+          JSON.stringify({...lists})
+              .substring(1, JSON.stringify({...lists}).length - 1)
+              .replaceAll(',', ';')
+              .replaceAll('"', '')
+          )
+      }, 10)
     }
 
     onUpdatePreview(data: any) {
-        this.previewData = {}
-        this.previewData = data
-        this.changeImage = data.changeImage || false
-      }
+      this.previewData = {}
+      this.previewData = data
+      this.changeImage = data.changeImage || false
+    }
 
     onUpdateManagement(data: any) {
-        this.action = data
-        this.$emit('updataManagement', this.action)
-        if (this.action.duplicate || this.action.delete) {
-          Object.assign(this.data, data)
-          this.doEmitData()
-        }
+      this.action = data
+      this.$emit('updataManagement', this.action)
+      if (this.action.duplicate || this.action.delete) {
+        Object.assign(this.data, data)
+        this.doEmitData()
+      }
+    }
+    
+    onUpdateScale(scale: number) {
+      Object.assign(this.data,scale)
+      this.action.done = true
+      this.doEmitData()
     }
 
     onUpdateFooterPanelData(data: any) {
-        this.footerData = data
-        this.action.edit = false
-        this.$emit('updataManagement', this.action)
-        if (data) {
-          Object.assign(this.data, data)
-          this.doEmitData()
-        }
+      this.footerData = data
+      this.action.edit = false
+      this.$emit('updataManagement', this.action)
+      if (data) {
+        Object.assign(this.data, data)
+        this.doEmitData()
       }
-    
-      doEmitData() {
-        if (this.action.delete) {
-          this.$emit('delete', this.elementId)
-        } else if (this.action.duplicate) {
-          this.$emit('duplicate', {
-            id: this.elementId,
-            position: this.action.position,
-            duplicate: this.action.duplicate
-          })
-        } else {
-          this.$emit('done', {
-            id: this.elementId,
-            props: { ...this.data }
-          })
-        }
+    }
+  
+    doEmitData() {
+      if (this.action.delete) {
+        this.$emit('delete', this.elementId)
+      } else if (this.action.duplicate) {
+        this.$emit('duplicate', {
+          id: this.elementId,
+          position: this.action.position,
+          duplicate: this.action.duplicate
+        })
+      } else {
+        this.$emit('done', {
+          id: this.elementId,
+          props: { ...this.data }
+        })
       }
+    }
 
     doEmitAddElement(data: any) {
-        this.$emit('add', { id: this.elementId, ...data })
+      this.$emit('add', { id: this.elementId, ...data })
     }
 
     @Watch('value', { deep: true })
     onValueChange(newValue: any, oldValue: any) {
-        if (!_.isEqual(newValue, oldValue)) {
-            this.transformValue = newValue
-        }
+      if (!_.isEqual(newValue, oldValue)) {
+          this.transformValue = newValue
+      }
     }
 }

@@ -1,11 +1,16 @@
 <template>
-  <span style="width: 100%;">
+  <span
+    :style="elementProps.flexbox && elementProps.flexbox['flex-grow']
+      ? `flex-grow: ${elementProps.flexbox['flex-grow']}`
+      : ''"
+  >
     <BoxComponent
       :elementName="elementName"
       :elementProps="elementProps"
       :management="management"
       :style="containerStyle"
       @click="doEmitAddElement"
+      @change="onUpdateScale"
     >
       <template slot="content">
         <button

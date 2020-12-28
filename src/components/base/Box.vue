@@ -30,6 +30,15 @@
         <label class="text-link">{{ elementProps.link }}</label>
       </div>
       <slot name="button-management" />
+      <div class="button-scale">
+        <ScaleStyleComponent
+          :elementId="elementId"
+          :elementProps="elementProps"
+          :management="management"
+          customKeyValue="flex-grow"
+          @change="onUpdateScale"
+        />
+      </div>
     </div>
     <slot name="content" />
   </span>
@@ -64,6 +73,10 @@ export default class BoxComponent extends BaseComponent {
 
   doEmitLeft(element: string) {
     this.$emit('click', { position: EElementPosition.LEFT, element: _.toUpper(element) })
+  }
+
+  onUpdateScale(scale: any) {
+    this.$emit('change', scale)
   }
 }
 </script>
