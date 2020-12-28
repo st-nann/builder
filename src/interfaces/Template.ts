@@ -94,10 +94,22 @@ export interface IBox {
         flexbox: {
             display: string
             'flex-grow': number
-            'flex-direction': EDirection.ROW
+            'flex-direction': EDirection.COLUMN
         },
         padding?: string
     },
-    children: any[]
+    children: [{
+        id?: string
+        element: EElementType.CONTAINER
+        props: {
+            background?: string
+            flexbox: {
+                display: string
+                'flex-grow': number
+                'flex-direction': EDirection.ROW
+            }
+        },
+        children: any[]
+    }]
 }
 

@@ -53,7 +53,6 @@
       const children: any[] = []
       if (state.children && state.children.length > 0) {
         state.children.forEach((child: any) => {
-          console.log(state.element, _.isString(child))
           children.push(_.isString(child) ? child : this.createComponent(child, tag))
         })
       }
@@ -129,6 +128,7 @@
             const data = this.value.duplicate
               ? { ..._.cloneDeep(item) }
               : { ..._.cloneDeep(this.defaultData[`${this.value.element}_DEFAULT`]) }
+            this.assignChildElementId(data)
             state.children.splice(indexInsert, 0, { ...data, id: uuidv4() })
           }
           this.addHorizontalElement(item)
@@ -158,10 +158,11 @@
                     ..._.cloneDeep(this.defaultData['CONTAINER_DEFAULT']),
                     id: uuidv4(),
                     children: _.cloneDeep([{
-                      id: uuidv4(),
-                      ..._.cloneDeep(this.defaultData[`${this.value.element}_DEFAULT`])
+                      ..._.cloneDeep(this.defaultData[`${this.value.element}_DEFAULT`]),
+                      id: uuidv4()
                     }])
                   }
+              this.assignChildElementId(data)
               if (!this.inserted) {
                 state.children.splice(indexInsert, 0, { ...data, id: uuidv4() })
                 this.inserted = true
@@ -195,6 +196,17 @@
         state.children = _.filter(state.children, item => item.children.length > 0)
       }
       return
+    }
+
+    assignChildElementId(state: any) {
+      if (state.children) {
+        state.children.forEach((child: any) => {
+          if (state.children && state.children.length > 0) {
+            this.assignChildElementId(child)
+          }
+          state.children = state.children.map((child: any) => { return { ...child, id: uuidv4() } })
+        })
+      }
     }
 
     render(createElement: CreateElement) {
