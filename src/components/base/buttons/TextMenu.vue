@@ -2,17 +2,19 @@
   <span class="text-menu-button-layout">
     <span class="menu-button-container">
       <TextButtonComponent v-bind="$props" />
-      <div class="menu-container">
-        <div class="menu-links">
-          <a
-            v-for="(item, index) in options"
-            :key="index"
-            :value="item.value"
-            class="menu-link"
-            @click="doEmit(item.value)"
-          >
-            {{ item.label }}
-          </a>
+      <div class="menu-container-text-hidden">
+        <div class="menu-container">
+          <div class="menu-links">
+            <a
+              v-for="(item, index) in options"
+              :key="index"
+              :value="item.value"
+              class="menu-link"
+              @click="doEmit(item.value)"
+            >
+              {{ item.label }}
+            </a>
+          </div>
         </div>
       </div>
     </span>
