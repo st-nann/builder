@@ -14,7 +14,7 @@
       </template>
       <template slot="button-management">
         <MainButtonComponent
-          class="button-box"
+          class="button-box button-management"
           :elementId="elementId"
           @click="onUpdateManagement"
         />
