@@ -1,11 +1,11 @@
 <template>
   <SliderComponent
-    :name="`${name}-height-${elementId}`"
-    label="Height"
-    min="80"
-    max="240"
-    :value="height"
-    @change="onUpdateHeight"
+    :name="`${name}-padding-${elementId}`"
+    label="Padding"
+    min="20"
+    max="150"
+    :value="padding"
+    @change="onUpdatePadding"
   />
 </template>
 
@@ -15,34 +15,34 @@ import { Component, Prop, Watch } from 'vue-property-decorator'
 import BaseComponent from '../../core/BaseComponent'
 
 @Component
-export default class HeightStyleComponent extends BaseComponent {
+export default class PaddingStyleComponent extends BaseComponent {
   @Prop() management!: any
   
-  height = '80'
+  padding = '10'
 
   doAssignDefaultData() {
-    this.height = '80'
+    this.padding = '10'
   }
 
   doAssignPropData() {
-    const haveHeight = this.elementProps && this.elementProps[this.customKeyValue]
-    if (haveHeight) {
+    const havePadding = this.elementProps && this.elementProps[this.customKeyValue]
+    if (havePadding) {
       const props = _.cloneDeep(this.elementProps)
-      this.height = props[this.customKeyValue].substring(0, props[this.customKeyValue].length - 2)
+      this.padding = props[this.customKeyValue].substring(0, props[this.customKeyValue].length - 2)
     } else {
       this.doAssignDefaultData()
     }
-    return haveHeight
+    return havePadding
   }
 
-  onUpdateHeight(height: any) {
-    this.height = height
+  onUpdatePadding(padding: any) {
+    this.padding = padding
     this.onEmitData()
   }
 
   onEmitData() {
-    this.$emit('change', !_.isEmpty(this.height)
-      ? { [this.customKeyValue]: `${this.height}px` }
+    this.$emit('change', !_.isEmpty(this.padding)
+      ? { [this.customKeyValue]: `${this.padding}px` }
       : undefined
     )
   }

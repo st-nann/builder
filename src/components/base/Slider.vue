@@ -7,8 +7,8 @@
         :id="`slider-${this.name}`"
         class="slider-content"
         type="range"
-        min="80"
-        max="240"
+        :min="min"
+        :max="max"
         :value="value"
         :style="style"
         @input="doUpdateInput"
@@ -24,7 +24,7 @@ import BaseComponent from '../../core/BaseComponent'
 @Component
 export default class SliderComponent extends BaseComponent {
   get style() {
-    const lower = (this.value - 80) * .625
+    const lower = (this.value - parseInt(this.min)) * .625
     const upper = 0
     return {
       '--input-range-lower': `${lower}%`,
