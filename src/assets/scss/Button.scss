@@ -120,8 +120,8 @@
 
     .menu-container-hidden {
         position: absolute;
-        height: 185px;
-        top: -5px;
+        height: 80px;
+        top: 20px;
     }
 
     .menu-container-circle-hidden {
@@ -200,10 +200,12 @@
 
 .default-square-menu-button-layout {
     @extend .button-menu;
+
     .menu-button-container:hover .menu-container {
-        top: 35px;
+        top: 20px;
         left: 50px;
     }
+
     .default-square-menu-button {
         @extend .default-square-button;
     }
@@ -211,10 +213,12 @@
 
 .start-square-menu-button-layout {
     @extend .button-menu;
+
     .menu-button-container:hover .menu-container {
-        top: 45px;
+        top: 25px;
         left: 30px;
     }
+
     .start-square-menu-button {
         @extend .start-square-button;
     }
@@ -222,10 +226,12 @@
 
 .circle-menu-button-layout {
     @extend .button-menu;
+
     .menu-button-container:hover .menu-container {
-        top: 45px;
+        top: 25px;
         left: 20px;
     }
+
     .circle-menu-button {
         @extend .circle-button;
     }
@@ -233,6 +239,7 @@
 
 .text-menu-button-layout {
     @extend .button-menu;
+    
     .menu-button-container:hover .menu-container {
         top: 15px;
         left: 14px;
