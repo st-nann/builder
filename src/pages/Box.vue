@@ -8,7 +8,9 @@
       @click="doEmitAddElement"
     >
       <template slot="content">
-        <div :style="{ ...elementProps }" />
+        <div class="box-content" :style="{ ...elementProps }">
+          <slot/>
+        </div>
       </template>
       <template slot="button-management">
         <MainButtonComponent

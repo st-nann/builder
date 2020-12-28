@@ -45,7 +45,17 @@ export const BOX_DEFAULT: IBox = {
         }
     },
     children: [{
-        id: uuidv4(),
-        ...TEXT_DEFAULT
+        element: EElementType.CONTAINER,
+        props: {
+            flexbox: {
+                display: 'flex',
+                'flex-grow': 1,
+                'flex-direction': EDirection.ROW
+            }
+        },
+        children: [{
+            id: uuidv4(),
+            ...TEXT_DEFAULT
+        }]
     }]
 }
