@@ -48,10 +48,12 @@
         return state.map((child) => this.createComponent(child, tag))
       }
 
-      const children: any[] = []
+      const tagName = BuilderTagMap.getTag(state.element)
 
+      const children: any[] = []
       if (state.children && state.children.length > 0) {
         state.children.forEach((child: any) => {
+          console.log(state.element, _.isString(child))
           children.push(_.isString(child) ? child : this.createComponent(child, tag))
         })
       }
@@ -114,9 +116,7 @@
         },
         style: style
       }
-
-      const tagName = BuilderTagMap.getTag(state.element)
-
+    
       return tag(tagName, properties, children)
     }
 

@@ -1,5 +1,5 @@
 <template>
-  <span :class="[className, 'link-text']" @click="doEmit">{{ label }}</span>
+  <span :class="['link-text', className]" @click="doEmit">{{ label }}</span>
 </template>
 
 <script lang="ts">

@@ -102,16 +102,45 @@
     width: max-content;
 }
 
+.text-menu-button {
+    cursor: pointer;
+}
+
 .button-menu {
     position: relative;
     
-     .menu-button-container:hover .menu-container {
+    .menu-button-container:hover .menu-container {
         display: flex;
         flex-direction: row;
         position: absolute;
-        left: -29px;
+        left: -5px;
         z-index: 10;
         transition: .4s ease .25s;
+    }
+
+    .menu-container-hidden {
+        position: absolute;
+        height: 185px;
+        top: -5px;
+    }
+
+    .menu-container-circle-hidden {
+        @extend .menu-container-hidden;
+        width: 135px;
+        right: -50px;
+    }
+
+    .menu-container-square-hidden {
+        @extend .menu-container-hidden;
+        width: 250px;
+        right: -103px;
+    }
+
+    .menu-container-text-hidden {
+        @extend .menu-container-hidden;
+        width: 100px;
+        top: 10px;
+        right: 20px;
     }
 
     .menu-container {
@@ -172,8 +201,8 @@
 .default-square-menu-button-layout {
     @extend .button-menu;
     .menu-button-container:hover .menu-container {
-        top: 28px;
-        left: -55px;
+        top: 35px;
+        left: 50px;
     }
     .default-square-menu-button {
         @extend .default-square-button;
@@ -183,8 +212,8 @@
 .start-square-menu-button-layout {
     @extend .button-menu;
     .menu-button-container:hover .menu-container {
-        top: 35px;
-        left: 35px;
+        top: 45px;
+        left: 30px;
     }
     .start-square-menu-button {
         @extend .start-square-button;
@@ -194,7 +223,8 @@
 .circle-menu-button-layout {
     @extend .button-menu;
     .menu-button-container:hover .menu-container {
-        top: 40px;
+        top: 45px;
+        left: 20px;
     }
     .circle-menu-button {
         @extend .circle-button;
@@ -204,7 +234,8 @@
 .text-menu-button-layout {
     @extend .button-menu;
     .menu-button-container:hover .menu-container {
-        top: 18px;
+        top: 15px;
+        left: 14px;
     }
 }
 

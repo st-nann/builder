@@ -2,18 +2,20 @@
   <span class="circle-menu-button-layout">
     <span class="menu-button-container">
       <CircleButtonComponent v-bind="$props" class="circle-menu-button"/>
-      <div class="menu-container">
-        <div class="menu-links">
-          <a
-            v-for="(item, index) in options"
-            :key="index"
-            :value="item.value"
-            class="menu-link"
-            @click="doEmit(item.value)"
-          >
-            <i v-if="item.icon" :class="`mdi mdi-${item.icon} menu-icon`" />
-            {{ item.label }}
-          </a>
+      <div class="menu-container-circle-hidden">
+        <div class="menu-container">
+          <div class="menu-links">
+            <a
+              v-for="(item, index) in options"
+              :key="index"
+              :value="item.value"
+              class="menu-link"
+              @click="doEmit(item.value)"
+            >
+              <i v-if="item.icon" :class="`mdi mdi-${item.icon} menu-icon`" />
+              {{ item.label }}
+            </a>
+          </div>
         </div>
       </div>
     </span>
