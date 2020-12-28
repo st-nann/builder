@@ -6,6 +6,7 @@
   >
     <BoxComponent
       :elementName="elementName"
+      :elementProps="elementProps"
       :management="management"
       :style="`${contentHtml ? 'min-height: auto' : ''}`"
       @click="doEmitAddElement"
@@ -130,7 +131,7 @@ export default class TextPage extends BaseComponent {
           this.editor.editor &&
           this.editor.editor.delta &&
           this.editor.editor.delta.ops &&
-          (this.editor.editor.delta.ops.length < 2 && this.editor.editor.delta.ops[0].insert !== '\n')
+          (this.editor.editor.delta.ops.length > 0 && this.editor.editor.delta.ops[0].insert !== '\n')
             ? { json: this.editor.editor.delta.ops }
             : undefined
         )

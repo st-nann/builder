@@ -27,6 +27,11 @@ export default class ScaleStyleComponent extends BaseComponent {
   
   flexGrow = 1
 
+  mounted() {
+    this.doAssignPropData()
+    this.onEmitData()
+  }
+
   doUpdateScaleUp() {
     if (this.flexGrow < 4) {
       this.flexGrow++
@@ -46,10 +51,14 @@ export default class ScaleStyleComponent extends BaseComponent {
   }
 
   doAssignPropData() {
-    const haveFlexGrow = this.elementProps && this.elementProps[this.customKeyValue]
+    const haveFlexGrow = (
+      this.elementProps &&
+      this.elementProps.flexbox &&
+      this.elementProps.flexbox[this.customKeyValue]
+    )
     if (haveFlexGrow) {
       const props = _.cloneDeep(this.elementProps)
-      this.flexGrow = props[this.customKeyValue]
+      this.flexGrow = props.flexbox[this.customKeyValue]
     } else {
       this.doAssignDefaultData()
     }
@@ -66,14 +75,6 @@ export default class ScaleStyleComponent extends BaseComponent {
       ? { flexbox: { [this.customKeyValue]: this.flexGrow } }
       : undefined
     )
-  }
-
-  @Watch('management.edit')
-  onEdit() {
-    if (this.management.edit) {
-      this.doAssignPropData()
-      this.onEmitData()
-    }
   }
 }
 </script>
