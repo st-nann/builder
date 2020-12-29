@@ -37,7 +37,7 @@
           v-bind="$props"
           :management="management"
           customKeyValue="flex-grow"
-          @change="onUpdateScale"
+          @click="onUpdateScale"
         />
       </div>
     </div>

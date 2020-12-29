@@ -28,7 +28,7 @@ export const IMAGE_DEFAULT: IImage = {
     element: EElementType.IMAGE,
     props: {
         flexbox: {
-            'flex-grow': 1,
+            'flex-grow': 1
         }
     }
 }
@@ -37,7 +37,7 @@ export const SPACER_DEFAULT: ISpacer = {
     element: EElementType.SPACER,
     props: {
         flexbox: {
-            'flex-grow': 1,
+            'flex-grow': 1
         },
         height: '80px'
     }
@@ -47,7 +47,7 @@ export const BUTTON_DEFAULT: IButton = {
     element: EElementType.BUTTON,
     props: {
         flexbox: {
-            'flex-grow': 1,
+            'flex-grow': 1
         }
     }
 }

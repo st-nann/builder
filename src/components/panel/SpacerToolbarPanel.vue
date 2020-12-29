@@ -32,7 +32,7 @@ export default class SpacerToolbarPanel extends BaseComponent {
   onEdit() {
     if (this.management.edit) {
       if (this.elementProps) {
-        this.spacerHeight = this.elementProps.height
+        this.spacerHeight = { height: this.elementProps.height }
       }
       this.onEmitData();
     }

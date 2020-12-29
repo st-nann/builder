@@ -7,7 +7,7 @@
     <BoxComponent
       v-bind="$props"
       :management="management"
-      :style="elementProps.flexbox ? { ...elementProps.flexbox } : ''"
+      :style="containerStyle"
       @click="doEmitAddElement"
       @change="onUpdateScale"
     >
@@ -50,6 +50,7 @@
 </template>
 
 <script lang="ts">
+import _ from 'lodash'
 import { Component, Watch } from 'vue-property-decorator'
 import BaseComponent from '../core/BaseComponent'
 
@@ -57,6 +58,17 @@ import BaseComponent from '../core/BaseComponent'
 export default class SpacerPage extends BaseComponent {
   management: any = {}
   spacerData: any = {}
+
+  get containerStyle() {
+    const style = {}
+    if (!_.isEmpty(this.elementProps.height)) {
+      Object.assign(style, { 'min-height': 'auto' })
+    }
+    if (this.elementProps.flexbox) {
+      Object.assign(style, { ...this.elementProps.flexbox })
+    }
+    return style
+  }
 
   getSpacerData(data: any) {
     this.spacerData = { ...data }

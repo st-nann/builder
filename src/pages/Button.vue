@@ -13,7 +13,7 @@
     >
       <template slot="content">
         <button
-          v-if="JSON.stringify(elementProps) !== '{}'"
+          v-if="elementProps.name"
           class="button-content"
           :style="propsStyle"
         >
@@ -68,7 +68,7 @@ export default class ButtonPage extends BaseComponent {
 
   get containerStyle() {
     const style = {}
-    if (JSON.stringify(this.elementProps) !== '{}') {
+    if (this.elementProps.name) {
       Object.assign(style, { 'min-height': 'auto' })
     }
     if (this.elementProps.flexbox) {
