@@ -13,14 +13,24 @@
       @change="onUpdateScale"
     >
       <template slot="content">
-        <div class="box-content" :style="{ ...elementProps }">
+        <div
+          :style="{
+            'flex-grow': `${
+              elementProps.flexbox && elementProps.flexbox['flex-grow']
+                ? elementProps.flexbox['flex-grow']
+                : 1
+            }`,
+            'padding': `${ elementProps.padding ? elementProps.padding : '20px' }`
+          }"
+        >
           <slot/>
         </div>
       </template>
       <template slot="button-management">
         <MainButtonComponent
-          class="button-box button-management"
+          class="button-box button-management-container"
           :elementId="elementId"
+          :elementName="elementName"
           @click="onUpdateManagement"
         />
       </template>

@@ -1,21 +1,24 @@
 <template>
   <span>
-    <SquareButtonComponent
-      icon="pencil"
-      className="default-square-button"
-      @click="doEdit"
-    />
-    <SquareMenuButtonComponent
-      icon="note-multiple"
-      className="default-square-menu-button"
-      :options="positions"
-      @click="doDuplicate"
-    />
-    <SquareButtonComponent
-      icon="trash-can"
-      className="delete-square-button"
-      @click="doOpenModal"
-    />
+    <div :class="{ 'button-management': elementName === 'Box' }">
+      <SquareButtonComponent
+        icon="pencil"
+        
+        className="default-square-button"
+        @click="doEdit"
+      />
+      <SquareMenuButtonComponent
+        icon="note-multiple"
+        className="default-square-menu-button"
+        :options="positions"
+        @click="doDuplicate"
+      />
+      <SquareButtonComponent
+        icon="trash-can"
+        className="delete-square-button"
+        @click="doOpenModal"
+      />
+    </div>
     <ModalComponent
       :ref="`modal-delete-${elementId}`"
       :modal="{ width: 400, action: 'delete', button: { save: 'Yes, Delete it', position: 'center', manage: true } }"

@@ -25,6 +25,7 @@
         <MainButtonComponent
           class="button-box"
           :elementId="elementId"
+          :elementName="elementName"
           @click="onUpdateManagement"
         />
       </template>

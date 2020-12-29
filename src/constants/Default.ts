@@ -38,7 +38,8 @@ export const SPACER_DEFAULT: ISpacer = {
     props: {
         flexbox: {
             'flex-grow': 1,
-        }
+        },
+        height: '80px'
     }
 }
 
@@ -58,7 +59,8 @@ export const BOX_DEFAULT: IBox = {
             display: 'flex',
             'flex-grow': 1,
             'flex-direction': EDirection.COLUMN
-        }
+        },
+        padding: '20px'
     },
     children: [{
         element: EElementType.CONTAINER,

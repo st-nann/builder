@@ -93,11 +93,14 @@
             padding: 10px;
         }
 
-        .button-management {
+        .button-management-container {
             top: 0px;
             right: -10px;
-            transform: scale(.7);
-            z-index: 10;
+
+            .button-management {
+                transform: scale(.7);
+                z-index: 10;
+            }
         }
 
         .button-scale {
