@@ -2,16 +2,16 @@
   <span>
     <DropdownComponent
       :name="`${name}-font-family-${elementId}`"
-      label="Font"
-      :options="fontNameOptions"
       :value="fontName"
+      :options="fontNameOptions"
+      label="Font"
       width="100"
       @change="onUpdateFontName"
     />
     <DropdownComponent
       :name="`${name}-font-size-${elementId}`"
-      :options="fontSizeOptions"
       :value="fontSize"
+      :options="fontSizeOptions"
       width="50"
       @change="onUpdateFontSize"
     />

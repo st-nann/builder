@@ -2,10 +2,9 @@
   <div v-show="imageUrl && imageUrl !== ''" class="toolbar-panel">
     <div class="toolbar-panel-input">
       <WidthToggleStyleComponent
-        class="toobar-panel-image-width"
-        :elementId="elementId"
-        :elementProps="elementProps"
+        v-bind="$props"
         :management="management"
+        class="toobar-panel-image-width"
         customKeyValue="width"
         @change="onUpdateWidth"
       />
@@ -13,23 +12,23 @@
     <div class="toolbar-panel-button">
       <InputComponent
         name="image-link"
-        class="toolbar-panel-image-link"
         label="Link"
         placeholder="https://"
         width="350"
+        class="toolbar-panel-image-link"
         :value="imageLink"
         @change="onUpdateLink"
       />
       <GroupButtonComponent
         name="image-horizontal-position"
-        :options="verticalPositionOptions"
         :value="{ 'image-vertical-position': alignImage }"
+        :options="verticalPositionOptions"
         @change="onUpdateVerticalPosition"
       />
       <GroupButtonComponent
         name="image-horizontal-position"
-        :options="horizontalPositionOptions"
         :value="{ 'image-horizontal-position': justifyImage }"
+        :options="horizontalPositionOptions"
         @change="onUpdateHorizontalPosition"
       />
     </div>

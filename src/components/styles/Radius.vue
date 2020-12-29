@@ -2,8 +2,8 @@
   <DropdownComponent
     :name="`${name}-radius-${elementId}`"
     :label="label"
-    :options="radiusOptions"
     :value="borderRadius"
+    :options="radiusOptions"
     width="50"
     @change="onUpdateRadius"
   />

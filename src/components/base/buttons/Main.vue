@@ -3,7 +3,6 @@
     <div :class="{ 'button-management': elementName === 'Box' }">
       <SquareButtonComponent
         icon="pencil"
-        
         className="default-square-button"
         @click="doEdit"
       />
@@ -14,15 +13,16 @@
         @click="doDuplicate"
       />
       <SquareButtonComponent
+        v-if="isHidden"
         icon="trash-can"
         className="delete-square-button"
         @click="doOpenModal"
       />
     </div>
     <ModalComponent
+      v-bind="$props"
       :ref="`modal-delete-${elementId}`"
       :modal="{ width: 400, action: 'delete', button: { save: 'Yes, Delete it', position: 'center', manage: true } }"
-      :elementId="elementId"
       @click="doDelete"
     >
       <template slot="content">
@@ -52,6 +52,13 @@ export default class MainButtonComponent extends BaseComponent {
   
   get positions() {
     return POSITION
+  }
+
+  get isHidden() {
+    return (
+      this.parent.parentName !== 'BOX' ||
+      (this.parent.parentName === 'BOX' && this.parent.quantityChildren > 1)
+    )
   }
 
   doOpenModal() {

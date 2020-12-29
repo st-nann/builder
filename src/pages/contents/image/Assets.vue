@@ -34,11 +34,13 @@
                     <div
                         v-for="(item, index) in filterImageLists"
                         :key="index"
-                        class="search-list-item"
-                        :class="{
-                            'clickable': !item.uploading,
-                            'search-list-item-active': item.url === url
-                        }"
+                        :class="[
+                            'search-list-item',
+                            {
+                                'clickable': !item.uploading,
+                                'search-list-item-active': item.url === url
+                            }
+                        ]"
                         @click="item.uploading ? '' : doSelectImage(item.url)"
                     >
                         <div class="search-list-item-image-container">

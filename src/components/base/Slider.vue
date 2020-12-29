@@ -5,12 +5,12 @@
       <div id="range-value" class="range-value" />
       <input
         :id="`slider-${this.name}`"
-        class="slider-content"
-        type="range"
+        :value="value"
         :min="min"
         :max="max"
-        :value="value"
         :style="style"
+        type="range"
+        class="slider-content"
         @input="doUpdateInput"
       />
     </span>

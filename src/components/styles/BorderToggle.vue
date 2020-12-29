@@ -2,23 +2,23 @@
   <span>
     <SwitchComponent
       :name="`${name}-border-bottom-toggle-${elementId}`"
-      class="footer-panel-border-bottom"
       :label="label"
       :value="toggle"
+      class="footer-panel-border-bottom"
       @change="onUpdateToggle"
     />
     <span v-if="toggle">
       <DropdownComponent
         :name="`${name}-border-bottom-width-toggle-${elementId}`"
-        :options="widthOptions"
         :value="borderWidth"
+        :options="widthOptions"
         width="50"
         @change="onUpdateWidth"
       />
       <DropdownComponent
         :name="`${name}-border-bottom-style-toggle-${elementId}`"
-        :options="borderStyles"
         :value="borderStyle"
+        :options="borderStyles"
         width="70"
         @change="onUpdateStyle"
       />

@@ -5,8 +5,7 @@
       : ''"
   >
     <BoxComponent
-      :elementName="elementName"
-      :elementProps="elementProps"
+      v-bind="$props"
       :management="management"
       :style="elementProps.flexbox ? { ...elementProps.flexbox } : ''"
       @click="doEmitAddElement"
@@ -28,23 +27,21 @@
       </template>
       <template slot="button-management">
         <MainButtonComponent
+          v-bind="$props"
           class="button-box button-management-container"
-          :elementId="elementId"
-          :elementName="elementName"
           @click="onUpdateManagement"
         />
       </template>
     </BoxComponent>
     <ModalComponent
+      v-bind="$props"
       :ref="`modal-edit-${elementId}`"
       :modal="{ width: 900, action: 'edit', button: { custom: true } }"
-      :elementId="elementId"
     >
       <template slot="content">
         <div class="modal-content-box">
           <BoxToolbarPanel
-            :elementId="elementId"
-            :elementProps="elementProps"
+            v-bind="$props"
             :management="management"
             @change="getBoxData"
           />
@@ -53,9 +50,7 @@
       </template>
       <template slot="action-custom">
         <FooterPanel
-          :elementId="elementId"
-          :elementName="elementName"
-          :elementProps="elementProps"
+          v-bind="$props"
           :management="management"
           @change="onUpdatePreview"
           @click="onUpdateFooterPanelData"

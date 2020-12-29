@@ -5,8 +5,7 @@
       : ''"
   >
     <BoxComponent
-      :elementName="elementName"
-      :elementProps="elementProps"
+      v-bind="$props"
       :management="management"
       :style="containerStyle"
       @click="doEmitAddElement"
@@ -15,25 +14,24 @@
       <template slot="content">
         <img
           v-if="elementProps.url"
-          class="image-content"
           :src="elementProps.url"
           :width="elementProps.width || '100%'"
           :style="propsStyle"
+          class="image-content"
         />
       </template>
       <template slot="button-management">
         <MainButtonComponent
+          v-bind="$props"
           class="button-box"
-          :elementId="elementId"
-          :elementName="elementName"
           @click="onUpdateManagement"
         />
       </template>
     </BoxComponent>
     <ModalComponent
+      v-bind="$props"
       :ref="`modal-edit-${elementId}`"
       :modal="{ width: changeImage ? 900 : 1000, action: 'edit', button: { custom: true } }"
-      :elementId="elementId"
     >
       <template slot="content">
         <div class="modal-content-image">
@@ -45,18 +43,17 @@
           />
           <div v-show="!changeImage">
             <ImageToolbarPanel
-              :elementId="elementId"
-              :elementProps="elementProps"
+              v-bind="$props"
               :management="management"
               :imageUrl="imageUrl"
               @change="getImageData"
             />
             <div :id="`image-container-preview-${elementId}`" class="image-preview-container">
               <img
-                :id="`image-preview-${elementId}`"
                 v-if="imageUrl"
-                class="image-preview"
+                :id="`image-preview-${elementId}`"
                 :src="imageUrl"
+                class="image-preview"
               />
               <div v-else class="no-image">
                 <i class="mdi mdi-image-plus no-image-icon" />
@@ -74,9 +71,7 @@
       <template slot="action-custom">
         <FooterPanel
           v-show="!changeImage"
-          :elementId="elementId"
-          :elementName="elementName"
-          :elementProps="elementProps"
+          v-bind="$props"
           :management="management"
           :imageUrl="imageUrl"
           @change="onUpdatePreview"

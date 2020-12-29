@@ -65,6 +65,7 @@ export const BOX_DEFAULT: IBox = {
     children: [{
         element: EElementType.CONTAINER,
         props: {
+            parent: EElementType.BOX,
             flexbox: {
                 display: 'flex',
                 'flex-grow': 1,

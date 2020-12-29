@@ -2,9 +2,9 @@
   <span>
     <SwitchComponent
       :name="`${name}-background-toggle-${elementId}`"
+      :value="toggle"
       class="footer-panel-border-bottom"
       label="Background"
-      :value="toggle"
       @change="onUpdateToggle"
     />
     <ColorPickerComponent

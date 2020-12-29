@@ -2,18 +2,16 @@
   <div class="footer-panel">
     <div class="footer-panel-switch">
       <BorderToggleStyleComponent
+        v-bind="$props"
         :name="`footer-panel-border-bottom-${elementId}`"
-        label="Border Bottom"
-        :elementId="elementId"
-        :elementProps="elementProps"
         :management="management"
+        label="Border Bottom"
         customKeyValue="border-bottom"
         @change="onUpdateBorderButton"
       />
       <BackgroundToggleStyleComponent
+        v-bind="$props"
         :name="`footer-panel-background-${elementId}`"
-        :elementId="elementId"
-        :elementProps="elementProps"
         :management="management"
         :changeImage="changeImage"
         customKeyValue="background-color"
@@ -22,15 +20,15 @@
     </div>
     <div class="footer-panel-button">
       <SwitchComponent
-        v-if="elementName === 'Image' && (imageUrl && imageUrl !== '')"
+        v-if="isImage"
         :name="`footer-panel-compress-image-${elementId}`"
+        :value="toggleCompressFile"
         class="footer-panel-compress-image"
         label="Compressed File"
-        :value="toggleCompressFile"
         @change="onUpdateCompressFile"
       />
       <SquareButtonComponent
-        v-if="elementName === 'Image' && (imageUrl && imageUrl !== '')"
+        v-if="isImage"
         icon="rotate-right"
         label="Change Image"
         className="change-image-square-button"
@@ -63,6 +61,10 @@ export default class FooterPanel extends BaseComponent {
   background = {}
   toggleCompressFile = false
   changeImage = false
+
+  get isImage() {
+    return this.elementName === 'Image' && (this.imageUrl && this.imageUrl !== '')
+  }
 
   get transformEmitData() {
     const data: any = { ...this.borderBottom, ...this.background }

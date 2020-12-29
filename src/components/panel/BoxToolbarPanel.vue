@@ -1,8 +1,7 @@
 <template>
   <div class="toolbar-panel">
     <PaddingStyleComponent
-      :elementId="elementId"
-      :elementProps="elementProps"
+      v-bind="$props"
       :management="management"
       customKeyValue="padding"
       @change="onUpdatePadding"

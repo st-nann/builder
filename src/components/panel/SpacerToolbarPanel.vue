@@ -1,8 +1,7 @@
 <template>
   <div class="toolbar-panel">
     <HeightStyleComponent
-      :elementId="elementId"
-      :elementProps="elementProps"
+      v-bind="$props"
       :management="management"
       customKeyValue="height"
       @change="onUpdateHeight"

@@ -10,7 +10,8 @@ export interface IContainer {
             'flex-grow': number
             'flex-direction': EDirection.ROW | EDirection.COLUMN
         },
-        background?: string
+        background?: string,
+        parent?: string
     },
     children: any[]
 }
@@ -114,6 +115,7 @@ export interface IBox {
         id?: string
         element: EElementType.CONTAINER
         props: {
+            parent: EElementType.BOX,
             background?: string
             flexbox: {
                 display: string
