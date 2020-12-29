@@ -113,7 +113,8 @@ npm run build:ts
 ```
 npm publish
 ```
-* remark: [Unpublish version] Run `npm unpublish <PACKAGE_NAME>@<VERSION>` such as `vue-template-builder@0.0.1`
+* remark: [Unpublish version] Run `npm unpublish <PACKAGE_NAME>@<VERSION>` such as `npm unpublish vue-template-builder@0.0.1`
+* remark: [Deprecate version] Run `npm deprecate -f <PACKAGE_NAME>@<VERSION> '<REASON>'` such as `npm deprecate -f vue-template-builder@0.0.1 'Have New Version'`
 <br>
 
 ### Project setup
