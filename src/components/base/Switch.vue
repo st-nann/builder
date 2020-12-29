@@ -1,7 +1,7 @@
 <template>
   <span>
     <label class="switch" @change="doSwitch">
-      <input :id="`switch-${name}`" type="checkbox" :checked="value">
+      <input :id="`switch-${name}`" :checked="value" type="checkbox">
       <span class="slider round"></span>
     </label>
     <span class="switch-label">{{ label }}</span>

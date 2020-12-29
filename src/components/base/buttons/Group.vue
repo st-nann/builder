@@ -1,9 +1,9 @@
 <template>
   <span class="group-button">
     <button
-      :id="`group-button-${name}`"
       v-for="(item, index) in options"
       :key="index"
+      :id="`group-button-${name}`"
       :value="item.value"
       class="group-button-item"
       @click="doUpdateGroupButton(item.value, true)"

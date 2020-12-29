@@ -72,6 +72,7 @@
 
       const properties = {
         props: {
+          elementTemplateJson: this.templateJson,
           elementState: state,
           elementId: state.id,
           elementName: _.capitalize(state.element),

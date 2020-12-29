@@ -3,10 +3,10 @@
     <span v-if="label" class="color-picker-label" :for="label">{{ label }}</span>
     <input
       :id="`color-picker-${name}`"
-      class="color-picker-input"
-      type="color"
       :name="label"
       :value="value || '#ffffff'"
+      type="color"
+      class="color-picker-input"
       @input="doUpdateColorPicker"
     >
   </span>

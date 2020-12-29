@@ -3,13 +3,13 @@
     <label v-if="label" class="input-label">{{ label }}</label>
     <input
       :id="`input-${this.name}`"
+      :value="value"
+      :placeholder="placeholder"
       :class="{
         'input': !search,
         'input-search': search
       }"
-      :placeholder="placeholder"
       :style="style"
-      :value="value"
       @input="doUpdateInput"
     />
     <i v-if="search" class="mdi mdi-magnify input-append-icon" />

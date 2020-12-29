@@ -1,10 +1,10 @@
 <template>
   <SliderComponent
     :name="`${name}-padding-${elementId}`"
+    :value="padding"
     label="Padding"
     min="20"
     max="150"
-    :value="padding"
     @change="onUpdatePadding"
   />
 </template>

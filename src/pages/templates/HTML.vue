@@ -7,10 +7,10 @@
       </div>
       <div class="container-management">
         <SquareButtonComponent
+          icon="code-braces-box"
+          label="View JSON"
           className="view-json-square-button"
-            icon="code-braces-box"
-            label="View JSON"
-            @click="doOpenModal"
+          @click="doOpenModal"
         />
         <ModalComponent
           ref="modal-view-json"
@@ -38,9 +38,9 @@
         </div>
         <div v-else class="box-start">
           <SquareMenuButtonComponent
-            className="start-square-menu-button"
             icon="plus-circle"
             label="Launch Template"
+            className="start-square-menu-button"
             :options="menu"
             @click="doAddJson"
           />

@@ -5,8 +5,7 @@
       : ''"
   >
     <BoxComponent
-      :elementName="elementName"
-      :elementProps="elementProps"
+      v-bind="$props"
       :management="management"
       :style="`${contentHtml ? 'min-height: auto' : ''}`"
       @click="doEmitAddElement"
@@ -22,24 +21,23 @@
       </template>
       <template slot="button-management">
         <MainButtonComponent
+          v-bind="$props"
           class="button-box"
-          :elementId="elementId"
-          :elementName="elementName"
           @click="onUpdateManagement"
         />
       </template>
     </BoxComponent>
     <ModalComponent
+      v-bind="$props"
       :ref="`modal-edit-${elementId}`"
       :modal="{ width: 900, action: 'edit', button: { custom: true } }"
-      :elementId="elementId"
     >
       <template slot="content">
         <div class="editor-container">
           <div :id="`editor-${elementId}`" class="editor" />
           <SquareMenuButtonComponent
-            label="Personalize"
             icon="plus"
+            label="Personalize"
             class="personalize-action"
             className="personalize-square-menu-button"
             :options="personalizes"
@@ -49,9 +47,7 @@
       </template>
       <template slot="action-custom">
         <FooterPanel
-          :elementId="elementId"
-          :elementName="elementName"
-          :elementProps="elementProps"
+          v-bind="$props"
           :management="management"
           @change="onUpdatePreview"
           @click="onUpdateFooterPanelData"

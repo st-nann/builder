@@ -4,19 +4,19 @@
       <div class="toolbar-panel-input">
         <InputComponent
           name="button-name"
-          class="toolbar-panel-button-name"
           label="Button Text"
           placeholder="Button"
           width="200"
+          class="toolbar-panel-button-name"
           :value="buttonName"
           @change="onUpdateName"
         />
         <InputComponent
           name="button-link"
-          class="toolbar-panel-button-link"
           label="Link"
           placeholder="https://"
           width="300"
+          class="toolbar-panel-button-link"
           :value="buttonLink"
           @change="onUpdateLink"
         />
@@ -24,47 +24,43 @@
       <div class="toolbar-panel-button">
         <GroupButtonComponent
           name="button-horizontal-position"
-          :options="horizontalPositionOptions"
           :value="{ 'button-horizontal-position': justifyImage }"
+          :options="horizontalPositionOptions"
           @change="onUpdateHorizontalPosition"
         />
       </div>
     </div>
     <div class="toolbar-panel-style">
       <BackgroundStyleComponent
+        v-bind="$props"
         :name="`toolbar-panel-button-background-${elementId}`"
-        label="Background Color"
-        :elementId="elementId"
-        :elementProps="elementProps"
         :management="management"
+        label="Background Color"
         customKeyValue="background"
         @change="onUpdateButtonBackgroundColor"
       />
       <FontStyleComponent
+        v-bind="$props"
         :name="`toolbar-panel-button-font-${elementId}`"
-        :elementId="elementId"
-        :elementProps="elementProps"
         :management="management"
         customKeyValue="font"
         @change="onUpdateFont"
       />
       <RadiusStyleComponent
+        v-bind="$props"
         :name="`toolbar-panel-button-radius-${elementId}`"
-        label="Radius"
-        :elementId="elementId"
-        :elementProps="elementProps"
         :management="management"
+        label="Radius"
         customKeyValue="border-radius"
         @change="onUpdateBorderRadius"
       />
       <BorderToggleStyleComponent
+        v-bind="$props"
         :name="`toolbar-panel-button-border-${elementId}`"
-        class="toobar-panel-border"
-        label="Border"
-        :elementId="elementId"
-        :elementProps="elementProps"
         :management="management"
+        class="toobar-panel-border"
         customKeyValue="border"
+        label="Border"
         @change="onUpdateBorderButton"
       />
     </div>

@@ -2,15 +2,15 @@
   <span>
     <SwitchComponent
       :name="`${name}-width-toggle-${elementId}`"
-      label="Custom Width"
       :value="toggle"
+      label="Custom Width"
       @change="onUpdateToggle"
     />
     <span v-if="toggle">
       <InputComponent
         :name="`${name}-width-toggle-${elementId}`"
-        width="40"
         :value="imageWidth"
+        width="40"
         @change="onUpdateWidth"
       />
       <span class="toolbar-panel-width-text">px</span>
