@@ -29,6 +29,7 @@ export default class BaseComponent extends Base {
 
   transformValue: any = null
   data: any = {}
+  scale: any = {}
   action: any = {}
   footerData: any = {}
   previewData: any = {}
@@ -95,10 +96,15 @@ export default class BaseComponent extends Base {
     }
   }
   
-  onUpdateScale(scale: number) {
-    Object.assign(this.data,scale)
-    this.action.done = true
-    this.doEmitData()
+  onUpdateScale(scale: any) {
+    if (scale) {
+      if (JSON.stringify(this.data) === '{}') {
+        Object.assign(this.data, this.elementProps)
+      }
+      this.scale = scale
+      this.action.done = true
+      this.doEmitData()
+    }
   }
 
   onUpdateFooterPanelData(data: any) {
@@ -123,7 +129,14 @@ export default class BaseComponent extends Base {
     } else {
       this.$emit('done', {
         id: this.elementId,
-        props: { ...this.data }
+        props: {
+          ...this.data,
+          flexbox: {
+            'align-items': this.data.flexbox['align-items'],
+            'justify-content': this.data.flexbox['justify-content'],
+            'flex-grow': this.scale.flexbox['flex-grow']
+          },
+        }
       })
     }
   }

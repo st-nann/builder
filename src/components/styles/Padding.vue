@@ -18,10 +18,10 @@ import BaseComponent from '../../core/BaseComponent'
 export default class PaddingStyleComponent extends BaseComponent {
   @Prop() management!: any
   
-  padding = '10'
+  padding = '20'
 
   doAssignDefaultData() {
-    this.padding = '10'
+    this.padding = '20'
   }
 
   doAssignPropData() {

@@ -32,7 +32,7 @@ export default class BoxToolbarPanel extends BaseComponent {
   onEdit() {
     if (this.management.edit) {
       if (this.elementProps) {
-        this.boxPadding = this.elementProps.padding
+        this.boxPadding = { padding: this.elementProps.padding }
       }
       this.onEmitData();
     }

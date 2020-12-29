@@ -71,7 +71,7 @@ export default class ScaleStyleComponent extends BaseComponent {
   }
 
   onEmitData() {
-    this.$emit('change', !_.isSet(this.flexGrow)
+    this.$emit('click', !_.isSet(this.flexGrow)
       ? { flexbox: { [this.customKeyValue]: this.flexGrow } }
       : undefined
     )
