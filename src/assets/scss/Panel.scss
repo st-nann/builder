@@ -3,8 +3,18 @@
     background-color: #ffffff;
 }
 
+.editor-container {
+    position: relative;
+}
+
 .editor {
     min-height: 300px;
+}
+
+.personalize-action {
+    position: absolute;
+    top: 8px;
+    right: 8px;
 }
 
 .ql-snow .ql-picker.ql-font {

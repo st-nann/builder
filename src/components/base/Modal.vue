@@ -5,21 +5,21 @@
       <div v-if="modal.button" class="modal-action" :style="style">
         <template v-if="modal.button.manage">
           <SquareButtonComponent
-            @click="doCloseModal"
             label="Cancel"
             className="cancel-delete-square-button"
+            @click="doCloseModal"
           />
           <SquareButtonComponent
-            @click="doAction"
             :label="modal.button.save"
             className="confirm-delete-square-button"
+            @click="doAction"
           />
         </template>
         <template v-if="modal.button.info">
           <SquareButtonComponent
-            @click="doCloseModal"
             label="Close"
             className="cancel-delete-square-button"
+            @click="doCloseModal"
           />
         </template>
         <template v-if="modal.button.custom">

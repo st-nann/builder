@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import _ from 'lodash'
-import { Component, Prop, Watch } from 'vue-property-decorator'
+import { Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../../core/BaseComponent'
 
 @Component
