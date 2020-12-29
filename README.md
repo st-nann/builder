@@ -5,7 +5,7 @@
 **Solution 1:** *Build Package (Style Not Effect and Include Store)*
 1. Run Command
 ```
-yarn add vue-template-builder
+yarn add vue-builder-template
 ```
 
 2. Run Command
@@ -26,7 +26,7 @@ npm run dev
 
 4. Import Package to main.ts or main.js file
 ```javascript
-    import Builder from 'vue-template-builder/src/main'
+    import Builder from 'vue-builder-template/src/main'
 
     Builder // declare create
 ```
@@ -60,16 +60,16 @@ npm run dev
 **Solution 2:** *Git Repo (Style Effect and Exclude Store)*
 1. Add Dependencies in package.json
 ```json
-    "vue-template-builder": "git+ssh://git@bitbucket.org:3dsinteractive/pam-builder.git"
+    "vue-builder-template": "git+ssh://git@bitbucket.org:3dsinteractive/pam-builder.git"
 ```
 
 2. Run Command
 ```
-yarn add vue-template-builder
+yarn add vue-builder-template
 ```
 or
 ```
-npm install vue-template-builder --save
+npm install vue-builder-template --save
 ```
 
 3. Create .env file
@@ -87,7 +87,7 @@ VUE_APP_TOKEN_IMAGE_STORAGE=<Token for access to image storage>
 
 4. Import Component in main.ts or main.js
 ```javascript
-    import Components from 'vue-template-builder/src/plugins/Index.ts'
+    import Components from 'vue-builder-template/src/plugins/Index.ts'
 
     Vue.use(Components)
 ```
@@ -113,8 +113,10 @@ npm run build:ts
 ```
 npm publish
 ```
-* remark: [Unpublish version] Run `npm unpublish <PACKAGE_NAME>@<VERSION>` such as `npm unpublish vue-template-builder@0.0.1`
-* remark: [Deprecate version] Run `npm deprecate -f <PACKAGE_NAME>@<VERSION> '<REASON>'` such as `npm deprecate -f vue-template-builder@0.0.1 'Have New Version'`
+* remark: [Unpublish version] Run `npm unpublish <PACKAGE_NAME>@<VERSION>` such as `npm unpublish vue-builder-template@0.0.1`
+* remark: [Deprecate version] Run `npm deprecate -f <PACKAGE_NAME>@<VERSION> '<REASON>'` such as `npm deprecate -f vue-builder-template@0.0.1 'Have New Version'`
+* remark: [Add User NPM for Delete Package] Run `npm owner add npm <PACKAGE_NAME>` such as `npm owner add npm vue-builder-template`
+* remark: [Delete Your User of Package] Run `npm owner rm <USER> <PACKAGE_NAME>` such as `npm owner rm username vue-builder-template`
 <br>
 
 ### Project setup

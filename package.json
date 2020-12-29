@@ -1,5 +1,5 @@
 {
-  "name": "vue-template-builder",
+  "name": "vue-builder-template",
   "version": "1.0.0",
   "description": "Builder Template (Vue + Typescript)",
   "private": false,
@@ -9,7 +9,7 @@
     "dev": "vue-cli-service serve --open",
     "dev:env": "./setup-env.sh .env.development && vue-cli-service serve --open",
     "build": "vue-cli-service build",
-    "build:lib": "vue-cli-service build --target lib --name vue-template-builder ./src/plugins/Index.ts",
+    "build:lib": "vue-cli-service build --target lib --name vue-builder-template./src/plugins/Index.ts",
     "build:ts": "npx cross-env NODE_ENV=development tsc --build",
     "build:tsclean": "tsc --build --clean",
     "lint": "vue-cli-service lint"
