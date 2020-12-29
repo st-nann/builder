@@ -14,3 +14,10 @@ export const MENU: IDropdownOption[] = [
     { label: 'Box', value: 'Box', icon: 'cube' },
     { label: 'Spacer', value: 'Spacer', icon: 'arrow-expand-vertical' }
 ]
+
+export const PERSONALIZES: IDropdownOption[] = [
+    { label: 'Email Sender', value: '[[EMAIL_SENDER]]' },
+    { label: 'Email Receiver', value: '[[EMAIL_RECEIVER]]' },
+    { label: 'Firstname', value: '[[FIRSTNAME]]' },
+    { label: 'Lastname', value: '[[LASTNAME]]' }
+]

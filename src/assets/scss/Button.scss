@@ -26,12 +26,6 @@
     color: #202020;
 }
 
-.circle-button:focus,
-.square-button:focus,
-.view-json-square-button:focus {
-    outline: none;
-}
-
 .default-square-button {
     @extend .square-button;
     background-color: #c6c6c6;
@@ -102,8 +96,26 @@
     width: max-content;
 }
 
+.personalize-square-button {
+    border: 1px solid #dddddd;
+    background-color: #ffffff;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 600;
+    height: 25px;
+    width: max-content;
+    cursor: pointer;
+}
+
 .text-menu-button {
     cursor: pointer;
+}
+
+.circle-button:focus,
+.square-button:focus,
+.view-json-square-button:focus,
+.personalize-square-button:focus {
+    outline: none;
 }
 
 .button-menu {
@@ -214,6 +226,26 @@
 
     .start-square-menu-button {
         @extend .start-square-button;
+    }
+}
+
+.personalize-square-menu-button-layout {
+    @extend .button-menu;
+
+    .menu-container-square-hidden {
+        @extend .menu-container-hidden;
+        width: 100px;
+        top: 5px;
+        right: -3px;
+    }
+
+    .menu-button-container:hover .menu-container {
+        top: 20px;
+        left: 1px;
+    }
+
+    .personalize-square-menu-button {
+        @extend .personalize-square-button;
     }
 }
 

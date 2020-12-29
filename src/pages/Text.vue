@@ -34,7 +34,17 @@
       :elementId="elementId"
     >
       <template slot="content">
-        <div :id="`editor-${elementId}`" class="editor"/>
+        <div class="editor-container">
+          <div :id="`editor-${elementId}`" class="editor" />
+          <SquareMenuButtonComponent
+            label="Personalize"
+            icon="plus"
+            class="personalize-action"
+            className="personalize-square-menu-button"
+            :options="personalizes"
+            @click="doAddPersonalize"
+          />
+        </div>
       </template>
       <template slot="action-custom">
         <FooterPanel
@@ -56,6 +66,7 @@ import quill from 'quill'
 import { Component, Watch } from 'vue-property-decorator'
 import BaseComponent from '../core/BaseComponent'
 import { FONT_STYLE } from '../constants/Style'
+import { PERSONALIZES } from '../constants/Base'
 
 const Quill = quill as any
 
@@ -64,6 +75,10 @@ export default class TextPage extends BaseComponent {
   management: any = {}
   editor: any = null
   contentHtml: any = null
+
+  get personalizes() {
+    return  PERSONALIZES
+  }
 
   created() {
     this.doRenderUpdateElement()
@@ -107,6 +122,7 @@ export default class TextPage extends BaseComponent {
       if (this.editor.editor.delta.ops[0]) {
         this.contentHtml = this.editor.root.innerHTML
       }
+      this.editor.focus()
     })
   }
 
@@ -119,6 +135,13 @@ export default class TextPage extends BaseComponent {
       if (backgroundColor) { previewStyle['background-color'] = backgroundColor }
     }
     this.doSetAttributeStyle(`editor-${this.elementId}`, previewStyle)
+  }
+
+  doAddPersonalize(personalize: string) {
+    this.editor.focus()
+    const position = this.editor.getSelection()
+    const cursor = position.index
+    this.editor.insertText(cursor, personalize, { 'color': '#0DAEFF', 'size': 'small', 'italic': true })
   }
 
   @Watch('editor', { deep: true })
