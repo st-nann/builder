@@ -10,7 +10,7 @@
       @change="onUpload($event)"
     >
     <label id="upload" for="file">
-      <div :class="['upload-square-butto', { 'upload-square-button-diabled': disabled }]">
+      <div :class="['upload-square-button', { 'upload-square-button-diabled': disabled }]">
         <i class="mdi mdi-folder-multiple-image" /> Upload New Image
       </div>
     <!-- <img id="output" class="upload-image" /> -->
