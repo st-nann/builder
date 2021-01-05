@@ -91,13 +91,13 @@ import { ENV } from '../constants/Env'
 
 @Component({
   computed: {
-    ...mapGetters('images', {   
+    ...mapGetters('authentication', {   
       loginResponse: 'login',
       loginInfo: 'loginInfo'
     })
   },
   methods: {
-    ...mapActions('images', [
+    ...mapActions('authentication', [
       'login',
       'getLoginData'
     ])
@@ -111,7 +111,7 @@ export default class ImagePage extends BaseComponent {
   loginInfo!: any
 
   get havePropData() {
-    return localStorage['baseurl'] && localStorage['authorization']
+    return localStorage['storage-baseurl'] && localStorage['storage-token']
   }
 
   get containerStyle() {
@@ -211,7 +211,7 @@ export default class ImagePage extends BaseComponent {
         self.doGetLoginInfo()
       } else {
         clearInterval(timeout)
-        localStorage['authorization'] = self.loginInfo.token
+        localStorage['storage-token'] = self.loginInfo.token
       }
     }, 500)
   }

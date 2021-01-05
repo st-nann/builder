@@ -3,18 +3,6 @@ import { mutationType } from './MutationTypes'
 import ImageState from './States'
 
 const mutations: MutationTree<ImageState> = {
-  [mutationType.LOGIN](
-    state: ImageState,
-    data: any
-  ): void {
-    state.login = data
-  },
-  [mutationType.LOGIN_INFORMATION](
-    state: ImageState,
-    data: any
-  ): void {
-    state.loginInfo = data
-  },
   [mutationType.LISTS](
     state: ImageState,
     data: object[]

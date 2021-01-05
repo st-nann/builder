@@ -2,8 +2,6 @@ import store from '../../../store/Index'
 import HttpRequest from '../../../third-party/HttpRequest'
 import {
   IState,
-  ILoginRequest,
-  IILoginParam,
   IUploadImageRequest,
   IImageParam
 } from '../../../third-party/interfaces/HttpRequest'
@@ -12,31 +10,9 @@ import { mutationType } from './MutationTypes'
 import ImageState from './States'
 import { ENV } from '../../../constants/Env'
 
-const baseUrl = localStorage['baseurl'] || ENV.BASE_URL_STORAGE
+const baseUrl = localStorage['storage-baseurl'] || ENV.BASE_URL_STORAGE
 
 const actions: ActionTree<ImageState, IState> = {
-  async login(
-    context: ActionContext<ImageState, IState>,
-    payload: { data: ILoginRequest }
-  ) {
-    await HttpRequest.sendRequest({
-      method: "POST",
-      path: `${baseUrl}/login`,
-      mutation: `images/${mutationType.LOGIN}`,
-      payload: payload.data
-    })
-  },
-  async getLoginData(
-    context: ActionContext<ImageState, IState>,
-    payload: { headers: IILoginParam }
-  ) {
-    await HttpRequest.sendRequest({
-      method: "GET",
-      path: `${baseUrl}/login`,
-      mutation: `images/${mutationType.LOGIN_INFORMATION}`,
-      headers: { 'ref': payload.headers.ref }
-    })
-  },
   async getImages(
     context: ActionContext<ImageState, IState>,
     payload: { params?: IImageParam }
@@ -52,6 +28,7 @@ const actions: ActionTree<ImageState, IState> = {
     await HttpRequest.sendRequest({
       method: "GET",
       path: `${baseUrl}/galleries${query}`,
+      headers: { 'authorization': localStorage['storage-token'] },
       mutation: `images/${mutationType.LISTS}`
     });
   },
@@ -64,7 +41,10 @@ const actions: ActionTree<ImageState, IState> = {
       path: `${baseUrl}/uploader/public`,
       mutation: `images/${mutationType.UPLOAD}`,
       payload: payload.data.file,
-      headers: { 'Content-Type': 'multipart/form-data' },
+      headers: {
+        'authorization': localStorage['storage-token'],
+        'Content-Type': 'multipart/form-data'
+      },
       onUploadProgress: (progress: any) => {
         store.dispatch(
           `images/updateUploadImage`,

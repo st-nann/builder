@@ -10,16 +10,10 @@ class HttpRequest {
   
     constructor() {
       this.datetime = this.getDateTime()
-      this.header = {
-        'x-timestamp': this.datetime,
-        'authorization': localStorage['authorization']
-      };
+      this.header = { 'x-timestamp': this.datetime };
       this.axios = axios.create({
         headers: this.header
-          ? {
-              'x-timestamp': this.header['x-timestamp'],
-              'authorization': this.header['authorization']
-            }
+          ? { 'x-timestamp': this.header['x-timestamp'] }
           : undefined
       });
       axios.interceptors.response.use(this.handleResponse, this.handleError);

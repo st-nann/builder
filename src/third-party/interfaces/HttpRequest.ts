@@ -8,7 +8,6 @@ export interface IHttpRequest {
 }
 export interface IHeader {
   'x-timestamp': string;
-  'authorization': string;
 }
 export interface IState {
   [key: string]: any
@@ -19,6 +18,11 @@ export interface ILoginRequest {
 }
 export interface IILoginParam {
   ref: string
+}
+
+export interface ITextParam {
+  page?: string
+  limit?: number
 }
 export interface IImageParam {
   page?: string

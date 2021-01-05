@@ -90,8 +90,10 @@ import { IImageLists, IImageItem } from '../../../interfaces/Image'
         ...mapGetters('components', {
             loadingLists: 'loading'
         }),
+        ...mapGetters('authentication', {
+            loginInfo: 'loginInfo'
+        }),
         ...mapGetters('images', {
-            loginInfo: 'loginInfo',
             imageLists: 'lists',
             uploadPercent: 'uploadPercent'
         })
@@ -119,7 +121,7 @@ export default class ImageAssetContent extends BaseComponent {
     uploadImage!: (payload: { data: { file: any } }) => any
 
     get havePropData() {
-        return localStorage['baseurl'] && localStorage['authorization']
+        return localStorage['storage-baseurl'] && localStorage['storage-token']
     }
 
     get loading() {
@@ -127,8 +129,8 @@ export default class ImageAssetContent extends BaseComponent {
         return this.havePropData
             ? lists['images/LISTS']
             : (
-                lists['images/LOGIN'] ||
-                lists['image/LOGIN_INFORMATION']||
+                lists['authentication/LOGIN'] ||
+                lists['authentication/LOGIN_INFORMATION']||
                 lists['images/LISTS']
             )
     }
