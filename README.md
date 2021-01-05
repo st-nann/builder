@@ -37,8 +37,10 @@ npm run dev
         id="builder"
         ref="builder"
         data-id="builder"
-        :data-baseurl="https://stg-ecom.pams.ai/api/backend"
-        :data-token="token"
+        :data-personalize-baseurl="https://stg-cms.pams.ai/api"
+        :data-personalize-token="personalizetoken"
+        :data-storage-baseurl="https://stg-ecom.pams.ai/api/backend"
+        :data-storage-token="storagetoken"
         :data-prop-template="JSON.stringify(propTemplateJson)"
         @click="onUpdateTemplate"
     />
@@ -49,8 +51,10 @@ npm run dev
 |id                                      |bilder   |`string`  |*for access element*                                                                           |
 |ref                                     |up to you|`string`  |*for access result template*                                                                   |
 |data-id                                 |up to you|`string`  |*for create element (default: builder). Mutiple element should be setup difference name*       |
-|:data-baseurl                           |up to you|`string`  |*for get or upload image* (ex. [GET] `<BASEURL>/galleries`, [POST] `<BASEURL>/uploader/public`)|
-|:data-token                             |up to you|`string`  |*for access api get or upload image*                                                           |
+|:data-personalize-baseurl (optional)    |up to you|`string`  |*for get personalize* (ex. [GET] `<BASEURL>/customers/attributes`)*                            |
+|:data-personalize-token (optional)      |up to you|`string`  |*for access api get personalize*                                                               |
+|:data-storage-baseurl                   |up to you|`string`  |*for get or upload image* (ex. [GET] `<BASEURL>/galleries`, [POST] `<BASEURL>/uploader/public`)|
+|:data-storage-token                     |up to you|`string`  |*for access api get or upload image*                                                           |
 |:data-prop-template (optional)          |up to you|`string`  |*for setup default prop your template json*                                                    |
 |@click="<YOUR_FUNCTION_NAME>" (optional)|up to you|`function`|*for get result on function*                                                                   |
 <br>
@@ -80,7 +84,8 @@ npm install vue-builder-plugin --save
 ```
 NODE_ENV=development
 VUE_APP_TITLE=Builder
-VUE_APP_BASE_URL=<Base URL API image storage>
+VUE_APP_BASE_URL_PERSONALIZE=<Base URL API text personalize>
+VUE_APP_BASE_URL_STORAGE=<Base URL API image storage>
 VUE_APP_ADMIN_USERNAME=<Username for access to image storage>
 VUE_APP_ADMIN_PASSWORD=<Password for access to image storage>
 ```

@@ -125,7 +125,7 @@
         display: flex;
         flex-direction: row;
         position: absolute;
-        left: -5px;
+        right: 0;
         z-index: 10;
         transition: .4s ease .25s;
     }
@@ -174,14 +174,23 @@
         border-bottom-color: #eaeaea;
         border-width: 9px;
     }
-      
+
+    .menu-scroll {
+        display: flex;
+        flex-direction: column;
+        overflow: scroll;
+        padding: 8px 15px;
+        max-height: 300px;
+        max-width: 180px;
+    }
+
     .menu-link {
         text-decoration: none;
         color: #414141;
         font-size: 13px;
         width: max-content;
         min-width: max-content;
-        padding: 7px 15px;
+        padding: 5px 0;
         cursor: pointer;
     }
 
@@ -231,7 +240,7 @@
 
 .personalize-square-menu-button-layout {
     @extend .button-menu;
-
+    
     .menu-container-square-hidden {
         @extend .menu-container-hidden;
         width: 100px;
@@ -240,8 +249,7 @@
     }
 
     .menu-button-container:hover .menu-container {
-        top: 20px;
-        left: 1px;
+        top: 23px;
     }
 
     .personalize-square-menu-button {

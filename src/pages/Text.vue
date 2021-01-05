@@ -61,20 +61,45 @@
 import _ from 'lodash'
 import quill from 'quill'
 import { Component, Watch } from 'vue-property-decorator'
+import { mapGetters, mapActions } from 'vuex'
 import BaseComponent from '../core/BaseComponent'
 import { FONT_STYLE } from '../constants/Style'
 import { PERSONALIZES } from '../constants/Base'
 
 const Quill = quill as any
 
-@Component
+@Component({
+    computed: {
+        ...mapGetters('texts', {
+            personalizeLists: 'personalizes',
+        })
+    },
+    methods: {
+      ...mapActions('texts', [
+        'getPersonalizes'
+      ])
+    }
+})
 export default class TextPage extends BaseComponent {
   management: any = {}
   editor: any = null
   contentHtml: any = null
+  personalizeLists!: any
+
+  get havePropData () {
+    return localStorage['personalize-baseurl'] && localStorage['personalize-token']
+  }
+
+  get transformPersonalizes() {
+    return _.isEmpty(this.personalizeLists)
+      ? undefined
+      : this.personalizeLists.items.map((item: any) => {
+        return { label: item.name, value: `[[${item.alias}]]` }
+      })
+  }
 
   get personalizes() {
-    return  PERSONALIZES
+    return this.transformPersonalizes || PERSONALIZES
   }
 
   created() {
@@ -84,6 +109,8 @@ export default class TextPage extends BaseComponent {
   updated() {
     this.doRenderUpdateElement()
   }
+
+  getPersonalizes!: (payload: { params: { page?: string, limit?: number } }) => void
 
   doRenderUpdateElement() {
     this.$nextTick(() => {
@@ -169,6 +196,9 @@ export default class TextPage extends BaseComponent {
     if (ref) {
       this.management = this.action
       ref.isOpenModal = this.management.edit
+    }
+    if (this.havePropData && this.management.edit) {
+      this.getPersonalizes({ params: { limit: 9999999 } })
     }
     const self = this
     setTimeout(() => {
