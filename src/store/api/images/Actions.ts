@@ -17,6 +17,7 @@ const actions: ActionTree<ImageState, IState> = {
     context: ActionContext<ImageState, IState>,
     payload: { params?: IImageParam }
   ) {
+    const token = localStorage['storage-token'] || store.getters['authentication/loginInfo'].token
     let [query, limit, page] = ['', '', '']
     if (payload.params) {
       limit = payload.params.limit ? `limit=${payload.params.limit}` : ''
@@ -28,7 +29,7 @@ const actions: ActionTree<ImageState, IState> = {
     await HttpRequest.sendRequest({
       method: "GET",
       path: `${baseUrl}/galleries${query}`,
-      headers: { 'authorization': localStorage['storage-token'] },
+      headers: { 'authorization': token },
       mutation: `images/${mutationType.LISTS}`
     });
   },
@@ -36,13 +37,14 @@ const actions: ActionTree<ImageState, IState> = {
     context: ActionContext<ImageState, IState>,
     payload: { data: IUploadImageRequest }
   ) {
+    const token = localStorage['storage-token'] || store.getters['authentication/loginInfo'].token
     await HttpRequest.sendRequest({
       method: "POST",
       path: `${baseUrl}/uploader/public`,
       mutation: `images/${mutationType.UPLOAD}`,
       payload: payload.data.file,
       headers: {
-        'authorization': localStorage['storage-token'],
+        'authorization': token,
         'Content-Type': 'multipart/form-data'
       },
       onUploadProgress: (progress: any) => {

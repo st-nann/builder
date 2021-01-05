@@ -213,7 +213,7 @@ export default class ImagePage extends BaseComponent {
         localStorage['storage-token'] = self.loginInfo.token
         clearInterval(timeout)
       }
-    }, 500)
+    }, 1000)
   }
 
   @Watch('previewData', { deep: true })

@@ -171,7 +171,7 @@ export default class ImageAssetContent extends BaseComponent {
 
     @Watch('loginInfo', { deep: true })
     async onHaveLoginInfo() {
-        if (_.isUndefined(this.loginInfo.code)) {
+        if (this.loginInfo.token) {
             await this.getImages({ params: { limit: 9999999 } })
             this.doFilterImages()
         }
