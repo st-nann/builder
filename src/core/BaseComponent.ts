@@ -36,6 +36,7 @@ export default class BaseComponent extends Base {
   changeImage = false
   parent: any = {}
   quantityParentBox = -1
+  isCancel = false
 
   created() {
     this.init()
@@ -97,7 +98,7 @@ export default class BaseComponent extends Base {
   }
   
   onUpdateScale(scale: any) {
-    if (scale) {
+    if (scale && !this.isCancel) {
       if (JSON.stringify(this.data) === '{}') {
         Object.assign(this.data, this.elementProps)
       }
@@ -111,7 +112,9 @@ export default class BaseComponent extends Base {
     this.footerData = data
     this.action.edit = false
     this.$emit('updataManagement', this.action)
+    this.isCancel = true
     if (data) {
+      this.isCancel = false
       Object.assign(this.data, data)
       this.doEmitData()
     }
