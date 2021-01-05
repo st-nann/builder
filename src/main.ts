@@ -18,6 +18,14 @@ const Builder = () => {
     const root = `#${node && !_.isNull(id) ? id.value : 'builder'}`
     const propTemplateJson = node && !_.isNull(template) ? JSON.parse(template.value) : undefined
 
+    if (node.getAttributeNode('data-baseurl')) {
+      localStorage['baseurl'] = node.getAttributeNode('data-baseurl')
+    }
+
+    if (node.getAttributeNode('data-token')) {
+      localStorage['authorization'] = node.getAttributeNode('data-token')
+    }
+
     const vue = new Vue({
       router,
       store,
