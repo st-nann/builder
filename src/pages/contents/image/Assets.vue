@@ -84,8 +84,6 @@ import { Component, Prop, Watch } from 'vue-property-decorator'
 import { mapGetters, mapActions } from 'vuex'
 import BaseComponent from '../../../core/BaseComponent'
 import { IImageLists, IImageItem } from '../../../interfaces/Image'
-// vuex-class
-/* import { Getter, Action } from 'vuex-class' */
 
 @Component({
     computed: {
@@ -109,19 +107,9 @@ export default class ImageAssetContent extends BaseComponent {
     @Prop(Boolean) changeImage!: boolean
     @Prop(String) imageUrl!: string
 
-    // vuex-class
-    /*
-    @Getter('images/lists')
-    private imageLists!: IImageLists
-
-    @Action('images/getImages')
-    private getImages!: (payload: { params: { page?: string, limit?: number } }) => void
-    */
-
     showLoading = true
     url = this.imageUrl
     uploadPercent!: number
-    // uploadPercentLists!: { [key: string]: number }[]
     loadingLists!: any
     loginInfo!: any
     imageLists!: IImageLists
@@ -130,20 +118,20 @@ export default class ImageAssetContent extends BaseComponent {
     getImages!: (payload: { params: { page?: string, limit?: number } }) => void
     uploadImage!: (payload: { data: { file: any } }) => any
 
-    get loading() {
-        const lists = this.loadingLists?.reduce((value1: any, value2: any) => Object.assign(value1, value2), {})
-        return (
-            lists['images/LOGIN'] ||
-            lists['image/LOGIN_INFORMATION']||
-            lists['images/LISTS']
-        )
+    get havePropData() {
+        return localStorage['baseurl'] && localStorage['authorization']
     }
 
-    // get uploadPercent() {
-    //     return this.uploadPercentLists.length > 0
-    //         ? this.uploadPercentLists.reduce((value1: any, value2: any) => Object.assign(value1, value2), {})
-    //         : undefined
-    // }
+    get loading() {
+        const lists = this.loadingLists?.reduce((value1: any, value2: any) => Object.assign(value1, value2), {})
+        return this.havePropData
+            ? lists['images/LISTS']
+            : (
+                lists['images/LOGIN'] ||
+                lists['image/LOGIN_INFORMATION']||
+                lists['images/LISTS']
+            )
+    }
 
     doConvertImageSize(size: number) {
         let transformSize: any = '0 byte'
@@ -181,7 +169,7 @@ export default class ImageAssetContent extends BaseComponent {
 
     @Watch('loginInfo', { deep: true })
     async onChangeImage() {
-        if (_.isUndefined(this.loginInfo.code)) {
+        if (this.havePropData || _.isUndefined(this.loginInfo.code)) {
             await this.getImages({ params: { limit: 9999999 } })
             this.doFilterImages()
         }

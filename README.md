@@ -37,18 +37,22 @@ npm run dev
         id="builder"
         ref="builder"
         data-id="builder"
+        :data-baseurl="https://stg-ecom.pams.ai/api/backend"
+        :data-token="token"
         :data-prop-template="JSON.stringify(propTemplateJson)"
         @click="onUpdateTemplate"
     />
 ```
 
-| attribute                              |value    |type      |description                                                                             |
-|----------------------------------------|:-------:|:--------:| -------------------------------------------------------------------------------------- |
-|id                                      |bilder   |`string`  |*for access element*                                                                    |
-|ref                                     |up to you|`string`  |*for access result template*                                                            |
-|data-id                                 |up to you|`string`  |*for create element (default: builder). Mutiple element should be setup difference name*|
-|:data-prop-template (optional)          |up to you|`string`  |*for setup default prop your template json*                                             |
-|@click="<YOUR_FUNCTION_NAME>" (optional)|up to you|`function`|*for get result on function*                                                            |
+| attribute                              |value    |type      |description                                                                                    |
+|----------------------------------------|:-------:|:--------:| --------------------------------------------------------------------------------------------- |
+|id                                      |bilder   |`string`  |*for access element*                                                                           |
+|ref                                     |up to you|`string`  |*for access result template*                                                                   |
+|data-id                                 |up to you|`string`  |*for create element (default: builder). Mutiple element should be setup difference name*       |
+|:data-baseurl                           |up to you|`string`  |*for get or upload image* (ex. [GET] `<BASEURL>/galleries`, [POST] `<BASEURL>/uploader/public`)|
+|:data-token                             |up to you|`string`  |*for access api get or upload image*                                                           |
+|:data-prop-template (optional)          |up to you|`string`  |*for setup default prop your template json*                                                    |
+|@click="<YOUR_FUNCTION_NAME>" (optional)|up to you|`function`|*for get result on function*                                                                   |
 <br>
 
 6. Access Result Template
@@ -76,13 +80,9 @@ npm install vue-builder-plugin --save
 ```
 NODE_ENV=development
 VUE_APP_TITLE=Builder
-VUE_APP_ECOM_CMS_API=<Base URL API image storage>
+VUE_APP_BASE_URL=<Base URL API image storage>
 VUE_APP_ADMIN_USERNAME=<Username for access to image storage>
 VUE_APP_ADMIN_PASSWORD=<Password for access to image storage>
-
-[optionnal]
-VUE_APP_BASE_URL=<Base URL API image storage>
-VUE_APP_TOKEN_IMAGE_STORAGE=<Token for access to image storage>
 ```
 
 4. Import Component in main.ts or main.js

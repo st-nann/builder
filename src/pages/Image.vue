@@ -110,6 +110,10 @@ export default class ImagePage extends BaseComponent {
   loginResponse!: any
   loginInfo!: any
 
+  get havePropData() {
+    return localStorage['baseurl'] && localStorage['authorization']
+  }
+
   get containerStyle() {
     const style = {}
     if (this.elementProps.flexbox) {
@@ -148,7 +152,7 @@ export default class ImagePage extends BaseComponent {
   getLoginData!: (payload: { headers: { ref: string } }) => void
 
   async created() {
-    if (_.isEmpty(ENV.TOKEN_IMAGE_STORAGE)) {
+    if (_.isUndefined(this.havePropData)) {
       await this.login({
         data: {
           email: ENV.ADMIN_USERNAME_STORAGE,
@@ -229,7 +233,9 @@ export default class ImagePage extends BaseComponent {
           this.changeImage = true
         }
       }
-      this.doGetLoginInfo()
+      if (_.isUndefined(this.havePropData)) {
+        this.doGetLoginInfo()
+      }
     }
   }
 }

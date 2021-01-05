@@ -1,5 +1,3 @@
-
-import _ from 'lodash'
 import store from '../../../store/Index'
 import HttpRequest from '../../../third-party/HttpRequest'
 import {
@@ -14,8 +12,7 @@ import { mutationType } from './MutationTypes'
 import ImageState from './States'
 import { ENV } from '../../../constants/Env'
 
-const baseUrl = ENV.BASE_URL_STORAGE
-const cmsApi = ENV.ECOM_CMS_API_URL_STORAGE
+const baseUrl = localStorage['baseurl'] || ENV.BASE_URL_STORAGE
 
 const actions: ActionTree<ImageState, IState> = {
   async login(
@@ -24,7 +21,7 @@ const actions: ActionTree<ImageState, IState> = {
   ) {
     await HttpRequest.sendRequest({
       method: "POST",
-      path: _.isEmpty(baseUrl) ? `${cmsApi}/login` : baseUrl,
+      path: `${baseUrl}/login`,
       mutation: `images/${mutationType.LOGIN}`,
       payload: payload.data
     })
@@ -35,7 +32,7 @@ const actions: ActionTree<ImageState, IState> = {
   ) {
     await HttpRequest.sendRequest({
       method: "GET",
-      path: baseUrl ? baseUrl : `${cmsApi}/login`,
+      path: `${baseUrl}/login`,
       mutation: `images/${mutationType.LOGIN_INFORMATION}`,
       headers: { 'ref': payload.headers.ref }
     })
@@ -54,7 +51,7 @@ const actions: ActionTree<ImageState, IState> = {
     }
     await HttpRequest.sendRequest({
       method: "GET",
-      path: baseUrl ? baseUrl : `${cmsApi}/galleries${query}`,
+      path: `${baseUrl}/galleries${query}`,
       mutation: `images/${mutationType.LISTS}`
     });
   },
@@ -64,7 +61,7 @@ const actions: ActionTree<ImageState, IState> = {
   ) {
     await HttpRequest.sendRequest({
       method: "POST",
-      path: baseUrl ? baseUrl : `${cmsApi}/uploader/public`,
+      path: `${baseUrl}/uploader/public`,
       mutation: `images/${mutationType.UPLOAD}`,
       payload: payload.data.file,
       headers: { 'Content-Type': 'multipart/form-data' },
