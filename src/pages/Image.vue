@@ -210,8 +210,8 @@ export default class ImagePage extends BaseComponent {
       if (self.loginInfo.message) {
         self.doGetLoginInfo()
       } else {
-        clearInterval(timeout)
         localStorage['storage-token'] = self.loginInfo.token
+        clearInterval(timeout)
       }
     }, 500)
   }
