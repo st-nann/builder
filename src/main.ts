@@ -14,17 +14,14 @@ const builder: any = document.querySelectorAll('#builder')
 const Builder = () => {
   _.forEach(builder, (node: any) => {
     const id = node.getAttributeNode('data-id')
+    const baseurl = node.getAttributeNode('data-baseurl')
+    const token = node.getAttributeNode('data-token')
     const template = node.getAttributeNode('data-prop-template')
     const root = `#${node && !_.isNull(id) ? id.value : 'builder'}`
     const propTemplateJson = node && !_.isNull(template) ? JSON.parse(template.value) : undefined
 
-    if (node.getAttributeNode('data-baseurl')) {
-      localStorage['baseurl'] = node.getAttributeNode('data-baseurl')
-    }
-
-    if (node.getAttributeNode('data-token')) {
-      localStorage['authorization'] = node.getAttributeNode('data-token')
-    }
+    if (baseurl) { localStorage['baseurl'] = baseurl.value.replaceAll('"', '') }
+    if (token) { localStorage['authorization'] = token.value.replaceAll('"', '') }
 
     const vue = new Vue({
       router,

@@ -168,8 +168,16 @@ export default class ImageAssetContent extends BaseComponent {
     }
 
     @Watch('loginInfo', { deep: true })
+    async onHaveLoginInfo() {
+        if (_.isUndefined(this.loginInfo.code)) {
+            await this.getImages({ params: { limit: 9999999 } })
+            this.doFilterImages()
+        }
+    }
+
+    @Watch('changeImage')
     async onChangeImage() {
-        if (this.havePropData || _.isUndefined(this.loginInfo.code)) {
+        if (this.changeImage && this.havePropData) {
             await this.getImages({ params: { limit: 9999999 } })
             this.doFilterImages()
         }
