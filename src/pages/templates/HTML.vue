@@ -1,11 +1,11 @@
 <template>
-  <div class="container">
-    <div class="container-header">
-      <div class="container-title">
+  <div class="builder-container">
+    <div class="builder-container-header">
+      <div class="builder-container-title">
         <span class="product-name">PAM </span>
         <span class="project-name">Message Builder</span>
       </div>
-      <div class="container-management">
+      <div class="builder-container-management">
         <SquareButtonComponent
           icon="code-braces-box"
           label="View JSON"
@@ -31,7 +31,7 @@
         />
       </div>
     </div>
-    <div class="container-body">
+    <div class="builder-container-body">
       <div class="content">
         <div v-if="haveElementChild">
           <BuilderCanvas :templateJson="templateJson"/>
