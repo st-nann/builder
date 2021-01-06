@@ -22,7 +22,7 @@
     background-color: transparent;
     border: 1px solid #dddddd;
     border-radius: 50px;
-    font-size: 12px;
+    font-size: 12px !important;
     color: #202020;
 }
 
@@ -100,10 +100,10 @@
     border: 1px solid #dddddd;
     background-color: #ffffff;
     border-radius: 5px;
-    font-size: 12px;
-    font-weight: 600;
+    font-size: 12px !important;
+    font-weight: 600 !important;
     height: 25px;
-    width: max-content;
+    padding: 0 5px;
     cursor: pointer;
 }
 
