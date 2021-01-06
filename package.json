@@ -1,6 +1,6 @@
 {
   "name": "vue-builder-plugin",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Builder Template (Vue + Typescript)",
   "private": false,
   "main": "dist/main.js",
@@ -55,9 +55,30 @@
   },
   "keywords": [
     "npm",
+    "tempalte",
+    "plugin",
+    "library",
+    "vue",
+    "vuejs",
+    "vue.js",
+    "email",
     "builder",
+    "builder-plugin",
+    "builder-library",
     "builder-template",
-    "vue-builder-template"
+    "builder-template-plugin",
+    "builder-template-library",
+    "email-builder",
+    "email-builder-template",
+    "email-builder-plugin",
+    "email-builder-library",
+    "vue-builder",
+    "vue-builder-template",
+    "vue-builder-plugin",
+    "vue-builder-library",
+    "vue-email-builder-template",
+    "vue-email-builder-plugin",
+    "vue-email-builder-library"
   ],
   "author": "Sanyanee Thawinvongrak"
 }
