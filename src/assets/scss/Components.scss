@@ -25,3 +25,21 @@ body {
 .clickable {
     cursor: pointer;
 }
+
+.v-application {
+    line-height: unset !important;
+}
+
+button, input, optgroup, select, textarea {
+    font: 400 13.3333px Arial !important;
+}
+
+::before, ::after {
+    text-decoration: unset !important;
+    vertical-align: unset !important;
+}
+
+*, ::before, ::after {
+    background-repeat: unset !important;
+    box-sizing: unset !important;
+}
