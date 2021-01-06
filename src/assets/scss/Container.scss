@@ -1,7 +1,8 @@
-.container {
+.builder-container {
     margin: 10px;
+    font-family: Arial, Helvetica, sans-serif !important;
 
-    .container-header {
+    .builder-container-header {
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -11,7 +12,7 @@
         border-top-right-radius: 10px;
         padding: 15px 20px;
 
-        .container-title {
+        .builder-container-title {
             flex-grow: 1;
 
             .product-name {
@@ -26,7 +27,7 @@
         }
     }
 
-    .container-management {
+    .builder-container-management {
         
         .json-viewer {
             border: 1px solid #dddddd;
@@ -43,7 +44,7 @@
         }
     }
 
-    .container-body {
+    .builder-container-body {
         display: flex;
         flex-direction: row;
         justify-content: center;
