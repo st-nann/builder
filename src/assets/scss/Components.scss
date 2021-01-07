@@ -9,9 +9,10 @@
 @import './Modal';
 @import './UploadImage';
 @import './Loading';
+@import './Vuetify';
 
 body {
-    font-family: Arial, Helvetica, sans-serif !important;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .link-text {
@@ -24,22 +25,4 @@ body {
 
 .clickable {
     cursor: pointer;
-}
-
-.v-application {
-    line-height: unset !important;
-}
-
-button, input, optgroup, select, textarea {
-    font: 400 16px Arial !important;
-}
-
-::before, ::after {
-    text-decoration: unset !important;
-    vertical-align: unset !important;
-}
-
-*, ::before, ::after {
-    background-repeat: unset !important;
-    box-sizing: unset !important;
 }

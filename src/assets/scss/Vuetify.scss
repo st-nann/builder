@@ -1,0 +1,19 @@
+/* override */ 
+
+#builder {
+  line-height: normal !important;
+}
+
+#builder button, #builder input {
+  font: 100 12px Arial !important;
+}
+
+#builder::before, #builder::after {
+  text-decoration: unset !important;
+  vertical-align: unset !important;
+}
+
+#builder, #builder::before, #builder::after {
+  background-repeat: unset !important;
+  box-sizing: unset !important;
+}
