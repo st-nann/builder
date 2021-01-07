@@ -17,21 +17,24 @@ or
 npm run dev
 ```
 
-3. Setup nuxt.config.js file (only nuxt.js)
-```json
-    "plugins": [
-        { "src": "~/plugins/<filename>", "ssr": false }
-    ]
-```
-
-4. Import Package to main.ts or main.js file
+3. Import Package to vue component
 ```javascript
-    import Builder from 'vue-builder-plugin/src/main'
+    [Vue]
+    mounted() {
+        const Builder = require('~/node_modules/vue-builder-plugin/src/main')
+        Builder
+    }
 
-    Builder // declare create
+    [Nuxt.js]
+    mounted() {
+        if (process.client) {
+            const Builder = require('~/node_modules/vue-builder-plugin/src/main')
+            Builder
+        }
+    }
 ```
 
-5. Use Component
+4. Use Component
 ```html
     <div
         id="builder"
@@ -59,7 +62,7 @@ npm run dev
 |@click="<YOUR_FUNCTION_NAME>" (optional)|up to you|`function`|*for get result on function*                                                                   |
 <br>
 
-6. Access Result Template
+5. Access Result Template
 ```javascript
     JSON.parse(this.$refs.<REF_NAME>.dataset.resultTemplate)
 ```
