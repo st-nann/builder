@@ -17,7 +17,7 @@ or
 npm run dev
 ```
 
-3. Import Package to vue component
+3. Import Package to Vue Component
 ```javascript
     [Vue]
     mounted() {
