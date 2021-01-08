@@ -140,8 +140,8 @@ export default class TextPage extends BaseComponent {
       }
       this.editor.root.innerHTML = ''
       this.editor.editor.delta.ops = []
-      if (this.elementProps && this.elementProps.json) {
-        this.editor.setContents(this.elementProps.json)
+      if (this.elementProps && this.elementProps['text-content']) {
+        this.editor.setContents(this.elementProps['text-content'])
       }
       if (this.editor.editor.delta.ops[0]) {
         this.contentHtml = this.editor.root.innerHTML
@@ -179,7 +179,7 @@ export default class TextPage extends BaseComponent {
           this.editor.editor.delta &&
           this.editor.editor.delta.ops &&
           (this.editor.editor.delta.ops.length > 0 && this.editor.editor.delta.ops[0].insert !== '\n')
-            ? { json: this.editor.editor.delta.ops }
+            ? { 'text-content': this.editor.editor.delta.ops }
             : undefined
         )
     })
