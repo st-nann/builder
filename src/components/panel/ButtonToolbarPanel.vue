@@ -36,7 +36,7 @@
         :name="`toolbar-panel-button-background-${elementId}`"
         :management="management"
         label="Background Color"
-        customKeyValue="background"
+        customKeyValue="button-background-color"
         @change="onUpdateButtonBackgroundColor"
       />
       <FontStyleComponent
