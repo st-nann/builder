@@ -86,6 +86,9 @@ export default class ButtonPage extends BaseComponent {
       ['font-size']: this.elementProps.font && this.elementProps.font['font-size']
         ? this.elementProps.font['font-size']
         : undefined,
+      ['background-color']: this.elementProps.font && this.elementProps['button-background-color']
+        ? this.elementProps['button-background-color']
+        : undefined,
       color: this.elementProps.font && this.elementProps.font.color
         ? this.elementProps.font.color
         : undefined,
@@ -110,7 +113,7 @@ export default class ButtonPage extends BaseComponent {
       const borderBottom = this.previewData['border-bottom']
       const font = this.previewData.font
       const backgroundColor = this.previewData['background-color']
-      const background = this.previewData['background']
+      const background = this.previewData['button-background-color']
       const fontFamily = font ? font['font-family'] : ''
       const fontSize = font ? font['font-size'] : ''
       const fontColor = font ? font.color : ''
@@ -119,7 +122,7 @@ export default class ButtonPage extends BaseComponent {
       const justify = this.previewData.flexbox ? this.previewData.flexbox['justify-content'] : ''
       if (borderBottom) { previewContainerStyle['border-bottom'] = `${borderBottom.width} ${borderBottom.style} ${borderBottom.color}` }
       if (backgroundColor) { previewContainerStyle['background-color'] = backgroundColor }
-      if (background) { previewButtonStyle.background = background }
+      if (background) { previewButtonStyle['background-color'] = background }
       if (fontFamily) { previewButtonStyle['font-family'] = fontFamily }
       if (fontSize) { previewButtonStyle['font-size'] = fontSize }
       if (fontColor) { previewButtonStyle.color = fontColor }
