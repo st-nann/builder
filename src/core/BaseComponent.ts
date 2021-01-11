@@ -89,12 +89,16 @@ export default class BaseComponent extends Base {
   }
 
   onUpdateManagement(data: any) {
+    this.data = {}
     this.action = data
     this.$emit('updataManagement', this.action)
+    if (this.action.edit) {
+      Object.assign(this.data, this.elementProps)
+    }
     if (this.action.duplicate || this.action.delete) {
       Object.assign(this.data, data)
-      this.doEmitData()
     }
+    this.doEmitData()
   }
   
   onUpdateScale(scale: any) {
