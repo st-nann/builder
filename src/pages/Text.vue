@@ -144,7 +144,7 @@ export default class TextPage extends BaseComponent {
         this.editor.setContents(this.elementProps['text-content'])
       }
       this.contentHtml = this.editor.editor.delta.ops[0] ? this.editor.root.innerHTML : null
-      this.editor.focus()
+      if (this.editor.root.textContent.length > 0) { this.editor.focus() }
     })
   }
 
@@ -200,8 +200,10 @@ export default class TextPage extends BaseComponent {
     }
     const self = this
     setTimeout(() => {
-      self.editor.focus()
-      self.editor.setSelection(self.editor.root.textContent.length)
+      if (self.editor.root.textContent.length > 0) {
+        self.editor.focus()
+        self.editor.setSelection(self.editor.root.textContent.length)
+      }
     }, 100)
   }
 }
