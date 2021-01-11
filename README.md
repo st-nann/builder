@@ -36,35 +36,34 @@ npm run dev
 
 4. Use Component
 ```html
-    <div
-        id="builder"
-        ref="builder"
-        data-id="builder"
-        :data-personalize-baseurl="https://stg-cms.pams.ai/api"
-        :data-personalize-token="personalizetoken"
-        :data-storage-baseurl="https://stg-ecom.pams.ai/api/backend"
-        :data-storage-token="storagetoken"
-        :data-prop-template="JSON.stringify(propTemplateJson)"
-        @click="onUpdateTemplate"
-    />
+    <div @click="onUpdateTemplate">
+        <div
+            id="builder"
+            class="builder-template-container"
+            :data-personalize-baseurl="https://stg-cms.pams.ai/api"
+            :data-personalize-token="personalizetoken"
+            :data-storage-baseurl="https://stg-ecom.pams.ai/api/backend"
+            :data-storage-token="storagetoken"
+            :data-prop-template="JSON.stringify(propTemplateJson)"
+        />
+    </div>
 ```
 
-| attribute                              |value    |type      |description                                                                                    |
-|----------------------------------------|:-------:|:--------:| --------------------------------------------------------------------------------------------- |
-|id                                      |bilder   |`string`  |*for access element*                                                                           |
-|ref                                     |up to you|`string`  |*for access result template*                                                                   |
-|data-id                                 |up to you|`string`  |*for create element (default: builder). Mutiple element should be setup difference name*       |
-|:data-personalize-baseurl (optional)    |up to you|`string`  |*for get personalize* (ex. [GET] `<BASEURL>/customers/attributes`)*                            |
-|:data-personalize-token (optional)      |up to you|`string`  |*for access api get personalize*                                                               |
-|:data-storage-baseurl                   |up to you|`string`  |*for get or upload image* (ex. [GET] `<BASEURL>/galleries`, [POST] `<BASEURL>/uploader/public`)|
-|:data-storage-token                     |up to you|`string`  |*for access api get or upload image*                                                           |
-|:data-prop-template (optional)          |up to you|`string`  |*for setup default prop your template json*                                                    |
-|@click="<YOUR_FUNCTION_NAME>" (optional)|up to you|`function`|*for get result on function*                                                                   |
+| attribute                              |value                     |type      |description                                                                                   |
+|----------------------------------------|:------------------------:|:--------:| -------------------------------------------------------------------------------------------- |
+|id                                      |up to you                 |`string`  |*for create element (default: builder). Mutiple element should be setup difference name*      |
+|class                                   |builder-template-container|`string`  |*for get all element class 'builder-template-container' to assign data                        |
+|:data-personalize-baseurl (optional)    |up to you                 |`string`  |*for get personalize* (ex. [GET] `<BASEURL>/customers/attributes`)*                           |
+|:data-personalize-token (optional)      |up to you                 |`string`  |*for access api get personalize*                                                              |
+|:data-storage-baseurl                   |up to you                 |`string`  |*for get or upload image* (ex. [GET] `<BASEURL>/galleries`, [POST] `<BASEURL>/uploader/public`|
+|:data-storage-token                     |up to you                 |`string`  |*for access api get or upload image*                                                          |
+|:data-prop-template (optional)          |up to you                 |`string`  |*for setup default prop your template json*                                                   |
+|@click="<YOUR_FUNCTION_NAME>" (optional)|up to you                 |`function`|*for get result on function*                                                                  |
 <br>
 
 5. Access Result Template
 ```javascript
-    JSON.parse(this.$refs.<REF_NAME>.dataset.resultTemplate)
+    JSON.parse((this.$el.firstChild as any).dataset.resultTemplate))
 ```
 <br>
 
