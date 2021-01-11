@@ -1,24 +1,24 @@
 /* override */ 
 
-#builder {
+.builder-container {
   line-height: normal !important;
 }
 
-#builder button, #builder input {
+.builder-container button, .builder-container input {
   font: 100 12px Arial !important;
 }
 
-#builder::before, #builder::after {
+.builder-container::before, .builder-container::after {
   text-decoration: unset !important;
   vertical-align: unset !important;
 }
 
-#builder, #builder::before, #builder::after {
+.builder-container, .builder-container::before, .builder-container::after {
   background-repeat: unset !important;
   box-sizing: unset !important;
 }
 
-#builder code {
+.builder-container code {
   background-color: transparent !important;
   color: #000000;
   padding: unset !important;

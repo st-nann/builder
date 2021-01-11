@@ -1,7 +1,5 @@
 <template>
   <HTMLTemplate
-    id="builder"
-    data-id="builder"
     :propTemplateJson="propTemplateJson"
     @change="doEmitTemplate"
   />
