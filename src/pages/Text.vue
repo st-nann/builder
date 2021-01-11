@@ -13,7 +13,7 @@
     >
       <template slot="content">
         <div
-          v-if="editor && editor.root"
+          v-if="contentHtml !== null"
           :id="`content-${elementId}`"
           class="ql-editor text-content"
           v-html="contentHtml"
@@ -138,14 +138,12 @@ export default class TextPage extends BaseComponent {
         }
         this.editor = new Quill(`#editor-${this.elementId}`, options)
       }
-      this.editor.root.innerHTML = ''
+      this.editor.root.innerHTML = null
       this.editor.editor.delta.ops = []
       if (this.elementProps && this.elementProps['text-content']) {
         this.editor.setContents(this.elementProps['text-content'])
       }
-      if (this.editor.editor.delta.ops[0]) {
-        this.contentHtml = this.editor.root.innerHTML
-      }
+      this.contentHtml = this.editor.editor.delta.ops[0] ? this.editor.root.innerHTML : null
       this.editor.focus()
     })
   }
