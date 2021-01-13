@@ -27,7 +27,7 @@ const actions: ActionTree<ImageState, IState> = {
       query = `?${limit}${limit.length > 0 && page ? `&${page}` : page}`
     }
     await HttpRequest.sendRequest({
-      method: "GET",
+      method: 'GET',
       path: `${baseUrl}/galleries${query}`,
       headers: { 'authorization': token },
       mutation: `images/${mutationType.LISTS}`
@@ -39,7 +39,7 @@ const actions: ActionTree<ImageState, IState> = {
   ) {
     const token = localStorage['storage-token'] || store.getters['authentication/loginInfo'].token
     await HttpRequest.sendRequest({
-      method: "POST",
+      method: 'POST',
       path: `${baseUrl}/uploader/public`,
       mutation: `images/${mutationType.UPLOAD}`,
       payload: payload.data.file,

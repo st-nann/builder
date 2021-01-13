@@ -17,7 +17,7 @@ const actions: ActionTree<AuthenticationState, IState> = {
     payload: { data: ILoginRequest }
   ) {
     await HttpRequest.sendRequest({
-      method: "POST",
+      method: 'POST',
       path: `${baseUrl}/login`,
       mutation: `authentication/${mutationType.LOGIN}`,
       payload: payload.data
@@ -28,7 +28,7 @@ const actions: ActionTree<AuthenticationState, IState> = {
     payload: { headers: IILoginParam }
   ) {
     await HttpRequest.sendRequest({
-      method: "GET",
+      method: 'GET',
       path: `${baseUrl}/login`,
       mutation: `authentication/${mutationType.LOGIN_INFORMATION}`,
       headers: { 'ref': payload.headers.ref }

@@ -24,7 +24,7 @@ const actions: ActionTree<TextState, IState> = {
       query = `?${limit}${limit.length > 0 && page ? `&${page}` : page}`
     }
     await HttpRequest.sendRequest({
-      method: "GET",
+      method: 'GET',
       path: `${baseUrl}/customers/attributes${query}`,
       mutation: `texts/${mutationType.PERSONALIZE}`,
       headers: { 'authorization': localStorage['personalize-token'] }

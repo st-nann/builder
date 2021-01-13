@@ -13,7 +13,7 @@
         @click="doDuplicate"
       />
       <SquareButtonComponent
-        v-if="isHidden"
+        v-if="isDisplay"
         icon="trash-can"
         className="delete-square-button"
         @click="doOpenModal"
@@ -51,14 +51,14 @@ export default class MainButtonComponent extends BaseComponent {
   position = ''
   
   get positions() {
-    return POSITION
+    return _.filter(POSITION, (item: any) => {
+      if (_.isUndefined(this.parent.quantityChildrenBox) || this.parent.quantityChildren < 4) { return item }
+      return !_.includes(['left', 'right'], item.value)
+    })
   }
 
-  get isHidden() {
-    return (
-      this.parent.parentName !== 'BOX' ||
-      (this.parent.parentName === 'BOX' && this.parent.quantityChildren > 1)
-    )
+  get isDisplay() {
+    return _.isUndefined(this.parent.quantityChildrenBox) || this.parent.quantityChildrenBox > 1
   }
 
   doOpenModal() {

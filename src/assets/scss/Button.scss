@@ -132,7 +132,7 @@
 
     .menu-container-hidden {
         position: absolute;
-        height: 20px;
+        height: 15px;
         top: 20px;
     }
 
@@ -205,13 +205,13 @@
 
     .menu-container-square-hidden {
         @extend .menu-container-hidden;
-        width: 120px;
-        right: -40px;
+        width: 50px;
+        right: -8px;
     }
 
     .menu-button-container:hover .menu-container {
         top: 13px;
-        left: -15px;
+        left: -50px;
     }
 
     .default-square-menu-button {
@@ -229,7 +229,7 @@
     }
 
     .menu-button-container:hover .menu-container {
-        top: 20px;
+        top: 15px;
         left: 25px;
     }
 
@@ -262,13 +262,13 @@
 
     .menu-container-circle-hidden {
         @extend .menu-container-hidden;
-        width: 110px;
-        right: -35px;
+        width: 50px;
+        right: -10px;
     }
 
     .menu-button-container:hover .menu-container {
-        top: 20px;
-        left: 10px;
+        top: 15px;
+        left: -22px;
     }
 
     .circle-menu-button {
