@@ -64,7 +64,7 @@ class HttpRequest {
       return this.axios.request({
         method: options.method,
         url: options.path,
-        responseType: "json",
+        responseType: 'json',
         data: options.payload,
         onUploadProgress: options.onUploadProgress || undefined,
         headers: options.headers || undefined

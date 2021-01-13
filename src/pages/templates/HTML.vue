@@ -55,14 +55,14 @@
   </div>
 </template>
 
-<script lang="ts">
-import _ from "lodash";
-import { v4 as uuidv4 } from "uuid";
-import { Component, Prop, Watch } from "vue-property-decorator";
-import BaseComponent from "../../core/BaseComponent";
-import { MENU } from "../../constants/Base";
-import { EElementType } from "../../enum/Elements";
-import { IContainer } from "../../interfaces/Template";
+<script lang='ts'>
+import _ from 'lodash'
+import { v4 as uuidv4 } from 'uuid'
+import { Component, Prop, Watch } from 'vue-property-decorator'
+import BaseComponent from '../../core/BaseComponent'
+import { MENU } from '../../constants/Base'
+import { EElementType } from '../../enum/Elements'
+import { IContainer } from '../../interfaces/Template'
 import {
   CONTAINER_DEFAULT,
   TEXT_DEFAULT,
@@ -70,37 +70,37 @@ import {
   SPACER_DEFAULT,
   BUTTON_DEFAULT,
   BOX_DEFAULT,
-} from "../../constants/Default";
-import { EDirection } from "../../enum/Components";
+} from '../../constants/Default'
+import { EDirection } from '../../enum/Components'
 
 @Component
 export default class HTMLTemplate extends BaseComponent {
   @Prop() propTemplateJson!: IContainer;
 
-  copyButtonLabel = "Click To Copy";
+  copyButtonLabel = 'Click To Copy'
 
-  element = "";
-  haveElementChild = false;
+  element = ''
+  haveElementChild = false
   templateJson: IContainer = {
     id: uuidv4(),
-    ..._.cloneDeep(this.defaultData["CONTAINER_DEFAULT"]),
+    ..._.cloneDeep(this.defaultData['CONTAINER_DEFAULT'])
   };
 
   copyJSON() {
-    const el = document.createElement("textarea");
-    el.value = JSON.stringify(this.templateJson);
-    document.body.appendChild(el);
+    const el = document.createElement('textarea')
+    el.value = JSON.stringify(this.templateJson)
+    document.body.appendChild(el)
     el.select();
-    document.execCommand("copy");
-    document.body.removeChild(el);
-    this.copyButtonLabel = "You Copied!";
+    document.execCommand('copy')
+    document.body.removeChild(el)
+    this.copyButtonLabel = 'You Copied!'
     setTimeout(() => {
-      this.copyButtonLabel = "Click To Copy";
+      this.copyButtonLabel = 'Click To Copy'
     }, 1500);
   }
 
   get menu() {
-    return MENU;
+    return MENU
   }
 
   get elementType() {
@@ -126,44 +126,44 @@ export default class HTMLTemplate extends BaseComponent {
 
   created() {
     if (this.propTemplateJson && !_.isEmpty(this.propTemplateJson)) {
-      this.templateJson = this.propTemplateJson;
-      this.haveElementChild = true;
+      this.templateJson = this.propTemplateJson
+      this.haveElementChild = true
     }
-    this.templateJson.props.flexbox["flex-direction"] = EDirection.COLUMN;
+    this.templateJson.props.flexbox['flex-direction'] = EDirection.COLUMN
   }
 
   doOpenModal() {
-    this.$refs["modal-view-json"].isOpenModal = true;
+    this.$refs['modal-view-json'].isOpenModal = true
   }
 
   doGetBackgrondContainer(value: string) {
     this.templateJson.props.background = value;
     document
-      .getElementsByClassName("content")[0]
-      .setAttribute("style", `background-color: ${value}`);
+      .getElementsByClassName('content')[0]
+      .setAttribute('style', `background-color: ${value}`)
   }
 
   doAddJson(element: string) {
     this.element = _.toUpper(element);
-    this.doAddElementChild(this.templateJson.children);
+    this.doAddElementChild(this.templateJson.children)
   }
 
   doFindElement(element: any) {
-    return this.elementType.includes(element);
+    return this.elementType.includes(element)
   }
 
   doAddElementChild(children: object[]) {
     if (this.templateJson.children.length < 1) {
       this.templateJson.children.push({
         id: uuidv4(),
-        ..._.cloneDeep(this.defaultData["CONTAINER_DEFAULT"]),
-      });
-      this.doAddElementChild(this.templateJson.children);
+        ..._.cloneDeep(this.defaultData['CONTAINER_DEFAULT'])
+      })
+      this.doAddElementChild(this.templateJson.children)
     } else {
       children.forEach((item: any) => {
         if (this.doFindElement(item.element)) {
           this.haveElementChild = true;
-          this.element = _.toUpper(item.element);
+          this.element = _.toUpper(item.element)
         } else {
           item.children.push({
             id: uuidv4(),
@@ -172,7 +172,7 @@ export default class HTMLTemplate extends BaseComponent {
           this.doAssignChildElementId(item);
           this.doAddElementChild(item.children);
         }
-      });
+      })
     }
   }
 
@@ -180,21 +180,21 @@ export default class HTMLTemplate extends BaseComponent {
     if (state.children) {
       state.children.forEach((child: any) => {
         if (state.children && state.children.length > 0) {
-          this.doAssignChildElementId(child);
+          this.doAssignChildElementId(child)
         }
         state.children = state.children.map((child: any) => {
-          return { ...child, id: uuidv4() };
+          return { ...child, id: uuidv4() }
         });
       });
     }
   }
 
-  @Watch("templateJson", { deep: true })
+  @Watch('templateJson', { deep: true })
   onUpdateTemplate() {
     if (this.templateJson.children.length < 1) {
       this.haveElementChild = false;
     }
-    this.$emit("change", this.templateJson);
+    this.$emit('change', this.templateJson)
   }
 }
 </script>

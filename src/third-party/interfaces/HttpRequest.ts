@@ -1,5 +1,5 @@
 export interface IHttpRequest {
-  method: "GET" | "POST" | "PUT" | "DELETE" | "get" | "delete" | "head" | "HEAD" | "options" | "OPTIONS" | "post" | "put" | "patch" | "PATCH" | "link" | "LINK" | "unlink" | "UNLINK";
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'get' | 'delete' | 'head' | 'HEAD' | 'options' | 'OPTIONS' | 'post' | 'put' | 'patch' | 'PATCH' | 'link' | 'LINK' | 'unlink' | 'UNLINK'
   path: string;
   payload?: any;
   mutation: string;
@@ -7,7 +7,7 @@ export interface IHttpRequest {
   headers?: any
 }
 export interface IHeader {
-  'x-timestamp': string;
+  'x-timestamp': string
 }
 export interface IState {
   [key: string]: any
