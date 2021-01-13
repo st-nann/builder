@@ -28,10 +28,10 @@ export default class WidthToggleStyleComponent extends BaseComponent {
   @Prop() management!: any
   
   toggle = false
-  imageWidth = '500'
+  imageWidth = '350'
 
   doAssignDefaultData() {
-    this.imageWidth = '500'
+    this.imageWidth = '350'
   }
 
   doAssignPropData() {

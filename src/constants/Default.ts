@@ -29,7 +29,8 @@ export const IMAGE_DEFAULT: IImage = {
     props: {
         flexbox: {
             'flex-grow': 1
-        }
+        },
+        width: '350px'
     }
 }
 

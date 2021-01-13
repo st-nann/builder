@@ -8,7 +8,7 @@
         @click="doEmitTop"
       />
       <CircleMenuButtonComponent
-        v-if="isHidden"
+        v-if="isDisplay"
         class="circle-button-right"
         icon="plus"
         :options="menu"
@@ -21,7 +21,7 @@
         @click="doEmitBottom"
       />
       <CircleMenuButtonComponent
-        v-if="isHidden"
+        v-if="isDisplay"
         class="circle-button-left"
         icon="plus"
         :options="menu"
@@ -32,7 +32,7 @@
         <label class="text-link">{{ elementProps.link }}</label>
       </div>
       <slot name="button-management" />
-      <div class="button-scale">
+      <div class="button-scale-container">
         <ScaleStyleComponent
           v-bind="$props"
           :management="management"
@@ -60,8 +60,8 @@ export default class BoxComponent extends BaseComponent {
     return MENU
   }
 
-  get isHidden() {
-    return this.parent.quantityChildren < 4 && this.parent.isAllowAdded
+  get isDisplay() {
+    return this.parent.quantityChildren < 4
   }
 
   doEmitTop(element: string) {

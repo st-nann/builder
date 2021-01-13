@@ -1,6 +1,6 @@
 <template>
   <span>
-    SCALE: {{ flexGrow }}
+    <span class="button-scale">SCALE: {{ flexGrow }}</span>
     <SquareButtonComponent
       icon="plus-thick"
       className="default-square-button"

@@ -63,7 +63,11 @@ npm run dev
 
 5. Access Result Template
 ```javascript
+    [Not pass props: data-prop-template]
     JSON.parse((this.$el.firstChild as any).dataset.resultTemplate))
+
+    [Pass props: data-prop-template]
+    JSON.parse((this.$el.firstChild as any).dataset.propTemplate))
 ```
 <br>
 

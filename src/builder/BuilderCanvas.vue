@@ -4,7 +4,7 @@
   import { Component, Vue, Prop } from 'vue-property-decorator'
   import { CreateElement } from 'vue'
   import { BuilderTagMap } from './BuilderTagMap'
-  import { EElementPosition } from '../enum/Elements'
+  import { EElementPosition, EElementType } from '../enum/Elements'
   import {
     CONTAINER_DEFAULT,
     TEXT_DEFAULT,
@@ -27,6 +27,7 @@
 
     value: any = {}
     parentId = ''
+    isParentBox = false
     foundParent = false
     inserted = false
 
@@ -163,6 +164,7 @@
                       id: uuidv4()
                     }])
                   }
+              if (this.isParentBox) { data.props.parent = EElementType.BOX }
               this.assignChildElementId(data)
               if (!this.inserted) {
                 state.children.splice(indexInsert, 0, { ...data, id: uuidv4() })
@@ -173,6 +175,7 @@
           } else {
             this.foundParent = item.id === this.value.id
             this.parentId = state.id
+            this.isParentBox = state.props.parent === EElementType.BOX
             this.inserted = false
             this.addVerticalElement(this.foundParent ? undefined : item)
           }
@@ -194,9 +197,11 @@
 
     deleteChildElement(state: any = this.templateJson) {
       if (state.children) {
-        state.children = _.filter(state.children, item => item.children.length > 0)
+        state.children.forEach((child: any) => {
+          state.children = _.filter(state.children, child => child.children ? child.children.length > 0 : true)
+          this.deleteChildElement(child)
+        })
       }
-      return
     }
 
     assignChildElementId(state: any) {

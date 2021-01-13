@@ -131,13 +131,13 @@ export default class ImagePage extends BaseComponent {
       if (this.elementProps.flexbox['align-items']) {
         switch (this.elementProps.flexbox['align-items']) {
           case 'flex-start':
-            style = 'margin-bottom: 100px;'
+            style = 'margin-bottom: 45px;'
             break
           case 'center':
-            style = 'margin: 100px 0;'
+            style = 'margin: 45px 0;'
             break
           case 'flex-end':
-            style = 'margin-top: 100px;'
+            style = 'margin-top: 45px;'
             break
           default:
             style = ''
