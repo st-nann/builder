@@ -2,7 +2,7 @@ import _ from 'lodash'
 import { Base } from './Base'
 import { Component, Prop, Watch } from 'vue-property-decorator'
 import { IFlexbox, IModal } from '../interfaces/Components'
-import { EElementType } from '@/enum/Elements'
+import { EElementType } from '../enum/Elements'
 
 @Component
 export default class BaseComponent extends Base {
@@ -50,7 +50,6 @@ export default class BaseComponent extends Base {
   boxChildren = 0
   boxContainerChildren = 0
   sumAllChildrenBoxContainer: any = {}
-  foundParentBoxElement = false
   foundParentElement = false
   isCancel = false
 
@@ -78,16 +77,15 @@ export default class BaseComponent extends Base {
           this.doCalculateChildrenBox()
           const mergeChildElement: any = {}
           _.forEach(this.childrenElementRootContainer, (index, key) => {
-            if (_.isUndefined(this.childrenElement[key])) {
+            if (_.isUndefined(this.childrenElementBoxContainer[key])) {
               Object.assign(mergeChildElement, { [key]: this.childrenElementRootContainer[key] })
             }
           })
-          Object.assign(mergeChildElement, this.childrenElement)
+          Object.assign(mergeChildElement, this.childrenElementBoxContainer)
           this.parent = {
             parentName: state.props.parent,
             quantityChildren: mergeChildElement[state.id] || 0,
-            quantityChildrenBox: this.childrenElementBox[state.id] || 2,
-            xxx: mergeChildElement
+            quantityChildrenBox: this.childrenElementBox[state.id] || 2
           }
         }
         this.doManageElement(item)
@@ -101,7 +99,14 @@ export default class BaseComponent extends Base {
       state.children.forEach((child: any) => {
         if (child.element === EElementType.CONTAINER && _.isUndefined(child.props.parent)) {
           this.containerId = child.id
-          Object.assign(this.childrenElementRootContainer, { [child.id]: child.children.length })
+          Object.assign(
+            this.childrenElementRootContainer,
+            {
+              [child.id]: this.sumAllChildrenBoxContainer[this.containerId]
+                ? this.sumAllChildrenBoxContainer[this.containerId] + (child.children.length - 1)
+                : child.children.length
+            }
+          )
           this.doAssignChildrenInContainer(child)
         }
         this.doAssignChildrenContainer(child)
@@ -173,7 +178,7 @@ export default class BaseComponent extends Base {
           this.childrenElementRootContainer,
           { 
             [this.boxId]: this.childrenElementRootContainer[this.boxId] < this.childrenElementBoxContainer[this.containerBoxId]
-              ? this.childrenElementBoxContainer[this.containerBoxId] - (this.childrenElementRootContainer[this.boxId] - 1)
+              ? this.childrenElementBoxContainer[this.containerBoxId]
               : this.childrenElementRootContainer[this.boxId]
           }
         )
@@ -196,7 +201,6 @@ export default class BaseComponent extends Base {
       state.children.forEach((child: any) => {
         if (this.childrenElementBoxContainer[child.id]) {
           this.calculateChild = (this.childrenElementRootContainer[child.id] - 1) + this.childrenElementBoxContainer[child.id]
-          Object.assign(this.childrenElement, { [child.id]: this.calculateChild })
           this.doCalcurateUpdateBeforeElementChildren()
           this.foundParentElement = false
         }
