@@ -48,6 +48,7 @@ const actions: ActionTree<ImageState, IState> = {
         'Content-Type': 'multipart/form-data'
       },
       onUploadProgress: (progress: any) => {
+        console.log(progress, progress.loaded, progress.total, Math.round((progress.loaded / progress.total) * 100), parseInt(Math.round((progress.loaded / progress.total) * 100) as any))
         store.dispatch(
           `images/updateUploadImage`,
           parseInt(Math.round((progress.loaded / progress.total) * 100) as any)

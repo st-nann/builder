@@ -12,6 +12,7 @@ export interface IDropdownOption {
 
 export interface IModal {
     width: number
+    height: number
     action: string
     button?: {
         info?: boolean

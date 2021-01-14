@@ -22,7 +22,12 @@
     <ModalComponent
       v-bind="$props"
       :ref="`modal-delete-${elementId}`"
-      :modal="{ width: 400, action: 'delete', button: { save: 'Yes, Delete it', position: 'center', manage: true } }"
+      :modal="{
+        width: 25,
+        height: 33,
+        action: 'delete',
+        button: { save: 'Yes, Delete it', position: 'center', manage: true }
+      }"
       @click="doDelete"
     >
       <template slot="content">

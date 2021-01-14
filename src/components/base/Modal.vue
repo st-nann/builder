@@ -1,31 +1,35 @@
 <template>
-  <div :id="`modal-${modal.action}-${elementId}`" class="modal">
-    <div class="modal-content" :style="style">
-      <slot name="content" />
-      <div v-if="modal.button" class="modal-action" :style="style">
-        <template v-if="modal.button.manage">
-          <SquareButtonComponent
-            label="Cancel"
-            className="cancel-delete-square-button"
-            @click="doCloseModal"
-          />
-          <SquareButtonComponent
-            :label="modal.button.save"
-            className="confirm-delete-square-button"
-            @click="doAction"
-          />
-        </template>
-        <template v-if="modal.button.info">
-          <SquareButtonComponent
-            label="Close"
-            className="cancel-delete-square-button"
-            @click="doCloseModal"
-          />
-        </template>
-        <template v-if="modal.button.custom">
-          <slot name="action-custom" />
-        </template>
+  <div :id="`modal-${modal.action}-${elementId}`" class="modal-overlay">
+    <div class="modal" :style="style">
+      <div class="modal-content-container">
+        <slot name="content" />
       </div>
+      <div v-if="modal.button" class="modal-action-container" :style="style">
+          <div class="modal-action">
+            <template v-if="modal.button.manage">
+              <SquareButtonComponent
+                label="Cancel"
+                className="cancel-delete-square-button"
+                @click="doCloseModal"
+              />
+              <SquareButtonComponent
+                :label="modal.button.save"
+                className="confirm-delete-square-button"
+                @click="doAction"
+              />
+            </template>
+            <template v-if="modal.button.info">
+              <SquareButtonComponent
+                label="Close"
+                className="cancel-delete-square-button"
+                @click="doCloseModal"
+              />
+            </template>
+            <template v-if="modal.button.custom">
+              <slot name="action-custom" />
+            </template>
+          </div>
+        </div>
     </div>
   </div>
 </template>
@@ -40,7 +44,8 @@ export default class ModalComponent extends BaseComponent {
 
   get style() {
     return {
-      '--modal-width': `${this.modal.width}px`,
+      '--modal-width': `${this.modal.width}%`,
+      '--modal-height': `${this.modal.height}%`,
       '--modal-action-position': this.modal.button?.position
     }
   }
