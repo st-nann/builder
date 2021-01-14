@@ -3,7 +3,7 @@ import { Base } from './Base'
 import { Component, Prop, Watch } from 'vue-property-decorator'
 import { IFlexbox, IModal } from '../interfaces/Components'
 import { EElementType } from '../enum/Elements'
-import { EDirection } from '@/enum/Components'
+import { EDirection } from '../enum/Components'
 
 @Component
 export default class BaseComponent extends Base {
