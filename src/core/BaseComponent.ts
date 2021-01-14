@@ -3,6 +3,7 @@ import { Base } from './Base'
 import { Component, Prop, Watch } from 'vue-property-decorator'
 import { IFlexbox, IModal } from '../interfaces/Components'
 import { EElementType } from '../enum/Elements'
+import { EDirection } from '@/enum/Components'
 
 @Component
 export default class BaseComponent extends Base {
@@ -36,21 +37,12 @@ export default class BaseComponent extends Base {
   previewData: any = {}
   changeImage = false
   parent: any = {}
-  childrenElementRootContainer: any = {}
-  childrenElementBoxContainer: any = {}
   childrenElement: any = {}
   childrenElementBox: any = {}
-  containerId = ''
-  containerBoxId = ''
-  parentContainerId = ''
-  boxId = ''
+  sumAllChildrenNested: any = {}
   containerRoot = ''
-  oldBoxId = ''
-  calculateChild = 0
   boxChildren = 0
   boxContainerChildren = 0
-  sumAllChildrenBoxContainer: any = {}
-  foundParentElement = false
   isCancel = false
 
   created() {
@@ -71,20 +63,12 @@ export default class BaseComponent extends Base {
       state.children.forEach((item: any) => {
         const foundChild = _.find(state.children, child => child.id === this.elementId)
         if (foundChild) {
-          this.doAssignChildrenContainer()
-          this.doAssignChildrenBoxContainer()
-          this.doCalculateChildren()
+          this.doCalculateAllChildrenNested()
+          this.doAssignChildrenToElement()
           this.doCalculateChildrenBox()
-          const mergeChildElement: any = {}
-          _.forEach(this.childrenElementRootContainer, (index, key) => {
-            if (_.isUndefined(this.childrenElementBoxContainer[key])) {
-              Object.assign(mergeChildElement, { [key]: this.childrenElementRootContainer[key] })
-            }
-          })
-          Object.assign(mergeChildElement, this.childrenElementBoxContainer)
           this.parent = {
             parentName: state.props.parent,
-            quantityChildren: mergeChildElement[state.id] || 0,
+            quantityChildren: this.childrenElement[state.id] || 0,
             quantityChildrenBox: this.childrenElementBox[state.id] || 2
           }
         }
@@ -93,134 +77,48 @@ export default class BaseComponent extends Base {
     }
   }
 
-  /* find all level children */
-  doAssignChildrenContainer(state: any = this.elementTemplateJson) {
+  doCalculateAllChildrenNested(state: any = this.elementTemplateJson) {
     if (state.children) {
       state.children.forEach((child: any) => {
-        if (child.element === EElementType.CONTAINER && _.isUndefined(child.props.parent)) {
-          this.containerId = child.id
-          Object.assign(
-            this.childrenElementRootContainer,
-            {
-              [child.id]: this.sumAllChildrenBoxContainer[this.containerId]
-                ? this.sumAllChildrenBoxContainer[this.containerId] + (child.children.length - 1)
-                : child.children.length
-            }
-          )
-          this.doAssignChildrenInContainer(child)
-        }
-        this.doAssignChildrenContainer(child)
-      })
-    }
-  }
-
-  /* assign all level children */
-  doAssignChildrenInContainer(state: any) {
-    if (state.children) {
-      state.children.forEach((child: any) => {
-        Object.assign(this.childrenElementRootContainer, { [child.id]: this.childrenElementRootContainer[state.id] })
-        this.doAssignChildrenInContainer(child)
-      })
-    }
-  }
-
-  /* find only box children */
-  doAssignChildrenBoxContainer(state: any = this.elementTemplateJson) {
-    if (state.children) {
-      state.children.forEach((child: any) => {
-        if (child.element === EElementType.CONTAINER && child.props.parent) {
-          Object.assign(
-            this.sumAllChildrenBoxContainer,
-            {
-              [this.containerRoot]: this.oldBoxId === this.boxId
-                ? child.children.length
-                : this.sumAllChildrenBoxContainer[this.containerRoot] && this.sumAllChildrenBoxContainer[this.containerRoot] < 4
-                  ? this.sumAllChildrenBoxContainer[this.containerRoot] + child.children.length
-                  : child.children.length
-            }
-          )
-          Object.assign(
-            this.childrenElementBoxContainer,
-            {
-              [child.id]: this.childrenElementBoxContainer[child.id]
-                ? this.childrenElementBoxContainer[child.id] > child.children.length 
-                  ? this.childrenElementRootContainer[this.containerRoot] < 4 && this.childrenElementBoxContainer[child.id] < 4
-                    ? (this.childrenElementBoxContainer[child.id] - 1) + child.children.length
-                    : this.childrenElementRootContainer[this.containerRoot]
-                  : child.children.length
-                : child.children.length
-            }
-          )
-          this.oldBoxId = this.boxId
-          this.containerBoxId = child.id
-          this.doAssignChildrenInBoxContainer(child)
-        }
-        if (child.element === EElementType.BOX) {
-          this.boxId = child.id
-        }
-        if (child.element === EElementType.CONTAINER && _.isUndefined(child.props.parent)) {
+        if (
+          child.element === EElementType.CONTAINER &&
+          _.isUndefined(child.props.parent) &&
+          child.props.flexbox['flex-direction'] === EDirection.ROW
+        ) {
           this.containerRoot = child.id
+          Object.assign(this.sumAllChildrenNested, { [this.containerRoot]: 0 })
         }
-        this.doAssignChildrenBoxContainer(child)
+        if (_.isUndefined(child.children)) {
+          Object.assign(
+            this.sumAllChildrenNested,
+            { [this.containerRoot]: this.sumAllChildrenNested[this.containerRoot] + 1 }
+          )
+        }
+        this.doCalculateAllChildrenNested(child)
       })
     }
   }
 
-  /* assign only box children */
-  doAssignChildrenInBoxContainer(state: any) {
+  doAssignChildrenToElement(state: any = this.elementTemplateJson) {
     if (state.children) {
       state.children.forEach((child: any) => {
-        Object.assign(
-          this.childrenElementBoxContainer,
-          { [child.id]: this.childrenElementBoxContainer[this.containerBoxId] }
-        )
-        Object.assign(
-          this.childrenElementRootContainer,
-          { 
-            [this.boxId]: this.childrenElementRootContainer[this.boxId] < this.childrenElementBoxContainer[this.containerBoxId]
-              ? this.childrenElementBoxContainer[this.containerBoxId]
-              : this.childrenElementRootContainer[this.boxId]
-          }
-        )
-        Object.assign(
-          this.childrenElementRootContainer,
-          { 
-            [this.containerRoot]: this.childrenElementRootContainer[this.containerRoot] < this.childrenElementRootContainer[this.boxId]
-              ? this.childrenElementRootContainer[this.boxId]
-              : this.childrenElementRootContainer[this.containerRoot]
-          }
-        )
-        this.doAssignChildrenInBoxContainer(child)
-      })
-    }
-  }
-
-  /* calculate children since container before box element */
-  doCalculateChildren(state: any = this.elementTemplateJson) {
-    if (state.children) {
-      state.children.forEach((child: any) => {
-        if (this.childrenElementBoxContainer[child.id]) {
-          this.calculateChild = (this.childrenElementRootContainer[child.id] - 1) + this.childrenElementBoxContainer[child.id]
-          this.doCalcurateUpdateBeforeElementChildren()
-          this.foundParentElement = false
+        if (
+          child.element === EElementType.CONTAINER &&
+          _.isUndefined(child.props.parent) &&
+          child.props.flexbox['flex-direction'] === EDirection.ROW
+        ) {
+          this.containerRoot = child.id
+          Object.assign(
+            this.childrenElement,
+            { [child.id]: this.sumAllChildrenNested[this.containerRoot] }
+          )
+          this.doAssignChildrenToElement(child)
         }
-        if (child.element === EElementType.CONTAINER && _.isUndefined(child.props.parent)) {
-          this.parentContainerId = child.id
-        }
-        this.doCalculateChildren(child)
-      })
-    }
-  }
-
-  /* assiagn children value since container before box element */
-  doCalcurateUpdateBeforeElementChildren(state: any = this.elementTemplateJson) {
-    if (state.children) {
-      state.children.forEach((child: any) => {
-        if (this.foundParentElement) {
-          Object.assign(this.childrenElement, { [child.id]: this.calculateChild })
-        }
-        this.foundParentElement = this.parentContainerId === child.id
-        this.doCalcurateUpdateBeforeElementChildren(child)
+        Object.assign(
+          this.childrenElement,
+          { [child.id]: this.sumAllChildrenNested[this.containerRoot] }
+        )
+        this.doAssignChildrenToElement(child)
       })
     }
   }
@@ -242,11 +140,11 @@ export default class BaseComponent extends Base {
       state.children.forEach((child: any) => {
         if (child.element === EElementType.CONTAINER && child.props.parent) {
           this.boxContainerChildren = child.children.length
-          Object.assign(this.childrenElementBox, { [child.id]: (this.boxChildren - 1) + this.boxContainerChildren })
         }
-        if (child.element !== EElementType.CONTAINER) {
-          Object.assign(this.childrenElementBox, { [child.id]: (this.boxChildren - 1) + this.boxContainerChildren })
-        }
+        Object.assign(
+          this.childrenElementBox,
+          { [child.id]: (this.boxChildren - 1) + this.boxContainerChildren }
+        )
         this.doAssignChildrenBox(child)
       })
     }
