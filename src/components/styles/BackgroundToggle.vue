@@ -56,12 +56,9 @@ export default class BackgroundToggleStyleComponent extends BaseComponent {
   }
 
   onEmitData() {
-    this.$emit('change', this.toggle
-      ? {
-          [this.customKeyValue]: !_.isEmpty(this.background) ? this.background : undefined
-        }
-      : undefined
-    )
+    this.$emit('change', {
+      [this.customKeyValue]: !_.isEmpty(this.background) && this.toggle ? this.background : undefined
+    })
   }
 
   @Watch('toggle')
@@ -73,11 +70,13 @@ export default class BackgroundToggleStyleComponent extends BaseComponent {
 
   @Watch('management.edit')
   onEdit() {
-    if (this.management.edit) {
-      const haveProps = this.doAssignPropData()
-      if (!haveProps) { this.toggle = false }
-      this.onEmitData()
-    }
+    setTimeout(() => {
+      if (this.management.edit) {
+        const haveProps = this.doAssignPropData()
+        if (!haveProps) { this.toggle = false }
+        this.onEmitData()
+      }
+    }, 10)
   }
 }
 </script>

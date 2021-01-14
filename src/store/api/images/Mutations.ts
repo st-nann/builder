@@ -36,6 +36,6 @@ const mutations: MutationTree<ImageState> = {
     //   state.uploadPercent.push(data)
     // }
   }
-};
+}
 
 export default mutations
