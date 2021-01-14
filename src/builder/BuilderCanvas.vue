@@ -127,11 +127,13 @@
         state.children.forEach((item: any, index: number) => {
           if (item.id === this.value.id) {
             indexInsert = EElementPosition.LEFT === this.value.position ? index : index + 1
+            console.log(item.id, indexInsert, item.id, this.value.id)
             const data = this.value.duplicate
               ? { ..._.cloneDeep(item) }
               : { ..._.cloneDeep(this.defaultData[`${this.value.element}_DEFAULT`]) }
             this.assignChildElementId(data)
             state.children.splice(indexInsert, 0, { ...data, id: uuidv4() })
+            this.value.id = ''
           }
           this.addHorizontalElement(item)
         })

@@ -18,11 +18,12 @@
           :modal="{ width: 800, button: { info: true, position: 'center' } }"
         >
           <template slot="content">
+            <div v-if="messageCopy !== ''" class="message-copy">{{ messageCopy }}</div>
             <div class="json-viewer">
               <highlight-code lang="json">
                 {{ templateJson }}
               </highlight-code>
-              <button @click="copyJSON()">{{ copyButtonLabel }}</button>
+              <i class="json-viewer-icon mdi mdi-content-copy" @click="doCopyJSON()" />
             </div>
           </template>
         </ModalComponent>
@@ -77,7 +78,7 @@ import { EDirection } from '../../enum/Components'
 export default class HTMLTemplate extends BaseComponent {
   @Prop() propTemplateJson!: IContainer;
 
-  copyButtonLabel = 'Click To Copy'
+  messageCopy = ''
 
   element = ''
   haveElementChild = false
@@ -86,16 +87,16 @@ export default class HTMLTemplate extends BaseComponent {
     ..._.cloneDeep(this.defaultData['CONTAINER_DEFAULT'])
   };
 
-  copyJSON() {
+  doCopyJSON() {
     const el = document.createElement('textarea')
     el.value = JSON.stringify(this.templateJson)
     document.body.appendChild(el)
-    el.select();
+    el.select()
     document.execCommand('copy')
     document.body.removeChild(el)
-    this.copyButtonLabel = 'You Copied!'
+    this.messageCopy = 'Content is copied!'
     setTimeout(() => {
-      this.copyButtonLabel = 'Click To Copy'
+      this.messageCopy = ''
     }, 1500);
   }
 
