@@ -46,10 +46,12 @@ export default class BackgroundStyleComponent extends BaseComponent {
 
   @Watch('management.edit')
   onEdit() {
-    if (this.management.edit) {
-      this.doAssignPropData()
-      this.onEmitData()
-    }
+    setTimeout(() => {
+      if (this.management.edit) {
+        this.doAssignPropData()
+        this.onEmitData()
+      }
+    }, 10)
   }
 }
 </script>

@@ -57,12 +57,9 @@ export default class WidthToggleStyleComponent extends BaseComponent {
   }
 
   onEmitData() {
-    this.$emit('change', this.toggle
-      ? {
-          [this.customKeyValue]: !_.isEmpty(this.imageWidth )? `${this.imageWidth}px` : undefined
-        }
-      : undefined
-    )
+    this.$emit('change', {
+      [this.customKeyValue]: !_.isEmpty(this.imageWidth) && this.toggle ? `${this.imageWidth}px` : undefined
+    })
   }
 
   @Watch('toggle')
@@ -74,11 +71,13 @@ export default class WidthToggleStyleComponent extends BaseComponent {
 
   @Watch('management.edit')
   onEdit() {
-    if (this.management.edit) {
-      const haveProps = this.doAssignPropData()
-      if (!haveProps) { this.toggle = false }
-      this.onEmitData()
-    }
+    setTimeout(() => {
+      if (this.management.edit) {
+        const haveProps = this.doAssignPropData()
+        if (!haveProps) { this.toggle = false }
+        this.onEmitData()
+      }
+    }, 10)
   }
 }
 </script>

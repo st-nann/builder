@@ -15,7 +15,7 @@
         />
         <ModalComponent
           ref="modal-view-json"
-          :modal="{ width: 800, button: { info: true, position: 'center' } }"
+          :modal="{ width: 60, height: 43, button: { info: true, position: 'center' } }"
         >
           <template slot="content">
             <div v-if="messageCopy !== ''" class="message-copy">{{ messageCopy }}</div>

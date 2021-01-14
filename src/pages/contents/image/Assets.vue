@@ -3,7 +3,7 @@
     <div class="image-asset-header">
         <h2 class="image-asset-header-title">Image Assets</h2>
         <div class="image-asset-header-upload">
-            <UploadImageComponent @change="onUploadImage" :disabled="uploadPercent < 100" />
+            <UploadImageComponent @change="onUploadImage" :disabled="uploadPercent < 100 || uploading" />
             <div class="image-asset-header-upload-description">
                 * File size must be less then 2 MB
             </div>
@@ -110,6 +110,7 @@ export default class ImageAssetContent extends BaseComponent {
     @Prop(String) imageUrl!: string
 
     showLoading = true
+    uploading = false
     url = this.imageUrl
     uploadPercent!: number
     loadingLists!: any
@@ -156,9 +157,11 @@ export default class ImageAssetContent extends BaseComponent {
 
     async onUploadImage(value: any) {
         this.showLoading = false
+        this.uploading = true
         await this.uploadImage({ data: value })
         await this.getImages({ params: { limit: 9999999 } })
         this.doFilterImages()
+        this.uploading = false
     }
 
     doEmitGetImage() {

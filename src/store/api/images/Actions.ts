@@ -48,11 +48,24 @@ const actions: ActionTree<ImageState, IState> = {
         'Content-Type': 'multipart/form-data'
       },
       onUploadProgress: (progress: any) => {
-        store.dispatch(
-          `images/updateUploadImage`,
-          parseInt(Math.round((progress.loaded / progress.total) * 100) as any)
-          // { [payload.data.name]: parseInt(Math.round((progress.loaded / progress.total) * 100) as any) }
-        )
+        const percentUploading = parseInt(Math.round((progress.loaded / progress.total) * 100) as any)
+        setTimeout(() => {
+          store.dispatch(`images/getImages`, { params: { limit: 9999999 } })
+          store.dispatch(`images/updateUploadImage`, 0)
+        }, 1300)
+        if (percentUploading < 100) {
+          store.dispatch(`images/updateUploadImage`, percentUploading)
+        } else {
+          setTimeout(() => {
+            store.dispatch(`images/updateUploadImage`, 50)
+          }, 2200)
+          setTimeout(() => {
+            store.dispatch(`images/updateUploadImage`, percentUploading)
+            // store.dispatch(`images/updateUploadImage`,
+            //   { [payload.data.name]: parseInt(Math.round((progress.loaded / progress.total) * 100) as any) }
+            // )
+          }, 3000)
+        }
       }
     })
   },

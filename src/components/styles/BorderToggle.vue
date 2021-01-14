@@ -102,9 +102,9 @@ export default class BorderToggleStyleComponent extends BaseComponent {
     this.$emit('change', this.toggle
       ? {
           [this.customKeyValue]: {
-            width: !_.isEmpty(this.borderWidth ) ? `${this.borderWidth}px` : undefined,
-            style: !_.isEmpty(this.borderStyle ) ? this.borderStyle : undefined,
-            color: !_.isEmpty(this.borderColor ) ? this.borderColor : undefined
+            width: !_.isEmpty(this.borderWidth) && this.toggle ? `${this.borderWidth}px` : undefined,
+            style: !_.isEmpty(this.borderStyle) && this.toggle ? this.borderStyle : undefined,
+            color: !_.isEmpty(this.borderColor) && this.toggle ? this.borderColor : undefined
           }
         }
       : undefined
@@ -120,11 +120,13 @@ export default class BorderToggleStyleComponent extends BaseComponent {
 
   @Watch('management.edit')
   onEdit() {
-    if (this.management.edit) {
-      const haveProps = this.doAssignPropData()
-      if (!haveProps) { this.toggle = false }
-      this.onEmitData()
-    }
+    setTimeout(() => {
+      if (this.management.edit) {
+        const haveProps = this.doAssignPropData()
+        if (!haveProps) { this.toggle = false }
+        this.onEmitData()
+      }
+    }, 10)
   }
 }
 </script>
