@@ -26,7 +26,9 @@ const Builder = () => {
     const storageToken = node.getAttributeNode('data-storage-token')
     const template = node.getAttributeNode('data-prop-template')
     const root = `#${localStorage['id']}`
-    const propTemplateJson = node && !_.isNull(template) ? JSON.parse(template.value) : undefined;
+    const propTemplateJson = node && !_.isNull(template) ? JSON.parse(template.value) : undefined
+    const isMobile = node.getAttributeNode('is-mobile')
+    const isDesktop = node.getAttributeNode('is-desktop')
 
     if (personalizeBaseUrl) {
       localStorage['personalize-baseurl'] = personalizeBaseUrl.value.replaceAll('"', '')
@@ -50,7 +52,11 @@ const Builder = () => {
         store,
         render: (h) =>
           h(BuilderTemplate, {
-            props: { propTemplateJson: propTemplateJson },
+            props: {
+              propTemplateJson: propTemplateJson,
+              isMobile: isMobile ? isMobile.value : false,
+              isDesktop: isDesktop ? isDesktop.value : false,
+            },
             on: {
               change(template: any) {
                 (vue.$el as any).dataset.resultTemplate = JSON.stringify(template)

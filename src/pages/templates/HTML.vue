@@ -1,5 +1,5 @@
 <template>
-  <div class="builder-container">
+  <div :class="['builder-container', { 'disable-event': isMobile || isDesktop }]">
     <div class="builder-container-header">
       <div class="builder-container-title">
         <span class="product-name">PAM </span>
@@ -76,7 +76,9 @@ import { EDirection } from '../../enum/Components'
 
 @Component
 export default class HTMLTemplate extends BaseComponent {
-  @Prop() propTemplateJson!: IContainer;
+  @Prop() propTemplateJson!: IContainer
+  @Prop(Boolean) isMobile!: boolean
+  @Prop(Boolean) isDesktop!: boolean
 
   messageCopy = ''
 

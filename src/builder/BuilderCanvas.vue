@@ -24,6 +24,7 @@
   })
   export default class BuilderCanvas extends Vue {
     @Prop() templateJson: any
+    @Prop(Boolean) isMobile!: boolean
 
     value: any = {}
     parentId = ''
