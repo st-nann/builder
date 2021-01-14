@@ -27,24 +27,14 @@ const Builder = () => {
     const template = node.getAttributeNode('data-prop-template')
     const root = `#${localStorage['id']}`
     const propTemplateJson = node && !_.isNull(template) ? JSON.parse(template.value) : undefined
-    const isMobile = node.getAttributeNode('is-mobile')
-    const isDesktop = node.getAttributeNode('is-desktop')
+    const isMobile = node.getAttributeNode('data-is-mobile')
+    const isDesktop = node.getAttributeNode('data-is-desktop')
 
-    if (personalizeBaseUrl) {
-      localStorage['personalize-baseurl'] = personalizeBaseUrl.value.replaceAll('"', '')
-    }
-    if (personalizeBaseUrl) {
-      localStorage['personalize-baseurl'] = personalizeBaseUrl.value.replaceAll('"', '')
-    }
-    if (personalizeToken) {
-      localStorage['personalize-token'] = personalizeToken.value.replaceAll('"', '')
-    }
-    if (storageBaseUrl) {
-      localStorage['storage-baseurl'] = storageBaseUrl.value.replaceAll('"', '')
-    }
-    if (storageToken) {
-      localStorage['storage-token'] = storageToken.value.replaceAll('"', '')
-    }
+    if (personalizeBaseUrl) { localStorage['personalize-baseurl'] = personalizeBaseUrl.value.replaceAll('"', '') }
+    if (personalizeBaseUrl) { localStorage['personalize-baseurl'] = personalizeBaseUrl.value.replaceAll('"', '') }
+    if (personalizeToken) { localStorage['personalize-token'] = personalizeToken.value.replaceAll('"', '') }
+    if (storageBaseUrl) { localStorage['storage-baseurl'] = storageBaseUrl.value.replaceAll('"', '') }
+    if (storageToken) { localStorage['storage-token'] = storageToken.value.replaceAll('"', '') }
 
     setTimeout(() => {
       const vue = new Vue({
