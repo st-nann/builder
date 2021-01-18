@@ -4,6 +4,7 @@
   import { Component, Vue, Prop } from 'vue-property-decorator'
   import { CreateElement } from 'vue'
   import { BuilderTagMap } from './BuilderTagMap'
+  import { IScreen } from '../interfaces/Components'
   import { EElementPosition, EElementType } from '../enum/Elements'
   import {
     CONTAINER_DEFAULT,
@@ -12,7 +13,7 @@
     SPACER_DEFAULT,
     BUTTON_DEFAULT,
     BOX_DEFAULT
-} from '../constants/Default'
+  } from '../constants/Default'
   import BoxPage from '../pages/Box.vue'
   import ButtonPage from '../pages/Button.vue'
   import ImagePage from '../pages/Image.vue'
@@ -23,8 +24,8 @@
     components: { BoxPage, ButtonPage, ImagePage, SpacerPage, TextPage },
   })
   export default class BuilderCanvas extends Vue {
-    @Prop() templateJson: any
-    @Prop(Boolean) isMobile!: boolean
+    @Prop() readonly templateJson!: any
+    @Prop() readonly screen!: IScreen
 
     value: any = {}
     parentId = ''
@@ -128,7 +129,6 @@
         state.children.forEach((item: any, index: number) => {
           if (item.id === this.value.id) {
             indexInsert = EElementPosition.LEFT === this.value.position ? index : index + 1
-            console.log(item.id, indexInsert, item.id, this.value.id)
             const data = this.value.duplicate
               ? { ..._.cloneDeep(item) }
               : { ..._.cloneDeep(this.defaultData[`${this.value.element}_DEFAULT`]) }

@@ -21,15 +21,13 @@ npm run dev
 ```javascript
     [Vue]
     mounted() {
-        const Builder = require('~/node_modules/vue-builder-plugin/src/main')
-        Builder
+        require('~/node_modules/vue-builder-plugin/src/main')
     }
 
     [Nuxt.js]
     mounted() {
         if (process.client) {
-            const Builder = require('~/node_modules/vue-builder-plugin/src/main')
-            Builder
+            require('~/node_modules/vue-builder-plugin/src/main')
         }
     }
 ```
@@ -69,7 +67,14 @@ npm run dev
     [Pass props: data-prop-template]
     JSON.parse((this.$el.firstChild as any).dataset.propTemplate))
 ```
+
+6. Access Builder Instance Directive From Outside
+```javascript
+    (this.$el.firstChild as any).__vue__.<YOUR_DIRECTIVE(DATA, PROPS, METHODS, ...)>
+```
+
 <br>
+
 
 **Solution 2:** *Git Repo (Style Effect and Exclude Store)*
 1. Add Dependencies in package.json

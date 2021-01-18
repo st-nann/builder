@@ -1,8 +1,6 @@
 <template>
   <HTMLTemplate
     :propTemplateJson="propTemplateJson"
-    :isMobile="isMobile"
-    :isDesktop="isDesktop"
     @change="doEmitTemplate"
   />
 </template>
@@ -13,8 +11,6 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 @Component
 export default class App extends Vue {
   @Prop() propTemplateJson!: any
-  @Prop(Boolean) isMobile!: boolean
-  @Prop(Boolean) isDesktop!: boolean
   
   doEmitTemplate(template: any) {
     this.$emit('change', template)

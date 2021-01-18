@@ -63,18 +63,6 @@
             </div>
         </div>
     </div>
-    <div class="image-asset-action">
-        <SquareButtonComponent
-            label="Cancel"
-            className="cancel-square-button"
-            @click="doEmitCancel"
-        />
-        <SquareButtonComponent
-            label="Add Image"
-            className="done-square-button"
-            @click="doEmitGetImage"
-        />
-    </div>
   </div>
 </template>
 

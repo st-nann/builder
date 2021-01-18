@@ -202,14 +202,6 @@
                             }
                         }
                     }
-
-                    .image-asset-action {
-                        display: flex;
-                        flex-direction: row;
-                        align-items: center;
-                        justify-content: flex-end;
-                        padding: 5px 0;
-                    }
                 }
 
                 .image-preview-container {
@@ -301,6 +293,15 @@
                 flex-direction: row;
                 justify-content: var(--modal-action-position);
                 align-items: flex-end;
+                margin: 5px 0 0 0;
+
+                .image-asset-action {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: flex-end;
+                    width: -webkit-fill-available;
+                }
             }
         }
     }
