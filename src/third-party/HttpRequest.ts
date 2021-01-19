@@ -2,6 +2,7 @@ import _ from 'lodash'
 import axios, { AxiosInstance } from 'axios'
 import store from '../store/Index'
 import { IHttpRequest, IHeader } from './interfaces/HttpRequest'
+import { AlertMsgError } from '../plugins/alert/Alert'
 
 class HttpRequest {
     private axios: AxiosInstance;
@@ -40,7 +41,10 @@ class HttpRequest {
     }
 
     private handleError(error: any) {
-      alert(`${error.response.data.code}: ${error.response.data.message}`)
+      AlertMsgError({
+        title: `Error: ${error.response.data.code}`,
+        text: `${error.response.data.message}`
+      })
       throw {
         code: error.response.data.code,
         message: error.response.data.message

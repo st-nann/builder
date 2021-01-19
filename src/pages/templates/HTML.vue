@@ -18,7 +18,6 @@
           :modal="{ width: 60, height: 60, button: { info: true, position: 'center' } }"
         >
           <template slot="content">
-            <div v-if="messageCopy !== ''" class="message-copy">{{ messageCopy }}</div>
             <div class="json-viewer">
               <highlight-code lang="json">
                 {{ templateJson }}
@@ -66,6 +65,7 @@ import { EDirection } from '../../enum/Components'
 import { EElementType } from '../../enum/Elements'
 import { IScreen } from '../../interfaces/Components'
 import { IContainer } from '../../interfaces/Template'
+import { AlertMsgSuccess } from '../../plugins/alert/Alert'
 import {
   CONTAINER_DEFAULT,
   TEXT_DEFAULT,
@@ -79,7 +79,6 @@ import {
 export default class HTMLTemplate extends BaseComponent {
   @Prop() propTemplateJson!: IContainer
 
-  messageCopy = ''
   element = ''
   haveElementChild = false
   screen: IScreen = { mobile: false, desktop: false }
@@ -141,10 +140,10 @@ export default class HTMLTemplate extends BaseComponent {
     element.select()
     document.execCommand('copy')
     document.body.removeChild(element)
-    this.messageCopy = 'Content is copied!'
-    setTimeout(() => {
-      this.messageCopy = ''
-    }, 1500)
+    AlertMsgSuccess({
+      title: 'Success',
+      text: 'Content is copied!'
+    })
   }
 
   doOpenModal() {
