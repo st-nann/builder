@@ -48,33 +48,36 @@ const actions: ActionTree<ImageState, IState> = {
         'Content-Type': 'multipart/form-data'
       },
       onUploadProgress: (progress: any) => {
+        store.dispatch(`images/updateUploadImage`, { [payload.data.name] : 0 })
         const percentUploading = parseInt(Math.round((progress.loaded / progress.total) * 100) as any)
-        setTimeout(() => {
-          store.dispatch(`images/getImages`, { params: { limit: 9999999 } })
-          store.dispatch(`images/updateUploadImage`, 0)
-        }, 1300)
         if (percentUploading < 100) {
-          store.dispatch(`images/updateUploadImage`, percentUploading)
+          store.dispatch(`images/updateUploadImage`, { [payload.data.name] : percentUploading })
+          if (percentUploading === 100) {
+            store.dispatch(`images/updateUploadLists`, { data: [] })
+          }
         } else {
           setTimeout(() => {
-            store.dispatch(`images/updateUploadImage`, 50)
-          }, 2200)
+            store.dispatch(`images/updateUploadImage`, { [payload.data.name] : 50 })
+          }, 1000)
           setTimeout(() => {
-            store.dispatch(`images/updateUploadImage`, percentUploading)
-            // store.dispatch(`images/updateUploadImage`,
-            //   { [payload.data.name]: parseInt(Math.round((progress.loaded / progress.total) * 100) as any) }
-            // )
-          }, 3000)
+            store.dispatch(`images/updateUploadImage`, { [payload.data.name] : percentUploading })
+            store.dispatch(`images/updateUploadLists`, { data: [] })
+          }, 2000)
         }
       }
     })
   },
   updateUploadImage(
     { commit }: ActionContext<ImageState, IState>,
-    data: number
-    // data: object
+    data: { [key: string]: number }
   ) {
     commit(mutationType.UPLOAD_PERCENT, data)
+  },
+  updateUploadLists(
+    { commit }: ActionContext<ImageState, IState>,
+    payload: { data: object[] }
+  ) {
+    commit(mutationType.UPLOAD_LISTS, payload.data)
   }
 }
 

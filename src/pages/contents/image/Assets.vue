@@ -3,7 +3,7 @@
     <div class="image-asset-header">
         <h2 class="image-asset-header-title">Image Assets</h2>
         <div class="image-asset-header-upload">
-            <UploadImageComponent @change="onUploadImage" :disabled="uploadPercent < 100 || uploading" />
+            <UploadImageComponent @change="onUploadImage" :disabled="uploadLists.length > 0 || loading === undefined || loading" />
             <div class="image-asset-header-upload-description">
                 * File size must be less then 2 MB
             </div>
@@ -24,13 +24,32 @@
                 />
             </div>
             <div class="search-list">
-                <div v-if="loading && showLoading || loading === undefined" class="loading-container">
+                <div v-if="loading && uploading || loading === undefined" class="loading-container">
                     <div class="loading" />
                 </div>
                 <div v-else-if="filterImageLists.length < 1" class="no-image-lists">
                     No image available
                 </div>
                 <div v-else>
+                    <div v-if="uploadLists.length > 0">
+                        <div
+                            v-for="(item, index) in uploadLists"
+                            :key="index"
+                            class="search-list-item"
+                        >
+                            <div class="search-list-item-image-container">
+                                <img class="search-list-item-image" :src="item.url" />
+                            </div>
+                            <div class="search-list-item-detail">
+                                <div class="image-uploading">
+                                    <div class="image-uploading-status">Uploading...</div>
+                                    <div class="image-uploading-progress">
+                                        <progress max="100" :value.prop="uploadPercent[item.name] || 0" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div
                         v-for="(item, index) in filterImageLists"
                         :key="index"
@@ -47,13 +66,7 @@
                             <img class="search-list-item-image" :src="item.url" />
                         </div>
                         <div class="search-list-item-detail">
-                            <div v-if="uploadPercent < 100 && index === 0" class="image-uploading">
-                                <div class="image-uploading-status">Uploading...</div>
-                                <div class="image-uploading-progress">
-                                    <progress max="100" :value.prop="uploadPercent" />
-                                </div>
-                            </div>
-                            <div v-else class="image-complete">
+                            <div class="image-complete">
                                 <div class="image-name">{{ item.title }}</div>
                                 <div class="image-size">{{ doConvertImageSize(item.size) }}</div>
                             </div>
@@ -72,6 +85,8 @@ import { Component, Prop, Watch } from 'vue-property-decorator'
 import { mapGetters, mapActions } from 'vuex'
 import BaseComponent from '../../../core/BaseComponent'
 import { IImageLists, IImageItem } from '../../../interfaces/Image'
+import { AlertMsgError } from '../../../plugins/alert/Alert'
+import { IUploadImageRequest } from '../../../third-party/interfaces/HttpRequest'
 
 @Component({
     computed: {
@@ -83,13 +98,15 @@ import { IImageLists, IImageItem } from '../../../interfaces/Image'
         }),
         ...mapGetters('images', {
             imageLists: 'lists',
-            uploadPercent: 'uploadPercent'
+            uploadPercent: 'uploadPercent',
+            uploadLists: 'uploadLists'
         })
     },
     methods: {
         ...mapActions('images', [
             'getImages',
-            'uploadImage'
+            'uploadImage',
+            'updateUploadLists'
         ])
     }
 })
@@ -97,17 +114,19 @@ export default class ImageAssetContent extends BaseComponent {
     @Prop(Boolean) changeImage!: boolean
     @Prop(String) imageUrl!: string
 
-    showLoading = true
-    uploading = false
+    uploading = true
     url = this.imageUrl
-    uploadPercent!: number
+    filterImageLists: IImageItem[] = []
+
+    uploadPercent!: { [key: string]: number }[]
     loadingLists!: any
     loginInfo!: any
     imageLists!: IImageLists
-    filterImageLists: IImageItem[] = []
+    uploadLists!: object[]
 
     getImages!: (payload: { params: { page?: string, limit?: number } }) => void
     uploadImage!: (payload: { data: { file: any } }) => any
+    updateUploadLists!: (payload: { data: any }) => any
 
     get havePropData() {
         return localStorage['storage-baseurl'] && localStorage['storage-token']
@@ -143,13 +162,19 @@ export default class ImageAssetContent extends BaseComponent {
         )
     }
 
-    async onUploadImage(value: any) {
-        this.showLoading = false
-        this.uploading = true
-        await this.uploadImage({ data: value })
-        await this.getImages({ params: { limit: 9999999 } })
-        this.doFilterImages()
-        this.uploading = false
+    async onUploadImage(value: IUploadImageRequest) {
+        if (_.isUndefined(value.message)) {
+            this.uploading = false
+            await this.updateUploadLists({ data: _.concat(this.uploadLists, [value]) })
+            await this.uploadImage({ data: value })
+            await this.getImages({ params: { limit: 9999999 } })
+            this.doFilterImages()
+        } else {
+            AlertMsgError({
+                title: 'Can\'t Upload Image',
+                text: value.message
+            })
+        }
     }
 
     doEmitGetImage() {

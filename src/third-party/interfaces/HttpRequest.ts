@@ -31,4 +31,6 @@ export interface IImageParam {
 export interface IUploadImageRequest {
   file: any
   name: string
+  url: string
+  message?: string
 }
