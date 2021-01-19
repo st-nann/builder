@@ -24,7 +24,7 @@ export default class GroupButtonComponent extends BaseComponent {
   doUpdateGroupButton(value?: any, action?: boolean) {
     const self = this
     setTimeout(() => {
-      const elements: any = document.querySelectorAll(`#group-button-${self.name}`)
+      const elements: any = self.$el.querySelectorAll(`#group-button-${self.name}`)
       if (typeof self.transformValue === 'object') {
         self.transformValue = this.transformValue[this.name]
       }

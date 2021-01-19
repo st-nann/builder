@@ -114,7 +114,7 @@ export default class TextPage extends BaseComponent {
 
   doRenderUpdateElement() {
     this.$nextTick(() => {
-      const modal = document.querySelector(`#modal-edit-${this.elementId}`)
+      const modal = this.$el.querySelector(`#modal-edit-${this.elementId}`)
       const toolbar = modal?.getElementsByClassName('ql-toolbar')[0]
       if (_.isUndefined(toolbar)) {
         const fonts = FONT_STYLE

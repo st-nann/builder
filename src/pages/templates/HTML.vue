@@ -1,5 +1,5 @@
 <template>
-  <div :class="['builder-container', { 'disable-event': isMobile || isDesktop }]">
+  <div :class="['builder-container', { 'disable-event': screen.mobile || screen.desktop }]">
     <div class="builder-container-header">
       <div class="builder-container-title">
         <span class="product-name">PAM </span>
@@ -15,7 +15,7 @@
         />
         <ModalComponent
           ref="modal-view-json"
-          :modal="{ width: 60, height: 43, button: { info: true, position: 'center' } }"
+          :modal="{ width: 60, height: 60, button: { info: true, position: 'center' } }"
         >
           <template slot="content">
             <div v-if="messageCopy !== ''" class="message-copy">{{ messageCopy }}</div>
@@ -38,9 +38,9 @@
     </div>
 
     <div class="builder-container-body">
-      <div class="content">
+      <div :class="{ 'content-mobile': screen.mobile, 'content-desktop': screen.desktop || !screen.mobile }">
         <div v-if="haveElementChild">
-          <BuilderCanvas :templateJson="templateJson" />
+          <BuilderCanvas :screen="screen" :templateJson="templateJson" />
         </div>
         <div v-else class="box-start">
           <SquareMenuButtonComponent
@@ -62,7 +62,9 @@ import { v4 as uuidv4 } from 'uuid'
 import { Component, Prop, Watch } from 'vue-property-decorator'
 import BaseComponent from '../../core/BaseComponent'
 import { MENU } from '../../constants/Base'
+import { EDirection } from '../../enum/Components'
 import { EElementType } from '../../enum/Elements'
+import { IScreen } from '../../interfaces/Components'
 import { IContainer } from '../../interfaces/Template'
 import {
   CONTAINER_DEFAULT,
@@ -72,34 +74,18 @@ import {
   BUTTON_DEFAULT,
   BOX_DEFAULT,
 } from '../../constants/Default'
-import { EDirection } from '../../enum/Components'
 
 @Component
 export default class HTMLTemplate extends BaseComponent {
   @Prop() propTemplateJson!: IContainer
-  @Prop(Boolean) isMobile!: boolean
-  @Prop(Boolean) isDesktop!: boolean
 
   messageCopy = ''
-
   element = ''
   haveElementChild = false
+  screen: IScreen = { mobile: false, desktop: false }
   templateJson: IContainer = {
     id: uuidv4(),
     ..._.cloneDeep(this.defaultData['CONTAINER_DEFAULT'])
-  };
-
-  doCopyJSON() {
-    const el = document.createElement('textarea')
-    el.value = JSON.stringify(this.templateJson)
-    document.body.appendChild(el)
-    el.select()
-    document.execCommand('copy')
-    document.body.removeChild(el)
-    this.messageCopy = 'Content is copied!'
-    setTimeout(() => {
-      this.messageCopy = ''
-    }, 1500);
   }
 
   get menu() {
@@ -123,8 +109,8 @@ export default class HTMLTemplate extends BaseComponent {
       IMAGE_DEFAULT,
       SPACER_DEFAULT,
       BUTTON_DEFAULT,
-      BOX_DEFAULT,
-    };
+      BOX_DEFAULT
+    }
   }
 
   created() {
@@ -133,6 +119,32 @@ export default class HTMLTemplate extends BaseComponent {
       this.haveElementChild = true
     }
     this.templateJson.props.flexbox['flex-direction'] = EDirection.COLUMN
+  }
+
+  mounted() {
+    const self = this
+    setTimeout(() => {
+      /* Assign this scope of current component for access from outside instance */
+      Object.assign((window as any).vm, { builderComponent: this })
+      self.onUpdateScreen(this.screen)
+    }, 10)
+  }
+
+  onUpdateScreen(screen: IScreen) {
+    this.screen = screen
+  }
+
+  doCopyJSON() {
+    const element = document.createElement('textarea')
+    element.value = JSON.stringify(this.templateJson)
+    document.body.appendChild(element)
+    element.select()
+    document.execCommand('copy')
+    document.body.removeChild(element)
+    this.messageCopy = 'Content is copied!'
+    setTimeout(() => {
+      this.messageCopy = ''
+    }, 1500)
   }
 
   doOpenModal() {

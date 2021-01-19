@@ -41,3 +41,8 @@ export interface IComponentOption {
         modal?: IModal
     }
 }
+
+export interface IScreen {
+    mobile: boolean
+    desktop: boolean
+}

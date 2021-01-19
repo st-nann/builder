@@ -37,6 +37,7 @@
         <div class="modal-content-image">
           <ImageAssetContent
             v-show="changeImage"
+            ref="assets"
             :changeImage="changeImage"
             :imageUrl="imageUrl"
             @click="onUpdateChangeImage"
@@ -69,6 +70,18 @@
         </div>
       </template>
       <template slot="action-custom">
+        <div v-show="changeImage" class="image-asset-action">
+          <SquareButtonComponent
+              label="Cancel"
+              className="cancel-square-button"
+              @click="doEmitCancel"
+          />
+          <SquareButtonComponent
+              label="Add Image"
+              className="done-square-button"
+              @click="doEmitGetImage"
+          />
+        </div>
         <FooterPanel
           v-show="!changeImage"
           v-bind="$props"
@@ -166,6 +179,14 @@ export default class ImagePage extends BaseComponent {
     this.imageData = { ...data }
     Object.assign(this.data, this.imageData)
     this.doAssignStyle()
+  }
+
+  doEmitCancel() {
+    this.$refs.assets.doEmitCancel()
+  }
+
+  doEmitGetImage() {
+    this.$refs.assets.doEmitGetImage()
   }
 
   onUpdateChangeImage(data: any) {

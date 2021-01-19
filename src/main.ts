@@ -25,10 +25,9 @@ const Builder = () => {
     const storageBaseUrl = node.getAttributeNode('data-storage-baseurl')
     const storageToken = node.getAttributeNode('data-storage-token')
     const template = node.getAttributeNode('data-prop-template')
-    const root = `#${localStorage['id']}`
+
     const propTemplateJson = node && !_.isNull(template) ? JSON.parse(template.value) : undefined
-    const isMobile = node.getAttributeNode('data-is-mobile')
-    const isDesktop = node.getAttributeNode('data-is-desktop')
+    const root = `#${localStorage['id']}`
 
     if (personalizeBaseUrl) { localStorage['personalize-baseurl'] = personalizeBaseUrl.value.replaceAll('"', '') }
     if (personalizeBaseUrl) { localStorage['personalize-baseurl'] = personalizeBaseUrl.value.replaceAll('"', '') }
@@ -37,19 +36,15 @@ const Builder = () => {
     if (storageToken) { localStorage['storage-token'] = storageToken.value.replaceAll('"', '') }
 
     setTimeout(() => {
-      const vue = new Vue({
+      (window as any).vm = new Vue({
         router,
         store,
         render: (h) =>
           h(BuilderTemplate, {
-            props: {
-              propTemplateJson: propTemplateJson,
-              isMobile: isMobile ? isMobile.value : false,
-              isDesktop: isDesktop ? isDesktop.value : false,
-            },
+            props: { propTemplateJson: propTemplateJson },
             on: {
-              change(template: any) {
-                (vue.$el as any).dataset.resultTemplate = JSON.stringify(template)
+              change(templateJson: any) {
+                (window as any).vm.$el.dataset.resultTemplate = JSON.stringify(templateJson)
               }
             }
           })
