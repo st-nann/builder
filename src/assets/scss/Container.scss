@@ -85,7 +85,16 @@
       display: flex;
       flex-direction: column;
       background-color: #ffffff;
-      width: 60%;
+    }
+
+    .content-mobile {
+      @extend .content;
+      width: 50%;
+    }
+
+    .content-desktop {
+      @extend .content;
+      width: 90%;
     }
   }
 }

@@ -5,6 +5,7 @@
   import { CreateElement } from 'vue'
   import { BuilderTagMap } from './BuilderTagMap'
   import { IScreen } from '../interfaces/Components'
+  import { EDirection } from '../enum/Components'
   import { EElementPosition, EElementType } from '../enum/Elements'
   import {
     CONTAINER_DEFAULT,
@@ -32,6 +33,7 @@
     isParentBox = false
     foundParent = false
     inserted = false
+    containerId: string[] = []
 
     get defaultData(): any {
       return {
@@ -49,6 +51,28 @@
 
       if (_.isArray(state)) {
         return state.map((child) => this.createComponent(child, tag))
+      }
+
+      if (this.screen.mobile) {
+        if (
+          state.element === EElementType.CONTAINER &&
+          state.props.flexbox['flex-direction'] === EDirection.ROW
+        ) {
+          this.containerId.push(state.id)
+          state.props.flexbox['flex-direction'] = EDirection.COLUMN
+        }
+      }
+
+      if (this.screen.desktop || (!this.screen.desktop && !this.screen.mobile)) {
+        if (
+          state.element === EElementType.CONTAINER &&
+          state.props.flexbox['flex-direction'] === EDirection.COLUMN
+        ) {
+          if (_.includes(this.containerId, state.id)) {
+            state.props.flexbox['flex-direction'] = EDirection.ROW
+            _.pull(this.containerId, state.id)
+          }
+        }
       }
 
       const tagName = BuilderTagMap.getTag(state.element)

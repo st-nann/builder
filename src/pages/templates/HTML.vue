@@ -38,7 +38,7 @@
     </div>
 
     <div class="builder-container-body">
-      <div class="content">
+      <div :class="{ 'content-mobile': screen.mobile, 'content-desktop': screen.desktop || !screen.mobile }">
         <div v-if="haveElementChild">
           <BuilderCanvas :screen="screen" :templateJson="templateJson" />
         </div>
