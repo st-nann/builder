@@ -15,7 +15,7 @@
         <img
           v-if="elementProps.url"
           :src="elementProps.url"
-          :width="elementProps.width || '100%'"
+          :width="elementProps.width || '350'"
           :style="propsStyle"
           class="image-content"
         />
@@ -144,13 +144,13 @@ export default class ImagePage extends BaseComponent {
       if (this.elementProps.flexbox['align-items']) {
         switch (this.elementProps.flexbox['align-items']) {
           case 'flex-start':
-            style = 'margin-bottom: 45px;'
+            style = 'margin-bottom: 10px;'
             break
           case 'center':
-            style = 'margin: 45px 0;'
+            style = 'margin: 10px 0;'
             break
           case 'flex-end':
-            style = 'margin-top: 45px;'
+            style = 'margin-top: 10px;'
             break
           default:
             style = ''

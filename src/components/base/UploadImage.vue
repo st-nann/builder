@@ -26,8 +26,16 @@ import BaseComponent from '../../core/BaseComponent'
 export default class UploadImageComponent extends BaseComponent {
   onUpload (event: any) {
     const formData = new FormData()
-    formData.append('file', event.target.files[0])
-    this.onInput({ name: event.target.files[0].name, file: formData })
+    const file = event.target.files[0]
+    formData.append('file', file, file.name)
+    this.onInput({
+      name: file.name,
+      file: formData,
+      url: URL.createObjectURL(event.target.files[0]),
+      message: event.target.files[0].size > 2000000
+        ? 'Image size should be less than 2 MB.'
+        : undefined
+    })
     // display image on div 
     /*
     const output = document.getElementById('output')
