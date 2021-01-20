@@ -16,7 +16,7 @@
           class="button-content"
           :style="propsStyle"
         >
-          {{ elementProps.name }}
+          <a class="button-link" :href="elementProps.link" target="_blank">{{ elementProps.name }}</a>
         </button>
       </template>
       <template slot="button-management">
