@@ -186,7 +186,7 @@
 
     .menu-link {
         text-decoration: none;
-        color: #414141;
+        color: #414141 !important;
         font-size: 13px;
         width: max-content;
         min-width: max-content;
@@ -195,7 +195,7 @@
     }
 
     .menu-link:hover {
-        color: #000000;
+        color: #000000 !important;
         font-weight: 700;
     }
 }
