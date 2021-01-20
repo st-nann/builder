@@ -9,7 +9,6 @@
       :management="management"
       :style="containerStyle"
       @click="doEmitAddElement"
-      @change="onUpdateScale"
     >
       <template slot="content">
         <img
@@ -23,8 +22,10 @@
       <template slot="button-management">
         <MainButtonComponent
           v-bind="$props"
+          :management="management"
           class="button-box"
           @click="onUpdateManagement"
+          @change="onUpdateScale"
         />
       </template>
     </BoxComponent>
@@ -132,9 +133,9 @@ export default class ImagePage extends BaseComponent {
     if (this.elementProps.flexbox) {
       Object.assign(style, { ...this.elementProps.flexbox })
     }
-    if (this.elementProps.url) {
-      Object.assign(style, { 'min-height': 'auto' })
-    }
+    // if (this.elementProps.url) {
+    //   Object.assign(style, { 'min-height': 'auto' })
+    // }
     return style
   }
 

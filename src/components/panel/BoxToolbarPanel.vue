@@ -1,11 +1,29 @@
 <template>
   <div class="toolbar-panel">
-    <PaddingStyleComponent
-      v-bind="$props"
-      :management="management"
-      customKeyValue="padding"
-      @change="onUpdatePadding"
-    />
+    <div class="toolbar-panel-padding">
+      <PaddingStyleComponent
+        name="vertical"
+        label="Vertical Padding"
+        v-bind="$props"
+        min="20"
+        max="150"
+        :weightRange="89"
+        :management="management"
+        customKeyValue="padding-y"
+        @change="onUpdatePaddingVertical"
+      />
+      <PaddingStyleComponent
+        name="horizontal"
+        label="Horizontal Padding"
+        v-bind="$props"
+        min="20"
+        max="600"
+        :weightRange="89"
+        :management="management"
+        customKeyValue="padding-x"
+        @change="onUpdatePaddingHorizontal"
+      />
+    </div>
   </div>
 </template>
 
@@ -17,22 +35,34 @@ import BaseComponent from '../../core/BaseComponent'
 export default class BoxToolbarPanel extends BaseComponent {
   @Prop() management!: any;
 
-  boxPadding: any
+  boxPaddingVertical: any
+  boxPaddingHorizontal: any
 
-  onUpdatePadding(padding: any) {
-    this.boxPadding = padding
+  onUpdatePaddingVertical(padding: any) {
+    this.boxPaddingVertical = padding
+    this.onEmitData()
+  }
+
+  onUpdatePaddingHorizontal(padding: any) {
+    this.boxPaddingHorizontal = padding
     this.onEmitData()
   }
 
   onEmitData() {
-    this.$emit("change", { ...this.boxPadding })
+    this.$emit("change", {
+      padding: {
+        ...this.boxPaddingVertical,
+        ...this.boxPaddingHorizontal
+      }
+    })
   }
 
   @Watch("management.edit")
   onEdit() {
     if (this.management.edit) {
       if (this.elementProps) {
-        this.boxPadding = { padding: this.elementProps.padding }
+        this.boxPaddingVertical = { 'padding-y': this.elementProps.padding['padding-y'] }
+        this.boxPaddingHorizontal = { 'padding-x': this.elementProps.padding['padding-x'] }
       }
       this.onEmitData();
     }

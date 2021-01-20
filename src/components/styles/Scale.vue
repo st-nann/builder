@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <span class="button-scale-action">
     <span class="button-scale">SCALE: {{ flexGrow }}</span>
     <SquareButtonComponent
       icon="plus-thick"
@@ -33,7 +33,7 @@ export default class ScaleStyleComponent extends BaseComponent {
   }
 
   doUpdateScaleUp() {
-    if (this.flexGrow < 4) {
+    if (this.flexGrow < 6) {
       this.flexGrow++
       this.onEmitData()
     }

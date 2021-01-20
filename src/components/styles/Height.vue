@@ -2,9 +2,10 @@
   <SliderComponent
     :name="`${name}-height-${elementId}`"
     :value="height"
-    label="Height"
-    min="80"
-    max="240"
+    :label="label"
+    :min="min"
+    :max="max"
+    :weightRange="weightRange"
     @change="onUpdateHeight"
   />
 </template>

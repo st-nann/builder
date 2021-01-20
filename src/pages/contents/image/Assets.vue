@@ -124,7 +124,7 @@ export default class ImageAssetContent extends BaseComponent {
     imageLists!: IImageLists
     uploadLists!: object[]
 
-    getImages!: (payload: { params: { page?: string, limit?: number } }) => void
+    getImages!: (payload: { params: { page?: string, limit?: number } }) => any
     uploadImage!: (payload: { data: { file: any } }) => any
     updateUploadLists!: (payload: { data: any }) => any
 
@@ -168,6 +168,7 @@ export default class ImageAssetContent extends BaseComponent {
             await this.updateUploadLists({ data: _.concat(this.uploadLists, [value]) })
             await this.uploadImage({ data: value })
             await this.getImages({ params: { limit: 9999999 } })
+                .then(() => { this.updateUploadLists({ data: [] }) })
             this.doFilterImages()
         } else {
             AlertMsgError({
