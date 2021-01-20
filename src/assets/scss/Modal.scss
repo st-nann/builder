@@ -240,6 +240,10 @@
                             border-radius: 50px;
                             border: none;
                         }
+
+                        .no-image-button:focus {
+                            outline: none;
+                        }
                     }
                 }
             }

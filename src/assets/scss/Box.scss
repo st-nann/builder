@@ -46,6 +46,14 @@
             display: none;
         }
     }
+
+    .text-content {
+        word-break: break-all;
+    }
+
+    .button-content {
+        border: 1px solid #000000;
+    }
 }
 
 .box:hover {
@@ -143,14 +151,14 @@
         }
 
         .text-element-label,
-        .circle-button-top,
-        .circle-button-bottom {
+        .circle-button-top {
             @extend .button-box;
             z-index: auto;
         }
 
         .circle-button-right,
-        .circle-button-left {
+        .circle-button-left,
+        .circle-button-bottom {
             @extend .button-box;
             z-index: 1;
         }
@@ -186,15 +194,23 @@
             z-index: 1;
         }
     }
+
+    .box-margin {
+        margin-bottom: 70px;
+    }
     
-    .text-content,
     .image-content,
     .button-content {
-        margin-bottom: 70px;
+        @extend .box-margin;
+    }
+
+    .text-content {
+        @extend .box-margin;
+        word-break: break-all;
     }
 
     .button-content {
-        margin-bottom: 70px;
+        @extend .box-margin;
         border: 1px solid #000000;
     }
 
