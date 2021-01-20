@@ -52,17 +52,13 @@ const actions: ActionTree<ImageState, IState> = {
         const percentUploading = parseInt(Math.round((progress.loaded / progress.total) * 100) as any)
         if (percentUploading < 100) {
           store.dispatch(`images/updateUploadImage`, { [payload.data.name] : percentUploading })
-          if (percentUploading === 100) {
-            store.dispatch(`images/updateUploadLists`, { data: [] })
-          }
         } else {
           setTimeout(() => {
             store.dispatch(`images/updateUploadImage`, { [payload.data.name] : 50 })
           }, 1000)
           setTimeout(() => {
             store.dispatch(`images/updateUploadImage`, { [payload.data.name] : percentUploading })
-            store.dispatch(`images/updateUploadLists`, { data: [] })
-          }, 2000)
+          }, 3000)
         }
       }
     })

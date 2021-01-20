@@ -26,6 +26,7 @@ export default class BaseComponent extends Base {
   @Prop(String) readonly width!: string
   @Prop(String) readonly min!: string // Slider
   @Prop(String) readonly max!: string // Slider
+  @Prop(Number) readonly weightRange!: number // Slider
   @Prop() modal!: IModal
   @Prop() customKeyValue!: string
 

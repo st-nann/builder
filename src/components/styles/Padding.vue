@@ -2,9 +2,10 @@
   <SliderComponent
     :name="`${name}-padding-${elementId}`"
     :value="padding"
-    label="Padding"
-    min="20"
-    max="150"
+    :label="label"
+    :min="min"
+    :max="max"
+    :weightRange="weightRange"
     @change="onUpdatePadding"
   />
 </template>
@@ -25,10 +26,10 @@ export default class PaddingStyleComponent extends BaseComponent {
   }
 
   doAssignPropData() {
-    const havePadding = this.elementProps && this.elementProps[this.customKeyValue]
+    const havePadding = this.elementProps && this.elementProps.padding && this.elementProps.padding[this.customKeyValue]
     if (havePadding) {
       const props = _.cloneDeep(this.elementProps)
-      this.padding = props[this.customKeyValue].substring(0, props[this.customKeyValue].length - 2)
+      this.padding = props.padding[this.customKeyValue].substring(0, props.padding[this.customKeyValue].length - 2)
     } else {
       this.doAssignDefaultData()
     }

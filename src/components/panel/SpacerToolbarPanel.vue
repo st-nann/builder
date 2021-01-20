@@ -3,6 +3,10 @@
     <HeightStyleComponent
       v-bind="$props"
       :management="management"
+      label="Height"
+      min="80"
+      max="240"
+      :weightRange="85"
       customKeyValue="height"
       @change="onUpdateHeight"
     />

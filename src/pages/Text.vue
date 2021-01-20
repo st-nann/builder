@@ -9,7 +9,6 @@
       :management="management"
       :style="`${contentHtml ? 'min-height: auto' : ''}`"
       @click="doEmitAddElement"
-      @change="onUpdateScale"
     >
       <template slot="content">
         <div
@@ -22,8 +21,10 @@
       <template slot="button-management">
         <MainButtonComponent
           v-bind="$props"
+          :management="management"
           class="button-box"
           @click="onUpdateManagement"
+          @change="onUpdateScale"
         />
       </template>
     </BoxComponent>

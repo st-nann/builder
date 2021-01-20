@@ -2,7 +2,7 @@
   <span class="slider-container">
     <label v-if="label" class="slider-label">{{ label }}</label>
     <span class="slider-input">
-      <div id="range-value" class="range-value" />
+      <div :id="`range-value-${this.name}`" class="range-value" />
       <input
         :id="`slider-${this.name}`"
         :value="value"
@@ -34,9 +34,9 @@ export default class SliderComponent extends BaseComponent {
 
   doUpdateInput() {
     const element: any = document.getElementById(`slider-${this.name}`)
-    const elementValue = document.getElementById('range-value'),
+    const elementValue = document.getElementById(`range-value-${this.name}`),
     setValue = () => {
-      const newValue = Number((element.value - element.min) * 85 / (element.max - element.min))
+      const newValue = Number((element.value - element.min) * this.weightRange / (element.max - element.min))
       const newPosition = 22 - (newValue * 0.2)
       if (elementValue) {
         elementValue.innerHTML = `<span>${element.value}px</span>`

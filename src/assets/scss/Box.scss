@@ -8,7 +8,7 @@
 
 .box {
     display: flex;
-    min-height: 200px;
+    min-height: 115px;
     height: auto;
     position: relative;
     background-color: transparent !important;
@@ -37,7 +37,6 @@
         }
 
         .button-box,
-        .button-scale-container,
         .text-element-label,
         .circle-button-top,
         .circle-button-right,
@@ -56,16 +55,104 @@
         
         .button-box {
             display: inline;
+
+            .button-setting-container {
+
+                .button-setting-box {
+                    z-index: 10;
+                }
+
+                .button-setting-group {
+                    display: none;
+                }
+            }
+
+            .button-setting-container:hover {
+
+                .button-setting-container-hidden {
+                    width: 450%;
+                    height: 14px;
+                    top: 30px;
+                    left: -61px;
+                    position: absolute;
+
+                    .button-setting-group {
+                        display: inline;
+                        position: absolute;
+                        z-index: 10;
+                        left: -20px;
+                        top: 8px;
+                        background-color: #ffffff;
+                        width: 200px;
+                        border-radius: 5px;
+                        box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+
+                        .button-setting-title {
+                            font-size: 12px;
+                            font-weight: 700;
+                            color: #484848;
+                            background-color: #dddddd;
+                            border-top-right-radius: 5px;
+                            border-top-left-radius: 5px;
+                            padding: 5px 8px;
+                        }
+
+                        .button-management {
+                            display: flex;
+                            flex-direction: column;
+                            padding: 5px;
+
+                            .title {
+                                font-size: 12px;
+                                font-weight: 100;
+                                color: #484848;
+                                padding: 3px 5px;
+                            }
+                            
+                            .button-management-title {
+                                @extend .title;
+                            }
+
+                            .button-management-action {
+                                margin: auto;
+                                margin-bottom: 10px;
+                            }
+
+                            .button-scale-container {
+
+                                .button-scale-title {
+                                    @extend .title;
+                                }
+                    
+                                .button-scale-action {
+                                    transform: scale(0.6);
+                                    display: block;
+                                    width: max-content;
+                                    margin: auto;
+                                    margin-top: -7px;
+
+                                    .button-scale {
+                                        vertical-align: middle;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
-        .button-scale-container,
         .text-element-label,
         .circle-button-top,
-        .circle-button-right,
-        .circle-button-bottom,
-        .circle-button-left {
+        .circle-button-bottom {
             @extend .button-box;
             z-index: auto;
+        }
+
+        .circle-button-right,
+        .circle-button-left {
+            @extend .button-box;
+            z-index: 1;
         }
 
         .circle-button-top {
@@ -78,7 +165,6 @@
 
         .circle-button-bottom {
             bottom: -20px;
-            z-index: 1;
         }
 
         .circle-button-left {
@@ -95,23 +181,9 @@
         }
 
         .button-management-container {
-            top: 0px;
-            right: -10px;
-
-            .button-management {
-                transform: scale(.7);
-                z-index: 10;
-            }
-        }
-
-        .button-scale-container {
-            bottom: -5px;
-            right: -35px;
-            transform: scale(0.5);
-
-            .button-scale {
-                vertical-align: middle;
-            }
+            top: 3px;
+            right: 3px;
+            z-index: 1;
         }
     }
     

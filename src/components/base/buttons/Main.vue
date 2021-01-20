@@ -1,24 +1,48 @@
 <template>
   <span>
-    <div :class="{ 'button-management': elementName === 'Box' }">
+    <span class="button-setting-container">
       <SquareButtonComponent
-        icon="pencil"
+        icon="cog"
+        :class="{ 'button-setting-box': elementName === 'Box' }"
         className="default-square-button"
-        @click="doEdit"
       />
-      <SquareMenuButtonComponent
-        icon="note-multiple"
-        className="default-square-menu-button"
-        :options="positions"
-        @click="doDuplicate"
-      />
-      <SquareButtonComponent
-        v-if="isDisplay"
-        icon="trash-can"
-        className="delete-square-button"
-        @click="doOpenModal"
-      />
-    </div>
+      <div class="button-setting-container-hidden">
+        <div class="button-setting-group">
+          <div class="button-setting-title">Setting</div>
+          <div class="button-management">
+            <div class="button-management-title">Management</div>
+            <div class="button-management-action">
+              <SquareButtonComponent
+                icon="pencil"
+                className="default-square-button"
+                @click="doEdit"
+              />
+              <SquareMenuButtonComponent
+                icon="note-multiple"
+                className="default-square-menu-button"
+                :options="positions"
+                @click="doDuplicate"
+              />
+              <SquareButtonComponent
+                v-if="isDisplay"
+                icon="trash-can"
+                className="delete-square-button"
+                @click="doOpenModal"
+              />
+            </div>
+            <div class="button-scale-container">
+              <div class="button-scale-title">Scale</div>
+              <ScaleStyleComponent
+                v-bind="$props"
+                :management="management"
+                customKeyValue="flex-grow"
+                @click="onUpdateScale"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </span>
     <ModalComponent
       v-bind="$props"
       :ref="`modal-delete-${elementId}`"
@@ -43,12 +67,14 @@
 
 <script lang="ts">
 import _ from 'lodash'
-import { Component } from 'vue-property-decorator'
+import { Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../../../core/BaseComponent'
 import { POSITION } from '../../../constants/Base'
 
 @Component
 export default class MainButtonComponent extends BaseComponent {
+  @Prop() readonly management!: any
+  
   isOpenModal = false
   edit = false
   duplicate = false
@@ -57,7 +83,7 @@ export default class MainButtonComponent extends BaseComponent {
   
   get positions() {
     return _.filter(POSITION, (item: any) => {
-      if (_.isUndefined(this.parent.quantityChildrenBox) || this.parent.quantityChildren < 4) { return item }
+      if (_.isUndefined(this.parent.quantityChildrenBox) || this.parent.quantityChildren < 6) { return item }
       return !_.includes(['left', 'right'], item.value)
     })
   }
@@ -94,6 +120,10 @@ export default class MainButtonComponent extends BaseComponent {
       delete: this.delete
     })
     Object.assign(this.$data, (this.$options.data as any).apply(this))
+  }
+
+  onUpdateScale(scale: any) {
+    this.$emit('change', scale)
   }
 }
 </script>

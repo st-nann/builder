@@ -9,7 +9,6 @@
       :management="management"
       :style="elementProps.flexbox ? { ...elementProps.flexbox } : ''"
       @click="doEmitAddElement"
-      @change="onUpdateScale"
     >
       <template slot="content">
         <div
@@ -19,7 +18,11 @@
                 ? elementProps.flexbox['flex-grow']
                 : 1
             }`,
-            'padding': `${ elementProps.padding ? elementProps.padding : '20px' }`
+            'padding': `${
+              elementProps.padding && elementProps.padding['padding-y'] ? elementProps.padding['padding-y'] : '20px'
+            } ${
+              elementProps.padding && elementProps.padding['padding-x'] ? elementProps.padding['padding-x'] : '20px'
+            }`
           }"
         >
           <slot/>
@@ -28,15 +31,17 @@
       <template slot="button-management">
         <MainButtonComponent
           v-bind="$props"
+          :management="management"
           class="button-box button-management-container"
           @click="onUpdateManagement"
+          @change="onUpdateScale"
         />
       </template>
     </BoxComponent>
     <ModalComponent
       v-bind="$props"
       :ref="`modal-edit-${elementId}`"
-      :modal="{ width: 50, height: 45, action: 'edit', button: { custom: true } }"
+      :modal="{ width: 72, height: 45, action: 'edit', button: { custom: true } }"
     >
       <template slot="content">
         <div class="modal-content-box">
@@ -45,7 +50,9 @@
             :management="management"
             @change="getBoxData"
           />
-          <div :id="`box-preview-${elementId}`" class="box-preview-container" />
+          <div :id="`box-preview-${elementId}`" class="box-preview-container">
+            <div class="box-preview-object" />
+          </div>
         </div>
       </template>
       <template slot="action-custom">
@@ -81,10 +88,14 @@ export default class BoxPage extends BaseComponent {
     if (JSON.stringify(this.previewData) !== '{}') {
       const border = this.previewData['border-bottom']
       const backgroundColor = this.previewData['background-color']
-      const padding = this.previewData.padding
+      const paddingVertical = this.previewData.padding['padding-y']
+      const paddingHorizontal = this.previewData.padding['padding-x']
       if (border) { previewBoxStyle['border-bottom'] = `${border.width} ${border.style} ${border.color}` }
       if (backgroundColor) { previewBoxStyle['background-color'] = backgroundColor }
-      if (padding) { previewBoxStyle.padding = padding }
+      if (paddingVertical) { previewBoxStyle['padding-top'] = paddingVertical }
+      if (paddingVertical) { previewBoxStyle['padding-bottom'] = paddingVertical }
+      if (paddingHorizontal) { previewBoxStyle['padding-left'] = paddingHorizontal }
+      if (paddingHorizontal) { previewBoxStyle['padding-right'] = paddingHorizontal }
     }
     this.doSetAttributeStyle(`box-preview-${this.elementId}`, previewBoxStyle)
   }

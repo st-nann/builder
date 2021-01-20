@@ -199,6 +199,16 @@
     }
 }
 
+/* Box Panel */
+.toolbar-panel {
+    @extend .panel;
+    
+    .toolbar-panel-padding {
+        flex-grow: 1;
+        text-align: end;
+    }
+}
+
 .footer-panel {
     @extend .panel;
 

@@ -32,14 +32,6 @@
         <label class="text-link">{{ elementProps.link }}</label>
       </div>
       <slot name="button-management" />
-      <div class="button-scale-container">
-        <ScaleStyleComponent
-          v-bind="$props"
-          :management="management"
-          customKeyValue="flex-grow"
-          @click="onUpdateScale"
-        />
-      </div>
     </div>
     <slot name="content" />
   </span>
@@ -61,7 +53,7 @@ export default class BoxComponent extends BaseComponent {
   }
 
   get isDisplay() {
-    return this.parent.quantityChildren < 4
+    return this.parent.quantityChildren < 6
   }
 
   doEmitTop(element: string) {
@@ -78,10 +70,6 @@ export default class BoxComponent extends BaseComponent {
 
   doEmitLeft(element: string) {
     this.$emit('click', { position: EElementPosition.LEFT, element: _.toUpper(element) })
-  }
-
-  onUpdateScale(scale: any) {
-    this.$emit('change', scale)
   }
 }
 </script>
