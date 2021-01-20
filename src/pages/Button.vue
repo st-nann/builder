@@ -41,8 +41,11 @@
             :management="management"
             @change="getButtonData"
           />
-          <div :id="`button-container-preview-${elementId}`" class="button-preview-container">
-            <button :id="`button-preview-${elementId}`" />
+          <div
+            :id="`button-container-preview-${elementId}`"
+            class="button-preview-container"
+          >
+            <button :id="`button-preview-${elementId}`" class="button-preview" />
           </div>
         </div>
       </template>

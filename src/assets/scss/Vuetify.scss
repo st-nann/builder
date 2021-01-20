@@ -4,12 +4,12 @@
   line-height: normal !important;
 }
 
-.builder-container button, .builder-container input {
-  font: 100 12px Arial !important;
+.v-application .builder-container a {
+  color: #06c;
 }
 
-.builder-container button {
-  border-style: inherit !important;
+.builder-container button, .builder-container input {
+  font: 100 12px Arial !important;
 }
 
 .builder-container::before, .builder-container::after {

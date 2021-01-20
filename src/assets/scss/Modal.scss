@@ -99,8 +99,8 @@
                             width: 50%;
 
                             .image-preview {
-                                width: 380px;
-                                height: 380px;
+                                width: 80%;
+                                height: 80%;
                                 object-fit: contain;
                             }
 
@@ -157,14 +157,15 @@
                                         width: 20%;
 
                                         .search-list-item-image {
-                                            width: 60px;
-                                            height: 60px;
+                                            width: 90%;
+                                            height: 90%;
                                             object-fit: contain;
                                         }
                                     }
 
                                     .search-list-item-detail {
                                         width: 80%;
+                                        padding: 0 0 0 20px;
 
                                         .image-complete {
 
@@ -255,6 +256,10 @@
                     margin: 0px 10px;
                     padding: 50px 0;
                     overflow-y: scroll;
+
+                    .button-preview {
+                        border: 1px solid
+                    }
                 }
             }
 
