@@ -53,94 +53,101 @@
 
     .button-content {
         border: 1px solid #000000;
+
+        .button-link {
+            color: #000000;
+        }
     }
 }
 
-.box:hover {
-    border: 1px dashed #414141;
+div[class*="enable-event"],
+div:not([class*="disable-event"]) > * ~ a {
+    .box:hover {
+        border: 1px dashed #414141;
 
-    .box-action:hover {
-        
-        .button-box {
-            display: inline;
+        .box-action:hover {
+            
+            .button-box {
+                display: inline;
 
-            .button-setting-container {
+                .button-setting-container {
 
-                .button-setting-box {
-                    z-index: 10;
-                }
-
-                .button-setting-group {
-                    display: none;
-                }
-            }
-
-            .button-setting-container:hover {
-
-                .button-setting-container-hidden {
-                    width: 450%;
-                    height: 14px;
-                    top: 30px;
-                    left: -61px;
-                    position: absolute;
+                    .button-setting-box {
+                        z-index: 10;
+                    }
 
                     .button-setting-group {
-                        display: inline;
+                        display: none;
+                    }
+                }
+
+                .button-setting-container:hover {
+
+                    .button-setting-container-hidden {
+                        width: 450%;
+                        height: 14px;
+                        top: 30px;
+                        left: -61px;
                         position: absolute;
-                        z-index: 10;
-                        left: -20px;
-                        top: 8px;
-                        background-color: #ffffff;
-                        width: 200px;
-                        border-radius: 5px;
-                        box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
 
-                        .button-setting-title {
-                            font-size: 12px;
-                            font-weight: 700;
-                            color: #484848;
-                            background-color: #dddddd;
-                            border-top-right-radius: 5px;
-                            border-top-left-radius: 5px;
-                            padding: 5px 8px;
-                        }
+                        .button-setting-group {
+                            display: inline;
+                            position: absolute;
+                            z-index: 10;
+                            left: -20px;
+                            top: 8px;
+                            background-color: #ffffff;
+                            width: 200px;
+                            border-radius: 5px;
+                            box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
 
-                        .button-management {
-                            display: flex;
-                            flex-direction: column;
-                            padding: 5px;
-
-                            .title {
+                            .button-setting-title {
                                 font-size: 12px;
-                                font-weight: 100;
+                                font-weight: 700;
                                 color: #484848;
-                                padding: 3px 5px;
-                            }
-                            
-                            .button-management-title {
-                                @extend .title;
-                            }
-
-                            .button-management-action {
-                                margin: auto;
-                                margin-bottom: 10px;
+                                background-color: #dddddd;
+                                border-top-right-radius: 5px;
+                                border-top-left-radius: 5px;
+                                padding: 5px 8px;
                             }
 
-                            .button-scale-container {
+                            .button-management {
+                                display: flex;
+                                flex-direction: column;
+                                padding: 5px;
 
-                                .button-scale-title {
+                                .title {
+                                    font-size: 12px;
+                                    font-weight: 100;
+                                    color: #484848;
+                                    padding: 3px 5px;
+                                }
+                                
+                                .button-management-title {
                                     @extend .title;
                                 }
-                    
-                                .button-scale-action {
-                                    transform: scale(0.6);
-                                    display: block;
-                                    width: max-content;
-                                    margin: auto;
-                                    margin-top: -7px;
 
-                                    .button-scale {
-                                        vertical-align: middle;
+                                .button-management-action {
+                                    margin: auto;
+                                    margin-bottom: 10px;
+                                }
+
+                                .button-scale-container {
+
+                                    .button-scale-title {
+                                        @extend .title;
+                                    }
+                        
+                                    .button-scale-action {
+                                        transform: scale(0.6);
+                                        display: block;
+                                        width: max-content;
+                                        margin: auto;
+                                        margin-top: -7px;
+
+                                        .button-scale {
+                                            vertical-align: middle;
+                                        }
                                     }
                                 }
                             }
@@ -148,73 +155,73 @@
                     }
                 }
             }
+
+            .text-element-label,
+            .circle-button-top {
+                @extend .button-box;
+                z-index: auto;
+            }
+
+            .circle-button-right,
+            .circle-button-left,
+            .circle-button-bottom {
+                @extend .button-box;
+                z-index: 1;
+            }
+
+            .circle-button-top {
+                top: -20px;
+            }
+
+            .circle-button-right {
+                right: -20px;
+            }
+
+            .circle-button-bottom {
+                bottom: -20px;
+            }
+
+            .circle-button-left {
+                left: -20px;
+            }
+
+            .text-element-label {
+                font-weight: 700;
+                font-size: 13px;
+                color: #888888;
+                top: 0;
+                left: 0;
+                padding: 10px;
+            }
+
+            .button-management-container {
+                top: 3px;
+                right: 3px;
+                z-index: 1;
+            }
         }
 
-        .text-element-label,
-        .circle-button-top {
-            @extend .button-box;
-            z-index: auto;
+        .box-margin {
+            margin-bottom: 70px;
+        }
+        
+        .image-content,
+        .button-content {
+            @extend .box-margin;
         }
 
-        .circle-button-right,
-        .circle-button-left,
-        .circle-button-bottom {
-            @extend .button-box;
-            z-index: 1;
+        .text-content {
+            @extend .box-margin;
+            word-break: break-all;
         }
 
-        .circle-button-top {
-            top: -20px;
+        .button-content {
+            @extend .box-margin;
+            border: 1px solid #000000;
         }
 
-        .circle-button-right {
-            right: -20px;
+        .box-content {
+            padding: 20px;
         }
-
-        .circle-button-bottom {
-            bottom: -20px;
-        }
-
-        .circle-button-left {
-            left: -20px;
-        }
-
-        .text-element-label {
-            font-weight: 700;
-            font-size: 13px;
-            color: #888888;
-            top: 0;
-            left: 0;
-            padding: 10px;
-        }
-
-        .button-management-container {
-            top: 3px;
-            right: 3px;
-            z-index: 1;
-        }
-    }
-
-    .box-margin {
-        margin-bottom: 70px;
-    }
-    
-    .image-content,
-    .button-content {
-        @extend .box-margin;
-    }
-
-    .text-content {
-        @extend .box-margin;
-        word-break: break-all;
-    }
-
-    .button-content {
-        @extend .box-margin;
-        border: 1px solid #000000;
-    }
-
-    .box-content {
-        padding: 20px;
     }
 }

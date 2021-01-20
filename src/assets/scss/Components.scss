@@ -34,3 +34,7 @@ a {
 .disable-event {
     pointer-events: none;
 }
+
+a, .enable-event {
+    pointer-events: auto;
+}
