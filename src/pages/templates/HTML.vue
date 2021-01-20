@@ -124,7 +124,7 @@ export default class HTMLTemplate extends BaseComponent {
     const self = this
     setTimeout(() => {
       /* Assign this scope of current component for access from outside instance */
-      Object.assign((window as any).vm, { builderComponent: this })
+      Object.assign((window as any).vm, { ...this })
       self.onUpdateScreen(this.screen)
     }, 10)
   }
