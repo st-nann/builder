@@ -3,8 +3,8 @@
     :class="[
       'builder-container',
       {
-        'enable-event': (screen.mobile || screen.desktop),
-        'disable-event': !screen.mobile || screen.desktop
+        'enable-event': !(screen.mobile || screen.desktop),
+        'disable-event': screen.mobile || screen.desktop
       }
     ]"
   >
