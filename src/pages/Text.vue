@@ -1,7 +1,12 @@
 <template>
   <span
-    :style="elementProps.flexbox && elementProps.flexbox['flex-grow']
-      ? `flex-grow: ${elementProps.flexbox['flex-grow']}; height: max-content;`
+    :style="elementProps.flexbox && elementProps.flexbox
+      ? `
+        ${elementProps.flexbox['flex-grow']} ? flex-grow: ${elementProps.flexbox['flex-grow']}; : ''
+        ${elementProps.flexbox['flex-basis']} ? flex-basis: ${elementProps.flexbox['flex-basis']}; : ''
+        ${elementProps.flexbox['max-width']} ? flex-grow: ${elementProps.flexbox['max-width']}; : ''
+        height: 100%;
+      `
       : ''"
   >
     <BoxComponent

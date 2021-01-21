@@ -8,17 +8,17 @@
         @click="doEmitTop"
       />
       <CircleMenuButtonComponent
+        class="circle-button-bottom"
+        icon="plus"
+        :options="menu"
+        @click="doEmitBottom"
+      />
+      <CircleMenuButtonComponent
         v-if="isDisplay"
         class="circle-button-right"
         icon="plus"
         :options="menu"
         @click="doEmitRight"
-      />
-      <CircleMenuButtonComponent
-        class="circle-button-bottom"
-        icon="plus"
-        :options="menu"
-        @click="doEmitBottom"
       />
       <CircleMenuButtonComponent
         v-if="isDisplay"
@@ -60,12 +60,12 @@ export default class BoxComponent extends BaseComponent {
     this.$emit('click', { position: EElementPosition.TOP, element: _.toUpper(element) })
   }
 
-  doEmitRight(element: string) {
-    this.$emit('click', { position: EElementPosition.RIGHT, element: _.toUpper(element) })
-  }
-
   doEmitBottom(element: string) {
     this.$emit('click', { position: EElementPosition.BOTTOM, element: _.toUpper(element) })
+  }
+
+  doEmitRight(element: string) {
+    this.$emit('click', { position: EElementPosition.RIGHT, element: _.toUpper(element) })
   }
 
   doEmitLeft(element: string) {
