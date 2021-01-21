@@ -4,7 +4,7 @@
     <SquareButtonComponent
       icon="plus-thick"
       className="default-square-button"
-      :disabled="flexGrow > 4"
+      :disabled="flexGrow > 6"
       @click="doUpdateScaleUp"
     />
     <SquareButtonComponent
