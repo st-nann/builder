@@ -36,13 +36,13 @@
       <template slot="content">
         <div class="editor-container">
           <div :id="`editor-${elementId}`" class="editor" />
-          <SquareMenuButtonComponent
+          <ComboboxComponent
+            :name="`personalize-${elementId}`"
             icon="plus"
             label="Personalize"
             class="personalize-action"
-            className="personalize-square-menu-button"
             :options="personalizes"
-            @click="doAddPersonalize"
+            @change="doAddPersonalize"
           />
         </div>
       </template>
@@ -95,7 +95,7 @@ export default class TextPage extends BaseComponent {
     return _.isEmpty(this.personalizeLists)
       ? undefined
       : this.personalizeLists.items.map((item: any) => {
-        return { label: item.name, value: `[[${item.alias}]]` }
+        return { label: item.name, value: `{{${item.alias}}}` }
       })
   }
 
