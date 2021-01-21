@@ -1,7 +1,12 @@
 <template>
   <span
-    :style="elementProps.flexbox && elementProps.flexbox['flex-grow']
-      ? `flex-grow: ${elementProps.flexbox['flex-grow']} height: max-content;`
+    :style="elementProps.flexbox && elementProps.flexbox
+      ? `
+        ${elementProps.flexbox['flex-grow']} ? flex-grow: ${elementProps.flexbox['flex-grow']}; : ''
+        ${elementProps.flexbox['flex-basis']} ? flex-basis: ${elementProps.flexbox['flex-basis']}; : ''
+        ${elementProps.flexbox['max-width']} ? flex-grow: ${elementProps.flexbox['max-width']}; : ''
+        height: 100%;
+      `
       : ''"
   >
     <BoxComponent
@@ -15,7 +20,7 @@
           v-if="elementProps.url"
           :src="elementProps.url"
           :width="elementProps.width || '350'"
-          :style="propsStyle"
+          :style="`${propsAlignStyle} ${propsJustifyStyle}`"
           class="image-content"
         />
       </template>
@@ -139,7 +144,7 @@ export default class ImagePage extends BaseComponent {
     return style
   }
 
-  get propsStyle() {
+  get propsAlignStyle() {
     let style = ''
     if (this.elementProps.flexbox) {
       if (this.elementProps.flexbox['align-items']) {
@@ -152,6 +157,29 @@ export default class ImagePage extends BaseComponent {
             break
           case 'flex-end':
             style = 'margin-top: 10px;'
+            break
+          default:
+            style = ''
+            break
+        }
+      }
+    }
+    return style
+  }
+
+  get propsJustifyStyle() {
+    let style = ''
+    if (this.elementProps.flexbox) {
+      if (this.elementProps.flexbox['justify-content']) {
+        switch (this.elementProps.flexbox['justify-content']) {
+          case 'flex-start':
+            style = 'margin-right: 10px;'
+            break
+          case 'center':
+            style = 'margin: 10px 0;'
+            break
+          case 'flex-end':
+            style = 'margin-left: 10px;'
             break
           default:
             style = ''

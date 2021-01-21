@@ -222,7 +222,9 @@ export default class BaseComponent extends Base {
           flexbox: {
             'align-items': this.data.flexbox['align-items'],
             'justify-content': this.data.flexbox['justify-content'],
-            'flex-grow': this.scale.flexbox['flex-grow']
+            'flex-grow': this.scale.flexbox['flex-grow'],
+            'flex-basis': this.data.flexbox['flex-basis'],
+            'max-width': this.data.flexbox['max-width']
           },
         }
       })
