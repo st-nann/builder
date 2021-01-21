@@ -8,6 +8,7 @@ import TextButtonComponent from '../../components/base/buttons/Text.vue'
 import TextMenuButtonComponent from '../../components/base/buttons/TextMenu.vue'
 import BoxComponent from '../../components/base/Box.vue'
 import ColorPickerComponent from '../../components/base/ColorPicker.vue'
+import ComboboxComponent from '../../components/base/Combobox.vue'
 import DropdownComponent from '../../components/base/Dropdown.vue'
 import InputComponent from '../../components/base/Input.vue'
 import ModalComponent from '../../components/base/Modal.vue'
@@ -26,6 +27,7 @@ export const BaseComponents = {
     TextMenuButtonComponent,
     BoxComponent,
     ColorPickerComponent,
+    ComboboxComponent,
     DropdownComponent,
     InputComponent,
     ModalComponent,

@@ -5,10 +5,13 @@
       :id="`input-${this.name}`"
       :value="value"
       :placeholder="placeholder"
-      :class="{
-        'input': !search,
-        'input-search': search
-      }"
+      :class="[
+        className,
+        {
+          'input': !search,
+          'input-search': search
+        }
+      ]"
       :style="style"
       @input="doUpdateInput"
     />

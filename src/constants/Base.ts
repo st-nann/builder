@@ -16,8 +16,8 @@ export const MENU: IDropdownOption[] = [
 ]
 
 export const PERSONALIZES: IDropdownOption[] = [
-    { label: 'Email Sender', value: '[[EMAIL_SENDER]]' },
-    { label: 'Email Receiver', value: '[[EMAIL_RECEIVER]]' },
-    { label: 'Firstname', value: '[[FIRSTNAME]]' },
-    { label: 'Lastname', value: '[[LASTNAME]]' }
+    { label: 'Email Sender', value: '{{EMAIL_SENDER}}' },
+    { label: 'Email Receiver', value: '{{EMAIL_RECEIVER}}' },
+    { label: 'Firstname', value: '{{FIRSTNAME}}' },
+    { label: 'Lastname', value: '{{LASTNAME}}' }
 ]
