@@ -17,7 +17,7 @@
         label="Horizontal Padding"
         v-bind="$props"
         min="20"
-        max="400"
+        max="200"
         :weightRange="89"
         :management="management"
         customKeyValue="padding-x"
