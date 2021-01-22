@@ -61,7 +61,7 @@ npm run dev
 ```javascript
     [Vue]
     mounted() {
-        const builder: any = require('~/node_modules/vue-builder-plugin/src/plugins/builder')
+        const builder: any = require('~/node_modules/vue-builder-plugin/src/plugins/Module')
         const store =  builder.default.store
         const router = builder.default.router
         const self = this
@@ -83,7 +83,7 @@ npm run dev
     [Nuxt.js]
     mounted() {
         if (process.client) {
-            const builder: any = require('~/node_modules/vue-builder-plugin/src/plugins/builder')
+            const builder: any = require('~/node_modules/vue-builder-plugin/src/plugins/Module')
             const store =  builder.default.store
             const router = builder.default.router
             const self = this
