@@ -128,10 +128,10 @@ npm run dev
 
 6. Access Builder Instance Directive From Outside
 ```javascript
-    <YOUR_PARAMETER>.$el.firstChild.__vue__.<YOUR_DIRECTIVE(DATA, PROPS, METHODS, ...)>
+    <YOUR_PARAMETER>.$el.__vue__.<YOUR_DIRECTIVE(DATA, PROPS, METHODS, ...)>
 
     such as
-        this.builder.$el.firstChild.__vue__.onUpdateScreen()
+        this.builder.$el.__vue__.onUpdateScreen()
 ```
 
 <br>
