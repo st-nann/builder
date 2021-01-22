@@ -126,14 +126,22 @@ npm run dev
 |id                                      |up to you                 |`string`  |*for create element (default: builder). Mutiple element should be setup difference name*      |
 <br>
 
-6. Access Builder Instance Directive From Outside
+6. Import Style To Component
+```javascript
+    <style lang="scss">
+        @import '~/node_modules/vue-builder-plugin/src/assets/scss/Main.scss';
+        @import '~/node_modules/vue-builder-plugin/src/assets/css/quill.core.css';
+        @import '~/node_modules/vue-builder-plugin/src/assets/css/quill.snow.css';
+    </style>
+```
+
+7. Access Builder Instance Directive From Outside
 ```javascript
     <YOUR_PARAMETER>.$el.__vue__.<YOUR_DIRECTIVE(DATA, PROPS, METHODS, ...)>
 
     such as
         this.builder.$el.__vue__.onUpdateScreen()
 ```
-
 <br>
 
 
