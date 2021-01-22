@@ -17,60 +17,121 @@ or
 npm run dev
 ```
 
-3. Import Package to Vue Component
+3. Setup Data To Local Storage
+```javascript
+
+    get storageBaseUrl() {
+        return <YOUR_STORAGE_BASEURL>
+    }
+
+    get storageToken() {
+        return <YOUR_PERSONALIZE_TOKEN>
+    }
+
+    [Optional]
+    get personalizeBaseUrl() {
+        return <YOUR_PERSONALIZE_BASEURL>
+    }
+
+    get personalizeToken() {
+        return <YOUR_PERSONALIZE_TOKEN>
+    }
+
+    created() {
+        if (process.client) {
+            localStorage['storage-baseurl'] = this.storageBaseUrl
+            localStorage['storage-token'] = this.storageToken
+
+            [Optional]
+            localStorage['personalize-baseurl'] = this.personalizeBaseUrl
+            localStorage['personalize-token'] = this.personalizeToken
+        }
+    }
+```
+<br>
+
+| attribute                              |value                     |type      |description                                                                                   |
+|----------------------------------------|:------------------------:|:--------:| -------------------------------------------------------------------------------------------- |
+|storageBaseUrl                          |up to you                 |`string`  |*for get or upload image* (ex. [GET] `<BASEURL>/galleries`, [POST] `<BASEURL>/uploader/public`|
+|storageToken                            |up to you                 |`string`  |*for access api get or upload image*                                                          |
+|personalizeBaseUrl (optional)           |up to you                 |`string`  |*for get personalize* (ex. [GET] `<BASEURL>/customers/attributes`)*                           |
+|personalizeToken (optional)             |up to you                 |`string`  |*for access api get personalize*                                                              |
+
+4. Import Module And Create Instance Vue Component
 ```javascript
     [Vue]
     mounted() {
-        require('~/node_modules/vue-builder-plugin/src/main')
+        const builder: any = require('~/node_modules/vue-builder-plugin/src/plugins/builder')
+        const store =  builder.default.store
+        const router = builder.default.router
+        const self = this
+        this.builder = new Vue({
+            router,
+            store,
+            render: (h) =>
+                h(builder.default.component, {
+                    props: { propTemplateJson: this.propTemplateJson },
+                    on: {
+                        change(templateJson: any) {
+                            self.$emit('change', (templateJson && !_.isEmpty(templateJson) ? templateJson : {}))
+                        }
+                    }
+                })
+        }).$mount(`#${this.id}`)
     }
 
     [Nuxt.js]
     mounted() {
         if (process.client) {
-            require('~/node_modules/vue-builder-plugin/src/main')
+            const builder: any = require('~/node_modules/vue-builder-plugin/src/plugins/builder')
+            const store =  builder.default.store
+            const router = builder.default.router
+            const self = this
+            this.builder = new Vue({
+                router,
+                store,
+                render: (h) =>
+                    h(builder.default.component, {
+                        props: { propTemplateJson: this.propTemplateJson },
+                        on: {
+                            change(templateJson: any) {
+                                self.$emit('change', (templateJson && !_.isEmpty(templateJson) ? templateJson : {}))
+                            }
+                        }
+                    })
+            }).$mount(`#${this.id}`)
         }
     }
-```
-
-4. Use Component
-```html
-    <div @click="onUpdateTemplate">
-        <div
-            id="builder"
-            class="builder-template-container"
-            :data-personalize-baseurl="https://stg-cms.pams.ai/api"
-            :data-personalize-token="personalizetoken"
-            :data-storage-baseurl="https://stg-ecom.pams.ai/api/backend"
-            :data-storage-token="storagetoken"
-            :data-prop-template="JSON.stringify(propTemplateJson)"
-        />
-    </div>
 ```
 
 | attribute                              |value                     |type      |description                                                                                   |
 |----------------------------------------|:------------------------:|:--------:| -------------------------------------------------------------------------------------------- |
 |id                                      |up to you                 |`string`  |*for create element (default: builder). Mutiple element should be setup difference name*      |
-|class                                   |builder-template-container|`string`  |*for get all element class 'builder-template-container' to assign data                        |
-|:data-personalize-baseurl (optional)    |up to you                 |`string`  |*for get personalize* (ex. [GET] `<BASEURL>/customers/attributes`)*                           |
-|:data-personalize-token (optional)      |up to you                 |`string`  |*for access api get personalize*                                                              |
-|:data-storage-baseurl                   |up to you                 |`string`  |*for get or upload image* (ex. [GET] `<BASEURL>/galleries`, [POST] `<BASEURL>/uploader/public`|
-|:data-storage-token                     |up to you                 |`string`  |*for access api get or upload image*                                                          |
-|:data-prop-template (optional)          |up to you                 |`string`  |*for setup default prop your template json*                                                   |
-|@click="<YOUR_FUNCTION_NAME>" (optional)|up to you                 |`function`|*for get result on function*                                                                  |
+|store                                   |-                         |-         |*for use store in builder component module*                                                   |
+|router                                  |-                         |-         |*for use router in builder component module*                                                  |
+|propTemplateJson                        |up to you                 |`object`  |*for setup default prop your template json (pass to builder module)*                          |
+|this.builder                            |up to you                 |`any`     |*for save vue instance data (parameter in your component)*                                    |
+|render                                  |-                         |`function`|*for render component*                                                                        |
+|change(templateJson: any)               |-                         |`function`|*for pass updated data from child (module component) to parent (your component) component*    |
+|.$mount(`#${this.id}`)                  |-                         |-         |*for create instance vue*                                                                     |
 <br>
 
-5. Access Result Template
-```javascript
-    [Not pass props: data-prop-template]
-    JSON.parse((this.$el.firstChild as any).dataset.resultTemplate))
-
-    [Pass props: data-prop-template]
-    JSON.parse((this.$el.firstChild as any).dataset.propTemplate))
+5. Use Component
+```html
+    <div id="builder" />
 ```
+
+| attribute                              |value                     |type      |description                                                                                   |
+|----------------------------------------|:------------------------:|:--------:| -------------------------------------------------------------------------------------------- |
+|id                                      |up to you                 |`string`  |*for create element (default: builder). Mutiple element should be setup difference name*      |
+<br>
 
 6. Access Builder Instance Directive From Outside
 ```javascript
-    (this.$el.firstChild as any).__vue__.<YOUR_DIRECTIVE(DATA, PROPS, METHODS, ...)>
+    <YOUR_PARAMETER>.$el.firstChild.__vue__.<YOUR_DIRECTIVE(DATA, PROPS, METHODS, ...)>
+
+    such as
+        this.builder.$el.firstChild.__vue__.onUpdateScreen()
 ```
 
 <br>
