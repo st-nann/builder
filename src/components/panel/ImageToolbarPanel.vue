@@ -5,7 +5,7 @@
         v-bind="$props"
         :management="management"
         class="toobar-panel-image-width"
-        customKeyValue="width"
+        customKeyValue="max-width"
         @change="onUpdateWidth"
       />
     </div>

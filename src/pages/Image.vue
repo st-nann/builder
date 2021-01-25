@@ -2,9 +2,9 @@
   <span
     :style="elementProps.flexbox && elementProps.flexbox
       ? `
-        ${elementProps.flexbox['flex-grow']} ? flex-grow: ${elementProps.flexbox['flex-grow']}; : ''
-        ${elementProps.flexbox['flex-basis']} ? flex-basis: ${elementProps.flexbox['flex-basis']}; : ''
-        ${elementProps.flexbox['max-width']} ? flex-grow: ${elementProps.flexbox['max-width']}; : ''
+        ${elementProps.flexbox['flex-grow'] ? `flex-grow: ${elementProps.flexbox['flex-grow']};` : ''}
+        ${elementProps.flexbox['flex-basis'] ? `flex-basis: ${elementProps.flexbox['flex-basis']};` : '' }
+        ${elementProps.flexbox['max-width'] ? `flex-grow: ${elementProps.flexbox['max-width']};` : '' }
         height: 100%;
       `
       : ''"
@@ -19,8 +19,12 @@
         <img
           v-if="elementProps.url"
           :src="elementProps.url"
-          :width="elementProps.width || '350'"
-          :style="`${propsAlignStyle} ${propsJustifyStyle}`"
+          :style="`
+            ${propsAlignStyle}
+            ${propsJustifyStyle}
+            width: ${`${elementProps.width};` || '100%;'}
+            max-width: ${`${elementProps['max-width']};` || '350px;'}
+          `"
           class="image-content"
         />
       </template>
@@ -234,11 +238,13 @@ export default class ImagePage extends BaseComponent {
     if (JSON.stringify(this.previewData) !== '{}') {
       const border = this.previewData['border-bottom']
       const backgroundColor = this.previewData['background-color']
+      const maxWidth = this.previewData['max-width']
       const width = this.previewData.width
       const justify = this.previewData.flexbox ? this.previewData.flexbox['justify-content'] : ''
       const align = this.previewData.flexbox ? this.previewData.flexbox['align-items'] : ''
       if (border) { previewContainerStyle['border-bottom'] = `${border.width} ${border.style} ${border.color}` }
       if (backgroundColor) { previewContainerStyle['background-color'] = backgroundColor }
+      if (maxWidth) { previewImageStyle['max-width'] = maxWidth }
       if (width) { previewImageStyle.width = width }
       if (justify) { previewContainerStyle['justify-content'] = justify }
       if (align) { previewContainerStyle['align-items'] = align }

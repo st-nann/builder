@@ -204,15 +204,13 @@ div:not([class*="disable-event"]) > * ~ a {
         .box-margin {
             margin-bottom: 70px;
         }
-        
-        .image-content,
-        .button-content {
-            @extend .box-margin;
-        }
 
         .text-content {
             @extend .box-margin;
             word-break: break-all;
+        }
+        .image-content {
+            @extend .box-margin;
         }
 
         .button-content {

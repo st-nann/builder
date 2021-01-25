@@ -36,7 +36,8 @@ export const IMAGE_DEFAULT: IImage = {
             'flex-basis': '100%',
             'max-width': '100%'
         },
-        width: '350px'
+        width: '100%',
+        'max-width': '350px'
     }
 }
 
@@ -73,7 +74,8 @@ export const BOX_DEFAULT: IBox = {
             'max-width': '100%',
             'flex-direction': EDirection.COLUMN
         },
-        padding: '20px'
+        padding: '20px',
+        width: '-webkit-fill-available'
     },
     children: [{
         element: EElementType.CONTAINER,
