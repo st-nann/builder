@@ -2,7 +2,7 @@
 
 ### How to use plugin
 
-**Build Package (Include Store)**
+**Solution 1:** *Build Package (Include Store)*
 1. Run Command
 ```
 yarn add vue-builder-plugin
@@ -142,6 +142,66 @@ npm run dev
     such as
         this.builder.$el.__vue__.onUpdateScreen()
 ```
+<br>
+
+
+**Solution 2:** *Git Repo (Exclude Store)*
+1. Add Dependencies in package.json
+```json
+    "vue-builder-plugin": "git+ssh://git@bitbucket.org:3dsinteractive/pam-builder.git"
+```
+
+2. Run Command
+```
+yarn add vue-builder-plugin
+```
+or
+```
+npm install vue-builder-plugin --save
+```
+
+3. Create .env file
+```
+NODE_ENV=development
+VUE_APP_TITLE=Builder
+VUE_APP_BASE_URL_PERSONALIZE=<Base URL API text personalize>
+VUE_APP_BASE_URL_STORAGE=<Base URL API image storage>
+VUE_APP_ADMIN_USERNAME=<Username for access to image storage>
+VUE_APP_ADMIN_PASSWORD=<Password for access to image storage>
+```
+
+4. Import Component in main.ts or main.js
+```javascript
+    import Components from 'vue-builder-plugin/src/plugins/Index.ts'
+
+    Vue.use(Components)
+```
+5. Use Component
+```html
+    <BuilderTemplate></BuilderTemplate>
+```
+
+### How to Build and Publish Package (Self Reminder)
+1. Setup package.json (Change version)
+2. Setup tsconfig.json
+3. Run Command
+```
+yarn build:ts
+```
+or
+```
+npm run build:ts
+```
+4. Register [NPM](https://www.npmjs.com)
+5. [In Your Project Plugin] npm login and type username, password, email
+6. Run Command (Every publish must be change version in package.json)
+```
+npm publish
+```
+* remark: [Unpublish version] Run `npm unpublish <PACKAGE_NAME>@<VERSION>` such as `npm unpublish vue-builder-plugin@0.0.1`
+* remark: [Deprecate version] Run `npm deprecate -f <PACKAGE_NAME>@<VERSION> '<REASON>'` such as `npm deprecate -f vue-builder-plugin@0.0.1 'Have New Version'`
+* remark: [Add User NPM for Delete Package] Run `npm owner add npm <PACKAGE_NAME>` such as `npm owner add npm vue-builder-plugin`
+* remark: [Delete Your User of Package] Run `npm owner rm <USER> <PACKAGE_NAME>` such as `npm owner rm username vue-builder-plugin`
 <br>
 
 ### Project setup

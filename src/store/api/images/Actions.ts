@@ -58,7 +58,7 @@ const actions: ActionTree<ImageState, IState> = {
           }, 1000)
           setTimeout(() => {
             store.dispatch(`images/updateUploadImage`, { [payload.data.name] : percentUploading })
-          }, 3000)
+          }, 5000)
         }
       }
     })
