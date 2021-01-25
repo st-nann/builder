@@ -2,9 +2,10 @@
   <span
     :style="elementProps.flexbox && elementProps.flexbox
       ? `
-        ${elementProps.flexbox['flex-grow']} ? flex-grow: ${elementProps.flexbox['flex-grow']}; : ''
-        ${elementProps.flexbox['flex-basis']} ? flex-basis: ${elementProps.flexbox['flex-basis']}; : ''
-        ${elementProps.flexbox['max-width']} ? flex-grow: ${elementProps.flexbox['max-width']}; : ''
+        ${elementProps.flexbox['flex-grow'] ? `flex-grow: ${elementProps.flexbox['flex-grow']};` : ''}
+        ${elementProps.flexbox['flex-basis'] ? `flex-basis: ${elementProps.flexbox['flex-basis']};` : '' }
+        ${elementProps.flexbox['max-width'] ? `flex-grow: ${elementProps.flexbox['max-width']};` : '' }
+        ${elementProps.width ? `width: ${elementProps.width};` : 'width: -webkit-fill-available' }
         height: 100%;
       `
       : ''"
@@ -17,18 +18,21 @@
     >
       <template slot="content">
         <div
-          :style="{
-            'flex-grow': `${
-              elementProps.flexbox && elementProps.flexbox['flex-grow']
-                ? elementProps.flexbox['flex-grow']
-                : 1
-            }`,
-            'padding': `${
-              elementProps.padding && elementProps.padding['padding-y'] ? elementProps.padding['padding-y'] : '20px'
-            } ${
-              elementProps.padding && elementProps.padding['padding-x'] ? elementProps.padding['padding-x'] : '20px'
-            }`
-          }"
+          :style="[
+            {
+              'flex-grow': `${
+                elementProps.flexbox && elementProps.flexbox['flex-grow']
+                  ? elementProps.flexbox['flex-grow']
+                  : 1
+              }`,
+              'padding': `${
+                elementProps.padding && elementProps.padding['padding-y'] ? elementProps.padding['padding-y'] : '20px'
+              } ${
+                elementProps.padding && elementProps.padding['padding-x'] ? elementProps.padding['padding-x'] : '20px'
+              }`,
+              'width': `${elementProps.width ? `${elementProps.width};` : '-webkit-fill-available' }`
+            }
+          ]"
         >
           <slot/>
         </div>

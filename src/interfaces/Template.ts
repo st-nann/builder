@@ -54,6 +54,7 @@ export interface IImage {
         url?: string
         compress?: boolean
         width?: string
+        'max-width'?: string
     }
 }
 
@@ -121,7 +122,8 @@ export interface IBox {
             style: string
             color: string
         },
-        padding?: string
+        padding?: string,
+        width?: string | number
     },
     children: [{
         id?: string

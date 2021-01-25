@@ -58,8 +58,13 @@
           state.element === EElementType.CONTAINER &&
           state.props.flexbox['flex-direction'] === EDirection.ROW
         ) {
-          this.containerId.push(state.id)
-          state.props.flexbox['flex-direction'] = EDirection.COLUMN
+          if (
+            state.props.parent !== EElementType.BOX &&
+            !_.every(state.children, { element: EElementType.IMAGE })
+          ) {
+            this.containerId.push(state.id)
+            state.props.flexbox['flex-direction'] = EDirection.COLUMN
+          }
         }
       }
 
