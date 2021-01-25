@@ -63,7 +63,8 @@
                         @click="item.uploading ? '' : doSelectImage(item.url)"
                     >
                         <div class="search-list-item-image-container">
-                            <img class="search-list-item-image" :src="item.url" />
+                            <div v-if="loadingImage && index === 0"/>
+                            <img v-else class="search-list-item-image" :src="`${item.url}`" />
                         </div>
                         <div class="search-list-item-detail">
                             <div class="image-complete">
@@ -115,6 +116,7 @@ export default class ImageAssetContent extends BaseComponent {
     @Prop(String) imageUrl!: string
 
     uploading = true
+    loadingImage = false
     url = this.imageUrl
     filterImageLists: IImageItem[] = []
 
@@ -167,15 +169,29 @@ export default class ImageAssetContent extends BaseComponent {
             this.uploading = false
             await this.updateUploadLists({ data: _.concat(this.uploadLists, [value]) })
             await this.uploadImage({ data: value })
-            await this.getImages({ params: { limit: 9999999 } })
-                .then(() => { this.updateUploadLists({ data: [] }) })
-            this.doFilterImages()
+            this.doGetLoopImage()
         } else {
             AlertMsgError({
                 title: 'Can\'t Upload Image',
                 text: value.message
             })
         }
+    }
+
+    async doGetLoopImage() {
+        this.$nextTick(() => {
+            _.forEach(this.uploadLists, async (item: any) => {
+                await this.getImages({ params: { limit: 9999999 } })
+                if (!_.isEmpty(this.uploadPercent[item.name])) {
+                    const percent: any = this.uploadPercent[item.name]
+                    if (percent < 100) { this.doGetLoopImage() }
+                }
+                this.loadingImage = true
+                await this.updateUploadLists({ data: [] }) 
+                await this.doFilterImages()
+                setTimeout(() => { this.loadingImage = false }, 1)
+            })
+        })
     }
 
     doEmitGetImage() {
