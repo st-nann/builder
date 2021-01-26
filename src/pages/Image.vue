@@ -19,12 +19,14 @@
         <img
           v-if="elementProps.url"
           :src="elementProps.url"
-          :style="{
+          :style="[
             propsAlignStyle,
             propsJustifyStyle,
-            'width': `${elementProps.width || '100%'};`,
-            'max-width': `${elementProps['max-width'] || '350px'};`
-          }"
+            {
+              'width': `${elementProps.width || '100%'};`,
+              'max-width': `${elementProps['max-width'] || '350px'};`
+            }
+          ]"
           class="image-content"
         />
       </template>
