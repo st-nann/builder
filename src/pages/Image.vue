@@ -19,15 +19,15 @@
         <img
           v-if="elementProps.url"
           :src="elementProps.url"
+          class="image-content"
           :style="[
             propsAlignStyle,
             propsJustifyStyle,
             {
-              'width': `${elementProps.width || '100%'};`,
-              'max-width': `${elementProps['max-width'] || '350px'};`
+              width: elementProps.width || '100%;',
+              'max-width': elementProps['max-width'] || '350px',
             }
           ]"
-          class="image-content"
         />
       </template>
       <template slot="button-management">

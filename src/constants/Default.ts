@@ -21,6 +21,7 @@ export const TEXT_DEFAULT: IText = {
         flexbox: {
             'flex-grow': 1
         },
+        'max-width': 'fit-content',
         'word-break': 'break-all'
     }
 }
