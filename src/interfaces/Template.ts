@@ -28,6 +28,7 @@ export interface IText {
             style: string
             color: string
         },
+        'max-width': string
         'word-break': string
         html?: string
     }

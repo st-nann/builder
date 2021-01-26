@@ -20,11 +20,18 @@
           v-if="elementProps.name"
           class="button-content"
           :style="[
-            propsStyle,
+            propsButtonStyle,
             { 'height': elementProps.height || 'max-content;' }
           ]"
         >
-          <a class="button-link" :href="elementProps.link" target="_blank">{{ elementProps.name }}</a>
+          <a
+            class="button-link"
+            :href="elementProps.link"
+            target="_blank"
+            :style="[propsTextButtonStyle]"
+          >
+            {{ elementProps.name }}
+          </a>
         </button>
       </template>
       <template slot="button-management">
@@ -89,23 +96,28 @@ export default class ButtonPage extends BaseComponent {
     return style
   }
 
-  get propsStyle() {
+  get propsButtonStyle() {
     return {
       ...this.elementProps,
+      ['background-color']: this.elementProps.font && this.elementProps['button-background-color']
+        ? this.elementProps['button-background-color']
+        : undefined,
+      border: this.elementProps.border
+        ? `${this.elementProps.border.width} ${this.elementProps.border.style} ${this.elementProps.border.color}`
+        : undefined
+    }
+  }
+
+  get propsTextButtonStyle() {
+    return {
       ['font-family']: this.elementProps.font && this.elementProps.font['font-family']
         ? this.elementProps.font['font-family']
         : undefined,
       ['font-size']: this.elementProps.font && this.elementProps.font['font-size']
         ? this.elementProps.font['font-size']
         : undefined,
-      ['background-color']: this.elementProps.font && this.elementProps['button-background-color']
-        ? this.elementProps['button-background-color']
-        : undefined,
       color: this.elementProps.font && this.elementProps.font.color
         ? this.elementProps.font.color
-        : undefined,
-      border: this.elementProps.border
-        ? `${this.elementProps.border.width} ${this.elementProps.border.style} ${this.elementProps.border.color}`
         : undefined
     }
   }
