@@ -4,8 +4,6 @@
       elementProps.flexbox
         ? {
             'flex-grow': `${elementProps.flexbox['flex-grow'] ? elementProps.flexbox['flex-grow'] : 1 };`,
-            'flex-basis': `${elementProps.flexbox['flex-basis'] ? elementProps.flexbox['flex-basis'] : '100%' };`,
-            'max-width': `${elementProps.flexbox['max-width'] ? elementProps.flexbox['max-width'] : '100%' };`,
             'height': '100%;'
           }
         : ''
@@ -22,6 +20,10 @@
           v-if="contentHtml !== null"
           :id="`content-${elementId}`"
           class="ql-editor text-content"
+          :style="{
+            'max-width': elementProps['max-width'] || 'fit-content',
+            'word-break': elementProps['word-break'] || 'break-all'
+          }"
           v-html="contentHtml"
         />
       </template>

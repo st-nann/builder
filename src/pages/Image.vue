@@ -4,8 +4,6 @@
       elementProps.flexbox
         ? {
             'flex-grow': `${elementProps.flexbox['flex-grow'] ? elementProps.flexbox['flex-grow'] : 1 };`,
-            'flex-basis': `${elementProps.flexbox['flex-basis'] ? elementProps.flexbox['flex-basis'] : '100%' };`,
-            'max-width': `${elementProps.flexbox['max-width'] ? elementProps.flexbox['max-width'] : '100%' };`,
             'height': '100%;'
           }
         : ''
@@ -21,12 +19,12 @@
         <img
           v-if="elementProps.url"
           :src="elementProps.url"
-          :style="`
-            ${propsAlignStyle}
-            ${propsJustifyStyle}
-            width: ${`${elementProps.width};` || '100%;'}
-            max-width: ${`${elementProps['max-width']};` || '350px;'}
-          `"
+          :style="{
+            propsAlignStyle,
+            propsJustifyStyle,
+            'width': `${elementProps.width || '100%'};`,
+            'max-width': `${elementProps['max-width'] || '350px'};`
+          }"
           class="image-content"
         />
       </template>
