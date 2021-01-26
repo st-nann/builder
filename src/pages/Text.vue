@@ -21,7 +21,6 @@
           :id="`content-${elementId}`"
           class="ql-editor text-content"
           :style="{
-            'max-width': elementProps['max-width'] || 'fit-content',
             'word-break': elementProps['word-break'] || 'break-all'
           }"
           v-html="contentHtml"
