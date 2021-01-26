@@ -8,8 +8,6 @@ export interface IContainer {
         flexbox: {
             display: string
             'flex-grow': number
-            'flex-basis': string
-            'max-width': string
             'flex-direction': EDirection.ROW | EDirection.COLUMN
         },
         background?: string,
@@ -23,8 +21,6 @@ export interface IText {
     props?: {
         flexbox: {
             'flex-grow': number
-            'flex-basis': string
-            'max-width': string
         },
         background?: string
         'border-bottom'?: {
@@ -32,6 +28,8 @@ export interface IText {
             style: string
             color: string
         },
+        'max-width': string
+        'word-break': string
         html?: string
     }
 }
@@ -41,8 +39,6 @@ export interface IImage {
     props: {
         flexbox: {
             'flex-grow': number
-            'flex-basis': string
-            'max-width': string
         },
         background?: string
         'border-bottom'?: {
@@ -63,8 +59,6 @@ export interface ISpacer {
     props?: {
         flexbox: {
             'flex-grow': number
-            'flex-basis': string
-            'max-width': string
         },
         background?: string
         'border-bottom'?: {
@@ -81,8 +75,6 @@ export interface IButton {
     props: {
         flexbox: {
             'flex-grow': number
-            'flex-basis': string
-            'max-width': string
         },
         background?: string
         'border-bottom'?: {
@@ -102,7 +94,8 @@ export interface IButton {
             style: string
             color: string
             radius: string
-        }
+        },
+        height: string
     }
 }
 
@@ -112,8 +105,6 @@ export interface IBox {
         flexbox: {
             display: string
             'flex-grow': number
-            'flex-basis': string
-            'max-width': string
             'flex-direction': EDirection.COLUMN
         },
         background?: string
@@ -134,8 +125,6 @@ export interface IBox {
             flexbox: {
                 display: string
                 'flex-grow': number
-                'flex-basis': string
-                'max-width': string
                 'flex-direction': EDirection.ROW
             }
         },

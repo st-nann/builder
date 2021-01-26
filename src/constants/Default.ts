@@ -9,8 +9,6 @@ export const CONTAINER_DEFAULT: IContainer = {
         flexbox: {
             display: 'flex',
             'flex-grow': 1,
-            'flex-basis': '100%',
-            'max-width': '100%',
             'flex-direction': EDirection.ROW
         }
     },
@@ -21,10 +19,10 @@ export const TEXT_DEFAULT: IText = {
     element: EElementType.TEXT,
     props: {
         flexbox: {
-            'flex-grow': 1,
-            'flex-basis': '100%',
-            'max-width': '100%'
-        }
+            'flex-grow': 1
+        },
+        'max-width': 'fit-content',
+        'word-break': 'break-all'
     }
 }
 
@@ -32,9 +30,7 @@ export const IMAGE_DEFAULT: IImage = {
     element: EElementType.IMAGE,
     props: {
         flexbox: {
-            'flex-grow': 1,
-            'flex-basis': '100%',
-            'max-width': '100%'
+            'flex-grow': 1
         },
         width: '100%',
         'max-width': '350px'
@@ -45,9 +41,7 @@ export const SPACER_DEFAULT: ISpacer = {
     element: EElementType.SPACER,
     props: {
         flexbox: {
-            'flex-grow': 1,
-            'flex-basis': '100%',
-            'max-width': '100%'
+            'flex-grow': 1
         },
         height: '80px'
     }
@@ -57,10 +51,9 @@ export const BUTTON_DEFAULT: IButton = {
     element: EElementType.BUTTON,
     props: {
         flexbox: {
-            'flex-grow': 1,
-            'flex-basis': '100%',
-            'max-width': '100%'
-        }
+            'flex-grow': 1
+        },
+        height: 'max-content'
     }
 }
 
@@ -70,8 +63,6 @@ export const BOX_DEFAULT: IBox = {
         flexbox: {
             display: 'flex',
             'flex-grow': 1,
-            'flex-basis': '100%',
-            'max-width': '100%',
             'flex-direction': EDirection.COLUMN
         },
         padding: '20px',
@@ -84,8 +75,6 @@ export const BOX_DEFAULT: IBox = {
             flexbox: {
                 display: 'flex',
                 'flex-grow': 1,
-                'flex-basis': '100%',
-                'max-width': '100%',
                 'flex-direction': EDirection.ROW
             }
         },

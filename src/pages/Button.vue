@@ -4,8 +4,6 @@
       elementProps.flexbox
         ? {
             'flex-grow': `${elementProps.flexbox['flex-grow'] ? elementProps.flexbox['flex-grow'] : 1 };`,
-            'flex-basis': `${elementProps.flexbox['flex-basis'] ? elementProps.flexbox['flex-basis'] : '100%' };`,
-            'max-width': `${elementProps.flexbox['max-width'] ? elementProps.flexbox['max-width'] : '100%' };`,
             'height': '100%;'
           }
         : ''
@@ -21,7 +19,10 @@
         <button
           v-if="elementProps.name"
           class="button-content"
-          :style="propsStyle"
+          :style="[
+            propsStyle,
+            { 'height': elementProps.height || 'max-content;' }
+          ]"
         >
           <a class="button-link" :href="elementProps.link" target="_blank">{{ elementProps.name }}</a>
         </button>
