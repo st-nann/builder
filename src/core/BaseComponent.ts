@@ -12,7 +12,7 @@ export default class BaseComponent extends Base {
   @Prop(String) readonly elementId!: string
   @Prop(String) readonly elementName!: string
   @Prop() readonly elementProps!: any
-  @Prop() readonly screen!: IScreen
+  @Prop() readonly elementScreen!: IScreen
   @Prop(String) readonly name!: string
   @Prop(String) readonly label!: string
   @Prop(String) readonly placeholder!: string

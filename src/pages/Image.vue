@@ -1,7 +1,7 @@
 <template>
   <span
     :style="`
-      width: ${screen.mobile ? 'calc(100%)' : 'calc(0%)'};
+      width: ${elementScreen.mobile ? 'calc(100%)' : 'calc(0%)'};
       flex-grow: ${elementProps.flexbox && elementProps.flexbox['flex-grow'] ? elementProps.flexbox['flex-grow'] : 1 };
     `"
   >
