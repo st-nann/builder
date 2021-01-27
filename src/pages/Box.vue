@@ -1,8 +1,8 @@
 <template>
   <span
     :style="`
-      width: ${elementProps.width ? elementProps.width : '-webkit-fill-available' };
-      flex-grow: ${elementProps.flexbox && elementProps.flexbox['flex-grow'] ? elementProps.flexbox['flex-grow'] : 1 }
+      width: ${screen.mobile ? 'calc(100%)' : 'calc(0%)'};
+      flex-grow: ${elementProps.flexbox && elementProps.flexbox['flex-grow'] ? elementProps.flexbox['flex-grow'] : 1 };
     `"
   >
     <BoxComponent

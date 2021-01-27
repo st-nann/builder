@@ -65,8 +65,7 @@ export const BOX_DEFAULT: IBox = {
             'flex-grow': 1,
             'flex-direction': EDirection.COLUMN
         },
-        padding: '20px',
-        width: '-webkit-fill-available'
+        padding: '20px'
     },
     children: [{
         element: EElementType.CONTAINER,
