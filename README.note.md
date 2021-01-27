@@ -148,7 +148,11 @@ npm run dev
 **Solution 2:** *Git Repo (Exclude Store)*
 1. Add Dependencies in package.json
 ```json
-    "vue-builder-plugin": "git+ssh://git@bitbucket.org:3dsinteractive/pam-builder.git"
+    "vue-builder-plugin": "git+ssh://git@bitbucket.org:<WORKSPACE>/<REPOSITORY>.git"
+
+    or
+
+    "vue-builder-plugin": "https://<USERNAME>:<PASSWORD>@bitbucket.org/<WORKSPACE>/<REPOSITORY>.git"
 ```
 
 2. Run Command
