@@ -109,7 +109,7 @@
           elementId: state.id,
           elementName: _.capitalize(state.element),
           elementProps: _.cloneDeep(state.props),
-          screen: this.screen
+          elementScreen: this.screen
         },
         on: {
           add: (value: any) => {
