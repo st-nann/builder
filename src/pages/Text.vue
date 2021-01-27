@@ -1,18 +1,14 @@
 <template>
   <span
-    :style="
-      elementProps.flexbox
-        ? {
-            'flex-grow': `${elementProps.flexbox['flex-grow'] ? elementProps.flexbox['flex-grow'] : 1 };`,
-            'height': '100%;'
-          }
-        : ''
-    "
+    :style="`
+      width: calc(0%); 
+      flex-grow: ${elementProps.flexbox && elementProps.flexbox['flex-grow'] ? elementProps.flexbox['flex-grow'] : 1 }
+    `"
   >
     <BoxComponent
       v-bind="$props"
       :management="management"
-      :style="`${contentHtml ? 'min-height: auto; justify-content: center;' : ''}`"
+      :style="`${contentHtml ? 'min-height: auto;' : ''}`"
       @click="doEmitAddElement"
     >
       <template slot="content">
@@ -20,10 +16,7 @@
           v-if="contentHtml !== null"
           :id="`content-${elementId}`"
           class="ql-editor text-content"
-          :style="{
-            'max-width': elementProps['max-width'] || 'fit-content',
-            'word-break': elementProps['word-break'] || 'break-all'
-          }"
+          :style="{ 'word-break': elementProps['word-break'] || 'break-all' }"
           v-html="contentHtml"
         />
       </template>
