@@ -1,14 +1,9 @@
 <template>
   <span
-    :style="
-      elementProps.flexbox
-        ? {
-            'flex-grow': `${elementProps.flexbox['flex-grow'] ? elementProps.flexbox['flex-grow'] : 1 };`,
-            'width': `${elementProps.width ? elementProps.width : '-webkit-fill-available' };`,
-            'height': '100%;'
-          }
-        : ''
-    "
+    :style="`
+      width: ${elementProps.width ? elementProps.width : '-webkit-fill-available' };
+      flex-grow: ${elementProps.flexbox && elementProps.flexbox['flex-grow'] ? elementProps.flexbox['flex-grow'] : 1 }
+    `"
   >
     <BoxComponent
       v-bind="$props"

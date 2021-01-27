@@ -1,7 +1,6 @@
 <template>
   <span
     :style="`
-      height: 100%;
       width: calc(0%); 
       flex-grow: ${elementProps.flexbox && elementProps.flexbox['flex-grow'] ? elementProps.flexbox['flex-grow'] : 1 }
     `"
