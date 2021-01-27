@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { Base } from './Base'
 import { Component, Prop, Watch } from 'vue-property-decorator'
-import { IFlexbox, IModal } from '../interfaces/Components'
+import { IFlexbox, IModal, IScreen } from '../interfaces/Components'
 import { EElementType } from '../enum/Elements'
 import { EDirection } from '../enum/Components'
 
@@ -12,6 +12,7 @@ export default class BaseComponent extends Base {
   @Prop(String) readonly elementId!: string
   @Prop(String) readonly elementName!: string
   @Prop() readonly elementProps!: any
+  @Prop() readonly screen!: IScreen
   @Prop(String) readonly name!: string
   @Prop(String) readonly label!: string
   @Prop(String) readonly placeholder!: string

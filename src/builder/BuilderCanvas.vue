@@ -108,7 +108,8 @@
           elementState: state,
           elementId: state.id,
           elementName: _.capitalize(state.element),
-          elementProps: _.cloneDeep(state.props)
+          elementProps: _.cloneDeep(state.props),
+          screen: this.screen
         },
         on: {
           add: (value: any) => {

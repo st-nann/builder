@@ -113,8 +113,7 @@ export interface IBox {
             style: string
             color: string
         },
-        padding?: string,
-        width?: string | number
+        padding?: string
     },
     children: [{
         id?: string
