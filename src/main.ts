@@ -20,5 +20,5 @@ setTimeout(() => {
     router,
     store,
     render: (h) => h(BuilderTemplate)
-  }).$mount('#builder')
+  }).$mount(`#${localStorage.id}`)
 }, 1000)
