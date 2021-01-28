@@ -221,6 +221,8 @@ export default class BaseComponent extends Base {
         props: {
           ...this.data,
           flexbox: {
+            'display': this.data.flexbox['display'] ? this.data.flexbox['display'] : undefined,
+            'flex-direction': this.data.flexbox['flex-direction'] ? this.data.flexbox['flex-direction'] : undefined,
             'align-items': this.data.flexbox['align-items'],
             'justify-content': this.data.flexbox['justify-content'],
             'flex-grow': this.scale.flexbox['flex-grow'] ? this.scale.flexbox['flex-grow'] : 1
