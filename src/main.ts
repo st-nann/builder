@@ -13,6 +13,8 @@ Vue.config.productionTip = false
 Vue.use(Components)
 Vue.use(VueHighlightJS)
 
+localStorage.id = 'builder'
+
 setTimeout(() => {
   (window as any).vm = new Vue({
     router,
