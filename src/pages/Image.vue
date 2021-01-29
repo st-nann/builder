@@ -97,6 +97,7 @@
           :imageUrl="imageUrl"
           @change="onUpdatePreview"
           @click="onUpdateFooterPanelData"
+          @cancel="onUpdateCancel"
         />
       </template>
     </ModalComponent>

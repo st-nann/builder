@@ -119,7 +119,7 @@ export default class FooterPanel extends BaseComponent {
   }
 
   doEmitCancel() {
-    this.$emit('click')
+    this.$emit('cancel')
   }
 
   @Watch('management.edit')

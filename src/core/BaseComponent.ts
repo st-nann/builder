@@ -173,7 +173,6 @@ export default class BaseComponent extends Base {
   onUpdateManagement(data: any) {
     this.data = {}
     this.action = data
-    this.$emit('updataManagement', this.action)
     if (this.action.edit) {
       Object.assign(this.data, this.elementProps)
     }
@@ -197,13 +196,18 @@ export default class BaseComponent extends Base {
   onUpdateFooterPanelData(data: any) {
     this.footerData = data
     this.action.edit = false
-    this.$emit('updataManagement', this.action)
     this.isCancel = true
     if (data) {
       this.isCancel = false
       Object.assign(this.data, data)
       this.doEmitData()
     }
+  }
+
+  onUpdateCancel() {
+    this.action.edit = false
+    this.action.done = false
+    this.data = {}
   }
 
   doEmitData() {
