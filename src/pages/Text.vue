@@ -166,7 +166,7 @@ export default class TextPage extends BaseComponent {
     this.editor.focus()
     const position = this.editor.getSelection()
     const cursor = position.index
-    this.editor.insertText(cursor, personalize, { 'color': '#0DAEFF', 'size': 'small', 'italic': true })
+    this.editor.insertText(cursor, personalize, { 'color': '#000000', 'size': 'small', 'italic': true })
     this.editor.format('color', '#000000')
     this.editor.format('size', false)
     this.editor.format('italic', false)
