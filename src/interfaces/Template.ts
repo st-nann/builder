@@ -112,7 +112,10 @@ export interface IBox {
             style: string
             color: string
         },
-        padding?: string
+        padding?: {
+            'padding-x': string,
+            'padding-y': string
+        }
     },
     children: [{
         id?: string
