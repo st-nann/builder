@@ -173,7 +173,6 @@ export default class TextPage extends BaseComponent {
     this.editor.format('color', '#000000')
     this.editor.format('size', false)
     this.editor.format('italic', false)
-    
   }
 
   @Watch('editor', { deep: true })
