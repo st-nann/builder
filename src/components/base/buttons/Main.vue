@@ -89,7 +89,7 @@ export default class MainButtonComponent extends BaseComponent {
   }
 
   get isDisplay() {
-    return _.isUndefined(this.parent.quantityChildrenBox) || this.parent.quantityChildrenBox > 1
+    return this.parent.quantityChildrenBox > 1
   }
 
   doOpenModal() {
