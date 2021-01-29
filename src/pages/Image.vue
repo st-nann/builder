@@ -39,7 +39,7 @@
     <ModalComponent
       v-bind="$props"
       :ref="`modal-edit-${elementId}`"
-      :modal="{ width: changeImage ? 50 : 65, height: changeImage ? 70 : 70, action: 'edit', button: { custom: true } }"
+      :modal="{ width: changeImage ? 50 : 65, height: changeImage ? 70 : 75, action: 'edit', button: { custom: true } }"
     >
       <template slot="content">
         <div class="modal-content-image">
