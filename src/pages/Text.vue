@@ -33,7 +33,7 @@
     <ModalComponent
       v-bind="$props"
       :ref="`modal-edit-${elementId}`"
-      :modal="{ width: 50, height: 40, action: 'edit', button: { custom: true } }"
+      :modal="{ width: 50, height: 45, action: 'edit', button: { custom: true } }"
     >
       <template slot="content">
         <div class="editor-container">
