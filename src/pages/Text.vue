@@ -51,6 +51,7 @@
       <template slot="action-custom">
         <FooterPanel
           v-bind="$props"
+          :isFooterStyle="true"
           :management="management"
           @change="onUpdatePreview"
           @click="onUpdateFooterPanelData"

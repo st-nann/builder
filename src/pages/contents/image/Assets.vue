@@ -17,7 +17,7 @@
         <div class="image-asset-content-search">
             <div class="search-input">
                 <InputComponent
-                    name="search-image"
+                    :name="`search-image-${elementId}`"
                     placeholder="Search Image"
                     :search="true"
                     @change="doFilterImages"

@@ -7,4 +7,4 @@ export class TextState {
   }
 }
 
-export default TextState;
+export default TextState

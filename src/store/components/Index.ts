@@ -11,6 +11,6 @@ const components: Module<ComponentState, IState> = {
   mutations,
   getters,
   namespaced: true
-};
+}
 
 export default components

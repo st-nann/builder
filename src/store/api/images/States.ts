@@ -13,4 +13,4 @@ export class ImageState {
   }
 }
 
-export default ImageState;
+export default ImageState

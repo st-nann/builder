@@ -12,6 +12,6 @@ const texts: Module<TextState, IState> = {
   mutations,
   getters,
   namespaced: true
-};
+}
 
-export default texts;
+export default texts

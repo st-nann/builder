@@ -237,3 +237,30 @@
         }
     }
 }
+
+/* Input Panel */
+.toolbar-panel {
+    @extend .panel;
+
+    .toolbar-panel-input-container {
+        display: flex;
+        flex-direction: column;
+        
+        .toolbar-panel-label {
+            margin: 5px 0;
+        }
+
+        .toolbar-panel-input-attribute {
+            margin: 5px 0;
+        
+        }
+
+        .toolbar-panel-input-style {
+            margin: 5px 0;
+
+            .toobar-panel-input-width {
+                margin-left: 20px;
+            }
+        }
+    }
+}

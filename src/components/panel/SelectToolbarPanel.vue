@@ -68,22 +68,22 @@
 </template>
 
 <script lang="ts">
-import _ from "lodash"
+import _ from "lodash";
 import { Component, Prop, Watch } from 'vue-property-decorator'
 import BaseComponent from '../../core/BaseComponent'
 import { HORIZONTAL_POSITION_STYLE } from '../../constants/Style'
 
 @Component
-export default class ButtonToolbarPanel extends BaseComponent {
-  @Prop() management!: any
+export default class SelectToolbarPanel extends BaseComponent {
+  @Prop() management!: any;
 
-  buttonName = 'Button'
-  buttonLink = ''
-  buttonBackgroundColor: any
-  buttonFont: any
-  buttonRadius: any
-  buttonBorder: any
-  justifyImage = 'center'
+  buttonName = 'Button';
+  buttonLink = '';
+  buttonBackgroundColor: any;
+  buttonFont: any;
+  buttonRadius: any;
+  buttonBorder: any;
+  justifyImage = 'center';
 
   get horizontalPositionOptions() {
     return HORIZONTAL_POSITION_STYLE
@@ -143,8 +143,8 @@ export default class ButtonToolbarPanel extends BaseComponent {
   onEdit() {
     if (this.management.edit) {
       if (this.elementProps) {
-        const haveFlexbox = this.elementProps.flexbox
-        const flexbox = _.cloneDeep(this.elementProps.flexbox)
+        const haveFlexbox = this.elementProps.flexbox;
+        const flexbox = _.cloneDeep(this.elementProps.flexbox);
         this.buttonName = this.elementProps.name || 'Button'
         this.buttonLink = this.elementProps.link || ''
         if (haveFlexbox) {

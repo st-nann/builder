@@ -105,13 +105,9 @@ export const INPUT_DEFAULT: IInput = {
             'flex-grow': 1
         },
         type: EInputType.TEXT,
-        height: '35px',
-        width: '50px',
-        required: false,
-        margin: {
-            'margin-x': '5px',
-            'margin-y': '5px'
-        }
+        height: '25px',
+        width: '200px',
+        required: false
     }
 }
 
@@ -121,13 +117,9 @@ export const TEXTAREA_DEFAULT: ITextArea = {
         flexbox: {
             'flex-grow': 1
         },
-        height: '35px',
-        width: '50px',
-        required: false,
-        margin: {
-            'margin-x': '5px',
-            'margin-y': '5px'
-        }
+        height: '25px',
+        width: '200px',
+        required: false
     }
 }
 
@@ -137,13 +129,9 @@ export const SELECT_DEFAULT: ISelect = {
         flexbox: {
             'flex-grow': 1
         },
-        height: '35px',
-        width: '50px',
-        required: false,
-        margin: {
-            'margin-x': '5px',
-            'margin-y': '5px'
-        }
+        height: '25px',
+        width: '200px',
+        required: false
     }
 }
 
@@ -154,11 +142,7 @@ export const CHECKBOX_DEFAULT: ICheckbox = {
             'flex-grow': 1
         },
         required: false,
-        checked: false,
-        margin: {
-            'margin-x': '5px',
-            'margin-y': '5px'
-        }
+        checked: false
     }
 }
 
@@ -169,10 +153,6 @@ export const RADIO_DEFAULT: IRadio = {
             'flex-grow': 1
         },
         required: false,
-        checked: false,
-        margin: {
-            'margin-x': '5px',
-            'margin-y': '5px'
-        }
+        checked: false
     }
 }

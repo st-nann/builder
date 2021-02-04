@@ -74,7 +74,7 @@ import BaseComponent from '../../core/BaseComponent'
 import { HORIZONTAL_POSITION_STYLE } from '../../constants/Style'
 
 @Component
-export default class ButtonToolbarPanel extends BaseComponent {
+export default class CheckboxToolbarPanel extends BaseComponent {
   @Prop() management!: any
 
   buttonName = 'Button'

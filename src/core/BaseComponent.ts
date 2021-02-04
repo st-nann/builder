@@ -182,6 +182,12 @@ export default class BaseComponent extends Base {
     }, 10)
   }
 
+  doSetAttribute(id: string, name: string, value: any) {
+    setTimeout(() => {
+      document.getElementById(id)?.setAttribute(name, value)
+    }, 10)
+  }
+
   onUpdatePreview(data: any) {
     this.previewData = {}
     this.previewData = data

@@ -63,9 +63,8 @@
       <template slot="action-custom">
         <FooterPanel
           v-bind="$props"
-          :isFooterStyle="true"
+          :isFooterStyle="false"
           :management="management"
-          @change="onUpdatePreview"
           @click="onUpdateFooterPanelData"
           @cancel="onUpdateCancel"
         />
@@ -79,7 +78,7 @@ import { Component, Watch } from 'vue-property-decorator'
 import BaseComponent from '../core/BaseComponent'
 
 @Component
-export default class ButtonPage extends BaseComponent {
+export default class TextareaPage extends BaseComponent {
   management: any = {}
   buttonData: any = {}
 

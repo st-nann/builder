@@ -9,4 +9,4 @@ export class AuthenticationState {
   }
 }
 
-export default AuthenticationState;
+export default AuthenticationState

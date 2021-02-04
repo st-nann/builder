@@ -83,16 +83,15 @@ export interface IButton {
         }
         link?: string
         font?: {
-            family: string
-            size: string
-            weight: number
+            'font-family': string
+            'font-size': string
             color: string
         }
+        'border-radius'?: string
         border?: {
             width: string
             style: string
             color: string
-            radius: string
         }
         height: string
     }
@@ -141,26 +140,20 @@ export interface IInput {
         }
         name?: string
         type: EInputType
-        height: string
-        width: string
         required: boolean
         placeholder?: string
+        height: string
+        width: string
         label?: {
             name?: string
             font?: {
-                family: string
-                size: string
-                weight: number
+                'font-family': string
+                'font-size': string
+                'font-weight': string
                 color: string
             }
         }
-        border?: {
-            radius: string
-        }
-        margin: {
-            'margin-x': string
-            'margin-y': string
-        }
+        'border-radius'?: string
     }
 }
 
@@ -178,19 +171,13 @@ export interface ITextArea {
         label?: {
             name?: string
             font?: {
-                family: string
-                size: string
-                weight: number
+                'font-family': string
+                'font-size': string
+                'font-weight': string
                 color: string
             }
         }
-        border?: {
-            radius: string
-        }
-        margin: {
-            'margin-x': string
-            'margin-y': string
-        }
+        'border-radius'?: string
     }
 }
 
@@ -208,19 +195,13 @@ export interface ISelect {
         label?: {
             name?: string
             font?: {
-                family: string
-                size: string
-                weight: number
+                'font-family': string
+                'font-size': string
+                'font-weight': string
                 color: string
             }
         }
-        border?: {
-            radius: string
-        }
-        margin: {
-            'margin-x': string
-            'margin-y': string
-        }
+        'border-radius'?: string
     }
 }
 
@@ -238,15 +219,11 @@ export interface ICheckbox {
         label?: {
             name?: string
             font?: {
-                family: string
-                size: string
-                weight: number
+                'font-family': string
+                'font-size': string
+                'font-weight': string
                 color: string
             }
-        }
-        margin: {
-            'margin-x': string
-            'margin-y': string
         }
     }
 }
@@ -265,15 +242,11 @@ export interface IRadio {
         label?: {
             name?: string
             font?: {
-                family: string
-                size: string
-                weight: number
+                'font-family': string
+                'font-size': string
+                'font-weight': string
                 color: string
             }
-        }
-        margin: {
-            'margin-x': string
-            'margin-y': string
         }
     }
 }

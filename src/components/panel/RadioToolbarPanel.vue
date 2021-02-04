@@ -74,7 +74,7 @@ import BaseComponent from '../../core/BaseComponent'
 import { HORIZONTAL_POSITION_STYLE } from '../../constants/Style'
 
 @Component
-export default class ButtonToolbarPanel extends BaseComponent {
+export default class RadioToolbarPanel extends BaseComponent {
   @Prop() management!: any
 
   buttonName = 'Button'
@@ -143,8 +143,8 @@ export default class ButtonToolbarPanel extends BaseComponent {
   onEdit() {
     if (this.management.edit) {
       if (this.elementProps) {
-        const haveFlexbox = this.elementProps.flexbox
-        const flexbox = _.cloneDeep(this.elementProps.flexbox)
+        const haveFlexbox = this.elementProps.flexbox;
+        const flexbox = _.cloneDeep(this.elementProps.flexbox);
         this.buttonName = this.elementProps.name || 'Button'
         this.buttonLink = this.elementProps.link || ''
         if (haveFlexbox) {

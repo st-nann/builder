@@ -159,8 +159,8 @@ npm run dev
 
 | attribute                              |value                          |type      |description                                                                                      |
 |----------------------------------------|:-----------------------------:|:--------:| ----------------------------------------------------------------------------------------------- |
-|isMobileActive                          |true, fasle                    |`boolean` |*for set up screen (if value is true you can view on mobile screen only)*                        |
-|isFullsceenActive                       |true, fasle                    |`boolean` |*for set up screen (if value is true you can view on desktop screen only)*                       |
+|isMobileActive                          |true, false                    |`boolean` |*for set up screen (if value is true you can view on mobile screen only)*                        |
+|isFullsceenActive                       |true, false                    |`boolean` |*for set up screen (if value is true you can view on desktop screen only)*                       |
 |width                                   |{ type: string, size: string } |`object`  |*for set up width and type screen (if you set value you still edit builder)*                     |
 |propWidthScreenType                     |SM, MD, LG, FULL, CUSTOM       |`string`  |*for set up screen type (SM: 30%, MD: 70%, LG: 50%, FULL: 100%, CUSTOM: up to you, DEFAULT: 90%)*|
 |propWidthScreenSize                     |number of percent (ex. 25%)    |`string`  |*for set up screen custom*                                                                       |

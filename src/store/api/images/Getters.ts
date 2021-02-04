@@ -7,6 +7,6 @@ const getters: GetterTree<ImageState, IState> = {
   upload: state => state.upload,
   uploadPercent: state => state.uploadPercent,
   uploadLists: state => state.uploadLists
-};
+}
 
 export default getters

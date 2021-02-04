@@ -15,6 +15,6 @@ const mutations: MutationTree<AuthenticationState> = {
   ): void {
     state.loginInfo = data
   }
-};
+}
 
 export default mutations

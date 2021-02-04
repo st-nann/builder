@@ -38,3 +38,15 @@ export const FONT_STYLE: string[] = [
     'Trebuchet-MS',
     'Verdana'
 ]
+
+export const INPUT_TYPES: IDropdownOption[] = [
+    { label: 'Text', value: 'text' },
+    { label: 'Password', value: 'password' },
+    { label: 'Email', value: 'email' },
+    { label: 'Number', value: 'number' }
+]
+
+export const FONT_WEIGHT: IDropdownOption[] = [
+    { label: 'Normal', value: 'normal' },
+    { label: 'Bold', value: 'bold' }
+]

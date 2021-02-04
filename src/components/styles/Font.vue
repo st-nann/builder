@@ -5,7 +5,7 @@
       :value="fontName"
       :options="fontNameOptions"
       label="Font"
-      width="100"
+      width="140"
       @change="onUpdateFontName"
     />
     <DropdownComponent

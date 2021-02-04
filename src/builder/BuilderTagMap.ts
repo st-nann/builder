@@ -6,6 +6,11 @@ export class BuilderTagMap {
         image: "ImagePage",
         button: "ButtonPage",
         box: "BoxPage",
+        input: "InputPage",
+        textarea: "TextareaPage",
+        select: "SelectPage",
+        checkbox: "CheckboxPage",
+        radio: "RadioPage",
         container: "div"
     }
     static getTag(elementName: string): string | undefined {
