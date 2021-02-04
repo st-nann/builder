@@ -1,6 +1,18 @@
 import { v4 as uuidv4 } from 'uuid'
-import { IBox, IButton, IContainer, IImage, ISpacer, IText } from '../interfaces/Template'
-import { EDirection } from '../enum/Components'
+import {
+    IBox,
+    IButton,
+    ICheckbox,
+    IContainer,
+    IImage,
+    IInput,
+    IRadio,
+    ISpacer,
+    ISelect,
+    IText,
+    ITextArea
+} from '../interfaces/Template'
+import { EDirection, EInputType } from '../enum/Components'
 import { EElementType } from '../enum/Elements'
 
 export const CONTAINER_DEFAULT: IContainer = {
@@ -84,4 +96,67 @@ export const BOX_DEFAULT: IBox = {
             ...TEXT_DEFAULT
         }]
     }]
+}
+
+export const INPUT_DEFAULT: IInput = {
+    element: EElementType.INPUT,
+    props: {
+        flexbox: {
+            'flex-grow': 1
+        },
+        type: EInputType.TEXT,
+        height: '25px',
+        width: '200px',
+        required: false
+    }
+}
+
+export const TEXTAREA_DEFAULT: ITextArea = {
+    element: EElementType.TEXTAREA,
+    props: {
+        flexbox: {
+            'flex-grow': 1
+        },
+        cols: 50,
+        rows: 5,
+        resize: 'none',
+        required: false
+    }
+}
+
+export const SELECT_DEFAULT: ISelect = {
+    element: EElementType.SELECT,
+    props: {
+        flexbox: {
+            'flex-grow': 1
+        },
+        height: '25px',
+        width: '200px',
+        required: false,
+        options: ['1::Option 1', '2::Option 2', '3::Option 3']
+    }
+}
+
+export const CHECKBOX_DEFAULT: ICheckbox = {
+    element: EElementType.CHECKBOX,
+    props: {
+        flexbox: {
+            'flex-grow': 1
+        },
+        type: 'checkbox',
+        required: false,
+        checked: false
+    }
+}
+
+export const RADIO_DEFAULT: IRadio = {
+    element: EElementType.RADIO,
+    props: {
+        flexbox: {
+            'flex-grow': 1
+        },
+        type: 'radio',
+        required: false,
+        checked: false
+    }
 }

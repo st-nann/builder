@@ -1,5 +1,10 @@
 import { EJustify } from '../enum/Components'
 
+export interface IMessageType {
+    EMAIL?: string
+    WEB_ATTENTION?: string
+    FLEX_MESSAGE?: string
+}
 export interface IFlexbox {
     grow: number
 }
@@ -45,4 +50,8 @@ export interface IComponentOption {
 export interface IScreen {
     mobile: boolean
     desktop: boolean
+    width?: {
+        type: string
+        size?: string
+    }
 }

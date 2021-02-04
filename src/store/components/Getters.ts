@@ -4,6 +4,6 @@ import ComponentState from './States'
 
 const getters: GetterTree<ComponentState, IState> = {
   loading: state => { return state.loading }
-};
+}
 
 export default getters

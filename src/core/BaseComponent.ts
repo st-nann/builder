@@ -1,13 +1,14 @@
 import _ from 'lodash'
 import { Base } from './Base'
 import { Component, Prop, Watch } from 'vue-property-decorator'
-import { IFlexbox, IModal, IScreen } from '../interfaces/Components'
+import { IFlexbox, IMessageType, IModal, IScreen } from '../interfaces/Components'
 import { EElementType } from '../enum/Elements'
 import { EDirection } from '../enum/Components'
 
 @Component
 export default class BaseComponent extends Base {
   @Prop() readonly elementTemplateJson!: any
+  @Prop() readonly elementMessageType!: IMessageType
   @Prop() readonly elementState!: any
   @Prop(String) readonly elementId!: string
   @Prop(String) readonly elementName!: string
@@ -25,6 +26,8 @@ export default class BaseComponent extends Base {
   @Prop(Array) readonly flexbox!: IFlexbox
   @Prop(String) readonly className!: string
   @Prop(String) readonly width!: string
+  @Prop(String) readonly rows!: number // Textarea
+  @Prop(String) readonly cols!: number // Textarea
   @Prop(String) readonly min!: string // Slider
   @Prop(String) readonly max!: string // Slider
   @Prop(Number) readonly weightRange!: number // Slider
@@ -45,6 +48,7 @@ export default class BaseComponent extends Base {
   containerRoot = ''
   boxChildren = 0
   boxContainerChildren = 0
+  childrenElementButtonBox = 0
   isCancel = false
 
   created() {
@@ -68,10 +72,12 @@ export default class BaseComponent extends Base {
           this.doCalculateAllChildrenNested()
           this.doAssignChildrenToElement()
           this.doCalculateChildrenBox()
+          this.doCalculateButtonBox()
           this.parent = {
             parentName: state.props.parent,
             quantityChildren: this.childrenElement[state.id] || 0,
-            quantityChildrenBox: this.childrenElementBox[state.id] || 2
+            quantityChildrenBox: this.childrenElementBox[state.id] || 2,
+            quantityChildrenButtonBox: this.childrenElementButtonBox || 1
           }
         }
         this.doManageElement(item)
@@ -137,6 +143,20 @@ export default class BaseComponent extends Base {
     }
   }
 
+  doCalculateButtonBox(state: any = this.elementTemplateJson) {
+    if (state.children) {
+      state.children.forEach((child: any) => {
+        if (child.element === EElementType.BOX) {
+          const button = _.filter(child.children, item => item.children[0].element === EElementType.BUTTON)
+          if (button) {
+            this.childrenElementButtonBox = button.length
+          }
+        }
+        this.doCalculateButtonBox(child)
+      })
+    }
+  }
+
   doAssignChildrenBox(state: any = this.elementTemplateJson) {
     if (state.children) {
       state.children.forEach((child: any) => {
@@ -161,6 +181,12 @@ export default class BaseComponent extends Base {
             .replaceAll(',', ';')
             .replaceAll('"', '')
         )
+    }, 10)
+  }
+
+  doSetAttribute(id: string, name: string, value: any) {
+    setTimeout(() => {
+      document.getElementById(id)?.setAttribute(name, value)
     }, 10)
   }
 

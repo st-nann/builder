@@ -12,6 +12,6 @@ const authentication: Module<AuthenticationState, IState> = {
   mutations,
   getters,
   namespaced: true
-};
+}
 
-export default authentication;
+export default authentication

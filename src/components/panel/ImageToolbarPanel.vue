@@ -11,7 +11,7 @@
     </div>
     <div class="toolbar-panel-button">
       <InputComponent
-        name="image-link"
+        :name="`image-link-${elementId}`"
         label="Link"
         placeholder="https://"
         width="350"
@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts">
-import _ from "lodash";
+import _ from "lodash"
 import { Component, Prop, Watch } from 'vue-property-decorator'
 import BaseComponent from '../../core/BaseComponent'
 import {
@@ -46,13 +46,13 @@ import {
 
 @Component
 export default class ImageToolbarPanel extends BaseComponent {
-  @Prop(String) imageUrl!: string;
-  @Prop() management!: any;
+  @Prop(String) imageUrl!: string
+  @Prop() management!: any
 
-  imageWidth: any;
-  imageLink = '';
-  justifyImage = 'center';
-  alignImage = 'center';
+  imageWidth: any
+  imageLink = ''
+  justifyImage = 'center'
+  alignImage = 'center'
 
   get horizontalPositionOptions() {
     return HORIZONTAL_POSITION_STYLE
@@ -100,8 +100,8 @@ export default class ImageToolbarPanel extends BaseComponent {
   onEdit() {
     if (this.management.edit) {
       if (this.elementProps) {
-        const haveFlexbox = this.elementProps.flexbox;
-        const flexbox = _.cloneDeep(this.elementProps.flexbox);
+        const haveFlexbox = this.elementProps.flexbox
+        const flexbox = _.cloneDeep(this.elementProps.flexbox)
         this.imageLink = this.elementProps.link || ''
         if (haveFlexbox) {
           this.justifyImage = _.isEmpty(flexbox['justify-content'])

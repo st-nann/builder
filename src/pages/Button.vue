@@ -63,6 +63,7 @@
       <template slot="action-custom">
         <FooterPanel
           v-bind="$props"
+          :isFooterStyle="true"
           :management="management"
           @change="onUpdatePreview"
           @click="onUpdateFooterPanelData"
@@ -140,6 +141,7 @@ export default class ButtonPage extends BaseComponent {
       const fontColor = font ? font.color : ''
       const border = this.previewData.border
       const borderRadiusButton = this.previewData['border-radius']
+      const width = this.previewData.width
       const justify = this.previewData.flexbox ? this.previewData.flexbox['justify-content'] : ''
       if (borderBottom) { previewContainerStyle['border-bottom'] = `${borderBottom.width} ${borderBottom.style} ${borderBottom.color}` }
       if (backgroundColor) { previewContainerStyle['background-color'] = backgroundColor }
@@ -149,6 +151,7 @@ export default class ButtonPage extends BaseComponent {
       if (fontColor) { previewButtonStyle.color = fontColor }
       if (border) { previewButtonStyle.border = `${border.width} ${border.style} ${border.color}` }
       if (borderRadiusButton) { previewButtonStyle['border-radius'] = borderRadiusButton }
+      if (width) { previewButtonStyle.width = width }
       if (justify) { previewContainerStyle['justify-content'] = justify }
     }
     this.doSetAttributeStyle(`button-container-preview-${this.elementId}`, previewContainerStyle)

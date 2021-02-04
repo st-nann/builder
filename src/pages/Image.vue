@@ -93,6 +93,7 @@
         <FooterPanel
           v-show="!changeImage"
           v-bind="$props"
+          :isFooterStyle="true"
           :management="management"
           :imageUrl="imageUrl"
           @change="onUpdatePreview"

@@ -14,3 +14,10 @@ export enum EAlign {
     CENTER = 'center',
     END = 'end'
 }
+
+export enum EInputType {
+    TEXT = 'text',
+    PASSWORD = 'password',
+    EMAIL = 'email',
+    NUMBER = 'number'
+}

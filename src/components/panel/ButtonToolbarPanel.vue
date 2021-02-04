@@ -3,7 +3,7 @@
     <div class="toolbar-panel-text-and-position">
       <div class="toolbar-panel-input">
         <InputComponent
-          name="button-name"
+          :name="`button-name-${elementId}`"
           label="Button Text"
           placeholder="Button"
           width="200"
@@ -12,7 +12,7 @@
           @change="onUpdateName"
         />
         <InputComponent
-          name="button-link"
+          :name="`button-link-${elementId}`"
           label="Link"
           placeholder="https://"
           width="300"
@@ -68,22 +68,22 @@
 </template>
 
 <script lang="ts">
-import _ from "lodash";
+import _ from "lodash"
 import { Component, Prop, Watch } from 'vue-property-decorator'
 import BaseComponent from '../../core/BaseComponent'
 import { HORIZONTAL_POSITION_STYLE } from '../../constants/Style'
 
 @Component
 export default class ButtonToolbarPanel extends BaseComponent {
-  @Prop() management!: any;
+  @Prop() management!: any
 
-  buttonName = 'Button';
-  buttonLink = '';
-  buttonBackgroundColor: any;
-  buttonFont: any;
-  buttonRadius: any;
-  buttonBorder: any;
-  justifyImage = 'center';
+  buttonName = 'Button'
+  buttonLink = ''
+  buttonBackgroundColor: any
+  buttonFont: any
+  buttonRadius: any
+  buttonBorder: any
+  justifyImage = 'center'
 
   get horizontalPositionOptions() {
     return HORIZONTAL_POSITION_STYLE
@@ -132,6 +132,7 @@ export default class ButtonToolbarPanel extends BaseComponent {
       ...this.buttonFont,
       ...this.buttonRadius,
       ...this.buttonBorder,
+      width: this.elementProps.width,
       flexbox: _.isEmpty(this.justifyImage)
         ? undefined
         : { 'justify-content': this.justifyImage }
@@ -142,8 +143,8 @@ export default class ButtonToolbarPanel extends BaseComponent {
   onEdit() {
     if (this.management.edit) {
       if (this.elementProps) {
-        const haveFlexbox = this.elementProps.flexbox;
-        const flexbox = _.cloneDeep(this.elementProps.flexbox);
+        const haveFlexbox = this.elementProps.flexbox
+        const flexbox = _.cloneDeep(this.elementProps.flexbox)
         this.buttonName = this.elementProps.name || 'Button'
         this.buttonLink = this.elementProps.link || ''
         if (haveFlexbox) {

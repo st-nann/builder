@@ -9,6 +9,6 @@ const mutations: MutationTree<TextState> = {
   ): void {
     state.personalizes = data
   }
-};
+}
 
 export default mutations

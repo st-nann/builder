@@ -5,19 +5,19 @@ import { IHttpRequest, IHeader } from './interfaces/HttpRequest'
 import { AlertMsgError } from '../plugins/alert/Alert'
 
 class HttpRequest {
-    private axios: AxiosInstance;
-    private header: IHeader;
-    private datetime: string;
+    private axios: AxiosInstance
+    private header: IHeader
+    private datetime: string
   
     constructor() {
       this.datetime = this.getDateTime()
-      this.header = { 'x-timestamp': this.datetime };
+      this.header = { 'x-timestamp': this.datetime }
       this.axios = axios.create({
         headers: this.header
           ? { 'x-timestamp': this.header['x-timestamp'] }
           : undefined
-      });
-      axios.interceptors.response.use(this.handleResponse, this.handleError);
+      })
+      axios.interceptors.response.use(this.handleResponse, this.handleError)
     }
 
     private convertDateTime(value: any) {
@@ -37,7 +37,7 @@ class HttpRequest {
     }
     
     private handleResponse(response: any) {
-      return response;
+      return response
     }
 
     private handleError(error: any) {
@@ -57,10 +57,10 @@ class HttpRequest {
       mutation: string
     ) {
       _.remove(store.state[storeName][stateName], item => {
-        const keys = _.keys(item);
-        return _.includes(keys, mutation);
-      });
-      return store.state[storeName][stateName];
+        const keys = _.keys(item)
+        return _.includes(keys, mutation)
+      })
+      return store.state[storeName][stateName]
     }
 
     public sendRequest(options: IHttpRequest) {

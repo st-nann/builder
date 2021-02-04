@@ -33,7 +33,7 @@ import BaseComponent from '../../core/BaseComponent'
 
 @Component
 export default class BoxToolbarPanel extends BaseComponent {
-  @Prop() management!: any;
+  @Prop() management!: any
 
   boxPaddingVertical: any
   boxPaddingHorizontal: any
@@ -64,7 +64,7 @@ export default class BoxToolbarPanel extends BaseComponent {
         this.boxPaddingVertical = { 'padding-y': this.elementProps.padding['padding-y'] }
         this.boxPaddingHorizontal = { 'padding-x': this.elementProps.padding['padding-x'] }
       }
-      this.onEmitData();
+      this.onEmitData()
     }
   }
 }

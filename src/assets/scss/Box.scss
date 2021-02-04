@@ -8,7 +8,7 @@
 
 .box {
     display: flex;
-    min-height: 115px;
+    min-height: 65px;
     height: auto;
     position: relative;
     background-color: transparent !important;
@@ -53,6 +53,34 @@
         .button-link {
             color: #000000;
         }
+    }
+
+    .box-padding {
+        padding: 15px;
+    }
+
+    .input-content {
+        @extend .box-padding;
+    }
+
+    .textarea-content {
+        @extend .box-padding;
+    }
+
+    .select-content {
+        @extend .box-padding;
+
+        select {
+            appearance: auto;
+        }
+    }
+
+    .checkbox-content {
+        @extend .box-padding;
+    }
+
+    .radio-content {
+        @extend .box-padding;
     }
 }
 
@@ -204,6 +232,7 @@ div:not([class*="disable-event"]) > * ~ a {
         .text-content {
             @extend .box-margin;
         }
+
         .image-content {
             @extend .box-margin;
         }
@@ -215,6 +244,26 @@ div:not([class*="disable-event"]) > * ~ a {
 
         .box-content {
             padding: 20px;
+        }
+
+        .input-content {
+            @extend .box-margin;
+        }
+
+        .textarea-content {
+            @extend .box-margin;
+        }
+
+        .select-content {
+            @extend .box-margin;
+        }
+
+        .checkbox-content {
+            @extend .box-margin;
+        }
+
+        .radio-content {
+            @extend .box-margin;
         }
     }
 }

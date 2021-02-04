@@ -9,6 +9,6 @@ const mutations: MutationTree<ComponentState> = {
   ): void {
     state.loading.push(data)
   }
-};
+}
 
-export default mutations;
+export default mutations

@@ -31,7 +31,7 @@ const actions: ActionTree<ImageState, IState> = {
       path: `${baseUrl}/galleries${query}`,
       headers: { 'authorization': token },
       mutation: `images/${mutationType.LISTS}`
-    });
+    })
   },
   async uploadImage(
     context: ActionContext<ImageState, IState>,

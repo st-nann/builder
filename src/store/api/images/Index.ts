@@ -12,6 +12,6 @@ const images: Module<ImageState, IState> = {
   mutations,
   getters,
   namespaced: true
-};
+}
 
-export default images;
+export default images

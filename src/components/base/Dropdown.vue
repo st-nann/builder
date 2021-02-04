@@ -2,7 +2,12 @@
   <span>
     <label v-if="label" class="dropdown-label">{{ label }}</label>
     <span class="dropdown">
-      <select :id="`select-${name}`" :style="style" @change="doUpdateDropdown">
+      <select
+        :id="`select-${name}`"
+        class="dropdown-select"
+        :style="style"
+        @change="doUpdateDropdown"
+      >
         <option
           v-for="(item, index) in options"
           :key="index"

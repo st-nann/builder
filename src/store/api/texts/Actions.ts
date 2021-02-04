@@ -28,7 +28,7 @@ const actions: ActionTree<TextState, IState> = {
       path: `${baseUrl}/customers/attributes${query}`,
       mutation: `texts/${mutationType.PERSONALIZE}`,
       headers: { 'authorization': localStorage['personalize-token'] }
-    });
+    })
   }
 }
 

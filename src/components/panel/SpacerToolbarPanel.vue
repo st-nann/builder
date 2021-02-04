@@ -19,7 +19,7 @@ import BaseComponent from '../../core/BaseComponent'
 
 @Component
 export default class SpacerToolbarPanel extends BaseComponent {
-  @Prop() management!: any;
+  @Prop() management!: any
 
   spacerHeight: any
 
@@ -38,7 +38,7 @@ export default class SpacerToolbarPanel extends BaseComponent {
       if (this.elementProps) {
         this.spacerHeight = { height: this.elementProps.height }
       }
-      this.onEmitData();
+      this.onEmitData()
     }
   }
 }

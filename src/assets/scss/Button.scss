@@ -111,6 +111,7 @@
     cursor: pointer;
 }
 
+button:focus,
 .circle-button:focus,
 .square-button:focus,
 .view-json-square-button:focus,
@@ -230,7 +231,7 @@
 
     .menu-button-container:hover .menu-container {
         top: 15px;
-        left: 25px;
+        left: 21px;
     }
 
     .start-square-menu-button {

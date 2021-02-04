@@ -1,8 +1,8 @@
 export interface IHttpRequest {
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'get' | 'delete' | 'head' | 'HEAD' | 'options' | 'OPTIONS' | 'post' | 'put' | 'patch' | 'PATCH' | 'link' | 'LINK' | 'unlink' | 'UNLINK'
-  path: string;
-  payload?: any;
-  mutation: string;
+  path: string
+  payload?: any
+  mutation: string
   onUploadProgress?: any
   headers?: any
 }

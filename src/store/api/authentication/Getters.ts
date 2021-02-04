@@ -5,6 +5,6 @@ import AuthenticationState from './States'
 const getters: GetterTree<AuthenticationState, IState> = {
   login: state => state.login,
   loginInfo: state => state.loginInfo
-};
+}
 
 export default getters

@@ -70,7 +70,10 @@ npm run dev
             store,
             render: (h) =>
                 h(builder.default.component, {
-                    props: { propTemplateJson: this.propTemplateJson },
+                    props: {
+                        propTemplateJson: this.propTemplateJson,
+                        propMessageType: this.propMessageType
+                    },
                     on: {
                         change(templateJson: any) {
                             self.$emit('change', (templateJson && !_.isEmpty(templateJson) ? templateJson : {}))
@@ -92,7 +95,10 @@ npm run dev
                 store,
                 render: (h) =>
                     h(builder.default.component, {
-                        props: { propTemplateJson: this.propTemplateJson },
+                        props: {
+                            propTemplateJson: this.propTemplateJson,
+                            propMessageType: this.propMessageType
+                        },
                         on: {
                             change(templateJson: any) {
                                 self.$emit('change', (templateJson && !_.isEmpty(templateJson) ? templateJson : {}))
@@ -104,16 +110,17 @@ npm run dev
     }
 ```
 
-| attribute                              |value                     |type      |description                                                                                   |
-|----------------------------------------|:------------------------:|:--------:| -------------------------------------------------------------------------------------------- |
-|id                                      |up to you                 |`string`  |*for create element (default: builder). Mutiple element should be setup difference name*      |
-|store                                   |-                         |-         |*for use store in builder component module*                                                   |
-|router                                  |-                         |-         |*for use router in builder component module*                                                  |
-|propTemplateJson                        |up to you                 |`object`  |*for setup default prop your template json (pass to builder module)*                          |
-|this.builder                            |up to you                 |`any`     |*for save vue instance data (parameter in your component)*                                    |
-|render                                  |-                         |`function`|*for render component*                                                                        |
-|change(templateJson: any)               |-                         |`function`|*for pass updated data from child (module component) to parent (your component) component*    |
-|.$mount(`#${this.id}`)                  |-                         |-         |*for create instance vue*                                                                     |
+| attribute                              |value                             |type      |description                                                                                   |
+|----------------------------------------|:--------------------------------:|:--------:| -------------------------------------------------------------------------------------------- |
+|id                                      |up to you                         |`string`  |*for create element (default: builder). Mutiple element should be setup difference name*      |
+|store                                   |-                                 |-         |*for use store in builder component module*                                                   |
+|router                                  |-                                 |-         |*for use router in builder component module*                                                  |
+|propTemplateJson                        |up to you                         |`object`  |*for setup default prop your template json (pass to builder module)*                          |
+|propMessageType                         |EMAIL, WEB_ATTENTION, FLEX_MESSAGE|`string`  |*for setup default prop your message type (EMAIL: result mjml, WEB_ATTENTION: result html, FLEX_MESSAGE: result line flex message)*               |
+|this.builder                            |up to you                         |`any`     |*for save vue instance data (parameter in your component)*                                    |
+|render                                  |-                                 |`function`|*for render component*                                                                        |
+|change(templateJson: any)               |-                                 |`function`|*for pass updated data from child (module component) to parent (your component) component*    |
+|.$mount(`#${this.id}`)                  |-                                 |-         |*for create instance vue*                                                                     |
 <br>
 
 5. Use Component
@@ -140,8 +147,23 @@ npm run dev
     <YOUR_PARAMETER>.$el.__vue__.<YOUR_DIRECTIVE(DATA, PROPS, METHODS, ...)>
 
     such as
-        this.builder.$el.__vue__.onUpdateScreen()
+        this.builder.$el.__vue__.onUpdateScreen({
+            mobile: this.isMobileActive,
+            desktop: this.isFullsceenActive,
+            width: {
+                type: this.propWidthScreenType,
+                size: this.propWidthScreenSize
+            }
+        })
 ```
+
+| attribute                              |value                          |type      |description                                                                                      |
+|----------------------------------------|:-----------------------------:|:--------:| ----------------------------------------------------------------------------------------------- |
+|isMobileActive                          |true, false                    |`boolean` |*for set up screen (if value is true you can view on mobile screen only)*                        |
+|isFullsceenActive                       |true, false                    |`boolean` |*for set up screen (if value is true you can view on desktop screen only)*                       |
+|width                                   |{ type: string, size: string } |`object`  |*for set up width and type screen (if you set value you still edit builder)*                     |
+|propWidthScreenType                     |SM, MD, LG, FULL, CUSTOM       |`string`  |*for set up screen type (SM: 30%, MD: 70%, LG: 50%, FULL: 100%, CUSTOM: up to you, DEFAULT: 90%)*|
+|propWidthScreenSize                     |number of percent (ex. 25%)    |`string`  |*for set up screen custom*                                                                       |
 <br>
 
 ### Project setup

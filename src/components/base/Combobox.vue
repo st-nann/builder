@@ -11,7 +11,7 @@
       </button>
       <div :id="`combobox-menu-${name}`" class="combobox-content">
         <InputComponent
-          :name="`search-${name}`"
+          :name="`search-${name}-${elementId}`"
           className="combobox-serach"
           placeholder="Search"
           :search="true"
@@ -54,7 +54,7 @@ export default class ComboboxComponent extends BaseComponent {
       if (!_.includes([`combobox-btn-${this.name}`, `input-search-${this.name}`], event.target.id)) {
         const menu: any = document.getElementsByClassName(`combobox-content`)
         for (let i = 0; i < menu.length; i++) {
-          const opened = menu[i];
+          const opened = menu[i]
           if (opened.classList.contains('show')) {
             opened.classList.remove('show')
           }

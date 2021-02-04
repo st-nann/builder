@@ -1,6 +1,6 @@
 <template>
   <div class="footer-panel">
-    <div class="footer-panel-switch">
+    <div v-if="isFooterStyle" class="footer-panel-switch">
       <BorderToggleStyleComponent
         v-bind="$props"
         :name="`footer-panel-border-bottom-${elementId}`"
@@ -56,6 +56,7 @@ import BaseComponent from '../../core/BaseComponent'
 export default class FooterPanel extends BaseComponent {
   @Prop() management!: any
   @Prop(String) imageUrl!: string
+  @Prop(Boolean) isFooterStyle!: boolean
   
   borderBottom = {}
   background = {}
