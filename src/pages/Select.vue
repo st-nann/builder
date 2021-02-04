@@ -100,7 +100,7 @@ import { IDropdownOption } from '../interfaces/Components'
 @Component
 export default class SelectPage extends BaseComponent {
   management: any = {}
-  inputData: any = {}
+  selectData: any = {}
   previewOptions: IDropdownOption[] = [{ label: '', value: '' }]
 
   get containerStyle() {
@@ -147,13 +147,13 @@ export default class SelectPage extends BaseComponent {
   }
 
   getInputData(data: any) {
-    this.inputData = { ...data }
-    Object.assign(this.data, { ...this.inputData })
+    this.selectData = { ...data }
+    Object.assign(this.data, { ...this.selectData })
     this.doAssignStyle()
   }
 
   doAssignStyle() {
-    Object.assign(this.previewData, this.inputData)
+    Object.assign(this.previewData, this.selectData)
     const previewLabelStyle: any = {}
     const previewSelectStyle: any = {}
     const labelName = this.previewData.label && this.previewData.label.name ? this.previewData.label.name : ''
@@ -195,8 +195,8 @@ export default class SelectPage extends BaseComponent {
       : [{ label: '', value: '' }]
   }
 
-  @Watch('inputData', { deep: true })
-  onUpdateinputData() {
+  @Watch('selectData', { deep: true })
+  onUpdateSelectData() {
     const self = this
     setTimeout(() => { self.previewOptions = self.doMapOptions(self.previewData.options) }, 10)
   }

@@ -12,23 +12,22 @@
       @click="doEmitAddElement"
     >
       <template slot="content">
-        <button
-          v-if="elementProps.name"
-          class="button-content"
-          :style="[
-            propsButtonStyle,
-            { 'height': elementProps.height || 'max-content;' }
-          ]"
-        >
-          <a
-            class="button-link"
-            :href="elementProps.link"
-            target="_blank"
-            :style="[propsTextButtonStyle]"
+        <div class="checkbox-content">
+          <input
+            :name="elementProps.name"
+            :type="elementProps.type"
+            :value="elementProps.value"
+            :required="elementProps.required"
+            :checked="elementProps.checked"
+            :style="[{ 'height': elementProps.height || 'max-content;' }]"
+          />
+          <span
+            v-if="elementProps.label && elementProps.label.name"
+            :style="propsLabelStyle"
           >
-            {{ elementProps.name }}
-          </a>
-        </button>
+            {{ elementProps.label.name }}
+          </span>
+        </div>
       </template>
       <template slot="button-management">
         <MainButtonComponent
@@ -46,17 +45,17 @@
       :modal="{ width: 60, height: 50, action: 'edit', button: { custom: true } }"
     >
       <template slot="content">
-        <div class="modal-content-button">
-          <ButtonToolbarPanel
+        <div class="modal-content-checkbox">
+          <CheckboxToolbarPanel
             v-bind="$props"
             :management="management"
-            @change="getButtonData"
+            @change="getCheckboxData"
           />
-          <div
-            :id="`button-container-preview-${elementId}`"
-            class="button-preview-container"
-          >
-            <button :id="`button-preview-${elementId}`" class="button-preview" />
+          <div class="checkbox-preview-container">
+            <div class="checkbox-preview-input-container">
+              <input :id="`checkbox-preview-${elementId}`" type="checkbox" class="checkbox-preview" />
+              <span :id="`checkbox-label-preview-${elementId}`" />
+            </div>
           </div>
         </div>
       </template>
@@ -80,83 +79,69 @@ import BaseComponent from '../core/BaseComponent'
 @Component
 export default class CheckboxPage extends BaseComponent {
   management: any = {}
-  buttonData: any = {}
+  checkboxData: any = {}
 
   get containerStyle() {
     const style = {}
     if (this.elementProps.name) {
       Object.assign(style, { 'min-height': 'auto' })
     }
-    if (this.elementProps.flexbox) {
-      Object.assign(style, { ...this.elementProps.flexbox })
+    return style
+  }
+
+  get propsLabelStyle() {
+    const style = {}
+    if (this.elementProps.label && this.elementProps.label.font) {
+      if (this.elementProps.label.font['font-family']) {
+        Object.assign(style, { 'font-family': this.elementProps.label.font['font-family'] })
+      }
+      if (this.elementProps.label.font['font-size']) {
+        Object.assign(style, { 'font-size': this.elementProps.label.font['font-size'] })
+      }
+      if (this.elementProps.label.font['font-weight']) {
+        Object.assign(style, { 'font-weight': this.elementProps.label.font['font-weight'] })
+      }
+      if (this.elementProps.label.font.color) {
+        Object.assign(style, { 'color': this.elementProps.label.font.color })
+      }
     }
     return style
   }
 
-  get propsButtonStyle() {
-    return {
-      ...this.elementProps,
-      ['background-color']: this.elementProps.font && this.elementProps['button-background-color']
-        ? this.elementProps['button-background-color']
-        : undefined,
-      border: this.elementProps.border
-        ? `${this.elementProps.border.width} ${this.elementProps.border.style} ${this.elementProps.border.color}`
-        : undefined
-    }
-  }
-
-  get propsTextButtonStyle() {
-    return {
-      ['font-family']: this.elementProps.font && this.elementProps.font['font-family']
-        ? this.elementProps.font['font-family']
-        : undefined,
-      ['font-size']: this.elementProps.font && this.elementProps.font['font-size']
-        ? this.elementProps.font['font-size']
-        : undefined,
-      color: this.elementProps.font && this.elementProps.font.color
-        ? this.elementProps.font.color
-        : undefined
-    }
-  }
-
-  getButtonData(data: any) {
-    this.buttonData = { ...data }
-    Object.assign(this.data, { ...this.buttonData, padding: '10px 30px' })
+  getCheckboxData(data: any) {
+    this.checkboxData = { ...data }
+    Object.assign(this.data, { ...this.checkboxData })
     this.doAssignStyle()
   }
 
   doAssignStyle() {
-    Object.assign(this.previewData, this.buttonData)
-    const previewContainerStyle: any = {}
-    const previewButtonStyle: any = {}
-    const previewButtonInnerHTMLStyle = this.previewData.name || ''
+    Object.assign(this.previewData, this.checkboxData)
+    const previewLabelStyle: any = {}
+    const labelName = this.previewData.label && this.previewData.label.name ? this.previewData.label.name : ''
     if (JSON.stringify(this.previewData) !== '{}') {
-      const borderBottom = this.previewData['border-bottom']
-      const font = this.previewData.font
-      const backgroundColor = this.previewData['background-color']
-      const background = this.previewData['button-background-color']
-      const fontFamily = font ? font['font-family'] : ''
-      const fontSize = font ? font['font-size'] : ''
-      const fontColor = font ? font.color : ''
-      const border = this.previewData.border
-      const borderRadiusButton = this.previewData['border-radius']
-      const width = this.previewData.width
-      const justify = this.previewData.flexbox ? this.previewData.flexbox['justify-content'] : ''
-      if (borderBottom) { previewContainerStyle['border-bottom'] = `${borderBottom.width} ${borderBottom.style} ${borderBottom.color}` }
-      if (backgroundColor) { previewContainerStyle['background-color'] = backgroundColor }
-      if (background) { previewButtonStyle['background-color'] = background }
-      if (fontFamily) { previewButtonStyle['font-family'] = fontFamily }
-      if (fontSize) { previewButtonStyle['font-size'] = fontSize }
-      if (fontColor) { previewButtonStyle.color = fontColor }
-      if (border) { previewButtonStyle.border = `${border.width} ${border.style} ${border.color}` }
-      if (borderRadiusButton) { previewButtonStyle['border-radius'] = borderRadiusButton }
-      if (width) { previewButtonStyle.width = width }
-      if (justify) { previewContainerStyle['justify-content'] = justify }
+      const name = this.previewData.name
+      const type = this.elementProps.type
+      const value = this.previewData.value
+      const required = this.previewData.required
+      const checked = this.previewData.checked
+      const labelFont = this.previewData.label && this.previewData.label.font
+      const labelFontFamily = labelFont && this.previewData.label.font['font-family'] ? this.previewData.label.font['font-family'] : ''
+      const labelFontSize = labelFont && this.previewData.label.font['font-size'] ? this.previewData.label.font['font-size'] : ''
+      const labelFontWeight = labelFont && this.previewData.label.font['font-weight'] ? this.previewData.label.font['font-weight'] : ''
+      const labelFontColor = labelFont && this.previewData.label.font.color ? this.previewData.label.font.color : ''
+      if (name) { this.doSetAttribute(`checkbox-preview-${this.elementId}`, 'name', name) }
+      if (type) { this.doSetAttribute(`checkbox-preview-${this.elementId}`, 'type', type) }
+      if (value) { this.doSetAttribute(`checkbox-preview-${this.elementId}`, 'value', value) }
+      if (required) { this.doSetAttribute(`checkbox-preview-${this.elementId}`, 'required', required) }
+      if (checked) { this.doSetAttribute(`checkbox-preview-${this.elementId}`, 'checked', checked) }
+      if (labelFontFamily) { previewLabelStyle['font-family'] = labelFontFamily }
+      if (labelFontSize) { previewLabelStyle['font-size'] = labelFontSize }
+      if (labelFontWeight) { previewLabelStyle['font-weight'] = labelFontWeight }
+      if (labelFontColor) { previewLabelStyle['color'] = labelFontColor }
     }
-    this.doSetAttributeStyle(`button-container-preview-${this.elementId}`, previewContainerStyle)
-    this.doSetAttributeStyle(`button-preview-${this.elementId}`, { ...previewButtonStyle, padding: '10px 30px' })
-    const button = document.getElementById(`button-preview-${this.elementId}`)
-    if (button) { button.innerHTML = previewButtonInnerHTMLStyle }
+    this.doSetAttributeStyle(`checkbox-label-preview-${this.elementId}`, previewLabelStyle)
+    const label = document.getElementById(`checkbox-label-preview-${this.elementId}`)
+    if (label) { label.innerHTML = labelName }
   }
 
   @Watch('previewData', { deep: true })

@@ -48,7 +48,7 @@
         />
         <SwitchComponent
           :name="`textarea-required-${elementId}`"
-          :value="toggleInputRequired"
+          :value="toggleTextareaRequired"
           class="toolbar-panel-textarea-required"
           label="Required"
           @change="onUpdateRequired"
@@ -100,7 +100,7 @@ export default class TextareaToolbarPanel extends BaseComponent {
   labelFontWeight: any
   textareaName = ''
   textareaPlaceholder = ''
-  toggleInputRequired = false
+  toggleTextareaRequired = false
   textareaRadius: any
   textareaCols = 50
   textareaRows = 5
@@ -131,7 +131,7 @@ export default class TextareaToolbarPanel extends BaseComponent {
   }
 
   onUpdateRequired(required: any) {
-    this.toggleInputRequired = required
+    this.toggleTextareaRequired = required
     this.onEmitData()
   }
 
@@ -154,7 +154,7 @@ export default class TextareaToolbarPanel extends BaseComponent {
     this.$emit('change', {
       name: _.isEmpty(this.textareaName) ? undefined : this.textareaName,
       placeholder: _.isEmpty(this.textareaPlaceholder) ? undefined : this.textareaPlaceholder,
-      required: this.toggleInputRequired || false,
+      required: this.toggleTextareaRequired || false,
       height: this.elementProps.height,
       cols: _.isEmpty(this.textareaCols) ? 50 : this.textareaCols,
       rows: _.isEmpty(this.textareaRows) ? 5 : this.textareaRows,
@@ -177,7 +177,7 @@ export default class TextareaToolbarPanel extends BaseComponent {
         this.textareaPlaceholder = this.elementProps.placeholder || ''
         this.textareaCols = this.textareaCols || 50
         this.textareaRows = this.textareaRows || 5
-        this.toggleInputRequired = this.elementProps.required || false
+        this.toggleTextareaRequired = this.elementProps.required || false
       }
       this.onEmitData()
     }

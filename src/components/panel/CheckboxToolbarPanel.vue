@@ -1,68 +1,66 @@
 <template>
   <div class="toolbar-panel">
-    <div class="toolbar-panel-text-and-position">
-      <div class="toolbar-panel-input">
+    <div class="toolbar-panel-checkbox-container">
+      <div class="toolbar-panel-label">
         <InputComponent
-          :name="`button-name-${elementId}`"
-          label="Button Text"
-          placeholder="Button"
+          :name="`checkbox-label-name-${elementId}`"
+          label="Label"
+          placeholder="Label"
           width="200"
-          class="toolbar-panel-button-name"
-          :value="buttonName"
+          class="toolbar-panel-checkbox-label-name"
+          :value="checkboxLabelName"
+          @change="onUpdateLabelName"
+        />
+        <FontStyleComponent
+          v-bind="$props"
+          :name="`toolbar-panel-checkbox-label-font-${elementId}`"
+          :management="management"
+          customKeyValue="font"
+          @change="onUpdateLabelFont"
+        />
+        <FontWeightStyleComponent
+          v-bind="$props"
+          :name="`toolbar-panel-checkbox-label-font-weight-${elementId}`"
+          :management="management"
+          label="Font Weight"
+          customKeyValue="font-weight"
+          @change="onUpdateLabelFontWeight"
+        />
+      </div>
+      <div class="toolbar-panel-checkbox-attribute">
+        <InputComponent
+          :name="`checkbox-name-${elementId}`"
+          label="Name"
+          placeholder="Name"
+          width="200"
+          class="toolbar-panel-checkbox-name"
+          :value="checkboxName"
           @change="onUpdateName"
         />
         <InputComponent
-          :name="`button-link-${elementId}`"
-          label="Link"
-          placeholder="https://"
-          width="300"
-          class="toolbar-panel-button-link"
-          :value="buttonLink"
-          @change="onUpdateLink"
+          :name="`checkbox-value-${elementId}`"
+          label="Value"
+          placeholder="Value"
+          width="200"
+          class="toolbar-panel-checkbox-value"
+          :value="checkboxValue"
+          @change="onUpdateValue"
+        />
+        <SwitchComponent
+          :name="`checkbox-required-${elementId}`"
+          :value="toggleCheckboxRequired"
+          class="toolbar-panel-checkbox-required"
+          label="Required"
+          @change="onUpdateRequired"
+        />
+        <SwitchComponent
+          :name="`checkbox-checked-${elementId}`"
+          :value="toggleCheckboxChecked"
+          class="toolbar-panel-checkbox-checked"
+          label="Checked"
+          @change="onUpdateChecked"
         />
       </div>
-      <div class="toolbar-panel-button">
-        <GroupButtonComponent
-          name="button-horizontal-position"
-          :value="{ 'button-horizontal-position': justifyImage }"
-          :options="horizontalPositionOptions"
-          @change="onUpdateHorizontalPosition"
-        />
-      </div>
-    </div>
-    <div class="toolbar-panel-style">
-      <BackgroundStyleComponent
-        v-bind="$props"
-        :name="`toolbar-panel-button-background-${elementId}`"
-        :management="management"
-        label="Background Color"
-        customKeyValue="button-background-color"
-        @change="onUpdateButtonBackgroundColor"
-      />
-      <FontStyleComponent
-        v-bind="$props"
-        :name="`toolbar-panel-button-font-${elementId}`"
-        :management="management"
-        customKeyValue="font"
-        @change="onUpdateFont"
-      />
-      <RadiusStyleComponent
-        v-bind="$props"
-        :name="`toolbar-panel-button-radius-${elementId}`"
-        :management="management"
-        label="Radius"
-        customKeyValue="border-radius"
-        @change="onUpdateBorderRadius"
-      />
-      <BorderToggleStyleComponent
-        v-bind="$props"
-        :name="`toolbar-panel-button-border-${elementId}`"
-        :management="management"
-        class="toobar-panel-border"
-        customKeyValue="border"
-        label="Border"
-        @change="onUpdateBorderButton"
-      />
     </div>
   </div>
 </template>
@@ -71,71 +69,72 @@
 import _ from "lodash"
 import { Component, Prop, Watch } from 'vue-property-decorator'
 import BaseComponent from '../../core/BaseComponent'
-import { HORIZONTAL_POSITION_STYLE } from '../../constants/Style'
+import { INPUT_TYPES } from '../../constants/Style'
 
 @Component
-export default class CheckboxToolbarPanel extends BaseComponent {
+export default class InputToolbarPanel extends BaseComponent {
   @Prop() management!: any
 
-  buttonName = 'Button'
-  buttonLink = ''
-  buttonBackgroundColor: any
-  buttonFont: any
-  buttonRadius: any
-  buttonBorder: any
-  justifyImage = 'center'
+  checkboxLabelName = ''
+  labelFont: any
+  labelFontWeight: any
+  checkboxName = ''
+  checkboxValue = ''
+  toggleCheckboxRequired = false
+  toggleCheckboxChecked = false
+  
+  get inputTypeOptions() {
+    return INPUT_TYPES
+  }
 
-  get horizontalPositionOptions() {
-    return HORIZONTAL_POSITION_STYLE
+  onUpdateLabelName(name: any) {
+    this.checkboxLabelName = name
+    this.onEmitData()
+  }
+
+  onUpdateLabelFont(font: any) {
+    this.labelFont = font
+    this.onEmitData()
+  }
+
+  onUpdateLabelFontWeight(weight: any) {
+    this.labelFontWeight = weight
+    this.onEmitData()
   }
 
   onUpdateName(name: any) {
-    this.buttonName = name
+    this.checkboxName = name
     this.onEmitData()
   }
 
-  onUpdateLink(link: string) {
-    this.buttonLink = link
+  onUpdateValue(value: any) {
+    this.checkboxValue = value
     this.onEmitData()
   }
 
-  onUpdateHorizontalPosition(position: string) {
-    this.justifyImage = position
+  onUpdateRequired(required: any) {
+    this.toggleCheckboxRequired = required
     this.onEmitData()
   }
 
-  onUpdateButtonBackgroundColor(backgroundColor: any) {
-    this.buttonBackgroundColor = backgroundColor
-    this.onEmitData()
-  }
-
-  onUpdateFont(font: any) {
-    this.buttonFont = font
-    this.onEmitData()
-  }
-
-  onUpdateBorderRadius(radius: string) {
-    this.buttonRadius = radius
-    this.onEmitData()
-  }
-
-  onUpdateBorderButton(border: any) {
-    this.buttonBorder = border
+  onUpdateChecked(checked: any) {
+    this.toggleCheckboxChecked = checked
     this.onEmitData()
   }
 
   onEmitData() {
     this.$emit('change', {
-      name: _.isEmpty(this.buttonName) ? undefined : this.buttonName,
-      link: _.isEmpty(this.buttonLink) ? undefined : this.buttonLink,
-      ...this.buttonBackgroundColor,
-      ...this.buttonFont,
-      ...this.buttonRadius,
-      ...this.buttonBorder,
-      width: this.elementProps.width,
-      flexbox: _.isEmpty(this.justifyImage)
-        ? undefined
-        : { 'justify-content': this.justifyImage }
+      name: _.isEmpty(this.checkboxName) ? undefined : this.checkboxName,
+      type: this.elementProps.type,
+      value: _.isEmpty(this.checkboxValue) ? undefined : this.checkboxValue,
+      required: this.toggleCheckboxRequired || false,
+      checked: this.toggleCheckboxChecked || false,
+      label: {
+        name: _.isEmpty(this.checkboxLabelName) ? undefined : this.checkboxLabelName,
+        font: _.isEmpty(this.labelFont) && _.isEmpty(this.labelFontWeight)
+          ? undefined
+          : { ...this.labelFont.font, ...this.labelFontWeight }
+      }
     })
   }
 
@@ -143,15 +142,11 @@ export default class CheckboxToolbarPanel extends BaseComponent {
   onEdit() {
     if (this.management.edit) {
       if (this.elementProps) {
-        const haveFlexbox = this.elementProps.flexbox
-        const flexbox = _.cloneDeep(this.elementProps.flexbox)
-        this.buttonName = this.elementProps.name || 'Button'
-        this.buttonLink = this.elementProps.link || ''
-        if (haveFlexbox) {
-          this.justifyImage = _.isEmpty(flexbox['justify-content'])
-            ? 'center'
-            : flexbox['justify-content']
-        }
+        this.checkboxLabelName = this.elementProps.label && this.elementProps.label.name ? this.elementProps.label.name : ''
+        this.checkboxName = this.elementProps.name || ''
+        this.checkboxValue = this.elementProps.value || ''
+        this.toggleCheckboxRequired = this.elementProps.required || false
+        this.toggleCheckboxChecked = this.elementProps.checked || false
       }
       this.onEmitData()
     }

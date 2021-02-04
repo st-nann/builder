@@ -12,7 +12,7 @@
       @click="doEmitAddElement"
     >
       <template slot="content">
-        <div>
+        <div class="input-content">
           <div
             v-if="elementProps.label && elementProps.label.name"
             :style="propsLabelStyle"

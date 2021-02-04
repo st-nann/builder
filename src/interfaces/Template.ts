@@ -213,10 +213,10 @@ export interface ICheckbox {
             'flex-grow': number
         }
         name?: string
+        type: string
         value?: string
         required: boolean
         checked: boolean
-        options?: string
         label?: {
             name?: string
             font?: {

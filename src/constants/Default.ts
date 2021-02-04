@@ -143,6 +143,7 @@ export const CHECKBOX_DEFAULT: ICheckbox = {
         flexbox: {
             'flex-grow': 1
         },
+        type: 'checkbox',
         required: false,
         checked: false
     }

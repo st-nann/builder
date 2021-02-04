@@ -8,7 +8,7 @@
 
 .box {
     display: flex;
-    min-height: 115px;
+    min-height: 65px;
     height: auto;
     position: relative;
     background-color: transparent !important;
@@ -73,6 +73,14 @@
         select {
             appearance: auto;
         }
+    }
+
+    .checkbox-content {
+        @extend .box-padding;
+    }
+
+    .radio-content {
+        @extend .box-padding;
     }
 }
 
@@ -247,6 +255,14 @@ div:not([class*="disable-event"]) > * ~ a {
         }
 
         .select-content {
+            @extend .box-margin;
+        }
+
+        .checkbox-content {
+            @extend .box-margin;
+        }
+
+        .radio-content {
             @extend .box-margin;
         }
     }

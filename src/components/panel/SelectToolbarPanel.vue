@@ -34,12 +34,12 @@
           placeholder="Name"
           width="200"
           class="toolbar-panel-select-name"
-          :value="inputName"
+          :value="selectName"
           @change="onUpdateName"
         />
         <SwitchComponent
           :name="`select-required-${elementId}`"
-          :value="toggleInputRequired"
+          :value="toggleSelectRequired"
           class="toolbar-panel-select-required"
           label="Required"
           @change="onUpdateRequired"
@@ -89,13 +89,13 @@ export default class SelectToolbarPanel extends BaseComponent {
   selectLabelName = ''
   labelFont: any
   labelFontWeight: any
-  inputName = ''
-  toggleInputRequired = false
-  inputRadius: any
-  inputWidth: any
+  selectName = ''
+  toggleSelectRequired = false
+  selectRadius: any
+  selectWidth: any
   selectOptions = []
   
-  get inputTypeOptions() {
+  get selectTypeOptions() {
     return INPUT_TYPES
   }
 
@@ -115,22 +115,22 @@ export default class SelectToolbarPanel extends BaseComponent {
   }
 
   onUpdateName(name: any) {
-    this.inputName = name
+    this.selectName = name
     this.onEmitData()
   }
 
   onUpdateRequired(required: any) {
-    this.toggleInputRequired = required
+    this.toggleSelectRequired = required
     this.onEmitData()
   }
 
   onUpdateBorderRadius(radius: string) {
-    this.inputRadius = radius
+    this.selectRadius = radius
     this.onEmitData()
   }
 
   onUpdateWidth(width: any) {
-    this.inputWidth = width
+    this.selectWidth = width
     this.onEmitData()
   }
 
@@ -141,10 +141,10 @@ export default class SelectToolbarPanel extends BaseComponent {
 
   onEmitData() {
     this.$emit('change', {
-      name: _.isEmpty(this.inputName) ? undefined : this.inputName,
-      required: this.toggleInputRequired || false,
+      name: _.isEmpty(this.selectName) ? undefined : this.selectName,
+      required: this.toggleSelectRequired || false,
       height: this.elementProps.height,
-      ...this.inputWidth,
+      ...this.selectWidth,
       options: _.isEmpty(this.selectOptions) ? undefined : this.selectOptions,
       label: {
         name: _.isEmpty(this.selectLabelName) ? undefined : this.selectLabelName,
@@ -152,7 +152,7 @@ export default class SelectToolbarPanel extends BaseComponent {
           ? undefined
           : { ...this.labelFont.font, ...this.labelFontWeight }
       },
-      ...this.inputRadius
+      ...this.selectRadius
     })
   }
 
@@ -161,8 +161,8 @@ export default class SelectToolbarPanel extends BaseComponent {
     if (this.management.edit) {
       if (this.elementProps) {
         this.selectLabelName = this.elementProps.label && this.elementProps.label.name ? this.elementProps.label.name : ''
-        this.inputName = this.elementProps.name || ''
-        this.toggleInputRequired = this.elementProps.required || false
+        this.selectName = this.elementProps.name || ''
+        this.toggleSelectRequired = this.elementProps.required || false
         this.selectOptions = this.elementProps.options || ['1::Option 1', '2::Option 2', '3::Option 3']
       }
       this.onEmitData()

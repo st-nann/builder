@@ -12,7 +12,7 @@
       @click="doEmitAddElement"
     >
       <template slot="content">
-        <div>
+        <div class="textarea-content">
           <div
             v-if="elementProps.label && elementProps.label.name"
             :style="propsLabelStyle"
@@ -82,7 +82,7 @@ import BaseComponent from '../core/BaseComponent'
 @Component
 export default class TextareaPage extends BaseComponent {
   management: any = {}
-  inputData: any = {}
+  textareaData: any = {}
 
   get containerStyle() {
     const style = {}
@@ -125,13 +125,13 @@ export default class TextareaPage extends BaseComponent {
   }
 
   getTextareaData(data: any) {
-    this.inputData = { ...data }
-    Object.assign(this.data, { ...this.inputData })
+    this.textareaData = { ...data }
+    Object.assign(this.data, { ...this.textareaData })
     this.doAssignStyle()
   }
 
   doAssignStyle() {
-    Object.assign(this.previewData, this.inputData)
+    Object.assign(this.previewData, this.textareaData)
     const previewLabelStyle: any = {}
     const previewTextareaStyle: any = {}
     const labelName = this.previewData.label && this.previewData.label.name ? this.previewData.label.name : ''
