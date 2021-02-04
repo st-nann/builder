@@ -7,11 +7,11 @@
 
 select {
     appearance: inherit;
-    border: 1px solid #c6c6c6;
-    border-radius: 3px;
     padding: 4px;
     font-size: 12px;
     overflow-wrap: break-word;
+    border: 1px solid #c6c6c6;
+    border-radius: 3px;
     width: var(--dropdown-width);
 }
 

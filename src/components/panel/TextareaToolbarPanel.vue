@@ -172,7 +172,7 @@ export default class TextareaToolbarPanel extends BaseComponent {
   onEdit() {
     if (this.management.edit) {
       if (this.elementProps) {
-        this.textareaLabelName = this.elementProps.labe && this.elementProps.label.name ? this.elementProps.label.name : ''
+        this.textareaLabelName = this.elementProps.label && this.elementProps.label.name ? this.elementProps.label.name : ''
         this.textareaName = this.elementProps.name || ''
         this.textareaPlaceholder = this.elementProps.placeholder || ''
         this.textareaCols = this.textareaCols || 50

@@ -26,6 +26,8 @@ export default class BaseComponent extends Base {
   @Prop(Array) readonly flexbox!: IFlexbox
   @Prop(String) readonly className!: string
   @Prop(String) readonly width!: string
+  @Prop(String) readonly rows!: number // Textarea
+  @Prop(String) readonly cols!: number // Textarea
   @Prop(String) readonly min!: string // Slider
   @Prop(String) readonly max!: string // Slider
   @Prop(Number) readonly weightRange!: number // Slider

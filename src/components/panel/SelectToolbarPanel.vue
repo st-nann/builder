@@ -1,141 +1,158 @@
 <template>
   <div class="toolbar-panel">
-    <div class="toolbar-panel-text-and-position">
-      <div class="toolbar-panel-input">
+    <div class="toolbar-panel-select-container">
+      <div class="toolbar-panel-label">
         <InputComponent
-          :name="`button-name-${elementId}`"
-          label="Button Text"
-          placeholder="Button"
+          :name="`select-label-name-${elementId}`"
+          label="Label"
+          placeholder="Label"
           width="200"
-          class="toolbar-panel-button-name"
-          :value="buttonName"
+          class="toolbar-panel-select-label-name"
+          :value="selectLabelName"
+          @change="onUpdateLabelName"
+        />
+        <FontStyleComponent
+          v-bind="$props"
+          :name="`toolbar-panel-select-label-font-${elementId}`"
+          :management="management"
+          customKeyValue="font"
+          @change="onUpdateLabelFont"
+        />
+        <FontWeightStyleComponent
+          v-bind="$props"
+          :name="`toolbar-panel-select-label-font-weight-${elementId}`"
+          :management="management"
+          label="Font Weight"
+          customKeyValue="font-weight"
+          @change="onUpdateLabelFontWeight"
+        />
+      </div>
+      <div class="toolbar-panel-select-style-and-attribute">
+        <InputComponent
+          :name="`select-name-${elementId}`"
+          label="Name"
+          placeholder="Name"
+          width="200"
+          class="toolbar-panel-select-name"
+          :value="inputName"
           @change="onUpdateName"
         />
-        <InputComponent
-          :name="`button-link-${elementId}`"
-          label="Link"
-          placeholder="https://"
-          width="300"
-          class="toolbar-panel-button-link"
-          :value="buttonLink"
-          @change="onUpdateLink"
+        <SwitchComponent
+          :name="`select-required-${elementId}`"
+          :value="toggleInputRequired"
+          class="toolbar-panel-select-required"
+          label="Required"
+          @change="onUpdateRequired"
+        />
+        <RadiusStyleComponent
+          v-bind="$props"
+          :name="`toolbar-panel-select-radius-${elementId}`"
+          :management="management"
+          label="Radius"
+          customKeyValue="border-radius"
+          @change="onUpdateBorderRadius"
+        />
+        <WidthToggleStyleComponent
+          v-bind="$props"
+          :management="management"
+          class="toobar-panel-select-width"
+          customKeyValue="width"
+          @change="onUpdateWidth"
         />
       </div>
-      <div class="toolbar-panel-button">
-        <GroupButtonComponent
-          name="button-horizontal-position"
-          :value="{ 'button-horizontal-position': justifyImage }"
-          :options="horizontalPositionOptions"
-          @change="onUpdateHorizontalPosition"
+      <div class="toolbar-panel-select-options">
+        <TextareaComponent
+          :name="`select-options-${elementId}`"
+          label="Options"
+          placeholder="Options"
+          cols="40"
+          rows="5"
+          class="toolbar-panel-select-options"
+          :value="selectOptions"
+          @change="onUpdateOptions"
         />
       </div>
-    </div>
-    <div class="toolbar-panel-style">
-      <BackgroundStyleComponent
-        v-bind="$props"
-        :name="`toolbar-panel-button-background-${elementId}`"
-        :management="management"
-        label="Background Color"
-        customKeyValue="button-background-color"
-        @change="onUpdateButtonBackgroundColor"
-      />
-      <FontStyleComponent
-        v-bind="$props"
-        :name="`toolbar-panel-button-font-${elementId}`"
-        :management="management"
-        customKeyValue="font"
-        @change="onUpdateFont"
-      />
-      <RadiusStyleComponent
-        v-bind="$props"
-        :name="`toolbar-panel-button-radius-${elementId}`"
-        :management="management"
-        label="Radius"
-        customKeyValue="border-radius"
-        @change="onUpdateBorderRadius"
-      />
-      <BorderToggleStyleComponent
-        v-bind="$props"
-        :name="`toolbar-panel-button-border-${elementId}`"
-        :management="management"
-        class="toobar-panel-border"
-        customKeyValue="border"
-        label="Border"
-        @change="onUpdateBorderButton"
-      />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import _ from "lodash";
+import _ from "lodash"
 import { Component, Prop, Watch } from 'vue-property-decorator'
 import BaseComponent from '../../core/BaseComponent'
-import { HORIZONTAL_POSITION_STYLE } from '../../constants/Style'
+import { INPUT_TYPES } from '../../constants/Style'
 
 @Component
 export default class SelectToolbarPanel extends BaseComponent {
-  @Prop() management!: any;
+  @Prop() management!: any
 
-  buttonName = 'Button';
-  buttonLink = '';
-  buttonBackgroundColor: any;
-  buttonFont: any;
-  buttonRadius: any;
-  buttonBorder: any;
-  justifyImage = 'center';
+  selectLabelName = ''
+  labelFont: any
+  labelFontWeight: any
+  inputName = ''
+  toggleInputRequired = false
+  inputRadius: any
+  inputWidth: any
+  selectOptions = []
+  
+  get inputTypeOptions() {
+    return INPUT_TYPES
+  }
 
-  get horizontalPositionOptions() {
-    return HORIZONTAL_POSITION_STYLE
+  onUpdateLabelName(name: any) {
+    this.selectLabelName = name
+    this.onEmitData()
+  }
+
+  onUpdateLabelFont(font: any) {
+    this.labelFont = font
+    this.onEmitData()
+  }
+
+  onUpdateLabelFontWeight(weight: any) {
+    this.labelFontWeight = weight
+    this.onEmitData()
   }
 
   onUpdateName(name: any) {
-    this.buttonName = name
+    this.inputName = name
     this.onEmitData()
   }
 
-  onUpdateLink(link: string) {
-    this.buttonLink = link
-    this.onEmitData()
-  }
-
-  onUpdateHorizontalPosition(position: string) {
-    this.justifyImage = position
-    this.onEmitData()
-  }
-
-  onUpdateButtonBackgroundColor(backgroundColor: any) {
-    this.buttonBackgroundColor = backgroundColor
-    this.onEmitData()
-  }
-
-  onUpdateFont(font: any) {
-    this.buttonFont = font
+  onUpdateRequired(required: any) {
+    this.toggleInputRequired = required
     this.onEmitData()
   }
 
   onUpdateBorderRadius(radius: string) {
-    this.buttonRadius = radius
+    this.inputRadius = radius
     this.onEmitData()
   }
 
-  onUpdateBorderButton(border: any) {
-    this.buttonBorder = border
+  onUpdateWidth(width: any) {
+    this.inputWidth = width
+    this.onEmitData()
+  }
+
+  onUpdateOptions(options: any) {
+    this.selectOptions = options
     this.onEmitData()
   }
 
   onEmitData() {
     this.$emit('change', {
-      name: _.isEmpty(this.buttonName) ? undefined : this.buttonName,
-      link: _.isEmpty(this.buttonLink) ? undefined : this.buttonLink,
-      ...this.buttonBackgroundColor,
-      ...this.buttonFont,
-      ...this.buttonRadius,
-      ...this.buttonBorder,
-      width: this.elementProps.width,
-      flexbox: _.isEmpty(this.justifyImage)
-        ? undefined
-        : { 'justify-content': this.justifyImage }
+      name: _.isEmpty(this.inputName) ? undefined : this.inputName,
+      required: this.toggleInputRequired || false,
+      height: this.elementProps.height,
+      ...this.inputWidth,
+      options: _.isEmpty(this.selectOptions) ? undefined : this.selectOptions,
+      label: {
+        name: _.isEmpty(this.selectLabelName) ? undefined : this.selectLabelName,
+        font: _.isEmpty(this.labelFont) && _.isEmpty(this.labelFontWeight)
+          ? undefined
+          : { ...this.labelFont.font, ...this.labelFontWeight }
+      },
+      ...this.inputRadius
     })
   }
 
@@ -143,15 +160,10 @@ export default class SelectToolbarPanel extends BaseComponent {
   onEdit() {
     if (this.management.edit) {
       if (this.elementProps) {
-        const haveFlexbox = this.elementProps.flexbox;
-        const flexbox = _.cloneDeep(this.elementProps.flexbox);
-        this.buttonName = this.elementProps.name || 'Button'
-        this.buttonLink = this.elementProps.link || ''
-        if (haveFlexbox) {
-          this.justifyImage = _.isEmpty(flexbox['justify-content'])
-            ? 'center'
-            : flexbox['justify-content']
-        }
+        this.selectLabelName = this.elementProps.label && this.elementProps.label.name ? this.elementProps.label.name : ''
+        this.inputName = this.elementProps.name || ''
+        this.toggleInputRequired = this.elementProps.required || false
+        this.selectOptions = this.elementProps.options || ['1::Option 1', '2::Option 2', '3::Option 3']
       }
       this.onEmitData()
     }

@@ -192,7 +192,7 @@ export interface ISelect {
         height: string
         width: string
         required: boolean
-        options?: string
+        options?: string[]
         label?: {
             name?: string
             font?: {

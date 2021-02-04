@@ -287,3 +287,30 @@
         }
     }
 }
+
+/* Select Panel */
+.toolbar-panel {
+    @extend .panel;
+
+    .toolbar-panel-select-container {
+        display: flex;
+        flex-direction: column;
+        
+        .toolbar-panel-label {
+            margin: 5px 0;
+        }
+
+        .toolbar-panel-select-style-and-attribute {
+            margin: 5px 0;
+
+            .toobar-panel-select-width {
+                margin-left: 10px;
+            }
+        
+        }
+
+        .toolbar-panel-select-options {
+            margin: 5px 0;
+        }
+    }
+}

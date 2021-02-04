@@ -2,7 +2,7 @@
   <span class="input-container">
     <label v-if="label" class="input-label">{{ label }}</label>
     <input
-      :id="`input-${this.name}`"
+      :id="`input-${name}`"
       :value="value"
       :placeholder="placeholder"
       :class="[

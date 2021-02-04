@@ -26,7 +26,7 @@
             :cols="elementProps.cols"
             :rows="elementProps.rows"
             :style="[
-              propsInputStyle,
+              propsTextareaStyle,
               { 'height': elementProps.height || 'max-content;' }
             ]"
           />
@@ -80,7 +80,7 @@ import { Component, Watch } from 'vue-property-decorator'
 import BaseComponent from '../core/BaseComponent'
 
 @Component
-export default class InputPage extends BaseComponent {
+export default class TextareaPage extends BaseComponent {
   management: any = {}
   inputData: any = {}
 
@@ -111,7 +111,7 @@ export default class InputPage extends BaseComponent {
     return style
   }
 
-  get propsInputStyle() {
+  get propsTextareaStyle() {
     const style = {}
     if (this.elementProps) {
       if (this.elementProps['border-radius']) {

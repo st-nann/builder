@@ -14,6 +14,7 @@ import InputComponent from '../../components/base/Input.vue'
 import ModalComponent from '../../components/base/Modal.vue'
 import SliderComponent from '../../components/base/Slider.vue'
 import SwitchComponent from '../../components/base/Switch.vue'
+import TextareaComponent from '../../components/base/Textarea.vue'
 import UploadImageComponent from '../../components/base/UploadImage.vue'
 
 export const BaseComponents = {
@@ -30,6 +31,7 @@ export const BaseComponents = {
     ComboboxComponent,
     DropdownComponent,
     InputComponent,
+    TextareaComponent,
     ModalComponent,
     SwitchComponent,
     SliderComponent,

@@ -174,7 +174,7 @@ export default class InputToolbarPanel extends BaseComponent {
   onEdit() {
     if (this.management.edit) {
       if (this.elementProps) {
-        this.inputLabelName = this.elementProps.labe && this.elementProps.label.name ? this.elementProps.label.name : ''
+        this.inputLabelName = this.elementProps.label && this.elementProps.label.name ? this.elementProps.label.name : ''
         this.inputName = this.elementProps.name || ''
         this.inputType = this.elementProps.type || ''
         this.inputPlaceholder = this.elementProps.placeholder || ''

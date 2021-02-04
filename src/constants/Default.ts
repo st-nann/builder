@@ -132,7 +132,8 @@ export const SELECT_DEFAULT: ISelect = {
         },
         height: '25px',
         width: '200px',
-        required: false
+        required: false,
+        options: ['1::Option 1', '2::Option 2', '3::Option 3']
     }
 }
 
