@@ -117,8 +117,9 @@ export const TEXTAREA_DEFAULT: ITextArea = {
         flexbox: {
             'flex-grow': 1
         },
-        height: '25px',
-        width: '200px',
+        cols: 50,
+        rows: 5,
+        resize: 'none',
         required: false
     }
 }

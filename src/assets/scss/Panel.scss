@@ -264,3 +264,26 @@
         }
     }
 }
+
+/* Textarea Panel */
+.toolbar-panel {
+    @extend .panel;
+
+    .toolbar-panel-textarea-container {
+        display: flex;
+        flex-direction: column;
+        
+        .toolbar-panel-label {
+            margin: 5px 0;
+        }
+
+        .toolbar-panel-textarea-attribute {
+            margin: 5px 0;
+        
+        }
+
+        .toolbar-panel-textarea-style {
+            margin: 5px 0;
+        }
+    }
+}

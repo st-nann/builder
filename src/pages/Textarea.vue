@@ -12,23 +12,25 @@
       @click="doEmitAddElement"
     >
       <template slot="content">
-        <button
-          v-if="elementProps.name"
-          class="button-content"
-          :style="[
-            propsButtonStyle,
-            { 'height': elementProps.height || 'max-content;' }
-          ]"
-        >
-          <a
-            class="button-link"
-            :href="elementProps.link"
-            target="_blank"
-            :style="[propsTextButtonStyle]"
+        <div>
+          <div
+            v-if="elementProps.label && elementProps.label.name"
+            :style="propsLabelStyle"
           >
-            {{ elementProps.name }}
-          </a>
-        </button>
+            {{ elementProps.label.name }}
+          </div>
+          <textarea
+            :name="elementProps.name"
+            :placeholder="elementProps.placeholder"
+            :required="elementProps.required"
+            :cols="elementProps.cols"
+            :rows="elementProps.rows"
+            :style="[
+              propsInputStyle,
+              { 'height': elementProps.height || 'max-content;' }
+            ]"
+          />
+        </div>
       </template>
       <template slot="button-management">
         <MainButtonComponent
@@ -46,17 +48,17 @@
       :modal="{ width: 60, height: 50, action: 'edit', button: { custom: true } }"
     >
       <template slot="content">
-        <div class="modal-content-button">
-          <ButtonToolbarPanel
+        <div class="modal-content-textarea">
+          <TextareaToolbarPanel
             v-bind="$props"
             :management="management"
-            @change="getButtonData"
+            @change="getTextareaData"
           />
-          <div
-            :id="`button-container-preview-${elementId}`"
-            class="button-preview-container"
-          >
-            <button :id="`button-preview-${elementId}`" class="button-preview" />
+          <div class="textarea-preview-container">
+            <div class="textarea-preview-input-container">
+              <div :id="`textarea-label-preview-${elementId}`" />
+              <textarea :id="`textarea-preview-${elementId}`" class="textarea-preview" />
+            </div>
           </div>
         </div>
       </template>
@@ -78,85 +80,90 @@ import { Component, Watch } from 'vue-property-decorator'
 import BaseComponent from '../core/BaseComponent'
 
 @Component
-export default class TextareaPage extends BaseComponent {
+export default class InputPage extends BaseComponent {
   management: any = {}
-  buttonData: any = {}
+  inputData: any = {}
 
   get containerStyle() {
     const style = {}
     if (this.elementProps.name) {
       Object.assign(style, { 'min-height': 'auto' })
     }
-    if (this.elementProps.flexbox) {
-      Object.assign(style, { ...this.elementProps.flexbox })
+    return style
+  }
+
+  get propsLabelStyle() {
+    const style = {}
+    if (this.elementProps.label && this.elementProps.label.font) {
+      if (this.elementProps.label.font['font-family']) {
+        Object.assign(style, { 'font-family': this.elementProps.label.font['font-family'] })
+      }
+      if (this.elementProps.label.font['font-size']) {
+        Object.assign(style, { 'font-size': this.elementProps.label.font['font-size'] })
+      }
+      if (this.elementProps.label.font['font-weight']) {
+        Object.assign(style, { 'font-weight': this.elementProps.label.font['font-weight'] })
+      }
+      if (this.elementProps.label.font.color) {
+        Object.assign(style, { 'color': this.elementProps.label.font.color })
+      }
     }
     return style
   }
 
-  get propsButtonStyle() {
-    return {
-      ...this.elementProps,
-      ['background-color']: this.elementProps.font && this.elementProps['button-background-color']
-        ? this.elementProps['button-background-color']
-        : undefined,
-      border: this.elementProps.border
-        ? `${this.elementProps.border.width} ${this.elementProps.border.style} ${this.elementProps.border.color}`
-        : undefined
+  get propsInputStyle() {
+    const style = {}
+    if (this.elementProps) {
+      if (this.elementProps['border-radius']) {
+        Object.assign(style, { 'border-radius': this.elementProps['border-radius'] })
+      }
+      if (this.elementProps.resize) {
+        Object.assign(style, { 'resize': this.elementProps.resize })
+      }
     }
+    return style
   }
 
-  get propsTextButtonStyle() {
-    return {
-      ['font-family']: this.elementProps.font && this.elementProps.font['font-family']
-        ? this.elementProps.font['font-family']
-        : undefined,
-      ['font-size']: this.elementProps.font && this.elementProps.font['font-size']
-        ? this.elementProps.font['font-size']
-        : undefined,
-      color: this.elementProps.font && this.elementProps.font.color
-        ? this.elementProps.font.color
-        : undefined
-    }
-  }
-
-  getButtonData(data: any) {
-    this.buttonData = { ...data }
-    Object.assign(this.data, { ...this.buttonData, padding: '10px 30px' })
+  getTextareaData(data: any) {
+    this.inputData = { ...data }
+    Object.assign(this.data, { ...this.inputData })
     this.doAssignStyle()
   }
 
   doAssignStyle() {
-    Object.assign(this.previewData, this.buttonData)
-    const previewContainerStyle: any = {}
-    const previewButtonStyle: any = {}
-    const previewButtonInnerHTMLStyle = this.previewData.name || ''
+    Object.assign(this.previewData, this.inputData)
+    const previewLabelStyle: any = {}
+    const previewTextareaStyle: any = {}
+    const labelName = this.previewData.label && this.previewData.label.name ? this.previewData.label.name : ''
     if (JSON.stringify(this.previewData) !== '{}') {
-      const borderBottom = this.previewData['border-bottom']
-      const font = this.previewData.font
-      const backgroundColor = this.previewData['background-color']
-      const background = this.previewData['button-background-color']
-      const fontFamily = font ? font['font-family'] : ''
-      const fontSize = font ? font['font-size'] : ''
-      const fontColor = font ? font.color : ''
-      const border = this.previewData.border
-      const borderRadiusButton = this.previewData['border-radius']
-      const width = this.previewData.width
-      const justify = this.previewData.flexbox ? this.previewData.flexbox['justify-content'] : ''
-      if (borderBottom) { previewContainerStyle['border-bottom'] = `${borderBottom.width} ${borderBottom.style} ${borderBottom.color}` }
-      if (backgroundColor) { previewContainerStyle['background-color'] = backgroundColor }
-      if (background) { previewButtonStyle['background-color'] = background }
-      if (fontFamily) { previewButtonStyle['font-family'] = fontFamily }
-      if (fontSize) { previewButtonStyle['font-size'] = fontSize }
-      if (fontColor) { previewButtonStyle.color = fontColor }
-      if (border) { previewButtonStyle.border = `${border.width} ${border.style} ${border.color}` }
-      if (borderRadiusButton) { previewButtonStyle['border-radius'] = borderRadiusButton }
-      if (width) { previewButtonStyle.width = width }
-      if (justify) { previewContainerStyle['justify-content'] = justify }
+      const name = this.previewData.name
+      const cols = this.previewData.cols
+      const rows = this.previewData.rows
+      const resize = this.elementProps.resize
+      const required = this.previewData.required
+      const placeholder = this.previewData.placeholder
+      const labelFont = this.previewData.label && this.previewData.label.font
+      const labelFontFamily = labelFont && this.previewData.label.font['font-family'] ? this.previewData.label.font['font-family'] : ''
+      const labelFontSize = labelFont && this.previewData.label.font['font-size'] ? this.previewData.label.font['font-size'] : ''
+      const labelFontWeight = labelFont && this.previewData.label.font['font-weight'] ? this.previewData.label.font['font-weight'] : ''
+      const labelFontColor = labelFont && this.previewData.label.font.color ? this.previewData.label.font.color : ''
+      const borderRadiusInput = this.previewData['border-radius'] || ''
+      if (name) { this.doSetAttribute(`textarea-preview-${this.elementId}`, 'name', name) }
+      if (required) { this.doSetAttribute(`textarea-preview-${this.elementId}`, 'required', required) }
+      if (placeholder) { this.doSetAttribute(`textarea-preview-${this.elementId}`, 'placeholder', placeholder) }
+      if (cols) { this.doSetAttribute(`textarea-preview-${this.elementId}`, 'cols', cols) }
+      if (rows) { this.doSetAttribute(`textarea-preview-${this.elementId}`, 'rows', rows) }
+      if (labelFontFamily) { previewLabelStyle['font-family'] = labelFontFamily }
+      if (labelFontSize) { previewLabelStyle['font-size'] = labelFontSize }
+      if (labelFontWeight) { previewLabelStyle['font-weight'] = labelFontWeight }
+      if (labelFontColor) { previewLabelStyle['color'] = labelFontColor }
+      if (borderRadiusInput) { previewTextareaStyle['border-radius'] = borderRadiusInput }
+      if (resize) { previewTextareaStyle.resize = resize }
     }
-    this.doSetAttributeStyle(`button-container-preview-${this.elementId}`, previewContainerStyle)
-    this.doSetAttributeStyle(`button-preview-${this.elementId}`, { ...previewButtonStyle, padding: '10px 30px' })
-    const button = document.getElementById(`button-preview-${this.elementId}`)
-    if (button) { button.innerHTML = previewButtonInnerHTMLStyle }
+    this.doSetAttributeStyle(`textarea-label-preview-${this.elementId}`, previewLabelStyle)
+    this.doSetAttributeStyle(`textarea-preview-${this.elementId}`, previewTextareaStyle)
+    const label = document.getElementById(`textarea-label-preview-${this.elementId}`)
+    if (label) { label.innerHTML = labelName }
   }
 
   @Watch('previewData', { deep: true })

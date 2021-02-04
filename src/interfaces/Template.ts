@@ -164,10 +164,11 @@ export interface ITextArea {
             'flex-grow': number
         }
         name?: string
-        height: string
-        width: string
         required: boolean
         placeholder?: string
+        cols: number
+        rows: number
+        resize: string
         label?: {
             name?: string
             font?: {

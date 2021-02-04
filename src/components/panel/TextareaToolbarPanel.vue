@@ -1,141 +1,170 @@
 <template>
   <div class="toolbar-panel">
-    <div class="toolbar-panel-text-and-position">
-      <div class="toolbar-panel-input">
+    <div class="toolbar-panel-textarea-container">
+      <div class="toolbar-panel-label">
         <InputComponent
-          :name="`button-name-${elementId}`"
-          label="Button Text"
-          placeholder="Button"
+          :name="`textarea-label-name-${elementId}`"
+          label="Label"
+          placeholder="Label"
           width="200"
-          class="toolbar-panel-button-name"
-          :value="buttonName"
+          class="toolbar-panel-textarea-label-name"
+          :value="textareaLabelName"
+          @change="onUpdateLabelName"
+        />
+        <FontStyleComponent
+          v-bind="$props"
+          :name="`toolbar-panel-textarea-label-font-${elementId}`"
+          :management="management"
+          customKeyValue="font"
+          @change="onUpdateLabelFont"
+        />
+        <FontWeightStyleComponent
+          v-bind="$props"
+          :name="`toolbar-panel-textarea-label-font-weight-${elementId}`"
+          :management="management"
+          label="Font Weight"
+          customKeyValue="font-weight"
+          @change="onUpdateLabelFontWeight"
+        />
+      </div>
+      <div class="toolbar-panel-textarea-attribute">
+        <InputComponent
+          :name="`textarea-name-${elementId}`"
+          label="Name"
+          placeholder="Name"
+          width="200"
+          class="toolbar-panel-textarea-name"
+          :value="textareaName"
           @change="onUpdateName"
         />
         <InputComponent
-          :name="`button-link-${elementId}`"
-          label="Link"
-          placeholder="https://"
-          width="300"
-          class="toolbar-panel-button-link"
-          :value="buttonLink"
-          @change="onUpdateLink"
+          :name="`textarea-placeholder-${elementId}`"
+          label="Placeholder"
+          placeholder="Placeholder"
+          width="200"
+          class="toolbar-panel-textarea-placeholder"
+          :value="textareaPlaceholder"
+          @change="onUpdatePlaceholder"
+        />
+        <SwitchComponent
+          :name="`textarea-required-${elementId}`"
+          :value="toggleInputRequired"
+          class="toolbar-panel-textarea-required"
+          label="Required"
+          @change="onUpdateRequired"
         />
       </div>
-      <div class="toolbar-panel-button">
-        <GroupButtonComponent
-          name="button-horizontal-position"
-          :value="{ 'button-horizontal-position': justifyImage }"
-          :options="horizontalPositionOptions"
-          @change="onUpdateHorizontalPosition"
+      <div class="toolbar-panel-textarea-style">
+        <RadiusStyleComponent
+          v-bind="$props"
+          :name="`toolbar-panel-textarea-radius-${elementId}`"
+          :management="management"
+          label="Radius"
+          customKeyValue="border-radius"
+          @change="onUpdateBorderRadius"
+        />
+        <InputComponent
+          :name="`textarea-column-${elementId}`"
+          label="Column (Width)"
+          placeholder="Column (Width)"
+          width="50"
+          class="toolbar-panel-textarea-column"
+          :value="textareaCols"
+          @change="onUpdateCols"
+        />
+        <InputComponent
+          :name="`textarea-row-${elementId}`"
+          label="Row (Height)"
+          placeholder="Row (Height)"
+          width="50"
+          class="toolbar-panel-textarea-row"
+          :value="textareaRows"
+          @change="onUpdateRows"
         />
       </div>
-    </div>
-    <div class="toolbar-panel-style">
-      <BackgroundStyleComponent
-        v-bind="$props"
-        :name="`toolbar-panel-button-background-${elementId}`"
-        :management="management"
-        label="Background Color"
-        customKeyValue="button-background-color"
-        @change="onUpdateButtonBackgroundColor"
-      />
-      <FontStyleComponent
-        v-bind="$props"
-        :name="`toolbar-panel-button-font-${elementId}`"
-        :management="management"
-        customKeyValue="font"
-        @change="onUpdateFont"
-      />
-      <RadiusStyleComponent
-        v-bind="$props"
-        :name="`toolbar-panel-button-radius-${elementId}`"
-        :management="management"
-        label="Radius"
-        customKeyValue="border-radius"
-        @change="onUpdateBorderRadius"
-      />
-      <BorderToggleStyleComponent
-        v-bind="$props"
-        :name="`toolbar-panel-button-border-${elementId}`"
-        :management="management"
-        class="toobar-panel-border"
-        customKeyValue="border"
-        label="Border"
-        @change="onUpdateBorderButton"
-      />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import _ from "lodash";
+import _ from "lodash"
 import { Component, Prop, Watch } from 'vue-property-decorator'
 import BaseComponent from '../../core/BaseComponent'
-import { HORIZONTAL_POSITION_STYLE } from '../../constants/Style'
 
 @Component
 export default class TextareaToolbarPanel extends BaseComponent {
-  @Prop() management!: any;
+  @Prop() management!: any
 
-  buttonName = 'Button';
-  buttonLink = '';
-  buttonBackgroundColor: any;
-  buttonFont: any;
-  buttonRadius: any;
-  buttonBorder: any;
-  justifyImage = 'center';
+  textareaLabelName = ''
+  labelFont: any
+  labelFontWeight: any
+  textareaName = ''
+  textareaPlaceholder = ''
+  toggleInputRequired = false
+  textareaRadius: any
+  textareaCols = 50
+  textareaRows = 5
 
-  get horizontalPositionOptions() {
-    return HORIZONTAL_POSITION_STYLE
+  onUpdateLabelName(name: any) {
+    this.textareaLabelName = name
+    this.onEmitData()
+  }
+
+  onUpdateLabelFont(font: any) {
+    this.labelFont = font
+    this.onEmitData()
+  }
+
+  onUpdateLabelFontWeight(weight: any) {
+    this.labelFontWeight = weight
+    this.onEmitData()
   }
 
   onUpdateName(name: any) {
-    this.buttonName = name
+    this.textareaName = name
     this.onEmitData()
   }
 
-  onUpdateLink(link: string) {
-    this.buttonLink = link
+  onUpdatePlaceholder(placeholder: any) {
+    this.textareaPlaceholder = placeholder
     this.onEmitData()
   }
 
-  onUpdateHorizontalPosition(position: string) {
-    this.justifyImage = position
-    this.onEmitData()
-  }
-
-  onUpdateButtonBackgroundColor(backgroundColor: any) {
-    this.buttonBackgroundColor = backgroundColor
-    this.onEmitData()
-  }
-
-  onUpdateFont(font: any) {
-    this.buttonFont = font
+  onUpdateRequired(required: any) {
+    this.toggleInputRequired = required
     this.onEmitData()
   }
 
   onUpdateBorderRadius(radius: string) {
-    this.buttonRadius = radius
+    this.textareaRadius = radius
     this.onEmitData()
   }
 
-  onUpdateBorderButton(border: any) {
-    this.buttonBorder = border
+  onUpdateCols(cols: any) {
+    this.textareaCols = cols
+    this.onEmitData()
+  }
+
+  onUpdateRows(rows: any) {
+    this.textareaRows = rows
     this.onEmitData()
   }
 
   onEmitData() {
     this.$emit('change', {
-      name: _.isEmpty(this.buttonName) ? undefined : this.buttonName,
-      link: _.isEmpty(this.buttonLink) ? undefined : this.buttonLink,
-      ...this.buttonBackgroundColor,
-      ...this.buttonFont,
-      ...this.buttonRadius,
-      ...this.buttonBorder,
-      width: this.elementProps.width,
-      flexbox: _.isEmpty(this.justifyImage)
-        ? undefined
-        : { 'justify-content': this.justifyImage }
+      name: _.isEmpty(this.textareaName) ? undefined : this.textareaName,
+      placeholder: _.isEmpty(this.textareaPlaceholder) ? undefined : this.textareaPlaceholder,
+      required: this.toggleInputRequired || false,
+      height: this.elementProps.height,
+      cols: _.isEmpty(this.textareaCols) ? 50 : this.textareaCols,
+      rows: _.isEmpty(this.textareaRows) ? 5 : this.textareaRows,
+      label: {
+        name: _.isEmpty(this.textareaLabelName) ? undefined : this.textareaLabelName,
+        font: _.isEmpty(this.labelFont) && _.isEmpty(this.labelFontWeight)
+          ? undefined
+          : { ...this.labelFont.font, ...this.labelFontWeight }
+      },
+      ...this.textareaRadius
     })
   }
 
@@ -143,15 +172,12 @@ export default class TextareaToolbarPanel extends BaseComponent {
   onEdit() {
     if (this.management.edit) {
       if (this.elementProps) {
-        const haveFlexbox = this.elementProps.flexbox;
-        const flexbox = _.cloneDeep(this.elementProps.flexbox);
-        this.buttonName = this.elementProps.name || 'Button'
-        this.buttonLink = this.elementProps.link || ''
-        if (haveFlexbox) {
-          this.justifyImage = _.isEmpty(flexbox['justify-content'])
-            ? 'center'
-            : flexbox['justify-content']
-        }
+        this.textareaLabelName = this.elementProps.labe && this.elementProps.label.name ? this.elementProps.label.name : ''
+        this.textareaName = this.elementProps.name || ''
+        this.textareaPlaceholder = this.elementProps.placeholder || ''
+        this.textareaCols = this.textareaCols || 50
+        this.textareaRows = this.textareaRows || 5
+        this.toggleInputRequired = this.elementProps.required || false
       }
       this.onEmitData()
     }
