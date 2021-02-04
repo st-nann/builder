@@ -155,6 +155,7 @@ export const RADIO_DEFAULT: IRadio = {
         flexbox: {
             'flex-grow': 1
         },
+        type: 'radio',
         required: false,
         checked: false
     }

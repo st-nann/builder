@@ -69,10 +69,9 @@
 import _ from "lodash"
 import { Component, Prop, Watch } from 'vue-property-decorator'
 import BaseComponent from '../../core/BaseComponent'
-import { INPUT_TYPES } from '../../constants/Style'
 
 @Component
-export default class InputToolbarPanel extends BaseComponent {
+export default class CheckboxToolbarPanel extends BaseComponent {
   @Prop() management!: any
 
   checkboxLabelName = ''
@@ -82,10 +81,6 @@ export default class InputToolbarPanel extends BaseComponent {
   checkboxValue = ''
   toggleCheckboxRequired = false
   toggleCheckboxChecked = false
-  
-  get inputTypeOptions() {
-    return INPUT_TYPES
-  }
 
   onUpdateLabelName(name: any) {
     this.checkboxLabelName = name
