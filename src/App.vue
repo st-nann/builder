@@ -1,16 +1,19 @@
 <template>
   <HTMLTemplate
     :propTemplateJson="propTemplateJson"
+    :propMessageType="propMessageType"
     @change="doEmitTemplate"
   />
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
+import { IMessageType } from './interfaces/Components'
 
 @Component
 export default class App extends Vue {
-  @Prop() propTemplateJson!: any
+  @Prop() readonly propTemplateJson!: any
+  @Prop() readonly propMessageType!: IMessageType
   
   doEmitTemplate(template: any) {
     this.$emit('change', template)

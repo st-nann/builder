@@ -4,16 +4,21 @@
   import { Component, Vue, Prop } from 'vue-property-decorator'
   import { CreateElement } from 'vue'
   import { BuilderTagMap } from './BuilderTagMap'
-  import { IScreen } from '../interfaces/Components'
+  import { IMessageType, IScreen } from '../interfaces/Components'
   import { EDirection } from '../enum/Components'
-  import { EElementPosition, EElementType } from '../enum/Elements'
+  import { EElementPosition, EElementType, EMessageType } from '../enum/Elements'
   import {
     CONTAINER_DEFAULT,
     TEXT_DEFAULT,
     IMAGE_DEFAULT,
     SPACER_DEFAULT,
     BUTTON_DEFAULT,
-    BOX_DEFAULT
+    BOX_DEFAULT,
+    INPUT_DEFAULT,
+    TEXTAREA_DEFAULT,
+    SELECT_DEFAULT,
+    CHECKBOX_DEFAULT,
+    RADIO_DEFAULT
   } from '../constants/Default'
   import BoxPage from '../pages/Box.vue'
   import ButtonPage from '../pages/Button.vue'
@@ -26,6 +31,7 @@
   })
   export default class BuilderCanvas extends Vue {
     @Prop() readonly templateJson!: any
+    @Prop() readonly messageType!: IMessageType
     @Prop() readonly screen!: IScreen
 
     value: any = {}
@@ -42,7 +48,12 @@
         IMAGE_DEFAULT,
         SPACER_DEFAULT,
         BUTTON_DEFAULT,
-        BOX_DEFAULT
+        BOX_DEFAULT,
+        INPUT_DEFAULT,
+        TEXTAREA_DEFAULT,
+        SELECT_DEFAULT,
+        CHECKBOX_DEFAULT,
+        RADIO_DEFAULT
       }
     }
 
@@ -105,6 +116,7 @@
       const properties = {
         props: {
           elementTemplateJson: this.templateJson,
+          elementMessageType: this.messageType,
           elementState: state,
           elementId: state.id,
           elementName: _.capitalize(state.element),
@@ -159,9 +171,13 @@
         state.children.forEach((item: any, index: number) => {
           if (item.id === this.value.id) {
             indexInsert = EElementPosition.LEFT === this.value.position ? index : index + 1
-            const data = this.value.duplicate
-              ? { ..._.cloneDeep(item) }
-              : { ..._.cloneDeep(this.defaultData[`${this.value.element}_DEFAULT`]) }
+            const defaultElement = this.defaultData[`${this.value.element}_DEFAULT`]
+            if (this.messageType === EMessageType.FLEX_MESSAGE) {
+              if (this.value.element === EElementType.BUTTON) {
+                defaultElement.props.width = '100%'
+              }
+            }
+            const data = this.value.duplicate ? { ..._.cloneDeep(item) } : { ..._.cloneDeep(defaultElement) }
             this.assignChildElementId(data)
             state.children.splice(indexInsert, 0, { ...data, id: uuidv4() })
             this.value.id = ''
@@ -179,6 +195,12 @@
             if (item.id === this.parentId) {
               indexInsert = EElementPosition.TOP === this.value.position ? index : index + 1
               const key: any = _.findKey(item.children, child => child.id === this.value.id)
+              const defaultElement = this.defaultData[`${this.value.element}_DEFAULT`]
+              if (this.messageType === EMessageType.FLEX_MESSAGE) {
+                if (this.value.element === EElementType.BUTTON) {
+                  defaultElement.props.width = '100%'
+                }
+              }
               const data = this.value.duplicate
                 ? { 
                     ..._.cloneDeep({
@@ -192,10 +214,7 @@
                 : { 
                     ..._.cloneDeep(this.defaultData['CONTAINER_DEFAULT']),
                     id: uuidv4(),
-                    children: _.cloneDeep([{
-                      ..._.cloneDeep(this.defaultData[`${this.value.element}_DEFAULT`]),
-                      id: uuidv4()
-                    }])
+                    children: _.cloneDeep([{ ..._.cloneDeep(defaultElement), id: uuidv4() }])
                   }
               if (this.isParentBox) { data.props.parent = EElementType.BOX }
               this.assignChildElementId(data)

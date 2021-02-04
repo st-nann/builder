@@ -45,9 +45,22 @@
     </div>
 
     <div class="builder-container-body">
-      <div :class="{ 'content-mobile': screen.mobile, 'content-desktop': screen.desktop || !screen.mobile }">
+      <div
+        :class="[
+          'builder-content',
+          {
+            'content-mobile': screen.width === undefined && screen.mobile,
+            'content-desktop': screen.width === undefined && (screen.desktop || !this.screen.mobile)
+          }
+        ]"
+        :style="`width: ${widthScreenCustom};`"
+      >
         <div v-if="haveElementChild">
-          <BuilderCanvas :screen="screen" :templateJson="templateJson" />
+          <BuilderCanvas
+            :screen="screen"
+            :templateJson="templateJson"
+            :messageType="propMessageType"
+          />
         </div>
         <div v-else class="box-start">
           <SquareMenuButtonComponent
@@ -68,10 +81,10 @@ import _ from 'lodash'
 import { v4 as uuidv4 } from 'uuid'
 import { Component, Prop, Watch } from 'vue-property-decorator'
 import BaseComponent from '../../core/BaseComponent'
-import { MENU } from '../../constants/Base'
+import { EMAIL_MENU, WEB_ATTENTION_MENU, FLEX_MESSAGE_MENU } from '../../constants/Base'
 import { EDirection } from '../../enum/Components'
-import { EElementType } from '../../enum/Elements'
-import { IScreen } from '../../interfaces/Components'
+import { EMessageType, EElementType } from '../../enum/Elements'
+import { IMessageType, IScreen } from '../../interfaces/Components'
 import { IContainer } from '../../interfaces/Template'
 import { AlertMsgSuccess } from '../../plugins/alert/Alert'
 import {
@@ -81,13 +94,21 @@ import {
   SPACER_DEFAULT,
   BUTTON_DEFAULT,
   BOX_DEFAULT,
+  INPUT_DEFAULT,
+  TEXTAREA_DEFAULT,
+  SELECT_DEFAULT,
+  CHECKBOX_DEFAULT,
+  RADIO_DEFAULT
+
 } from '../../constants/Default'
 
 @Component
 export default class HTMLTemplate extends BaseComponent {
   @Prop() propTemplateJson!: IContainer
+  @Prop() readonly propMessageType!: IMessageType
 
   element = ''
+  widthScreenCustom = ''
   haveElementChild = false
   screen: IScreen = { mobile: false, desktop: false }
   templateJson: IContainer = {
@@ -96,7 +117,12 @@ export default class HTMLTemplate extends BaseComponent {
   }
 
   get menu() {
-    return MENU
+    switch (this.propMessageType) {
+      case EMessageType.EMAIL: return EMAIL_MENU
+      case EMessageType.WEB_ATTENTION: return WEB_ATTENTION_MENU
+      case EMessageType.FLEX_MESSAGE: return FLEX_MESSAGE_MENU
+      default: return EMAIL_MENU
+    }
   }
 
   get elementType() {
@@ -106,6 +132,11 @@ export default class HTMLTemplate extends BaseComponent {
       EElementType.SPACER,
       EElementType.BUTTON,
       EElementType.BOX,
+      EElementType.INPUT,
+      EElementType.TEXTAREA,
+      EElementType.SELECT,
+      EElementType.CHECKBOX,
+      EElementType.RADIO
     ];
   }
 
@@ -116,7 +147,12 @@ export default class HTMLTemplate extends BaseComponent {
       IMAGE_DEFAULT,
       SPACER_DEFAULT,
       BUTTON_DEFAULT,
-      BOX_DEFAULT
+      BOX_DEFAULT,
+      INPUT_DEFAULT,
+      TEXTAREA_DEFAULT,
+      SELECT_DEFAULT,
+      CHECKBOX_DEFAULT,
+      RADIO_DEFAULT
     }
   }
 
@@ -138,7 +174,30 @@ export default class HTMLTemplate extends BaseComponent {
   }
 
   onUpdateScreen(screen: IScreen) {
-    this.screen = screen
+    if (this.screen.width && this.screen.width.type) {
+      switch (this.screen.width.type) {
+        case 'SM':
+          this.widthScreenCustom = `30%`
+          break
+        case 'MD':
+          this.widthScreenCustom = `50%`
+          break
+        case 'LG':
+          this.widthScreenCustom = `70%`
+          break
+        case 'FULL':
+          this.widthScreenCustom = `100%`
+          break
+        case 'CUSTOM':
+          this.widthScreenCustom = this.screen.width.size || '90%'
+          break
+        default:
+          this.widthScreenCustom = `90%`
+          break
+      }
+    } else {
+      this.screen = screen
+    }
   }
 
   doCopyJSON() {
@@ -187,10 +246,13 @@ export default class HTMLTemplate extends BaseComponent {
           this.haveElementChild = true;
           this.element = _.toUpper(item.element)
         } else {
-          item.children.push({
-            id: uuidv4(),
-            ..._.cloneDeep(this.defaultData[`${this.element}_DEFAULT`]),
-          });
+          const defaultElement = this.defaultData[`${this.element}_DEFAULT`]
+          if (this.propMessageType === EMessageType.FLEX_MESSAGE) {
+            if (this.element === EElementType.BUTTON) {
+              defaultElement.props.width = '100%'
+            }
+          }
+          item.children.push({ id: uuidv4(), ..._.cloneDeep(defaultElement) })
           this.doAssignChildElementId(item);
           this.doAddElementChild(item.children);
         }

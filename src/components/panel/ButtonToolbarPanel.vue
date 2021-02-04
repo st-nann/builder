@@ -132,6 +132,7 @@ export default class ButtonToolbarPanel extends BaseComponent {
       ...this.buttonFont,
       ...this.buttonRadius,
       ...this.buttonBorder,
+      width: this.elementProps.width,
       flexbox: _.isEmpty(this.justifyImage)
         ? undefined
         : { 'justify-content': this.justifyImage }
