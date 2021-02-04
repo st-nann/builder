@@ -1,7 +1,7 @@
 <template>
   <HTMLTemplate
     :propTemplateJson="propTemplateJson"
-    propMessageType="WEB_ATTENTION"
+    :propMessageType="propMessageType"
     @change="doEmitTemplate"
   />
 </template>
