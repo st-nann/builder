@@ -38,7 +38,7 @@
         <ColorPickerComponent
           name="contanier-background"
           label="Background"
-          :value="templateJson.background"
+          :value="colorBgDefault"
           @change="doGetBackgrondContainer"
         />
       </div>
@@ -49,11 +49,11 @@
         :class="[
           'builder-content',
           {
-            'content-mobile': screen.width === undefined && screen.mobile,
-            'content-desktop': screen.width === undefined && (screen.desktop || !this.screen.mobile)
+            'content-mobile': screen.width === undefined && screen.mobile && propMessageType !== 'FLEX_MESSAGE',
+            'content-desktop': screen.width === undefined && propMessageType !== 'FLEX_MESSAGE' && (screen.desktop || !this.screen.mobile)
           }
         ]"
-        :style="`width: ${widthScreenCustom};`"
+        :style="`width: ${propMessageType === 'FLEX_MESSAGE' ? '50%' : widthScreenCustom};`"
       >
         <div v-if="haveElementChild">
           <BuilderCanvas
@@ -109,6 +109,7 @@ export default class HTMLTemplate extends BaseComponent {
 
   element = ''
   widthScreenCustom = ''
+  colorBgDefault = '#ffffff'
   haveElementChild = false
   screen: IScreen = { mobile: false, desktop: false }
   templateJson: IContainer = {
@@ -170,6 +171,10 @@ export default class HTMLTemplate extends BaseComponent {
       /* Assign this scope of current component for access from outside instance */
       (window as any).vm = this
       self.onUpdateScreen(this.screen)
+
+      if (self.propMessageType === EMessageType.FLEX_MESSAGE) {
+        self.doGetBackgrondContainer('#6787b7')
+      }
     }, 10)
   }
 
@@ -218,10 +223,10 @@ export default class HTMLTemplate extends BaseComponent {
   }
 
   doGetBackgrondContainer(value: string) {
-    this.templateJson.props.background = value;
-    document
-      .getElementsByClassName('content')[0]
-      .setAttribute('style', `background-color: ${value}`)
+    this.templateJson.props['background-color'] = value
+    const element =  document.getElementsByClassName('builder-content')[0]
+    const style = element.getAttribute('style')
+    element.setAttribute('style', `${style} background-color: ${value};`)
   }
 
   doAddJson(element: string) {
@@ -276,8 +281,10 @@ export default class HTMLTemplate extends BaseComponent {
   @Watch('templateJson', { deep: true })
   onUpdateTemplate() {
     if (this.templateJson.children.length < 1) {
-      this.haveElementChild = false;
+      this.haveElementChild = false
     }
+    const self = this
+    setTimeout(() => { self.colorBgDefault = self.templateJson.props['background-color'] || '#ffffff' }, 10)
     this.$emit('change', this.templateJson)
   }
 }
