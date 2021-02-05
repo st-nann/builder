@@ -1,6 +1,6 @@
 {
   "name": "vue-builder-plugin",
-  "version": "1.0.198",
+  "version": "1.0.199",
   "description": "Builder Template (Vue + Typescript)",
   "private": false,
   "sideEffects": false,
