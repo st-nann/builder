@@ -18,13 +18,14 @@
                 @click="doEdit"
               />
               <SquareMenuButtonComponent
+                v-if="isDisplayDuplicateBtn"
                 icon="note-multiple"
                 className="default-square-menu-button"
                 :options="positions"
                 @click="doDuplicate"
               />
               <SquareButtonComponent
-                v-if="isDisplay"
+                v-if="isDisplayDeleteBtn"
                 icon="trash-can"
                 className="delete-square-button"
                 @click="doOpenModal"
@@ -70,6 +71,7 @@ import _ from 'lodash'
 import { Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../../../core/BaseComponent'
 import { POSITION } from '../../../constants/Base'
+import { EElementType, EMessageType } from '@/enum/Elements'
 
 @Component
 export default class MainButtonComponent extends BaseComponent {
@@ -83,12 +85,19 @@ export default class MainButtonComponent extends BaseComponent {
   
   get positions() {
     return _.filter(POSITION, (item: any) => {
-      if (_.isUndefined(this.parent.quantityChildrenBox) || this.parent.quantityChildren < 6) { return item }
+      if (this.elementMessageType === EMessageType.FLEX_MESSAGE) { return !_.includes(['left', 'right'], item.value) }
+      else if (_.isUndefined(this.parent.quantityChildrenBox) || this.parent.quantityChildren < 6) { return item }
       return !_.includes(['left', 'right'], item.value)
     })
   }
 
-  get isDisplay() {
+  get isDisplayDuplicateBtn() {
+    return this.elementMessageType === EMessageType.FLEX_MESSAGE
+      ? _.upperCase(this.elementName) === EElementType.BUTTON && this.parent.quantityChildrenButtonBox < 3
+      : true
+  }
+
+  get isDisplayDeleteBtn() {
     return _.isUndefined(this.parent.quantityChildrenBox) || this.parent.quantityChildrenBox > 1
   }
 

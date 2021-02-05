@@ -61,7 +61,7 @@ export default class BoxComponent extends BaseComponent {
 
   get isDisplayVertical() {
     return this.elementMessageType === EMessageType.FLEX_MESSAGE
-      ? _.upperCase(this.elementName) === EElementType.BUTTON && this.childrenElementButtonBox < 3
+      ? _.upperCase(this.elementName) === EElementType.BUTTON && this.parent.quantityChildrenButtonBox < 3
       : true
   }
 
