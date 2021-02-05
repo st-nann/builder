@@ -75,7 +75,8 @@ export interface IButton {
         flexbox: {
             'flex-grow': number
         }
-        background?: string
+        name?: string
+        'button-background-color'?: string
         'border-bottom'?: {
             width: string
             style: string
