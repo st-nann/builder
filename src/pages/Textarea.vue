@@ -57,7 +57,7 @@
           <div class="textarea-preview-container">
             <div class="textarea-preview-input-container">
               <div :id="`textarea-label-preview-${elementId}`" />
-              <textarea :id="`textarea-preview-${elementId}`" class="textarea-preview" />
+              <textarea :id="`textarea-preview-${elementId}`" class="textarea-preview" readonly />
             </div>
           </div>
         </div>

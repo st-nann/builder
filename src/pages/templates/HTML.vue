@@ -34,13 +34,15 @@
             </div>
           </template>
         </ModalComponent>
-        <span class="vertical-line"> | </span>
-        <ColorPickerComponent
-          name="contanier-background"
-          label="Background"
-          :value="colorBgDefault"
-          @change="doGetBackgrondContainer"
-        />
+        <span v-if="propMessageType !== 'FLEX_MESSAGE'">
+          <span class="vertical-line"> | </span>
+          <ColorPickerComponent
+            name="contanier-background"
+            label="Background"
+            :value="colorBgDefault"
+            @change="doGetBackgrondContainer"
+          />
+        </span>
       </div>
     </div>
 

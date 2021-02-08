@@ -56,7 +56,7 @@
           <div class="input-preview-container">
             <div class="input-preview-input-container">
               <div :id="`input-label-preview-${elementId}`" />
-              <input :id="`input-preview-${elementId}`" class="input-preview" />
+              <input :id="`input-preview-${elementId}`" class="input-preview" readonly />
             </div>
           </div>
         </div>
