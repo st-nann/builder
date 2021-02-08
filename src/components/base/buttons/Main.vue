@@ -71,7 +71,7 @@ import _ from 'lodash'
 import { Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../../../core/BaseComponent'
 import { POSITION } from '../../../constants/Base'
-import { EElementType, EMessageType } from '@/enum/Elements'
+import { EElementType, EMessageType } from '../../../enum/Elements'
 
 @Component
 export default class MainButtonComponent extends BaseComponent {
