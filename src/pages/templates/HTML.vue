@@ -172,7 +172,7 @@ export default class HTMLTemplate extends BaseComponent {
     setTimeout(() => {
       /* Assign this scope of current component for access from outside instance */
       (window as any).vm = this
-      self.onUpdateScreen(this.screen)
+      self.onUpdateScreen(self.screen)
 
       if (self.propMessageType === EMessageType.FLEX_MESSAGE) {
         self.doGetBackgrondContainer('#6787b7')
