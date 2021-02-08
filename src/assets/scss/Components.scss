@@ -40,3 +40,8 @@ a {
 a, .enable-event {
     pointer-events: auto;
 }
+
+input:focus,
+textarea:focus {
+    outline: none;
+}
