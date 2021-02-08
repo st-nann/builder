@@ -45,17 +45,16 @@
         </span>
       </div>
     </div>
-
     <div class="builder-container-body">
       <div
         :class="[
           'builder-content',
           {
             'content-mobile': screen.width === undefined && screen.mobile && propMessageType !== 'FLEX_MESSAGE',
-            'content-desktop': screen.width === undefined && propMessageType !== 'FLEX_MESSAGE' && (screen.desktop || !this.screen.mobile)
+            'content-desktop': screen.width === undefined && propMessageType !== 'FLEX_MESSAGE' && (screen.desktop || !screen.mobile)
           }
         ]"
-        :style="`width: ${propMessageType === 'FLEX_MESSAGE' ? '50%' : widthScreenCustom};`"
+        :style="`width: ${screen.width ? screen.width.size : (propMessageType === 'FLEX_MESSAGE' ? '50%' : '')};`"
       >
         <div v-if="haveElementChild">
           <BuilderCanvas
@@ -181,30 +180,29 @@ export default class HTMLTemplate extends BaseComponent {
   }
 
   onUpdateScreen(screen: IScreen) {
-    if (this.screen.width && this.screen.width.type) {
-      switch (this.screen.width.type) {
+    if (screen.width && screen.width.type) {
+      switch (screen.width.type) {
         case 'SM':
-          this.widthScreenCustom = `30%`
+          screen.width.size = `30%`
           break
         case 'MD':
-          this.widthScreenCustom = `50%`
+          screen.width.size = `50%`
           break
         case 'LG':
-          this.widthScreenCustom = `70%`
+          screen.width.size = `70%`
           break
         case 'FULL':
-          this.widthScreenCustom = `100%`
+          screen.width.size = `100%`
           break
         case 'CUSTOM':
-          this.widthScreenCustom = this.screen.width.size || '90%'
+          screen.width.size = screen.width.size || '90%'
           break
         default:
-          this.widthScreenCustom = `90%`
+          screen.width.size = `90%`
           break
       }
-    } else {
-      this.screen = screen
     }
+    this.screen = screen
   }
 
   doCopyJSON() {
