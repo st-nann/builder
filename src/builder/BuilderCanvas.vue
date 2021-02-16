@@ -20,15 +20,8 @@
     CHECKBOX_DEFAULT,
     RADIO_DEFAULT
   } from '../constants/Default'
-  import BoxPage from '../pages/Box.vue'
-  import ButtonPage from '../pages/Button.vue'
-  import ImagePage from '../pages/Image.vue'
-  import SpacerPage from '../pages/Spacer.vue'
-  import TextPage from '../pages/Text.vue'
 
-  @Component({
-    components: { BoxPage, ButtonPage, ImagePage, SpacerPage, TextPage },
-  })
+  @Component
   export default class BuilderCanvas extends Vue {
     @Prop() readonly templateJson!: any
     @Prop() readonly messageType!: IMessageType
