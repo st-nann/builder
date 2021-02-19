@@ -50,13 +50,14 @@
       }
     }
 
-    createComponent(state: any, tag: CreateElement): any {
-      if (_.isEmpty(state)) { return tag("div") }
+    createComponent(state: any, createElement: CreateElement): any {
+      if (_.isEmpty(state)) { return createElement("div") }
 
       if (_.isArray(state)) {
-        return state.map((child) => this.createComponent(child, tag))
+        return state.map((child) => this.createComponent(child, createElement))
       }
 
+      /* Responsive Mobile */
       if (this.screen.mobile) {
         if (
           state.element === EElementType.CONTAINER &&
@@ -72,6 +73,7 @@
         }
       }
 
+      /* Responsive Dasktop */
       if (this.screen.desktop || (!this.screen.desktop && !this.screen.mobile)) {
         if (
           state.element === EElementType.CONTAINER &&
@@ -84,29 +86,45 @@
         }
       }
 
+      /* Map Tag Name For Create Component */
       const tagName = BuilderTagMap.getTag(state.element)
 
       const children: any[] = []
       if (state.children && state.children.length > 0) {
         state.children.forEach((child: any) => {
-          children.push(_.isString(child) ? child : this.createComponent(child, tag))
+          children.push(_.isString(child) ? child : this.createComponent(child, createElement))
         })
       }
 
+      /* Assign Width Button Flex Message */
+      if (this.messageType === EMessageType.FLEX_MESSAGE) {
+        if (state.element === EElementType.BUTTON) {
+          state.props.width = '100%'
+        }
+      }
+
+      /* Root Element Style */
       const style = state.props
         ? {
-            ..._.pick(state.props, ['background-color', 'flexbox']),
+            'background-color': EElementType.CONTAINER && this.messageType === EMessageType.FLEX_MESSAGE
+              ? 'transparent'
+              : { ..._.pick(state.props, ['background-color']) },
             ...state.props.flexbox,
             ...state.props['border-bottom']
                 ? {
                     'border-bottom':
                       `${state.props['border-bottom'].width} ${state.props['border-bottom'].style} ${state.props['border-bottom'].color}`
                   }
-                : undefined
+                : undefined,
+            width: state.element === EElementType.CONTAINER
+              ? undefined
+              : (this.screen.mobile ? `calc(100%)` : `calc(0%)`),
+            'flex-grow': state.props.flexbox && state.props.flexbox['flex-grow'] ? state.props.flexbox['flex-grow'] : 1,
           }
           : undefined
 
       const properties = {
+        style: style,
         props: {
           elementTemplateJson: this.templateJson,
           elementMessageType: this.messageType,
@@ -151,13 +169,13 @@
               }
             }
           }
-        },
-        style: style
+        }
       }
     
-      return tag(tagName, properties, children)
+      return createElement(tagName, properties, children)
     }
 
+    /*  Add Element Left And Right */
     addHorizontalElement(state: any = this.templateJson) {
       if (state.children) {
         let indexInsert = 0
@@ -165,11 +183,6 @@
           if (item.id === this.value.id) {
             indexInsert = EElementPosition.LEFT === this.value.position ? index : index + 1
             const defaultElement = this.defaultData[`${this.value.element}_DEFAULT`]
-            if (this.messageType === EMessageType.FLEX_MESSAGE) {
-              if (this.value.element === EElementType.BUTTON) {
-                defaultElement.props.width = '100%'
-              }
-            }
             const data = this.value.duplicate ? { ..._.cloneDeep(item) } : { ..._.cloneDeep(defaultElement) }
             this.assignChildElementId(data)
             state.children.splice(indexInsert, 0, { ...data, id: uuidv4() })
@@ -180,6 +193,7 @@
       }
     }
 
+    /*  Add Element Top And Bottom */
     addVerticalElement(state: any = this.templateJson) {
       if (state.children) {
         let indexInsert = 0
@@ -189,11 +203,6 @@
               indexInsert = EElementPosition.TOP === this.value.position ? index : index + 1
               const key: any = _.findKey(item.children, child => child.id === this.value.id)
               const defaultElement = this.defaultData[`${this.value.element}_DEFAULT`]
-              if (this.messageType === EMessageType.FLEX_MESSAGE) {
-                if (this.value.element === EElementType.BUTTON) {
-                  defaultElement.props.width = '100%'
-                }
-              }
               const data = this.value.duplicate
                 ? { 
                     ..._.cloneDeep({
@@ -228,6 +237,7 @@
       }
     }
 
+    /*  Delete Element */
     deleteElement(state: any = this.templateJson) {
       if (state.children) {
         state.children.forEach((child: any) => {
@@ -240,6 +250,7 @@
       }
     }
 
+    /*  Check Element Children For Delete */
     deleteChildElement(state: any = this.templateJson) {
       if (state.children) {
         state.children.forEach((child: any) => {
@@ -249,6 +260,7 @@
       }
     }
 
+    /*  Assign Element ID */
     assignChildElementId(state: any) {
       if (state.children) {
         state.children.forEach((child: any) => {
@@ -260,6 +272,7 @@
       }
     }
 
+    /* Directive Vue.Js */
     render(createElement: CreateElement) {
       return this.createComponent(this.templateJson, createElement)
     }

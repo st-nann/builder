@@ -179,6 +179,7 @@ export default class HTMLTemplate extends BaseComponent {
     }, 10)
   }
 
+  /* Trigger Function From Outside */
   onUpdateScreen(screen: IScreen) {
     if (screen.width && screen.width.type) {
       switch (screen.width.type) {
@@ -248,18 +249,13 @@ export default class HTMLTemplate extends BaseComponent {
     } else {
       children.forEach((item: any) => {
         if (this.doFindElement(item.element)) {
-          this.haveElementChild = true;
+          this.haveElementChild = true
           this.element = _.toUpper(item.element)
         } else {
           const defaultElement = this.defaultData[`${this.element}_DEFAULT`]
-          if (this.propMessageType === EMessageType.FLEX_MESSAGE) {
-            if (this.element === EElementType.BUTTON) {
-              defaultElement.props.width = '100%'
-            }
-          }
           item.children.push({ id: uuidv4(), ..._.cloneDeep(defaultElement) })
-          this.doAssignChildElementId(item);
-          this.doAddElementChild(item.children);
+          this.doAssignChildElementId(item)
+          this.doAddElementChild(item.children)
         }
       })
     }

@@ -64,6 +64,7 @@ export default class BaseComponent extends Base {
     this.$emit('change', this.transformValue)
   }
 
+  /* Check Limit Element */
   doManageElement(state: any = this.elementTemplateJson) {
     if (state.children) {
       state.children.forEach((item: any) => {
@@ -85,6 +86,7 @@ export default class BaseComponent extends Base {
     }
   }
 
+  /* Count All Children Of Container Root Element (Count Last Child Only) */
   doCalculateAllChildrenNested(state: any = this.elementTemplateJson) {
     if (state.children) {
       state.children.forEach((child: any) => {
@@ -107,6 +109,7 @@ export default class BaseComponent extends Base {
     }
   }
 
+  /* Assign Children To Element */
   doAssignChildrenToElement(state: any = this.elementTemplateJson) {
     if (state.children) {
       state.children.forEach((child: any) => {
@@ -131,6 +134,7 @@ export default class BaseComponent extends Base {
     }
   }
 
+  /* Count Children of Box */
   doCalculateChildrenBox(state: any = this.elementTemplateJson) {
     if (state.children) {
       state.children.forEach((child: any) => {
@@ -143,20 +147,7 @@ export default class BaseComponent extends Base {
     }
   }
 
-  doCalculateButtonBox(state: any = this.elementTemplateJson) {
-    if (state.children) {
-      state.children.forEach((child: any) => {
-        if (child.element === EElementType.BOX) {
-          const button = _.filter(child.children, item => item.children[0].element === EElementType.BUTTON)
-          if (button) {
-            this.childrenElementButtonBox = button.length
-          }
-        }
-        this.doCalculateButtonBox(child)
-      })
-    }
-  }
-
+  /* Assign Children of Box */
   doAssignChildrenBox(state: any = this.elementTemplateJson) {
     if (state.children) {
       state.children.forEach((child: any) => {
@@ -172,6 +163,22 @@ export default class BaseComponent extends Base {
     }
   }
 
+  /* Count Children of Button Box (Flex Message) */
+  doCalculateButtonBox(state: any = this.elementTemplateJson) {
+    if (state.children) {
+      state.children.forEach((child: any) => {
+        if (child.element === EElementType.BOX) {
+          const button = _.filter(child.children, item => item.children[0].element === EElementType.BUTTON)
+          if (button) {
+            this.childrenElementButtonBox = button.length
+          }
+        }
+        this.doCalculateButtonBox(child)
+      })
+    }
+  }
+
+  /* Set Attribute Style For Preview */
   doSetAttributeStyle(id: string, lists: object) {
     setTimeout(() => {
         document.getElementById(id)?.setAttribute(
@@ -184,18 +191,21 @@ export default class BaseComponent extends Base {
     }, 10)
   }
 
+  /* Set Attribute (Not style) For Preview */
   doSetAttribute(id: string, name: string, value: any) {
     setTimeout(() => {
       document.getElementById(id)?.setAttribute(name, value)
     }, 10)
   }
 
+  /* Update Preview */
   onUpdatePreview(data: any) {
     this.previewData = {}
     this.previewData = data
     this.changeImage = data.changeImage || false
   }
 
+  /* Update Management (Edit, Duplicate, Delete) */
   onUpdateManagement(data: any) {
     this.data = {}
     this.action = data
@@ -208,6 +218,7 @@ export default class BaseComponent extends Base {
     this.doEmitData()
   }
   
+  /* Update Scale */
   onUpdateScale(scale: any) {
     if (scale && !this.isCancel) {
       if (JSON.stringify(this.data) === '{}') {
@@ -219,6 +230,7 @@ export default class BaseComponent extends Base {
     }
   }
 
+  /* Update Footer Style */
   onUpdateFooterPanelData(data: any) {
     this.footerData = data
     this.action.edit = false
@@ -230,12 +242,14 @@ export default class BaseComponent extends Base {
     }
   }
 
+  /* Cancel */
   onUpdateCancel() {
     this.action.edit = false
     this.action.done = false
     this.data = {}
   }
 
+  /* Emit Data To Builder Canvas (On Function: done) */
   doEmitData() {
     if (this.action.delete) {
       this.$emit('delete', this.elementId)
@@ -262,6 +276,7 @@ export default class BaseComponent extends Base {
     }
   }
 
+  /* Emit Add Element (On Function: add) */
   doEmitAddElement(data: any) {
     this.$emit('add', { id: this.elementId, ...data })
   }
